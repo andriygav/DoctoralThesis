@@ -1,0 +1,396 @@
+\begin{lemma}[Производная умножения матричнозначных функций]\label{lemma:matrix_funcs_product_derivative}
+    Пусть заданы~$\mathbf{A}(\mathbf{X}) \in \mathbb{R}^{p \times r}$ и~$\mathbf{B}(\mathbf{X}) \in \mathbb{R}^{r \times q}$ матрицезначные функции переменной~$\mathbf{X}$, тогда
+    \begin{equation}
+        \frac{\partial\mathbf{A}(\mathbf{X})\mathbf{B}(\mathbf{X})}{\partial \mathbf{X}} = \left(\mathbf{A} \otimes \mathbf{I}_q 
+     \right) \frac{\partial\mathbf{B}}{\partial\mathbf{X}} + \left( \mathbf{I}_p \otimes \mathbf{B}^\top\right) \frac{\partial\mathbf{A}}{\partial\mathbf{X}}
+    \end{equation}
+\end{lemma}
+\begin{proof}
+Применить цепное правило для вычисления производной сложной функции, а затем объединим его со свойством~\ref{prop:matrix_product_derivative}
+    \begin{align}
+        \frac{\partial\mathbf{A}(\mathbf{X}) \mathbf{B}(\mathbf{X})}{\partial \mathbf{X}} &= \frac{\partial \mathbf{A}\mathbf{B}}{\partial\mathbf{B}}\frac{\partial\mathbf{B}}{\partial \mathbf{X}} + \frac{\partial \mathbf{A}\mathbf{B}}{\partial\mathbf{A}}\frac{\partial\mathbf{A}}{\partial \mathbf{X}} =\\
+        &=\frac{\partial \mathbf{A}\mathbf{B}\mathbf{I}_q}{\partial\mathbf{B}}\frac{\partial\mathbf{B}}{\partial \mathbf{X}} + \frac{\partial \mathbf{I}_p\mathbf{A}\mathbf{B}}{\partial\mathbf{A}}\frac{\partial\mathbf{A}}{\partial \mathbf{X}} = \\
+        &= \left( \mathbf{A} \otimes \mathbf{I}_q \right) \frac{\partial \mathbf{B}}{\partial \mathbf{X}} + \left( \mathbf{I}_p \otimes \mathbf{B}^\top \right) \frac{\partial \mathbf{A}}{\partial \mathbf{X}}
+    \end{align}
+\end{proof}
+
+\begin{lemma}[Теорема идентификации для построчной векторизации] \label{lemma:identification_theorem_vec_r}
+
+Пусть отображение~$\mathbf{F}: \mathbb{R}^{m\times n} \rightarrow \mathbb{R}^{p, q}$ является дифференциальной матричнозначной функцией от~$\mathbf{X} \in \mathbb{R}^{m \times n}$.
+Если дифференциал функции~$\mathbf{F}$ может быть записан в виде:
+\begin{equation}
+    d \mathrm{vec}_r(\mathbf{F}(\mathbf{X})) = \mathbf{J} \cdot d \mathrm{vec}_r(\mathbf{X}),
+\end{equation}
+где матрица~$\mathbf{J} \in \mathbb{R}^{pq \times mn}$ является, некоторой константной матрицей относительно переменной~$d\mathbf{X}$, тогда матрица~$\mathbf{J}$ является матрицей Якоби преобразования $\mathbf{F}(\mathbf{X})$ относительно построчной векторизации. Обозначим это в следующем виде:
+\begin{equation}
+    \frac{\partial \mathbf{F}(\mathbf{X})}{\partial \mathbf{X}} := \frac{\partial \mathrm{vec}_r(\mathbf{F}(\mathbf{X}))}{\partial (\mathrm{vec}_r(\mathbf{X}))^\top} = \mathbf{J}
+\end{equation}
+    
+\end{lemma}
+\begin{proof}
+Это построчный $\mathrm{vec}_r$-аналог первой теоремы об идентификации (англ. first identification theorem) в главе 12~\cite{magnus1988matrix} для векторизации по столбцам.
+\end{proof}
+
+\begin{lemma}[Производная квадрата Адамара]\label{lemma:hadamard_square_derivative}
+Для матрицы~$\mathbf{A} \in \mathbb{R}^{m \times n}$, производная поэлементного квадрата равна
+\[
+    \frac{\partial \mathbf{A}^{\circ 2}}{\partial \mathbf{A}}
+    = 2 \cdot \mathrm{diag}\!\big(\mathrm{vec}_r(\mathbf{A})\big).
+\]
+\end{lemma}
+\begin{proof}
+Используя определение~\ref{def:vec_elem_ops}, а именно $(\mathbf{A}^{\circ 2}){ij} = (\mathbf{A}{ij})^2$.
+Выполняя поэлеметное взятие дифференциала, получаем, что:
+\[
+    d(\mathbf{A}^{\circ 2}) = 2\mathbf{A} \circ d\mathbf{A}.
+\]
+Далее, применяя оператор~$\mathrm{vec}_r$ и используя свойство~\ref{prop:vec_r_hadamard_product} получаем выражение:
+\[
+    \mathrm{vec}_r(d(\mathbf{A}^{\circ 2})) = 2 \textit{diag}(\mathrm{vec}_r(\mathbf{A})) \mathrm{vec}_r (d\mathbf{A}),
+\]
+причем, используя построчный аналог первой теоремы об идентификации~\ref{lemma:identification_theorem_vec_r} получаем следующий вид:
+\[
+    \frac{\partial \mathbf{A}^{\circ 2}}{\partial \mathbf{A}}
+    = \frac{\partial \mathrm{vec}_r(\mathbf{A}^{\circ 2})}{\partial \mathrm{vec}_r(\mathbf{A})} = 2 \cdot \mathrm{diag}\!\big(\mathrm{vec}_r(\mathbf{A})\big).
+\]
+\end{proof}
+
+\begin{lemma}[Производная корня Адамара]\label{lemma:hadamard_root_derivative}
+Для матричнозначной функции~$\mathbf{A} \in \mathbb{R_+}^{m \times n}$ с положительными элементами, производная поэлементного корня равна
+\[
+    \frac{\partial \mathbf{A}^{\circ \frac{1}{2}}}{\partial \mathbf{A}}
+    = \tfrac{1}{2}\, \mathrm{diag}^{-1}\!\big(\mathrm{vec}_r^{\circ \frac{1}{2}}(\mathbf{A})\big).
+\]
+\end{lemma}
+\begin{proof}
+Аналогично, доказательству леммы~\ref{lemma:hadamard_square_derivative} получаем~$d(\mathbf{A}^{\circ 1/2}) = \frac{1}{2}\mathbf{A}^{\circ -1/2} \circ d\mathbf{A},$  откуда в векторном виде получаем, следующее выражение:
+\[
+    \frac{\partial \mathbf{A}^{\circ \frac{1}{2}}}{\partial \mathbf{A}}
+    = \frac{\partial \mathrm{vec}_r(\mathbf{A}^{\circ \frac{1}{2}})}{\partial \mathrm{vec}_r(\mathbf{A})} = \tfrac{1}{2}\, \mathrm{diag}^{-1}\!\big(\mathrm{vec}_r^{\circ \frac{1}{2}}(\mathbf{A})\big).
+\]
+\end{proof}
+
+\begin{lemma}[Производная обратной матрицы]\label{lemma:invert_derivative}
+Пусть задана обратимая квадратная матрица~$\mathbf{D} \in \mathbb{R}^{n \times n}$, тогда производная операции обращения равно:
+\[
+    \frac{\partial \mathbf{D}^{-1}}{\partial \mathbf{D}} 
+    = -\mathbf{D}^{-1} \otimes \mathbf{D}^{-\top}.
+\]
+\end{lemma}
+\begin{proof}
+По определению из~\cite{petersen2012matrix} и~\cite{magnus1988matrix}:
+\[
+    d(\mathbf{D}^{-1}) = -\mathbf{D}^{-1} \,(d\mathbf{D})\, \mathbf{D}^{-1}.
+\] 
+Используя оператор~$\mathrm{vec}_r$ и свойство~\ref{prop:vec_r_matrix_product}, получаем 
+\[
+    \mathrm{vec}_r(-\mathbf{D}^{-1} \,(d\mathbf{D})\, \mathbf{D}^{-1}) = (-\mathbf{D}^{-1} \otimes \mathbf{D}^{-\top}) \mathrm{vec}_r(d\mathbf{D}),
+\]
+причем, используя лемму~\ref{lemma:identification_theorem_vec_r} получаем:
+\[
+    \mathrm{vec}_r(d\mathbf{D}^{-1}) = \frac{\partial \mathrm{vec}_r \mathbf{D}^{-1}}{\partial\mathrm{vec}_r\mathbf{D}} \mathrm{vec}_r(d\mathbf{D}).
+\]
+Следовательно получаем выражение, которое заканчивает доказательство леммы~ $\frac{\partial \mathrm{vec}_r \mathbf{D}^{-1}}{\partial\mathrm{vec}_r\mathbf{D}} = (-\mathbf{D}^{-1} \otimes \mathbf{D}^{-\top})$
+\end{proof}
+
+\begin{lemma}[Производная $\mathrm{diag}(\cdot)$]\label{lemma:diag_derivative}
+Для вектора~$\mathbf{v} \in \mathbb{R}^{L \times 1}$, производная оператора диагонализации является:
+\[
+    \frac{\partial \mathrm{diag}(\mathbf{v})}{\partial \mathbf{v}}
+    = \big(\mathbf{e}_1 \otimes \mathbf{e}_1 \quad \dots \quad \mathbf{e}_L \otimes \mathbf{e}_L\big),
+\]
+где вектора~$\mathbf{e}_i$ являются базисными в пространстве~$\mathbb{R}^L$.
+\end{lemma}
+
+\begin{proof}
+По определению~\ref{def:vec_elem_ops} оператор~$\mathrm{diag}(\mathbf{v})$ отображает элемент~$v_i,$ в позицию~$(i,i)$ результирующей диагональной матрицы.
+Тогда производная оператора~$\mathrm{diag}(\mathbf{v})$ является матрицей~$\mathbf{E}_{ii} = \mathbf{e}_i \mathbf{e}_i^\top,$ в которой~$1$ в позиции~$(i,i)$~и $0$ иначе. Причем используя свойство~\ref{prop:vec_r_matrix_product}, применяя оператор построчной векторизации, получаем:
+\[
+    \mathrm{vec}_r(\mathbf{E}_{i,i}) = \mathbf{e}_i \otimes \mathbf{e}_i.
+\]
+
+Итого, применяя для всех~$i=1,\dots,L$, матрица Якоби принимает вид:
+\[
+    \frac{\partial \mathrm{diag}(\mathbf{v})}{\partial \mathbf{v}}
+    = \big(\mathbf{e}_1 \otimes \mathbf{e}_1 \quad \dots \quad \mathbf{e}_L \otimes \mathbf{e}_L\big).
+\]
+\end{proof}
+
+\begin{lemma}[Производная транспонированной матрицы]\label{lemma:transposed_matrix_derivative}
+    Пусть задана матрица~$\mathbf{A} \in \mathbb{R}^{m \times n}$, тогда справедливо следующее равенство:
+    \begin{equation}
+        \frac{\partial \mathbf{A}^\top}{\partial \mathbf{A}} = \mathbf{K}_{n, m},
+    \end{equation}
+    где матрица~$\mathbf{K}_{n, m}$ является коммутационной матрицей (англ. commutation matrix) описанной в определении~\ref{def:commutation_matrix}.
+\end{lemma} 
+\begin{proof}
+    Объединяя аналогичное свойство из~\cite{magnus1988matrix} для постолбцовой векторизации с правилом соединения столбцов и строк~\ref{prop:vec_relation} и \ref{def:commutation_matrix}, получаем утверждение теоремы.
+\end{proof}
+
+
+\begin{lemma}[Производная произведения Кронекера матричнозначных функций]\label{lemma:matrix_funcs_kronecker_product_derivative}
+    Пусть заданы матричнозначные функции~$\mathbf{A}(\mathbf{X}) \in \mathbb{R}^{n \times q}$ и~$\mathbf{B}(\mathbf{X}) \in \mathbb{R}^{p \times r}$ матрицы $\mathbf{X}$, тогда
+    \begin{equation}
+        \frac{\partial\mathbf{A}(\mathbf{X}) \otimes \mathbf{B}(\mathbf{X})}{\partial \mathbf{X}} = (\mathbf{I}_n \otimes \mathbf{K}_{p,q} \otimes \mathbf{I}_r) \left( \left( \mathrm{vec}_r \mathbf{A} \otimes \mathbf{I}_{pr} \right) \frac{\partial\mathbf{B}}{\partial \mathbf{X}} + \left( \mathbf{I}_{nq} \otimes \mathrm{vec}_r \mathbf{B} \right) \frac{\partial\mathbf{A}}{\partial \mathbf{X}}\right).
+    \end{equation}
+\end{lemma}
+\begin{proof}
+    Применить цепное правило для вычисления производной сложной функции, а затем объединим его со свойством~\ref{prop:kronecker_product_derivative}
+    \begin{align}
+        \frac{\partial\mathbf{A}(\mathbf{X}) \otimes \mathbf{B}(\mathbf{X})}{\partial \mathbf{X}} &= \frac{\partial \mathbf{A}\otimes\mathbf{B}}{\partial\mathbf{B}}\frac{\partial\mathbf{B}}{\partial \mathbf{X}} + \frac{\partial \mathbf{A}\otimes\mathbf{B}}{\partial\mathbf{A}}\frac{\partial\mathbf{A}}{\partial \mathbf{X}} = \\
+        &= (\mathbf{I}_n \otimes \mathbf{K}_{p,q} \otimes \mathbf{I}_r) \left( \mathrm{vec}_r \mathbf{A} \otimes \mathbf{I}_{pr} \right) \frac{\partial\mathbf{B}}{\partial \mathbf{X}} +\\
+        &\quad+(\mathbf{I}_n \otimes \mathbf{K}_{p,q} \otimes \mathbf{I}_r) \left( \mathbf{I}_{nq} \otimes \mathrm{vec}_r \mathbf{B} \right) \frac{\partial\mathbf{A}}{\partial \mathbf{X}} = \\
+        &= (\mathbf{I}_n \otimes \mathbf{K}_{p,q} \otimes \mathbf{I}_r) \left( \left( \mathrm{vec}_r \mathbf{A} \otimes \mathbf{I}_{pr} \right) \frac{\partial\mathbf{B}}{\partial \mathbf{X}} + \left( \mathbf{I}_{nq} \otimes \mathrm{vec}_r \mathbf{B} \right) \frac{\partial\mathbf{A}}{\partial \mathbf{X}}\right).
+    \end{align}
+\end{proof}
+
+\begin{lemma}\label{lemma:attention_phi_from_functional_hessian}
+Consider single-head scaled dot-product attention
+\[
+    \mathbf{F}(\mathbf{X}) = \mathbf{A}(\mathbf{T}) \, \mathbf{X}\mathbf{W}_V,
+    \qquad
+    \mathbf{T} \;=\; \frac{1}{\sqrt{d_K}}\, \mathbf{X}\mathbf{W}_Q \mathbf{W}_K^\top \mathbf{X}^\top,
+\]
+with $\mathbf{X} \in \mathbb{R}^{L \times d_V}$, $\mathbf{W}_Q,\mathbf{W}_K \in \mathbb{R}^{d_V \times d_K}$, $\mathbf{W}_V \in \mathbb{R}^{d_V \times d_V}$. The attention map $\mathbf{A}(\cdot)$ applies row-wise softmax. We use row-wise vectorization $\mathrm{vec}_r(\cdot)$ and the commutation matrices $\mathbf{K}_{m,n}$ from Definition~\ref{def:commutation_matrix}.
+
+Define the generalized functional Hessian blocks (following \cite{ormaniec2024attentionhessian} in our $\mathrm{vec}_r$ convention) by
+\[
+    \mathbf{H}_{\mathrm{f}}(\mathbf{W}_i,\mathbf{W}_j)
+    = \big( \tfrac{\partial \ell}{\partial \mathbf{F}} \otimes \mathbf{I}_{p_i q_i} \big) \; \frac{\partial^2 \mathbf{F}}{\partial \mathbf{W}_i \partial \mathbf{W}_j},
+\]
+where $p_i q_i$ is the size of $\mathbf{W}_i$ (e.g.\ $p_Q q_Q = d_V d_K$), and $\tfrac{\partial \ell}{\partial \mathbf{F}} \in \mathbb{R}^{L \times d_V}$ is the loss gradient.
+
+Specializing to the squared-error loss $\ell(\mathbf{F})=\tfrac{1}{2}\|\mathbf{F}-\mathbf{Target}\|_F^2$, one has $\tfrac{\partial \ell}{\partial \mathbf{F}}=\mathbf{F}-\mathbf{Target}$ and the row-wise contraction matrix
+\[
+    \mathbf{R}_m := \mathrm{vec}_r\big(\mathbf{F}(\mathbf{X}) - \mathbf{Target}\big)^\top \otimes \mathbf{I}_m \;\in\; \mathbb{R}^{m \times (m \cdot L d_V)}.
+\]
+Then for $i \in \{V,Q,K\}$ with $n_i:=p_i q_i$, the functional Hessian blocks can be factorized as
+\[
+    \mathbf{H}_{\mathrm{f}}(\mathbf{W}_i,\mathbf{W}_j) \;=\; \mathbf{R}_{n_i}\; \boldsymbol{\Phi}_{ij},
+    \qquad
+    \boldsymbol{\Phi}_{ij} := \frac{\partial^2 \mathbf{F}}{\partial \mathbf{W}_i \partial \mathbf{W}_j}
+    \;\in\; \mathbb{R}^{(L d_V \cdot n_i) \times n_j}.
+\]
+In particular, the model-curvature blocks $\boldsymbol{\Phi}_{ij}$ (to be used in the Transformer Hessian) are obtained from the corresponding expressions in \cite[Thm.~3.2]{ormaniec2024attentionhessian} by removing the left contraction $\mathbf{R}_{n_i}$.
+
+We now list the explicit blocks needed in our derivation. Define the fixed reshaping operator
+\[
+    \mathbf{S} := \big(\mathbf{I}_{d_V} \otimes \mathbf{K}_{d_V, d_V}\big)\, \big(\mathrm{vec}_r \mathbf{I}_{d_V} \otimes \mathbf{I}_{d_V}\big)
+    \;\in\; \mathbb{R}^{d_V^2 \times d_V},
+\]
+and the softmax-derivative operators
+\[
+    \mathbf{Z}_1 := (\mathbf{I}_L \otimes \mathbf{X}^\top)(\partial\mathbf{A}/\partial\mathbf{T})(\mathbf{X} \otimes \mathbf{X}) \in \mathbb{R}^{Ld_V \times d_V^2},
+    \mathbf{Z}_2 := \big(\mathbf{I}_L \otimes \mathbf{X}^\top \otimes \mathbf{X}^\top \otimes \mathbf{X}^\top\big)\,
+    \frac{\partial^2 \mathbf{A}}{\partial \mathbf{T}^2}\,
+    (\mathbf{X} \otimes \mathbf{X})
+    \;\in\; \mathbb{R}^{L d_V^3 \times d_V^2},
+\]
+where $\tfrac{\partial^2 \mathbf{A}}{\partial \mathbf{T}^2}$ denotes the (row-wise) softmax second derivative tensor arranged compatibly with $\mathrm{vec}_r$ and Kronecker products as above, and $\mathbf{Z}_1$ is the (first-order) softmax derivative linear operator used in \cite{ormaniec2024attentionhessian} (we keep the exact form as defined there; its size ensures dimensional consistency below).
+
+Then the pure attention second derivatives (model curvature) are:
+\[
+    \boldsymbol{\Phi}_{VV} \;=\; \mathbf{0}_{(L d_V \cdot d_V^2) \times d_V^2},
+\]
+\[
+    \boldsymbol{\Phi}_{QQ} \;=\; \frac{2}{L d_V d_K}\;
+    \big(\mathbf{I}_L \otimes \mathbf{W}_V^\top \otimes \mathbf{I}_{d_V} \otimes \mathbf{W}_K^\top\big)\;
+    \mathbf{Z}_2\;
+    \big(\mathbf{I}_{d_V} \otimes \mathbf{W}_K\big)
+    \;\in\; \mathbb{R}^{(L d_V \cdot d_V d_K) \times d_V d_K},
+\]
+\[
+    \boldsymbol{\Phi}_{VQ} \;=\; \frac{2}{L d_V \sqrt{d_K}}\;
+    \big(\mathbf{I}_L \otimes \mathbf{S}\big)\;
+    \mathbf{Z}_1\;
+    \big(\mathbf{I}_{d_V} \otimes \mathbf{W}_K\big)
+    \;\in\; \mathbb{R}^{(L d_V \cdot d_V^2) \times d_V d_K},
+\]
+\begin{align}
+    \boldsymbol{\Phi}_{QK}
+    &\;=\; \frac{2}{L d_V d_K}\;
+    \big(\mathbf{I}_L \otimes \mathbf{W}_V^\top \otimes \mathbf{I}_{d_V} \otimes \mathbf{W}_K^\top\big)\;
+    \mathbf{Z}_2\;
+    \big(\mathbf{W}_Q \otimes \mathbf{I}_{d_V}\big)\, \mathbf{K}_{d_K, d_V} \\
+    &\qquad +\; \frac{2}{L d_V \sqrt{d_K}}\;
+    \big(\mathbf{I}_{d_V} \otimes \mathbf{W}_V^\top \otimes \mathbf{I}_{d_V}\big)\;
+    \big(\mathbf{Z}_1 \otimes \mathbf{I}_{d_V}\big)\; \mathbf{S} \otimes \mathbf{I}_{d_K} \;\in\; \mathbb{R}^{(L d_V \cdot d_V d_K) \times d_V d_K}.
+\end{align}
+
+Moreover, by symmetry of second derivatives, $\boldsymbol{\Phi}_{KQ}$ equals $\boldsymbol{\Phi}_{QK}$ with $\mathbf{W}_Q,\mathbf{W}_K$ swapped and commutation adjusted by $\mathbf{K}_{\cdot,\cdot}$ (Definition~\ref{def:commutation_matrix}). Analogous symmetric relations give $\boldsymbol{\Phi}_{QV}$ and $\boldsymbol{\Phi}_{KV}$ from $\boldsymbol{\Phi}_{VQ}$.
+\end{lemma}
+\begin{proof}  
+ By definition of the generalized functional Hessian in \cite{ormaniec2024attentionhessian},
+\[
+    \mathbf{H}_{\mathrm{f}}(\mathbf{W}_i,\mathbf{W}_j)
+    = \big( \tfrac{\partial \ell}{\partial \mathbf{F}} \otimes \mathbf{I}_{p_i q_i} \big)\,
+    \frac{\partial^2 \mathbf{F}}{\partial \mathbf{W}_i \partial \mathbf{W}_j}.
+\]
+For squared-error loss, $\tfrac{\partial \ell}{\partial \mathbf{F}}$ yields the contraction $\mathbf{R}_{p_i q_i}$ defined above; hence
+$\mathbf{H}_{\mathrm{f}}(\mathbf{W}_i,\mathbf{W}_j) = \mathbf{R}_{n_i} \boldsymbol{\Phi}_{ij}$
+with $\boldsymbol{\Phi}_{ij} = \tfrac{\partial^2 \mathbf{F}}{\partial \mathbf{W}_i \partial \mathbf{W}_j}$.
+The explicit forms for $\mathbf{H}_{\mathrm{f}}$ in \cite[Thm.~3.2]{ormaniec2024attentionhessian} then imply the above formulas for $\boldsymbol{\Phi}_{ij}$ by simply removing the leading contraction $\mathbf{R}_{n_i}$.
+\end{proof}
+
+
+\begin{lemma}\label{lemma:Y_S_norm_bounds}
+Let $\mathbf{X}\in\mathbb{R}^{L\times d_V}$, $\mathbf{Y}=\mathrm{LayerNorm}(\mathbf{F}(\mathbf{X})+\mathbf{X})\in\mathbb{R}^{L\times d_V}$ and
+\[
+    \mathrm{FFN}(\mathbf{Y})=\sigma(\mathbf{Y}\mathbf{W}_1)\mathbf{W}_2,\qquad\mathbf{W}_1\in\mathbb{R}^{d_V\times d_{ff}},\quad\mathbf{W}_2\in\mathbb{R}^{d_{ff}\times d_V},
+\]
+and set $\mathbf{S}=\mathbf{Y}+\mathrm{FFN}(\mathbf{Y})\in\mathbb{R}^{L\times d_V}$.
+Then the following spectral-norm bounds hold:
+\begin{align}
+    \|\mathbf{Y}\|_2 &\;\le\; \|\mathbf{Y}\|_F \;=\; \sqrt{L\,d_V}, 
+    \label{eq:Y_norm_bound}
+    \\
+    \|\mathrm{FFN}(\mathbf{Y})\|_2 &\;\le\; \sqrt{\min(L,d_{ff})}\; \|\mathbf{Y}\|_2\,\|\mathbf{W}_1\|_2\,\|\mathbf{W}_2\|_2,
+    \label{eq:FFN_norm_bound}
+    \\
+    \|\mathbf{S}\|_2 \;\le\; \|\mathbf{Y}\|_2 + \|\mathrm{FFN}(\mathbf{Y})\|_2 
+    &\;\le\; \sqrt{L\,d_V}\;\Big(1+\sqrt{\min(L,d_{ff})}\,\|\mathbf{W}_1\|_2\,\|\mathbf{W}_2\|_2\Big).
+    \label{eq:S_norm_bound}
+\end{align}
+\end{lemma}
+\begin{proof}
+We proceed using only the properties stated in the preliminaries.
+
+1) Bound for $\|\mathbf{Y}\|_2$.
+By the LayerNorm definition (Theorem~\ref{thm:layernorm_derivative}), write
+\[\mathbf{Y} \;=\; \mathbf{P}(\mathbf{S}_0)\,\mathbf{M}(\mathbf{S}_0), \qquad \mathbf{S}_0:=\mathbf{F}(\mathbf{X})+\mathbf{X},\]
+where $\mathbf{M}(\mathbf{S}_0)=\mathbf{S}_0-\tfrac{1}{d_V}\mathbf{S}_0\mathbf{1}_{d_V}\mathbf{1}_{d_V}^\top$ and 
+$\mathbf{P}=\mathrm{diag}^{-1}(\sigma)$ with $\sigma=\tfrac{1}{\sqrt{d_V}}(\mathbf{M}^{\circ 2}\mathbf{1})^{\circ 1/2}$ applied row-wise.
+For any row $i$, denote $\mathbf{m}_i$ the $i$-th row of $\mathbf{M}$ and $\sigma_i=\tfrac{1}{\sqrt{d_V}}\|\mathbf{m}_i\|_2$. Then the $i$-th row of $\mathbf{Y}$ is $\mathbf{y}_i=\mathbf{m}_i/\sigma_i$, so
+\[\|\mathbf{y}_i\|_2^2 \;=\; \frac{\|\mathbf{m}_i\|_2^2}{\sigma_i^2}\;=\; \frac{\|\mathbf{m}_i\|_2^2}{(1/d_V)\,\|\mathbf{m}_i\|_2^2}\;=\; d_V.\]
+Hence every row of $\mathbf{Y}$ has Euclidean norm $\sqrt{d_V}$. Therefore,
+\[\|\mathbf{Y}\|_F^2 = \sum_{i=1}^L \|\mathbf{y}_i\|_2^2 = L\,d_V,\qquad\text{so}\qquad\|\mathbf{Y}\|_F = \sqrt{L\,d_V}.\]
+By the norm inequality $\|\mathbf{A}\|_2 \le \|\mathbf{A}\|_F$ (Property~\ref{prop:matrix_norm_inequalities}), we obtain \eqref{eq:Y_norm_bound}.
+
+2) Bound for $\|\mathrm{FFN}(\mathbf{Y})\|_2$.
+We estimate step-by-step using only matrix norm properties.
+
+First,
+\[\|\mathrm{FFN}(\mathbf{Y})\|_2= \|\text{ReLU}(\mathbf{Y}\mathbf{W}_1)\mathbf{W}_2\|_2\;\le\; \|\text{ReLU}(\mathbf{Y}\mathbf{W}_1)\|_2 \,\|\mathbf{W}_2\|_2\qquad\text{(Property~\ref{prop:matrix_product_norm})}.\]
+Next, use $\|\cdot\|_2 \le \|\cdot\|_F$ (Property~\ref{prop:matrix_norm_inequalities}) to get
+\[\|\text{ReLU}(\mathbf{Y}\mathbf{W}_1)\|_2 \le \|\text{ReLU}(\mathbf{Y}\mathbf{W}_1)\|_F.\]
+By Definition~\ref{def:matrix_norms}, $\|\cdot\|_F^2$ is the sum of squares. Entrywise $\sigma(\cdot)$ satisfies $0\le \sigma(a)\le |a|$, hence $\sigma(a)^2 \le a^2$ for each entry $a \in \mathbb{R}$. Therefore,
+\[\|\sigma(\mathbf{Y}\mathbf{W}_1)\|_F \le \|\mathbf{Y}\mathbf{W}_1\|_F.\]
+Using the inequality $\|\cdot\|_F \le \sqrt{d}\,\|\cdot\|_2$ with $d=\operatorname{rank}(\cdot)$ from Property~\ref{prop:matrix_norm_inequalities} (row $X=\|\cdot\|_F$, column $Y=\|\cdot\|_2$), we obtain
+\[\|\mathbf{Y}\mathbf{W}_1\|_F \le \sqrt{\operatorname{rank}(\mathbf{Y}\mathbf{W}_1)}\,\|\mathbf{Y}\mathbf{W}_1\|_2.\]
+Since $\mathbf{Y}\mathbf{W}_1 \in \mathbb{R}^{L\times d_{ff}}$, $\operatorname{rank}(\mathbf{Y}\mathbf{W}_1)\le \min(L,d_{ff})$. Thus
+\[\|\mathbf{Y}\mathbf{W}_1\|_F \le \sqrt{\min(L,d_{ff})}\,\|\mathbf{Y}\mathbf{W}_1\|_2\le \sqrt{\min(L,d_{ff})}\,\|\mathbf{Y}\|_2 \,\|\mathbf{W}_1\|_2\qquad\text{(Property~\ref{prop:matrix_product_norm})}.\]
+Collecting,
+\[\|\mathrm{FFN}(\mathbf{Y})\|_2\le \|\sigma(\mathbf{Y}\mathbf{W}_1)\|_F \,\|\mathbf{W}_2\|_2\le \sqrt{\min(L,d_{ff})}\;\|\mathbf{Y}\|_2\,\|\mathbf{W}_1\|_2\,\|\mathbf{W}_2\|_2,\]
+which is \eqref{eq:FFN_norm_bound}.
+
+3) Bound for $\|\mathbf{S}\|_2$.
+By the sum-norm inequality (Property~\ref{prop:matrix_sum_norm}),
+\[\|\mathbf{S}\|_2=\|\mathbf{Y}+\mathrm{FFN}(\mathbf{Y})\|_2\le \|\mathbf{Y}\|_2 + \|\mathrm{FFN}(\mathbf{Y})\|_2.\]
+Substituting \eqref{eq:Y_norm_bound} and \eqref{eq:FFN_norm_bound} yields \eqref{eq:S_norm_bound}.
+\end{proof}
+
+\begin{lemma}\label{lemma:layernorm_deriv_hessian_norm}
+
+Let $\mathbf{X} \in \mathbb{R}^{m \times n}$. LayerNorm derivative $\mathbf{J}_{\mathrm{LN}}(\mathbf{X}) = \frac{\partial \text{LayerNorm}(\mathbf{X})}{\partial \mathbf{X}}$ is calculated according to Theorem \ref{thm:layernorm_derivative} and its Hessian $\mathbf{H}_{\mathrm{LN}}(\mathbf{X}) = \frac{\partial^2 \text{LayerNorm}(\mathbf{X})}{\partial \mathbf{X}^2}$ is calculated as in Theorem \ref{thm:layernorm_second_derivative}. Then, the following estimation holds:
+
+\begin{align}
+\big\|\mathbf{J}_{\mathrm{LN}}(\mathbf{X})\big\|_2
+&\le \frac{1}{\sigma_{\min}} \;+\; \frac{\|\mathbf{X}\|_2^2}{\sqrt{n}\,\sigma_{\min}^3}, \label{eq:ln_jac_norm_bound}\\[4pt]
+\big\|\mathbf{H}_{\mathrm{LN}}(\mathbf{X})\big\|_2
+&\le \frac{\|\mathbf{X}\|_2}{\sigma_{\min}^3}\Big(1+\sqrt{\tfrac{m}{n}}\Big)
+\;+\; \frac{\|\mathbf{X}\|_2^2}{\sqrt{n}\,\sigma_{\min}^3}
+\;+\; \frac{3\,\|\mathbf{X}\|_2^3}{n\,\sigma_{\min}^5}.
+\label{eq:ln_hess_norm_bound}
+\end{align}
+
+where $\sigma_{\min}$ denotes $\min \limits_i \|\mathbf{M}_i \|_2$, where $\mathbf{M}(\mathbf{X}) = \mathbf{X}\,(\mathbf{I}_n - \tfrac{1}{n}\mathbf{1}_n\mathbf{1}_n^\top)$
+    
+\end{lemma}
+
+\begin{proof}
+We rely only on the properties established in the preliminaries and on Theorems~\ref{thm:layernorm_derivative}--\ref{thm:layernorm_second_derivative}.
+
+1) LayerNorm Jacobian structure and bound.
+By Theorem~\ref{thm:layernorm_derivative} (with $L\!\to\! m$, $d_V\!\to\! n$),
+\[\mathbf{J}_{\mathrm{LN}}(\mathbf{X})= (\mathbf{P}\otimes \mathbf{I}_n)\,\mathbf{G}+ (\mathbf{I}_m\otimes \mathbf{M}^\top)\,\mathbf{H},\]
+where $\mathbf{G}=\mathbf{I}_{mn}-\tfrac{1}{n}(\mathbf{I}_m\otimes \mathbf{1}_{n\times n})$,
+$\mathbf{H}=\tfrac{\partial \mathbf{P}}{\partial \mathbf{X}}$, and $\mathbf{P}=\mathrm{diag}^{-1}(\boldsymbol{\sigma})$.
+Using Properties~\ref{prop:kronecker_product_norm}, \ref{prop:matrix_product_norm}, \ref{prop:matrix_sum_norm},
+\[\|\mathbf{J}_{\mathrm{LN}}(\mathbf{X})\|_2\le \|\mathbf{P}\otimes \mathbf{I}_n\|_2\,\|\mathbf{G}\|_2 + \|\mathbf{I}_m\otimes \mathbf{M}^\top\|_2\,\|\mathbf{H}\|_2= \|\mathbf{P}\|_2\,\|\mathbf{G}\|_2 + \|\mathbf{M}\|_2\,\|\mathbf{H}\|_2.\]
+We now bound each factor:
+
+- $\|\mathbf{G}\|_2\le 1$ since $\tfrac{1}{n}\mathbf{1}_{n\times n}$ is a projection, hence $\|\mathbf{I}_n-\tfrac{1}{n}\mathbf{1}_{n\times n}\|_2\le 1$ and Kronecker preserves the spectral norm bound (Properties~\ref{prop:matrix_product_norm}, \ref{prop:kronecker_product_norm}, Proposition~\ref{lemma:1_spectral_norm}).
+
+- $\|\mathbf{P}\|_2 = \|\mathbf{D}^{-1}\|_2 = 1/\sigma_{\min}$, where $\mathbf{D}=\mathrm{diag}(\boldsymbol{\sigma})$.
+
+- $\|\mathbf{M}\|_2 \le \|\mathbf{X}\|_2$, because $\mathbf{M}(\mathbf{X}) = \mathbf{X}\,(\mathbf{I}_n - \tfrac{1}{n}\mathbf{1}_n\mathbf{1}_n^\top)$ and the right factor is a projector with norm $\le 1$ (Property~\ref{prop:matrix_product_norm}).
+
+- For $\|\mathbf{H}\|_2=\big\|\tfrac{\partial \mathbf{P}}{\partial \mathbf{X}}\big\|_2$, Theorem~\ref{thm:layernorm_derivative} plus Propositions~\ref{lemma:invert_derivative}, \ref{lemma:diag_derivative}, \ref{lemma:hadamard_square_derivative}, \ref{lemma:hadamard_root_derivative} and Properties~\ref{prop:matrix_product_norm}, \ref{prop:kronecker_product_norm} give (see the same chain as in Theorem~\ref{thm:layernorm_derivative}):
+\[
+\Big\|\frac{\partial \mathbf{P}}{\partial \mathbf{X}}\Big\|_2
+\le \frac{1}{\sqrt{n}}\;\|\mathbf{D}^{-1}\otimes \mathbf{D}^{-\top}\|_2\,
+\Big\|\mathrm{diag}^{-1}\!\big(\mathrm{vec}_r^{\circ 1/2}(\mathbf{M}^{\circ 2}\mathbf{1}_n)\big)\Big\|_2\,
+\|\mathbf{I}_m\otimes \mathbf{1}_n^\top\|_2\,\|\mathrm{diag}(\mathrm{vec}_r(\mathbf{M}))\|_2\,
+\Big\|\frac{\partial \mathbf{M}}{\partial \mathbf{X}}\Big\|_2.
+\]
+Using $\|\mathbf{D}^{-1}\otimes \mathbf{D}^{-\top}\|_2=\|\mathbf{D}^{-1}\|_2^2=\frac{1}{\sigma_{\min}^{2}}$, 
+$\big\|\mathrm{diag}^{-1}(\cdot)\big\|_2 = \frac{1}{\min_i\sqrt{\sum_{v} M_{i,v}^2}} = \frac{1}{\sqrt{n}\,\sigma_{\min}}$,\newline
+$\|\mathbf{I}_m\otimes \mathbf{1}^\top\|_2=\sqrt{n}$,
+$\|\mathrm{diag}(\mathrm{vec}_r(\mathbf{M}))\|_2=\|\mathbf{M}\|_{\max}\le \|\mathbf{M}\|_2$ (Property~\ref{prop:matrix_norm_inequalities}),
+and $\big\|\tfrac{\partial \mathbf{M}}{\partial \mathbf{X}}\big\|_2\le 1$ (projection), we obtain
+\[\|\mathbf{H}\|_2 \;\le\; \frac{1}{\sqrt{n}\sigma_{\min}^{2}}\cdot \frac{1}{\sqrt{n}\,\sigma_{\min}}\cdot \sqrt{n}\cdot \|\mathbf{M}\|_2\cdot 1\;\le\; \frac{\|\mathbf{X}\|_2}{\sqrt{n}\,\sigma_{\min}^3}.\]
+Collecting the bounds gives \eqref{eq:ln_jac_norm_bound}:
+\[
+\|\mathbf{J}_{\mathrm{LN}}(\mathbf{X})\|_2
+\le \frac{1}{\sigma_{\min}}\cdot 1 + \|\mathbf{X}\|_2\cdot \frac{\|\mathbf{X}\|_2}{\sqrt{n}\,\sigma_{\min}^3}
+= \frac{1}{\sigma_{\min}} + \frac{\|\mathbf{X}\|_2^2}{\sqrt{n}\,\sigma_{\min}^3}.
+\]
+
+2) LayerNorm Hessian structure and bound.
+From Theorem~\ref{thm:layernorm_second_derivative} (with $m,n$), using $\tfrac{\partial^2 \mathbf{M}}{\partial \mathbf{X}^2}=0$,
+\[\mathbf{H}_{\mathrm{LN}}(\mathbf{X})=(\mathbf{I}_{mn}\otimes \mathbf{G}^\top)\,\frac{\partial (\mathbf{P}\otimes \mathbf{I}_n)}{\partial \mathbf{X}}+ \big( (\mathbf{I}_m\otimes \mathbf{M}^\top)\otimes \mathbf{I}_{mn}\big)\,\frac{\partial^2 \mathbf{P}}{\partial \mathbf{X}^2}+ (\mathbf{I}_{mn}\otimes \mathbf{H}^\top)\,\frac{\partial (\mathbf{I}_m\otimes \mathbf{M}^\top)}{\partial \mathbf{X}}.\]
+We bound the three terms separately with Properties~\ref{prop:matrix_product_norm}, \ref{prop:kronecker_product_norm}.
+
+(i) First term. By Proposition~\ref{prop:kronecker_product_derivative},
+\[\frac{\partial (\mathbf{P}\otimes \mathbf{I}_n)}{\partial \mathbf{X}}=(\mathbf{I}_m \otimes \mathbf{K}_{n,m} \otimes \mathbf{I}_n)\,(\mathbf{I}_{m^2} \otimes \mathrm{vec}_r(\mathbf{I}_n))\,\frac{\partial \mathbf{P}}{\partial \mathbf{X}},\]
+therefore
+\[\Big\|(\mathbf{I}_{mn}\otimes \mathbf{G}^\top)\,\frac{\partial (\mathbf{P}\otimes \mathbf{I}_n)}{\partial \mathbf{X}}\Big\|_2\le \|\mathbf{G}\|_2 \,\|\mathbf{I}_{m^2} \otimes \mathrm{vec}_r(\mathbf{I}_n)\|_2 \,\Big\|\frac{\partial \mathbf{P}}{\partial \mathbf{X}}\Big\|_2= 1 \cdot \sqrt{n} \cdot \frac{\|\mathbf{X}\|_2}{\sqrt{n}\,\sigma_{\min}^3}= \frac{\|\mathbf{X}\|_2}{\sigma_{\min}^3}.\]
+
+(ii) Second term. Using $\|\mathbf{I}_m\otimes \mathbf{M}^\top\|_2=\|\mathbf{M}\|_2\le \|\mathbf{X}\|_2$ and the bound below for $\big\|\tfrac{\partial^2 \mathbf{P}}{\partial \mathbf{X}^2}\big\|_2$,
+\[\Big\|\big( (\mathbf{I}_m\otimes \mathbf{M}^\top)\otimes \mathbf{I}_{mn}\big)\,\frac{\partial^2 \mathbf{P}}{\partial \mathbf{X}^2}\Big\|_2\le \|\mathbf{X}\|_2 \,\Big\|\frac{\partial^2 \mathbf{P}}{\partial \mathbf{X}^2}\Big\|_2.\]
+We now bound $\big\|\tfrac{\partial^2 \mathbf{P}}{\partial \mathbf{X}^2}\big\|_2$ following the same chain as in the proof of Theorem~\ref{thm:layernorm_second_derivative}:
+write $\tfrac{\partial \mathbf{P}}{\partial \mathbf{X}}=\tfrac{1}{\sqrt{n}}\mathbf{A}_1(\mathbf{X})\,\mathbf{E}\,\mathbf{B}_1(\mathbf{X})$ and differentiate using Property~\ref{prop:matrix_product_norm}, while bounding the factors with Propositions~\ref{lemma:invert_derivative}, \ref{lemma:diag_derivative}, \ref{lemma:hadamard_square_derivative}, \ref{lemma:hadamard_root_derivative} and Properties~\ref{prop:matrix_product_norm}, \ref{prop:kronecker_product_norm}, \ref{prop:matrix_norm_inequalities}. This yields
+\[\Big\|\frac{\partial^2 \mathbf{P}}{\partial \mathbf{X}^2}\Big\|_2\;\le\;\frac{1}{\sqrt{n}\,\sigma_{\min}^3}\,\|\mathbf{X}\|_2\;+\; \frac{3}{n\,\sigma_{\min}^5}\,\|\mathbf{X}\|_2^2.\]
+Therefore,
+\[\Big\|\big( (\mathbf{I}_m\otimes \mathbf{M}^\top)\otimes \mathbf{I}_{mn}\big)\,\frac{\partial^2 \mathbf{P}}{\partial \mathbf{X}^2}\Big\|_2\le \frac{\|\mathbf{X}\|_2^2}{\sqrt{n}\,\sigma_{\min}^3}+ \frac{3\,\|\mathbf{X}\|_2^3}{n\,\sigma_{\min}^5}.\]
+
+(iii) Third term. By Proposition~\ref{prop:kronecker_product_derivative} and Proposition~\ref{lemma:transposed_matrix_derivative},
+\[\frac{\partial (\mathbf{I}_m\otimes \mathbf{M}^\top)}{\partial \mathbf{X}}=(\mathbf{I}_m \otimes \mathbf{K}_{n,m} \otimes \mathbf{I}_m)\,(\mathrm{vec}_r(\mathbf{I}_m)\otimes \mathbf{I}_{mn})\,\frac{\partial \mathbf{M}}{\partial \mathbf{X}},\]
+so
+\[\Big\|(\mathbf{I}_{mn}\otimes \mathbf{H}^\top)\,\frac{\partial (\mathbf{I}_m\otimes \mathbf{M}^\top)}{\partial \mathbf{X}}\Big\|_2\le \|\mathbf{H}\|_2 \,\|\mathrm{vec}_r(\mathbf{I}_m)\otimes \mathbf{I}_{mn}\|_2 \,\Big\|\frac{\partial \mathbf{M}}{\partial \mathbf{X}}\Big\|_2= \frac{\|\mathbf{X}\|_2}{\sqrt{n}\,\sigma_{\min}^3}\cdot \sqrt{m}\cdot 1= \frac{\sqrt{m}}{\sqrt{n}}\,\frac{\|\mathbf{X}\|_2}{\sigma_{\min}^3}.\]
+
+Summing (i)–(iii) with Property~\ref{prop:matrix_sum_norm} yields \eqref{eq:ln_hess_norm_bound}:
+\[
+\|\mathbf{H}_{\mathrm{LN}}(\mathbf{X})\|_2
+\le \frac{\|\mathbf{X}\|_2}{\sigma_{\min}^3}
++ \Big(\frac{\|\mathbf{X}\|_2^2}{\sqrt{n}\,\sigma_{\min}^3}
++ \frac{3\,\|\mathbf{X}\|_2^3}{n\,\sigma_{\min}^5}\Big)
++ \frac{\sqrt{m}}{\sqrt{n}}\,\frac{\|\mathbf{X}\|_2}{\sigma_{\min}^3}
+=
+\frac{\|\mathbf{X}\|_2}{\sigma_{\min}^3}\Big(1+\sqrt{\tfrac{m}{n}}\Big)
++ \frac{\|\mathbf{X}\|_2^2}{\sqrt{n}\,\sigma_{\min}^3}
++ \frac{3\,\|\mathbf{X}\|_2^3}{n\,\sigma_{\min}^5}.
+\]
+This completes the proof.
+\end{proof}
+
+\begin{lemma}\label{lemma:1_spectral_norm}
+    Let $\mathbf{A} = \mathbf{1}_{L \times L}$ (a matrix full of 1). Then its spectral norm is
+    \begin{equation}
+        \| \mathbf{A}\|_2 = L
+    \end{equation}
+\end{lemma}
+
+\begin{proof}
+    Using basic Linear Algebra properties, we obtain $\mathrm{tr}(\mathbf{A}) = L$ and $\mathrm{rank}(\mathbf{A}) = 1 = \mathrm{dim}(\mathrm{Im}(\mathbf{X}))$. Therefore, using $\mathrm{dim}(\mathrm{Im}(\mathbf{X})) + \mathrm{dim}(\mathrm{Ker}(\mathbf{X})) = L$, we get $\mathrm{dim}(\mathrm{Ker}(\mathbf{X})) = L - 1$. Thus, for $i \in \{2, \dots L\}$ we get $\lambda_i = 0$ and for $\lambda_1 = L$. Then, the only non-null singular value of the matrix $\mathbf{A}$ is $\sqrt{L^2} = L$. Thus, we obtain that $\| \mathbf{A}\|_2 = L$, according to Definition \ref{def:matrix_norms}.
+\end{proof}

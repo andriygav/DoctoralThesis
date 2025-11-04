@@ -1,0 +1,28 @@
+\section{Классические методы оценки достаточного объема выборки}
+
+Методы определения достаточного размера выборки классически формулировались для статистических критериев~\cite{gadaev2019chislennye613061567}:
+
+\begin{enumerate}
+    \item \textbf{Статистические.} Выбирается нулевая гипотеза, и требуется определить минимальное количество данных, необходимое для достижения \textbf{заданной мощности стат.~критерия}.
+    \item \textbf{Эвристические.} Широко используют методы по типу бутстрапирования, кросс-валидации, выбора признаков.
+    \item \textbf{Байесовские.} Параметры модели рассматриваются как случайные величины. Критерии на основе ожидаемых по подвыборкам величин.
+\end{enumerate}
+
+\section{Близость апостериорных распределений на схожих подвыборках}
+
+
+\begin{enumerate}
+    \item Рассматриваем две подвыборки, отличающиеся на один объект: $D_k$ и $D_{k+1}$
+    \item Считаем: $p_k(\mathbf{w}) = p(\mathbf{w} | D_k)$ и $p_{k+1}(\mathbf{w}) = p(\mathbf{w} | D_{k+1})$
+    \item Сравниваем их по дивергенции Кульбака--Лейблера: $D_{\text{KL}}(p_{k} \| p_{k+1})$
+\end{enumerate}
+
+\begin{figure}[h!t]\center
+    \includesvg[width=0.7\textwidth]{figures/chapter-2/posterior_ru}
+    \caption{Пример сдвига распределений при добавления объектов}
+    \label{fig-chapter-2-posterior-ru}
+\end{figure}
+
+\begin{definition}
+    $$ \forall k \geqslant m^*: {KL}(k) = D_{KL}(p_k \| p_{k+1}) = \int p_k(\textbf{w}) \log{\dfrac{p_k(\textbf{w})}{p_{k+1}(\textbf{w})}} d\textbf{w} \leqslant \varepsilon $$
+\end{definition} 

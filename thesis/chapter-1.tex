@@ -1,0 +1,67 @@
+\section{Задача оценки сложности моделей и данных}
+
+Заданы выборка и мера сложности выборки:
+$$\mathfrak{D} = \{D_i\}_{i=1}^{l}, \quad \mu_D(D_i) : \mathfrak{D} \to \mathbb{R}_+.$$
+
+Заданы аппроксимирующие модели и мера сложности моделей:
+$$\mathfrak{F} = \{f\}_{j=1}^{n}, \quad \mu_f(f_i) : \mathfrak{F} \to \mathbb{R}_+.$$
+
+\begin{definition}
+    Назовем модель $f\in\mathfrak{F}$ \textit{обучаемой} на выборке $D\in\mathfrak{D},$ если $\mu_f(f)\leq \mu_D(D)$.
+\end{definition}
+
+\section{Сложность данных, как объем обучающей выборки}
+
+В рамках определения об обучаемости модели на выборке, введем определения \textit{условной сложности выборки}:
+$$\mu_D(D_i|f) : \mathfrak{D} \to \mathbb{R}_+.$$
+
+Частным случаем \textit{условной сложности выборки} является достаточный объем выборки~--- минимальный объем данных из выборки~$D$ необходимый для обучения модели~$f$.
+
+\begin{definition}
+    Размер выборки $m^*$ называется \textit{достаточным} согласно критерия $T$, если $T$ выполняется для всех $k \geqslant m^*$.
+\end{definition}
+
+\section{Оценка изменений функций потерь}
+
+\begin{figure}[h!t]\center
+    \centering
+    \includegraphics[width=0.7\linewidth]{figures/chapter-3/losses_difference.pdf}
+    \caption{Пример изменения функции потерь при добавлении нового объекта}
+    \label{fig-chapter-3-losses-difference}
+\end{figure}
+
+
+Задана выборка:
+\begin{equation}
+    D = \left\{ (\mathbf{x}_i, \mathbf{y}_i) \right\}, \quad i = 1, \ldots, m, \quad \mathbf{x} \in \mathcal{X}, \ \mathbf{y} \in \mathcal{Y}.
+\end{equation}
+
+Условное распределение $p(\mathbf{y}|\mathbf{x})$ аппроксимируется $f_{\boldsymbol{\theta}}: \mathcal{X} \to \mathcal{Y}$, $\boldsymbol{\theta} \in \mathbb{R}^{P}$.
+
+Функция потерь
+\begin{equation}
+    \mathcal{L}_m(\boldsymbol{\theta}) = \dfrac{1}{m} \sum\limits_{i=1}^{m} \ell(f_{\boldsymbol{\theta}}(\mathbf{x}_i), \mathbf{y}_i) \approx \mathbb{E}_{(\mathbf{x}, \mathbf{y}) \sim p(\mathbf{x}, \mathbf{y})} \left[ \ell(f_{\boldsymbol{\theta}}(\mathbf{x}), \mathbf{y}) \right]
+\end{equation}
+
+
+Изменение значения при добавлении одного объекта
+\begin{equation}
+    \mathcal{L}_{k+1}(\boldsymbol{\theta}) - \mathcal{L}_k(\boldsymbol{\theta}) = \dfrac{1}{k+1} \left( \ell(f_{\boldsymbol{\theta}}(\mathbf{x}_{k+1}), \mathbf{y}_{k+1}) - \mathcal{L}_{k}(\boldsymbol{\theta}) \right)
+\end{equation}
+
+
+Абсолютное изменение функции потерь
+\begin{equation}
+    \left| \mathcal{L}_{k+1}(\boldsymbol{\theta}) - \mathcal{L}_k(\boldsymbol{\theta}) \right| \leqslant M_l+ \dfrac{1}{k+1} \left\|\boldsymbol{\theta} - \boldsymbol{\theta}^*\right\|_2^2 \left\| \mathbf{H}_{k+1}(\boldsymbol{\theta}^*) - \dfrac{1}{k} \sum\limits_{i=1}^{k} \mathbf{H}_{i}(\boldsymbol{\theta}^*) \right\|_2
+\end{equation}
+
+\section{Оценки норм матрц Гессе}
+
+\subsection{Полносвязная нейронная сеть}
+
+Below there is a Theorem~\ref{thm:hess}.
+
+\begin{theorem}\label{thm:hess}
+    Consider a $L$-layer fully connected neural network with ReLU activation function and without bias terms, applied to solve a $K$-label classification problem. Suppose the following is satisfied: $\| \mathbf{W}^{(p)} \|_2 \leqslant M_{\mathbf{W}}$ and $\| \mathbf{x}_i \|_2 \leqslant M_{\mathbf{x}}$ for all layers $p = 1, \ldots, L$ in network and for all objects $i = 1, \ldots, m$ in the dataset. Then, for any object $i = 1, \ldots, m$ the following inequality holds:
+    \[ \left\| \mathbf{H}_i(\boldsymbol{\theta}) \right\|_2 \leqslant L \sqrt{2} M_{\mathbf{x}}^2 M_{\mathbf{W}}^{2L} + \sqrt{2} \dfrac{M_{\mathbf{W}}^2 (M_{\mathbf{W}}^{2L} - 1)}{M_{\mathbf{W}}^2 - 1}. \]
+\end{theorem}

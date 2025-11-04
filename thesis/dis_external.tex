@@ -1,0 +1,148 @@
+\begin{property}[Норма матричного произведения]
+\label{prop:matrix_product_norm}
+    Пусть матрицы $\mathbf{A} \in \mathbb{R}^{m \times n}$ и $\mathbf{B} \in \mathbb{R}^{n \times q}$, тогда выполняется следующее неравенство
+    \begin{equation}
+        \| \mathbf{A} \mathbf{B}\|_2 \leq \| \mathbf{A}\|_2 \| \mathbf{B}\|_2
+    \end{equation}
+\end{property}
+
+\begin{property}[Норма матричного произведения Кронекера]\label{prop:kronecker_product_norm}
+    Пусть матрицы $\mathbf{A} \in \mathbb{R}^{m \times n}$ и $\mathbf{B} \in \mathbb{R}^{p \times q}$, тогда выполняется следующее равенство
+    \begin{equation}
+        \| \mathbf{A} \otimes \mathbf{B}\|_2 = \| \mathbf{A}\|_2 \| \mathbf{B}\|_2
+    \end{equation}
+\end{property}
+
+\begin{property}[Норма матричного транспонирования]\label{prop:transposed_matrix_norm}
+    Пусть матрица $\mathbf{A} \in \mathbb{R}^{m \times n}$, тогда
+    \begin{equation}
+        \| \mathbf{A}\|_2 = \| \mathbf{A}^\top\|_2
+    \end{equation}
+\end{property}
+
+\begin{property}[Соотношения между матричными нормами] \label{prop:matrix_norm_inequalities}
+    Пусть матрица $\mathbf{A} \in \mathbb{R}^{m \times n}$, тогда следующие неравенства между матричными нормами являются верными:
+    
+    \begin{center}
+        \begin{tabular}{c|ccccc}
+            \diagbox[height=2em, width=4em]{X}{Y} & $\|\mathbf{A}\|_{\max}$ & $\|\mathbf{A}\|_1$ & $\|\mathbf{A}\|_\infty$ & $\|\mathbf{A}\|_2$ & $\|\mathbf{A}\|_F$ \\
+            \hline
+            $\|\mathbf{A}\|_{\max}$ &  & 1 & 1 & 1 & 1 \\
+            $\|\mathbf{A}\|_1$ & $m$ &  & $m$ & $\sqrt{m}$ & $\sqrt{m}$ \\
+            $\|\mathbf{A}\|_\infty$ & $n$ & $n$ &  & $\sqrt{n}$ & $\sqrt{n}$ \\
+            $\|\mathbf{A}\|_2$ & $\sqrt{mn}$ & $\sqrt{n}$ & $\sqrt{m}$ &  & 1 \\
+            $\|\mathbf{A}\|_F$ & $\sqrt{mn}$ & $\sqrt{n}$ & $\sqrt{m}$ & $\sqrt{d}$ & \\
+        \end{tabular}
+    \end{center}
+    где $d = \operatorname{rank}(\mathbf{A})$.
+    Таблица читается следующим образом: для каждой пары норм $\|\cdot\|_X$ и $\|\cdot\|_Y$,
+    \[
+        \|\mathbf{A}\|_X \leq c \cdot \|\mathbf{A}\|_Y
+    \]
+    где $c$ это константа на пересечения строки $X$ и колонки $Y$.
+\end{property}
+
+\begin{property}[Relation between $\mathrm{vec}$ and $\mathrm{vec}_r$]\label{prop:vec_relation}
+    Let $\mathbf{A} \in \mathbb{R}^{m \times n}$. The row-wise vectorization operator $\mathrm{vec}_r$ and the standard column-wise vectorization operator $\mathrm{vec}$ are related by the transpose:
+    \begin{equation}
+    \mathrm{vec}_r(\mathbf{A}) = \mathrm{vec}(\mathbf{A}^\top)
+    \end{equation}
+\end{property}
+
+\begin{property}[Норма матричной суммы]\label{prop:matrix_sum_norm}
+    Пусть матрица $\mathbf{A}$ и матрица $\mathbf{B}$ является матрицами из пространства матриц $\mathbb{R}^{m \times n}$, тогда
+    \begin{equation}
+        \| \mathbf{A} + \mathbf{B}\|_2 \leq \| \mathbf{A}\|_2 + \| \mathbf{B}\|_2
+    \end{equation}
+\end{property}
+
+\begin{property}[Block-matrix norm inequality]\label{prop:block_matrix_norm}
+    Let $\mathbf{A} \in \mathbb{R}^{m \times n}$ be a block-matrix, each block of which is a matrix $\mathbf{B}_{i,j}$, thus the following holds
+    
+    \begin{equation}
+        \| \mathbf{A} \|_2 \leq \sqrt{m n} \max\limits_{i,j}\| \mathbf{B}_{i,j}\|_2
+    \end{equation}
+    
+    Note, if matrix $\mathbf{A}$ is block-diagonal, then the strict equality holds $\| \mathbf{A} \|_2 = \max\limits_{i}\| \mathbf{B}_{i,i}\|_2$.
+\end{property}
+
+\begin{property}[Element-wise division]\label{prop:elem_wise_division}
+    Let $\mathbf{A} \in \mathbb{R}^{m\times n}$ be a matrix and $\mathbf{b} \in \mathbb{R}^{m \times 1}$ be a vector. Then for matrix $\mathbf{C} \in {\in \mathbb{R}^{m \times n}}$, where $c_{i,j} = \frac{a_{i,j}}{b_i}$ is fulfilled that
+    \begin{equation}
+        \mathbf{C} = \textit{diag}^{-1}(\mathbf{b})\mathbf{A}
+    \end{equation}
+\end{property}
+
+\begin{property}[Matrix-Product derivative]\label{prop:matrix_product_derivative}
+    Let $\mathbf{X}, \mathbf{A}, \mathbf{B}$ be matrices with appropriate dimensions, then
+    \begin{equation}
+        \frac{\partial\mathbf{A}\mathbf{X}\mathbf{B}}{\partial\mathbf{X}} = \mathbf{A} \otimes \mathbf{B}^\top
+    \end{equation}
+    where $\mathbf{A}$ and $\mathbf{B}$ have no dependence on $\mathbf{X}$.
+\end{property}
+
+\begin{property}[Row-wise vectorization of Hadamard product] \label{prop:vec_r_hadamard_product}
+Let $\mathbf{A}, \mathbf{B} \in \mathbb{R}^{m \times n}$. Then
+
+\[
+\mathrm{vec}_r(\mathbf{A} \circ \mathbf{B}) = \textit{diag}(\mathrm{vec}_r(\mathbf{A})) \mathrm{vec}_r(\mathbf{B})
+\]
+
+where $\circ$ denotes the Hadamard (element-wise) product.
+This result follows directly from \cite{magnus1988matrix}, where the similar result was obtained for column-wise vectorization. 
+\end{property}
+
+\begin{property}[Row-wise vectorization of matrix product]\label{prop:vec_r_matrix_product}
+    Let $\mathbf{X}, \mathbf{A}, \mathbf{B}$ be matrices with appropriate dimensions, then
+    \begin{equation}
+        \mathrm{vec}_r(\mathbf{A} \mathbf{X}\mathbf{B}) = (\mathbf{A} \otimes \mathbf{B}^\top) \mathrm{vec}_r(\mathbf{X})
+    \end{equation}
+\end{property}
+
+\begin{property}[Kronecker-Product derivative]\label{prop:kronecker_product_derivative}
+    Let \( \mathbf{X} \in \mathbb{R}^{n \times q} \) and \( \mathbf{Y} \in \mathbb{R}^{p \times r} \). Then
+    \[
+        \frac{\partial (\mathbf{X} \otimes \mathbf{Y})}{\partial \mathbf{X}} = (\mathbf{I}_n \otimes \mathbf{K}_{p,q} \otimes \mathbf{I}_r) \left( \mathbf{I}_{nq} \otimes \mathrm{vec}_r \mathbf{Y} \right),
+    \]
+    and analogously
+    \[
+        \frac{\partial (\mathbf{X} \otimes \mathbf{Y})}{\partial \mathbf{Y}} = (\mathbf{I}_n \otimes \mathbf{K}_{p,q} \otimes \mathbf{I}_r) \left( \mathrm{vec}_r \mathbf{X} \otimes \mathbf{I}_{pr} \right).
+    \]
+\end{property}
+
+\begin{definition}[Commutation Matrix]\label{def:commutation_matrix}
+
+    The commutation matrix $\mathbf{K}_{m,n} \in \mathbb{R}^{mn \times mn}$ is the unique matrix such that for any matrix $\mathbf{A} \in \mathbb{R}^{m \times n}$ the following holds
+    
+    \begin{equation}
+        \mathbf{K}_{m,n} \mathrm{vec}(\mathbf{A}) = \mathrm{vec}(\mathbf{A}^\top)
+    \end{equation}
+    
+    Using Property \ref{prop:vec_relation}, we immediately have the relationship:
+    
+    \begin{equation}
+    \mathrm{vec}_r(\mathbf{A}) = \mathbf{K}_{m,n} \mathrm{vec}(\mathbf{A}) \quad \text{and} \quad \mathrm{vec}(\mathbf{A}) = \mathbf{K}_{n,m} \mathrm{vec}_r(\mathbf{A})
+    \end{equation}
+    
+    since $\mathbf{K}_{n,m}\mathbf{K}_{m,n} = \mathbf{I}_{mn}$.
+\end{definition}
+
+\begin{definition}[Vectorization and Element-wise Operations] \label{def:vec_elem_ops}
+Let $\mathbf{A}$ be a matrix and $\mathbf{v}$ be a vector.
+\begin{itemize}
+    \item $\mathrm{vec}_r(\mathbf{A})$ denotes the row-wise vectorization of matrix $\mathbf{A}$.
+    \item $\mathbf{A}^{\circ \alpha}$ denotes the element-wise $\alpha$-power of matrix $\mathbf{A}$, i.e., $(\mathbf{A}^{\circ \alpha})_{ij} = (\mathbf{A}_{ij})^\alpha$.
+    \item $\textit{diag}(\mathbf{v})$ creates a diagonal matrix with vector $\mathbf{v}$ on its main diagonal.
+\end{itemize}
+\end{definition}
+
+\begin{definition}\label{def:matrix_norms}
+For a matrix $\mathbf{A} \in \mathbb{R}^{m \times n}$:
+\begin{align}
+\|\mathbf{A}\|_2 &= \sigma_1 \quad &&\text{(Spectral norm, largest singular value)} \\
+\|\mathbf{A}\|_F &= \sqrt{\sum_{i=1}^m \sum_{j=1}^n |a_{ij}|^2} = \sqrt{\sum_{i=1}^r \sigma_i^2} \quad &&\text{(Frobenius norm)} \\
+\|\mathbf{A}\|_1 &= \max_{1 \leq j \leq n} \sum_{i=1}^m |a_{ij}| \quad &&\text{(Maximum absolute column sum)} \\
+\|\mathbf{A}\|_\infty &= \max_{1 \leq i \leq m} \sum_{j=1}^n |a_{ij}| \quad &&\text{(Maximum absolute row sum)} \\
+\|\mathbf{A}\|_{\max} &= \max_{i,j} |a_{ij}| \quad &&\text{(Element-wise maximum, not a submultiplicative norm)}
+\end{align}
+\end{definition}

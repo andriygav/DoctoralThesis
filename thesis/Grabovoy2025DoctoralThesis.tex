@@ -1,11 +1,12 @@
 \documentclass{dissert}
 \usepackage[T2A]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage[english,russian]{babel}
+\usepackage[russian]{babel}
 
 \usepackage{fullpage}
 \usepackage{lastpage}
 \usepackage{enumerate}
+\usepackage{svg}
 
 \usepackage[all]{xy}
 % colors
@@ -18,7 +19,7 @@
 \geometry{right=1.0cm}
 \geometry{top=2.0cm}
 \geometry{bottom=2.0cm}
-\renewcommand{\baselinestretch}{1.0}
+\renewcommand{\baselinestretch}{1.5}
 
 \newcommand{\paragraph}[1]{\noindent\textbf{#1}\quad}
 
@@ -55,10 +56,11 @@
 
 
 % Нужные мне пакеты
+\usepackage[bookmarksnumbered]{hyperref}
+\usepackage{diagbox}
 \usepackage{amsthm}
 \usepackage{graphicx}
-\usepackage{amssymb}
-\usepackage{amsmath}
+\usepackage{amsmath,amssymb,amsfonts}
 \usepackage{graphicx}
 \usepackage{subfig}
 \usepackage{caption}
@@ -71,6 +73,8 @@
 \newtheorem{theorem}{Теорема}
 \newtheorem{lemma}[theorem]{Лемма}
 \newtheorem{definition}{Определение}
+\newtheorem{assumption}{Предположение}
+\newtheorem{property}{Свойство}
 
 \usepackage{comment}
 \usepackage{rotating}
@@ -90,8 +94,65 @@
 
 % Введение
 \newpage{}
-\addcontentsline{toc}{section}{Введение}
 \chapter*{Введение}
+\addcontentsline{toc}{section}{Введение}
 \input{dis_intro}
+
+% Первая глава
+\clearpage
+\chapter{Сложность модели и данных}
+\input{chapter-1}
+
+% Вторая глава
+\clearpage
+\chapter{Аппроксимация матриц Гессе в нейросетевых архитектурах}
+\input{chapter-2}
+
+% Третья глава
+\clearpage
+\chapter{Оценка достаточно объема выборки}
+\input{chapter-3}
+
+% Четвертая глава
+\clearpage
+\chapter{Методы снижения сложности нейросетевых архитектур}
+\input{chapter-4}
+
+% Шестая глава
+\clearpage
+\chapter{Применение теоретических оценок сложности моделей и данных в прикладных задачах}
+\input{chapter-5}
+
+
+% Выводы
+\clearpage
+\chapter*{Заключение}
+\addcontentsline{toc}{section}{Заключение}
+\input{dis_conclusion}
+
+\clearpage
+\chapter*{Общие свойства и определения}
+\addcontentsline{toc}{section}{Общие свойства и определения}
+\input{dis_external}
+
+\clearpage 
+\addcontentsline{toc}{section}{Список иллюстраций}
+\listoffigures
+
+\clearpage
+\addcontentsline{toc}{section}{Список таблиц}
+\listoftables
+
+\clearpage
+\addcontentsline{toc}{section}{Список литературы}
+\renewcommand{\bibname}{Список литературы}
+
+\nocite{*}
+\bibliography{dis_literature}
+
+\appendix
+\clearpage
+\chapter{Дополнительные леммы}
+\input{dis_extralemmas}
 
 \end{document}
