@@ -54,14 +54,3 @@ $$\mu_D(D_i|f) : \mathfrak{D} \to \mathbb{R}_+.$$
 \begin{equation}
     \left| \mathcal{L}_{k+1}(\boldsymbol{\theta}) - \mathcal{L}_k(\boldsymbol{\theta}) \right| \leqslant M_l+ \dfrac{1}{k+1} \left\|\boldsymbol{\theta} - \boldsymbol{\theta}^*\right\|_2^2 \left\| \mathbf{H}_{k+1}(\boldsymbol{\theta}^*) - \dfrac{1}{k} \sum\limits_{i=1}^{k} \mathbf{H}_{i}(\boldsymbol{\theta}^*) \right\|_2
 \end{equation}
-
-\section{Оценки норм матрц Гессе}
-
-\subsection{Полносвязная нейронная сеть}
-
-Below there is a Theorem~\ref{thm:hess}.
-
-\begin{theorem}\label{thm:hess}
-    Consider a $L$-layer fully connected neural network with ReLU activation function and without bias terms, applied to solve a $K$-label classification problem. Suppose the following is satisfied: $\| \mathbf{W}^{(p)} \|_2 \leqslant M_{\mathbf{W}}$ and $\| \mathbf{x}_i \|_2 \leqslant M_{\mathbf{x}}$ for all layers $p = 1, \ldots, L$ in network and for all objects $i = 1, \ldots, m$ in the dataset. Then, for any object $i = 1, \ldots, m$ the following inequality holds:
-    \[ \left\| \mathbf{H}_i(\boldsymbol{\theta}) \right\|_2 \leqslant L \sqrt{2} M_{\mathbf{x}}^2 M_{\mathbf{W}}^{2L} + \sqrt{2} \dfrac{M_{\mathbf{W}}^2 (M_{\mathbf{W}}^{2L} - 1)}{M_{\mathbf{W}}^2 - 1}. \]
-\end{theorem}
