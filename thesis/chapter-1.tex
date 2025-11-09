@@ -10,7 +10,7 @@
 
 В рамках данного подхода основным является анализ изменения функции потерь при непрерывном изменении выборки. В разделе~\ref{chapter:complexity:loss} описывается то как абсолютное изменение функции потерь оценивается через спектральную норму матрицы Гессе:
 \begin{equation}
-    \left| \mathcal{L}_{k+1}(\boldsymbol{\theta}) - \mathcal{L}_k(\boldsymbol{\theta}) \right| \leqslant M_l + \dfrac{1}{k+1} \left\|\boldsymbol{\theta} - \boldsymbol{\theta}^*\right\|_2^2 \left\| \mathbf{H}_{k+1}(\boldsymbol{\theta}^*) - \dfrac{1}{k} \sum\limits_{i=1}^{k} \mathbf{H}_{i}(\boldsymbol{\theta}^*) \right\|_2
+    \left| \mathcal{L}_{k+1}(\boldsymbol{\theta}) - \mathcal{L}_k(\boldsymbol{\theta}) \right| \leqslant M_l + \frac{1}{k+1} \left\|\boldsymbol{\theta} - \boldsymbol{\theta}^*\right\|_2^2 \left\| \mathbf{H}_{k+1}(\boldsymbol{\theta}^*) - \frac{1}{k} \sum\limits_{i=1}^{k} \mathbf{H}_{i}(\boldsymbol{\theta}^*) \right\|_2
 \end{equation}
 
 Этот результат, основанный на теоретических выкладках из главы~\ref{chapter:gesian}, позволяет формализовать понятие~\textit{условной сложности выборки}~$\mu_D(D_i|f)$ и установить критерии достаточности объема данных для обучения конкретной модели.
@@ -85,7 +85,7 @@
 В рамках диссертационной работы предполагается исследовать частный случай меры сложности модели на основе оценок ландшафта оптимизационных задач используя матрицы Гессе для различных нейросетевых архитектур, которые описаны в главе~\ref{chapter:gesian}. Подробнее о частном случае меры сложности описано в разделе~\ref{chapter:complexity:loss}.
 
 \begin{theorem}\label{chapter:complex:theorem-finetunning}
-    Если для исходной выборки~$D\in\mathfrak{D}$ выполняется условие~$\mu_f(f) \leq \mu_D(D)$, тогда для новой выборки~$D'\in\mathfrak{D}$ модель может быть успешно дообучена при условии:
+    Если для исходной выборки~$D\in\mathfrak{D}$ выполняется условие~$\mu_f(f) \leq \mu_D(D)$, тогда для новой выборки~$D'\in\mathfrak{D}$ модель дообучаема при условии:
     \[
         \mu_f(f) - \mu_D(D) \leq \mu_D(D').
     \]
@@ -221,7 +221,7 @@
 \end{equation}
 где функция эмпирического риска для выборки размера~$|D|=m$ задается в следующем виде: 
 \begin{equation}
-    \mathcal{L}_m(\boldsymbol{\theta}) = \dfrac{1}{m} \sum\limits_{i=1}^{m} \ell(f_{\boldsymbol{\theta}}(\mathbf{x}_i), \mathbf{y}_i) \approx \mathbb{E}_{(\mathbf{x}, \mathbf{y}) \sim p(\mathbf{x}, \mathbf{y})} \left[ \ell(f_{\boldsymbol{\theta}}(\mathbf{x}), \mathbf{y}) \right],
+    \mathcal{L}_m(\boldsymbol{\theta}) = \frac{1}{m} \sum\limits_{i=1}^{m} \ell(f_{\boldsymbol{\theta}}(\mathbf{x}_i), \mathbf{y}_i) \approx \mathbb{E}_{(\mathbf{x}, \mathbf{y}) \sim p(\mathbf{x}, \mathbf{y})} \left[ \ell(f_{\boldsymbol{\theta}}(\mathbf{x}), \mathbf{y}) \right],
 \end{equation}
 где функция~$\ell\left(\mathbf{z}, \mathbf{y}\right)$ описывает ошибку на одном объекте. Далее в качестве функции~$\ell$ будут рассматриваться либо кросс-энтропийная функция ошибка либо средняя квадратическая ошибка, в зависимости от рассматриваемой задачи и архитектуры модели.
 
@@ -230,7 +230,7 @@
 \begin{align}\label{chapter:complex:equation-difference}
     \mathcal{L}_{k+1}(\boldsymbol{\theta}) - \mathcal{L}_k(\boldsymbol{\theta}) &= \frac{1}{k+1}\sum_{i=1}^k\ell(f_{\boldsymbol{\theta}}(\mathbf{x}_{i}), \mathbf{y}_{i}) - \frac{1}{k+1}\sum_{i=1}^k\ell(f_{\boldsymbol{\theta}}(\mathbf{x}_{i}), \mathbf{y}_{i}) = \\
     &= \frac{1}{k+1}\ell(f_{\boldsymbol{\theta}}(\mathbf{x}_{k+1}), \mathbf{y}_{k+1})-\sum_{i=1}^{k}\frac{1}{k(k+1)}\ell(f_{\boldsymbol{\theta}}(\mathbf{x}_{i}), \mathbf{y}_{i}) = \\
-    &= \dfrac{1}{k+1} \left(\ell(f_{\boldsymbol{\theta}}(\mathbf{x}_{k+1}), \mathbf{y}_{k+1}) - \mathcal{L}_{k}(\boldsymbol{\theta})\right).
+    &= \frac{1}{k+1} \left(\ell(f_{\boldsymbol{\theta}}(\mathbf{x}_{k+1}), \mathbf{y}_{k+1}) - \mathcal{L}_{k}(\boldsymbol{\theta})\right).
 \end{align}
 
 Дальнейшее исследования ландшафта нацелено на исследования данной разницы, причем особенно особенно интересуют предельные свойства при стремлении размера выборки к бесконечности. Для дальнейших оценок данной разности вводиться предположение~\ref{chapter:complex:assumption-local-optima-not-change}, которое в целом подтверждается на практике, но в свою очередь является достаточно сильным, что упрощает дальнейшие выкладки.
@@ -246,22 +246,22 @@
 
 Воспользуемся квадратичным приближением Тейлора для упомянутых выше функций потерь в окрестности точки $\boldsymbol{\theta}^*$. Предполагаем, что разложение до второго порядка будет достаточным для изучения локального поведения. Член первого порядка обращается в ноль, поскольку градиенты $\nabla \mathcal{L}_{k}(\boldsymbol{\theta}^*)$ и $\nabla \mathcal{L}_{k+1}(\boldsymbol{\theta}^*)$ равны нулю:
 \begin{equation}\label{chapter:complex:equation-approx}
-    \mathcal{L}_{k}(\boldsymbol{\theta}) \approx \mathcal{L}_{k}(\boldsymbol{\theta}^*) + \dfrac{1}{2} (\boldsymbol{\theta} - \boldsymbol{\theta}^*)^\top \mathbf{H}^{(k)}(\boldsymbol{\theta}^*) (\boldsymbol{\theta} - \boldsymbol{\theta}^*),
+    \mathcal{L}_{k}(\boldsymbol{\theta}) \approx \mathcal{L}_{k}(\boldsymbol{\theta}^*) + \frac{1}{2} (\boldsymbol{\theta} - \boldsymbol{\theta}^*)^\top \mathbf{H}^{(k)}(\boldsymbol{\theta}^*) (\boldsymbol{\theta} - \boldsymbol{\theta}^*),
 \end{equation}
 где мы обозначили гессиан функции $\mathcal{L}_{k}(\boldsymbol{\theta})$ по параметрам $\boldsymbol{\theta}$ в точке $\boldsymbol{\theta}^*$ как $\mathbf{H}^{(k)}(\boldsymbol{\theta}^*) \in \mathbb{R}^{P \times P}$. Более того, полный гессиан может быть записан как среднее значение гессианов отдельных членов эмпирической функции потерь:
 \[
-    \mathbf{H}^{(k)}(\boldsymbol{\theta}) = \nabla^2_{\boldsymbol{\theta}} \mathcal{L}_{k}(\boldsymbol{\theta}) = \dfrac{1}{k} \sum\limits_{i=1}^{k} \nabla^2_{\boldsymbol{\theta}} \ell(f_{\boldsymbol{\theta}}(\mathbf{x}_{i}), \mathbf{y}_{i}) = \dfrac{1}{k} \sum\limits_{i=1}^{k} \mathbf{H}_{i}(\boldsymbol{\theta}).
+    \mathbf{H}^{(k)}(\boldsymbol{\theta}) = \nabla^2_{\boldsymbol{\theta}} \mathcal{L}_{k}(\boldsymbol{\theta}) = \frac{1}{k} \sum\limits_{i=1}^{k} \nabla^2_{\boldsymbol{\theta}} \ell(f_{\boldsymbol{\theta}}(\mathbf{x}_{i}), \mathbf{y}_{i}) = \frac{1}{k} \sum\limits_{i=1}^{k} \mathbf{H}_{i}(\boldsymbol{\theta}).
 \]
 
 Следовательно, используя полученное квадратичное приближение~\eqref{chapter:complex:equation-approx}, формула для разности потерь~\eqref{chapter:complex:equation-difference} принимает вид:
 \begin{align}
-    \mathcal{L}_{k+1}(\boldsymbol{\theta}) - \mathcal{L}_k(\boldsymbol{\theta}) &= \dfrac{1}{k+1} \left( \ell(f_{\boldsymbol{\theta}^*}(\mathbf{x}_{k+1}), \mathbf{y}_{k+1}) - \dfrac{1}{k} \sum\limits_{i=1}^{k} \ell(f_{\boldsymbol{\theta}^*}(\mathbf{x}_{i}), \mathbf{y}_{i}) \right) +\\
-    &\quad+ \dfrac{1}{k+1} (\boldsymbol{\theta} - \boldsymbol{\theta}^*)^\top \left( \mathbf{H}_{k+1}(\boldsymbol{\theta}^*) - \dfrac{1}{k} \sum\limits_{i=1}^{k} \mathbf{H}_{i}(\boldsymbol{\theta}^*) \right) (\boldsymbol{\theta} - \boldsymbol{\theta}^*),
+    \mathcal{L}_{k+1}(\boldsymbol{\theta}) - \mathcal{L}_k(\boldsymbol{\theta}) &= \frac{1}{k+1} \left( \ell(f_{\boldsymbol{\theta}^*}(\mathbf{x}_{k+1}), \mathbf{y}_{k+1}) - \frac{1}{k} \sum\limits_{i=1}^{k} \ell(f_{\boldsymbol{\theta}^*}(\mathbf{x}_{i}), \mathbf{y}_{i}) \right) +\\
+    &\quad+ \frac{1}{k+1} (\boldsymbol{\theta} - \boldsymbol{\theta}^*)^\top \left( \mathbf{H}_{k+1}(\boldsymbol{\theta}^*) - \frac{1}{k} \sum\limits_{i=1}^{k} \mathbf{H}_{i}(\boldsymbol{\theta}^*) \right) (\boldsymbol{\theta} - \boldsymbol{\theta}^*),
 \end{align}
 причем, используя неравенство треугольника, мы можем вывести следующую оценку:
-\begin{align}
-    \left| \mathcal{L}_{k+1}(\boldsymbol{\theta}) - \mathcal{L}_k(\boldsymbol{\theta}) \right| &\leqslant \dfrac{1}{k+1} \left| \ell(f_{\boldsymbol{\theta}^*}(\mathbf{x}_{k+1}), \mathbf{y}_{k+1}) - \dfrac{1}{k} \sum\limits_{i=1}^{k} \ell(f_{\boldsymbol{\theta}^*}(\mathbf{x}_{i}), \mathbf{y}_{i}) \right| +\\
-    &\quad+ \dfrac{1}{k+1} \left\|\boldsymbol{\theta} - \boldsymbol{\theta}^*\right\|_2^2 \left\| \mathbf{H}_{k+1}(\boldsymbol{\theta}^*) - \dfrac{1}{k} \sum\limits_{i=1}^{k} \mathbf{H}_{i}(\boldsymbol{\theta}^*) \right\|_2.
+\begin{align}\label{chapter:complex:equation-mod-difference-full}
+    \left| \mathcal{L}_{k+1}(\boldsymbol{\theta}) - \mathcal{L}_k(\boldsymbol{\theta}) \right| &\leqslant \frac{1}{k+1} \left| \ell(f_{\boldsymbol{\theta}^*}(\mathbf{x}_{k+1}), \mathbf{y}_{k+1}) - \frac{1}{k} \sum\limits_{i=1}^{k} \ell(f_{\boldsymbol{\theta}^*}(\mathbf{x}_{i}), \mathbf{y}_{i}) \right| +\\
+    &\quad+ \frac{1}{k+1} \left\|\boldsymbol{\theta} - \boldsymbol{\theta}^*\right\|_2^2 \left\| \mathbf{H}_{k+1}(\boldsymbol{\theta}^*) - \frac{1}{k} \sum\limits_{i=1}^{k} \mathbf{H}_{i}(\boldsymbol{\theta}^*) \right\|_2.
 \end{align}
 
 Заметим, что первое слагаемое может быть легко ограничено константой, поскольку сама функция потерь принимает ограниченные значения.
@@ -269,7 +269,306 @@
 Подробный анализ матриц Гессе для различных типов параметрических моделей глубокого обучения представлен в главе~\ref{chapter:gesian}.
 Таким образом, мы анализируем локальную сходимость ландшафта функции, ее матрицу Гессе.
 
-Итого, получаем следующее интересующее нас выражение для анализа, описывающее поведение ландшафта функции потерь:
+Получаем выражение для анализа, описывающее поведение ландшафта функции потерь:
 \begin{equation}\label{chapter:complex:equation-mod-difference}
-    \left| \mathcal{L}_{k+1}(\boldsymbol{\theta}) - \mathcal{L}_k(\boldsymbol{\theta}) \right| \leqslant M_l+ \dfrac{1}{k+1} \left\|\boldsymbol{\theta} - \boldsymbol{\theta}^*\right\|_2^2 \left\| \mathbf{H}_{k+1}(\boldsymbol{\theta}^*) - \dfrac{1}{k} \sum\limits_{i=1}^{k} \mathbf{H}_{i}(\boldsymbol{\theta}^*) \right\|_2.
+    \left| \mathcal{L}_{k+1}(\boldsymbol{\theta}) - \mathcal{L}_k(\boldsymbol{\theta}) \right| \leqslant \frac{M_l}{k+1}+ \frac{1}{k+1} \left\|\boldsymbol{\theta} - \boldsymbol{\theta}^*\right\|_2^2 \left\| \mathbf{H}_{k+1}(\boldsymbol{\theta}^*) - \frac{1}{k} \sum\limits_{i=1}^{k} \mathbf{H}_{i}(\boldsymbol{\theta}^*) \right\|_2.
 \end{equation}
+
+Таким образом получили, что анализ сходимости ландшафта оптимизационной задачи сводится к анализу нормы матрицы Гессе, которые подробно разобраны в главе~\ref{chapter:gesian}.
+
+Оценка~\ref{chapter:complex:equation-mod-difference} задает некоторое свойство параметрического семейства функций~$f$ на заданной выборке~$D.$
+Определим данное свойство как условную сложность модели~$f$ на выборке~$D:$
+\begin{equation}\label{chapter:complex:equantion-subcomplex-model}
+    \mu_f(f|D) : \mathfrak{F} \to \mathbb{R}_+,
+\end{equation}
+причем, более подробно рассмотрим частный случай условной меры сложности параметрического семейства функций~$f$ вида:
+\begin{equation}\label{chapter:complex:equantion-subcomplex-model-surface}
+    \mu_f(f|D) = \mathsf{E}_{\mathbf{x}_i\in D}\left\| \mathbf{H}_{i}(\boldsymbol{\theta}^*) -  \mathsf{E}_{\mathbf{x}_i\in D}\mathbf{H}_{i}(\boldsymbol{\theta}^*) \right\|_2.
+\end{equation}
+
+\begin{definition}\label{chapter:complex:definition-subcomplex-model}
+    Условной сложностью параметрической модели~$f$ относительно заданной выборки~$D$ назовем отображение~\eqref{chapter:complex:equantion-subcomplex-model}.
+\end{definition}
+
+\begin{definition}\label{chapter:complex:definition-subcomplex-model-surface}
+    Ландшафтноя мерой сложности параметрической функции~$f$ назовем условную сложность параметрической модели~$f$ заданной выражением~\eqref{chapter:complex:equantion-subcomplex-model-surface}.
+\end{definition}
+
+Определение~\ref{chapter:complex:definition-subcomplex-model} описывает прикладный способ задания сложности на параметрических семействах функций в контексте оптимизации на заданных выборках.
+Причем, условная сложность модели~$\mu_f(f|D)$ характеризует сложность архитектуры модели~$f$ при ее обучении на выборке данных $D$.
+Это позволяет количественно оценить, насколько модель ``соответствует'' данным.
+Так слишком простая модель может недообучаться, а слишком сложная~--- переобучаться.
+
+Ландшафтная же мера сложности~\ref{chapter:complex:definition-subcomplex-model-surface} представляет собой явный вид условной сложности, основанную на анализе оптимизационного ландшафта функции потерь.
+Заметим, что выражение \eqref{chapter:complex:equantion-subcomplex-model-surface} содержательно указывает на то, насколько сильно добавление нового объекта данных изменяет кривизну функции потерь в окрестности оптимума.
+
+Дальнейшее повествование в главе посвящено к оценкам ландшафтной меры для различных параметрических моделей~$f.$
+Все результаты основываются на анализе матриц Гессе описаных в главе~\ref{chapter:gesian}.
+
+Используя выражение~\ref{chapter:complex:equation-mod-difference} и определение ландшафтной меры сложности получаем следующую асимптотическую связь между этими оценками:
+\begin{equation}\label{chapter:complex:relation-surface-subcomplex-model}
+    \left| \mathcal{L}_{k+1}(\boldsymbol{\theta}) - \mathcal{L}_k(\boldsymbol{\theta}) \right| \leqslant \frac{M_l}{k+1}+ \frac{\mu_f(f|D)}{k+1}\left\|\boldsymbol{\theta} - \boldsymbol{\theta}^*\right\|_2^2.
+\end{equation}
+
+\begin{lemma}
+    Пусть задан некоторый~$\varepsilon,$ описывающей допустимое изменение ландшафта при добавления одного объекта в некоторой окрестности оптимума~$\boldsymbol{\theta}^*$ радиуса~$R$,
+    причем выборка~$D$ из простой генеральной совокупности~$\Gamma_C$.
+
+    Тогда верно следующее соотношение между ландшафтной мерой~$\mu_f(f|D)$ и условной сложностью выборки~$\mu_D(D|f):$
+    \[
+        \mu_f(f|D) \geq \mu_D(D|f)\frac{\varepsilon}{CR^2} - \frac{M_\ell }{R^2}.
+    \]
+\end{lemma}
+\begin{proof}
+    Очевидно из определения условных мер сложности моделей и данных и подстановке всей выборки~$D$ в выражение~\eqref{chapter:complex:relation-surface-subcomplex-model}.
+\end{proof}
+
+
+\subsection{Полносвязная нейросетевая модель глубокого обучения}
+
+Используя результаты, полученные в рамках главы~\ref{chapter:gesian}, а именно результаты теоремы~\ref{theorem:hess-kiselev-lemma} в которой показана асимптотика нормы матрицы Гессе от гиперпараметров полносвязной нейросетевой модели:
+\[
+    \left\| \mathbf{H}_i(\boldsymbol{\theta}) \right\|_2 \propto L (hM)^{2L},
+\]
+из которой видно, что спектральная норма матрицы Гессе имеет полиномиальную зависимость от размера слоя и экспоненциальную зависимость от числа слоев.
+
+\begin{theorem}\label{chapter:complex:theorem-kiselev-loss}
+    Пусть параметры $\boldsymbol{\theta}$ выбраны так, что $\left\|\boldsymbol{\theta} - \boldsymbol{\theta}^*\right\|_2^2 \leqslant R^2$ для некоторого $R > 0$. Если существует неотрицательная константа $M_{\ell}$ такая, что $\left| \ell(f_{\boldsymbol{\theta}^*}(\mathbf{x}_{i}), \mathbf{y}_{i}) \right| \leqslant M_{\ell}$ для всех объектов $i = 1, \ldots, m$ в наборе данных, то при выполнении условий Теоремы~\ref{theorem:hess-kiselev-theorem} справедливо:
+    \begin{align}
+        \left| \mathcal{L}_{k+1}(\boldsymbol{\theta}) - \mathcal{L}_k(\boldsymbol{\theta}) \right| \leqslant \frac{2}{k+1}\left( M_{\ell} + \left( L \sqrt{2} M_{\mathbf{x}}^2 M_{\mathbf{W}}^{2L} + \sqrt{2} \frac{M_{\mathbf{W}}^2 (M_{\mathbf{W}}^{2L} - 1)}{M_{\mathbf{W}}^2 - 1} \right) R^2 \right),
+    \end{align}
+    причем, что выражение асимптотически стремиться к~$0,$ то есть:
+    \begin{align}
+        \left| \mathcal{L}_{k+1}(\boldsymbol{\theta}) - \mathcal{L}_k(\boldsymbol{\theta}) \right| \to 0~\text{при}~k \to \infty.
+    \end{align}
+    Таким образом, имеет место следующая пропорциональность:
+    \begin{equation}\label{eq:rate}
+        \left| \mathcal{L}_{k+1}(\boldsymbol{\theta}) - \mathcal{L}_k(\boldsymbol{\theta}) \right| \propto \frac{L (hM)^{2L} R^2}{k}. 
+    \end{equation}
+\end{theorem}
+\begin{proof}
+    Используя неравенство треугольника для выражения~\ref{chapter:complex:equation-mod-difference-full}, получаем
+    \begin{align}
+        & \left| \ell(f_{\boldsymbol{\theta}^*}(\mathbf{x}_{k+1}), \mathbf{y}_{k+1}) - \frac{1}{k} \sum\limits_{i=1}^{k} \ell(f_{\boldsymbol{\theta}^*}(\mathbf{x}_{i}), \mathbf{y}_{i}) \right| \leqslant \\
+        &\quad\leqslant \left| \ell(f_{\boldsymbol{\theta}^*}(\mathbf{x}_{k+1}), \mathbf{y}_{k+1}) \right| + \left| \frac{1}{k} \sum\limits_{i=1}^{k} \ell(f_{\boldsymbol{\theta}^*}(\mathbf{x}_{i}), \mathbf{y}_{i}) \right| \leqslant \\
+        &\quad\leqslant \left| \ell(f_{\boldsymbol{\theta}^*}(\mathbf{x}_{k+1}), \mathbf{y}_{k+1}) \right| + \frac{1}{k} \sum\limits_{i=1}^{k} \left| \ell(f_{\boldsymbol{\theta}^*}(\mathbf{x}_{i}), \mathbf{y}_{i}) \right| \leqslant\\
+        &\quad\leqslant M_{\ell} + \frac{1}{k} \sum\limits_{i=1}^{k} M_{\ell} = 2M_{\ell} = \mathcal{O}(1) \text{ при } k \to \infty.
+    \end{align}
+    Аналогично для норм матриц Гессе получаем:
+    \begin{align}
+        & \left\| \mathbf{H}_{k+1}(\boldsymbol{\theta}^*) - \frac{1}{k} \sum\limits_{i=1}^{k} \mathbf{H}_{i}(\boldsymbol{\theta}^*) \right\|_2 \leqslant \\
+        &\quad\leqslant \left\| \mathbf{H}_{k+1}(\boldsymbol{\theta}^*) \right\| + \left\| \frac{1}{k} \sum\limits_{i=1}^{k} \mathbf{H}_{i}(\boldsymbol{\theta}^*) \right\|_2 \leqslant \\
+        &\quad\leqslant \left\| \mathbf{H}_{k+1}(\boldsymbol{\theta}^*) \right\| + \frac{1}{k} \sum\limits_{i=1}^{k} \left\| \mathbf{H}_{i}(\boldsymbol{\theta}^*) \right\|_2 \leqslant \\
+        &\quad\leqslant M_{\mathbf{H}} + \frac{1}{k} \sum\limits_{i=1}^{k} M_{\mathbf{H}} = 2 M_{\mathbf{H}} = \mathcal{O}(1)~\text{при}~k \to \infty,
+    \end{align}
+    где из Теоремы~\ref{theorem:hess-kiselev-theorem} получаем
+    \[
+        M_{\mathbf{H}} = L \sqrt{2} M_{\mathbf{x}}^2 M_{\mathbf{W}}^{2L} + \sqrt{2} \frac{M_{\mathbf{W}}^2 (M_{\mathbf{W}}^{2L} - 1)}{M_{\mathbf{W}}^2 - 1}.
+    \]
+    
+    Таким образом, подставляя полученные оценки в выражение для разности, получаем
+    \[
+        \left| \mathcal{L}_{k+1}(\boldsymbol{\theta}) - \mathcal{L}_k(\boldsymbol{\theta}) \right| \leqslant \frac{2M_{\ell}}{k+1} + \frac{2M_{\mathbf{H}}}{k+1} \left\|\boldsymbol{\theta} - \boldsymbol{\theta}^*\right\|_2^2,
+    \]
+    где выбирая окрестность локального минимума $\boldsymbol{\theta}^*$, т.е. $\left\|\boldsymbol{\theta} - \boldsymbol{\theta}^*\right\|_2^2 \leqslant R^2$, получаем
+    \[
+        \left| \mathcal{L}_{k+1}(\boldsymbol{\theta}) - \mathcal{L}_k(\boldsymbol{\theta}) \right| \leqslant \frac{2}{k+1}\left( M_{\ell} + M_{\mathbf{H}}R^2 \right) \to 0 \text{ при } k \to \infty.
+    \]
+\end{proof}
+
+Используя доказательство теоремы~\ref{chapter:complex:theorem-kiselev-loss} легко получается выражение для ландшафтной меры полносвязной нейросетевой модели глубокого обучения, которое описано в следствии~\ref{chapter:complex:corollary-theorem-kiselev-loss}.
+
+\begin{corollary}\label{chapter:complex:corollary-theorem-kiselev-loss}
+    Ландшафтная мера сложности параметрической функции~$f$ полносвязной нейросетевой модели глубокого обучения имеет асимптотику:
+    \[
+        \mu_f(f|D) \propto L(hM)^{2L},
+    \]
+    где~$M$ некоторая константа зависящая ограничивающая параметры и данные.
+\end{corollary}
+
+В работе~\cite{eldan2016exponentialcomplexity} показано, что существуют функции, которые могут быть эффективно представлены трехслойными сетями, но требуют экспоненциального числа нейронов в двухслойных сетях.
+Следствие указывает~\ref{chapter:complex:corollary-theorem-kiselev-loss}, указывает на схожий результат, описывающий то, что экспоненциальный рост сложность модели увеличивается экспоненциально при увеличении числа слоев, и следовательно, уменьшив число слоем, потребуется экспоненциальный рост параметров модели, чтобы сохранить заданную сложность модели.
+
+\subsection{Сверточные модели глубокого обучения}
+
+В данном подразделе рассматривается оценка ландшафтной меры сложности для сверточных нейронных сетей, которые являются одними из популярных на текущий момент моделей глубокого обучения.
+В анализе ландшафта используются результаты о матрицах Гессе из главы~\ref{chapter:gesian}.
+
+Начнем с анализа 1D-сверточных сетей, которые применяются в обработке последовательностей, временных рядов и сигналов.
+Основные результаты, важные для определения ландшафтной меры сложности, представлены в теореме~\ref{chapter:complex:theorem-1Dconv-loss}.
+
+\begin{theorem}\label{chapter:complex:theorem-1Dconv-loss}
+Пусть параметры~$\boldsymbol{\theta}$ находятся в $R$-окрестности оптимума:
+\[
+    \|\boldsymbol{\theta} - \boldsymbol{\theta}^*\| \leqslant R,
+\]
+а функция потерь ограничена некоторой константой:
+\[
+    \exists \; W_l > 0: \; \forall i\; |\ell_i| \leqslant M_{\ell}.
+\]
+Пусть все объекты в наборе данных ограничены:
+\[
+    \exists W_x\; \forall i \; \|{x_i}\| \leqslant W_x.
+\]
+Тогда в условиях теоремы~\ref{thm:1Dconv}:
+\begin{align}
+    & \big|\mathcal{L}_{k+1}(\boldsymbol{\theta}) - \mathcal{L}_{k}(\boldsymbol{\theta})\big| \leqslant \frac{2}{k+1}M_{\ell} +\\
+    & + \frac{2}{k+1}R^2\sqrt{2}d^2W_x^2(L+1)(C^2w^2kd)^L.
+\end{align}
+\end{theorem}
+\begin{proof}
+    Доказательство эквивалентно доказательству теореме~\ref{chapter:complex:theorem-kiselev-loss} подставляя оценки нормы матрицы Гессе из теоремы~\ref{thm:1Dconv}.
+\end{proof}
+
+Используя теорему~\ref{chapter:complex:theorem-1Dconv-loss} легко получается выражение для ландшафтной меры 1D-сверточной нейросетевой модели глубокого обучения, которое описано в следствии~\ref{chapter:complex:corollary-theorem-1Dconv-loss}.
+
+\begin{corollary}\label{chapter:complex:corollary-theorem-1Dconv-loss}
+    Ландшафтная мера сложности параметрической функции~$f$ 1D-сверточной модели глубокого обучения имеет асимптотику:
+    \[
+        \mu_f(f|D) \propto L(C^2M^2kd)^{L},
+    \]
+    где~$C$~--- максимальное число каналов,~$d$~--- длина входной последовательности,~$k$~--- размер свертки,~$M$~--- некоторая константа зависящая ограничивающая параметры и данные.
+\end{corollary}
+
+Полученные оценки демонстрируют, что сложность 1D-сверточных нейросетевых моделей экспоненциально зависит от глубины $L$ и полиномиально~--- от остальных гиперпараметров архитектуры.
+Особенностью 1D-архитектур является линейная зависимость от длины последовательности $d$, что отражает специфику обработки последовательностей.
+
+Перейдем к анализу 2D-сверточных сетей, которые применяются в задачах обработки изображений.
+Основные результаты, важные для определения ландшафтной меры сложности, представлены в теореме~\ref{chapter:complex:theorem-2Dconv-loss}.
+
+\begin{theorem}\label{chapter:complex:theorem-2Dconv-loss}
+Пусть параметры $\boldsymbol{\theta}$ находятся в $R$-окрестности оптимума:
+\[
+    \|\boldsymbol{\theta} - \boldsymbol{\theta}^*\| \leqslant R.
+\]
+Также функция потерь ограничена некоторой константой:
+\[
+    \exists \; W_l > 0: \; \forall i\; |\ell_i| \leqslant W_l.
+\]
+Пусть все объекты в наборе данных также ограничены:
+\[
+    \exists W_x\; \forall i \; \|{x_i}\| \leqslant W_x.
+\]
+
+Тогда при выполнении условий теоремы~\ref{thm:2Dconv} справедливо:
+\begin{align}
+    & \big|\mathcal{L}_{k+1}(\boldsymbol{\theta}) - \mathcal{L}_{k}(\boldsymbol{\theta})\big| \leqslant \frac{2}{k+1}W_{\ell} +\\
+    & + \frac{2}{k+1}R^2\sqrt{2}q^2W_{x}^2(L+1)(C^2k^2w^2mn)^L,
+\end{align}
+где $q^2 = C^2k^2mn$.
+\end{theorem}
+\begin{proof}
+    Доказательство эквивалентно доказательству теореме~\ref{chapter:complex:theorem-kiselev-loss} подставляя оценки нормы матрицы Гессе из теоремы~\ref{thm:2Dconv}.
+\end{proof}
+
+Используя теорему~\ref{chapter:complex:theorem-2Dconv-loss} легко получается выражение для ландшафтной меры 2D-сверточной нейросетевой модели глубокого обучения, которое описано в следствии~\ref{chapter:complex:corollary-theorem-2Dconv-loss}.
+
+\begin{corollary}\label{chapter:complex:corollary-theorem-2Dconv-loss}
+    Ландшафтная мера сложности параметрической функции~$f$ 2D-сверточной модели глубокого обучения имеет асимптотику:
+    \[
+        \mu_f(f|D) \propto C^2k^2L(C^2k^2M^2mn)^{L},
+    \]
+    где~$C$~--- максимальное число каналов,~$m,n$~--- размеры входного изображения,~$k$~--- размер свертки,~$M$~--- некоторая константа зависящая ограничивающая параметры и данные.
+\end{corollary}
+
+Для 2D-сверточных сетей наблюдается более быстрый рост сложности по сравнению с 1D-архитектурами, что обусловлено двумерной природой данных.
+
+\subsection{Трансформер модели глубокого обучения}
+
+Архитектура трансформеров представляет собой один из наиболее значительных прорывов в области глубокого обучения последних лет.
+Эти модели демонстрируют state-of-the-art результаты в задачах обработки естественного языка, компьютерного зрения и других областях.
+Особенностью трансформеров является механизм самовнимания, который позволяет модели учитывать глобальные зависимости в данных независимо от их положения.
+
+\begin{theorem}\label{chapter:complex:theorem-transformer-loss}
+Для одного блока самовнимания и одного блока трансформера \ref{eq:transformer} при условии ограниченности функции потерь \[
+    0 \leqslant \ell(\mathbf{f}_{\mathbf{w}^*}(\mathbf{x}_i), \mathbf{y}_i) \leqslant L,
+\]
+и ограниченности норм матриц Гессе справедливо:
+\[
+    \left| \mathcal{L}_{k+1}(\mathbf{w}) - \mathcal{L}_k(\mathbf{w}) \right| \leqslant \frac{2L}{k+1} + \frac{M \left\| \mathbf{w} - \mathbf{w}^* \right\|_2^2}{(k+1)},
+\]
+где для блока самовнимания константа $M$ может быть непосредственно вычислена из Теоремы \ref{thm:self_attention_hessian_estimation},
+а для блока трансформера \(M = M_{\text{tr}}\) вычисляется в соответствии с Теоремой~\ref{thm:transformer_hessian_estimate}.
+\end{theorem}
+\begin{proof}
+Доказательство проводится в несколько этапов.
+На первом этапе оценивается разность значений функции потерь в оптимальной точке, затем на втором этапе оценивается разность гессианов.
+После чего используя результаты обоих этапов, проводиться объединение обоих оценок.
+
+Рассмотрим разность эмпирических функций потерь при добавлении нового объекта. Используя разложение разности и свойства норм, получаем:
+\begin{align}
+    \left| \mathcal{L}_{k+1}(\mathbf{w}) - \mathcal{L}_k(\mathbf{w}) \right| &\leqslant \frac{1}{k+1} \left| \ell(\mathbf{f}_{\mathbf{w}^*}(\mathbf{x}_{k+1}), \mathbf{y}_{k+1}) - \frac{1}{k} \sum_{i=1}^{k} \ell(\mathbf{f}_{\mathbf{w}^*}(\mathbf{x}_{i}), \mathbf{y}_{i}) \right| +\\
+    &\quad+ \frac{1}{2 (k+1)} \left\| \mathbf{w} - \mathbf{w}^* \right\|_2^2 \left\| \mathbf{H}_{k+1}(\mathbf{w}^*) - \frac{1}{k} \sum_{i=1}^{k} \mathbf{H}_i(\mathbf{w}^*) \right\|_2.
+\end{align}
+
+Первое слагаемое характеризует изменение значения функции потерь в оптимальной точке параметров $\mathbf{w}^*$ при добавлении нового объекта.
+Это разность между значением потерь на новом объекте и средним значением потерь на предыдущей выборке, до добавления нового объекта.
+Предположим, что функция потерь $\ell(\mathbf{f}_{\mathbf{w}^*}(\mathbf{x}_i), \mathbf{y}_i)$ ограничена сверху константой $L$ для всех объектов выборки:
+\[
+    0 \leqslant \ell(\mathbf{f}_{\mathbf{w}^*}(\mathbf{x}_i), \mathbf{y}_i) \leqslant L.
+\]
+Это предположение является естественным для большинства функций потерь, используемых в машинном обучении, таких как кросс-энтропия или среднеквадратичная ошибка.
+Тогда для нового объекта выполняется:
+\[
+    \ell(\mathbf{f}_{\mathbf{w}^*}(\mathbf{x}_{k+1}), \mathbf{y}_{k+1}) \leqslant L,
+\]
+а для среднего значения по предыдущей выборке:
+\[
+    \frac{1}{k} \sum_{i=1}^{k} \ell(\mathbf{f}_{\mathbf{w}^*}(\mathbf{x}_{i}), \mathbf{y}_{i}) \leqslant \frac{1}{k} \sum_{i=1}^{k} L = L.
+\]
+Используя неравенство треугольника для модуля разности, получаем:
+\[
+    \left| \ell(\mathbf{f}_{\mathbf{w}^*}(\mathbf{x}_{k+1}), \mathbf{y}_{k+1}) - \frac{1}{k} \sum_{i=1}^{k} \ell(\mathbf{f}_{\mathbf{w}^*}(\mathbf{x}_{i}), \mathbf{y}_{i}) \right| \leqslant L + L = 2L.
+\]
+Таким образом, вклад первого слагаемого в общую оценку не превосходит:
+\[
+    \frac{1}{k+1} \left| \ell(\mathbf{f}_{\mathbf{w}^*}(\mathbf{x}_{k+1}), \mathbf{y}_{k+1}) - \frac{1}{k} \sum_{i=1}^{k} \ell(\mathbf{f}_{\mathbf{w}^*}(\mathbf{x}_{i}), \mathbf{y}_{i}) \right| \leqslant \frac{2L}{k+1}.
+\]
+
+Второе слагаемое в оценке связано с изменением гессиана функции потерь. Рассмотрим выражение:
+\[
+    \left\| \mathbf{H}_{k+1}(\mathbf{w}^*) - \frac{1}{k} \sum_{i=1}^{k} \mathbf{H}_i(\mathbf{w}^*) \right\|_2,
+\]
+где $\mathbf{H}_{k+1}(\mathbf{w}^*) = \nabla^2_{\mathbf{w}} \ell(\mathbf{f}_{\mathbf{w}^*}(\mathbf{x}_{k+1}), \mathbf{y}_{k+1})$~--- матрица Гессе функции потерь для нового объекта, а $\frac{1}{k} \sum_{i=1}^{k} \mathbf{H}_i(\mathbf{w}^*) = \mathbf{H}_k(\mathbf{w}^*)$~--- средняя матрица Гессе по всей предыдущей выборке.
+Перепишем это выражение в более удобной форме:
+\begin{align}
+    \mathbf{H}_k(\mathbf{w}^*) &= \frac{1}{k} \sum_{i=1}^{k} \mathbf{H}_i(\mathbf{w}^*),\\
+    \mathbf{H}_{k+1}(\mathbf{w}^*) - \mathbf{H}_k(\mathbf{w}^*) &= \mathbf{H}_{k+1}(\mathbf{w}^*) - \frac{1}{k} \sum_{i=1}^{k} \mathbf{H}_i(\mathbf{w}^*).
+\end{align}
+Для оценки нормы этой разности используем неравенство треугольника:
+\[
+    \left\| \mathbf{H}_{k+1}(\mathbf{w}^*) - \frac{1}{k} \sum_{i=1}^{k} \mathbf{H}_i(\mathbf{w}^*) \right\|_2 \leqslant \left\| \mathbf{H}_{k+1}(\mathbf{w}^*) \right\|_2 + \left\| \frac{1}{k} \sum_{i=1}^{k} \mathbf{H}_i(\mathbf{w}^*) \right\|_2.
+\]
+Предположим, что выполняется ограниченость следующих метриц Гессе:
+\[
+    \left\| \mathbf{H}_i(\mathbf{w}^*) \right\|_2 \leqslant M
+\]
+для некоторой константы $M$.
+Тогда для гессиана нового объекта:
+\[
+    \left\| \mathbf{H}_{k+1}(\mathbf{w}^*) \right\|_2 \leqslant M,
+\]
+а для суммы гессианов:
+\[
+    \left\| \sum_{i=1}^{k} \mathbf{H}_i(\mathbf{w}^*) \right\|_2 \leqslant \sum_{i=1}^{k} \left\| \mathbf{H}_i(\mathbf{w}^*) \right\|_2 \leqslant k M.
+\]
+Следовательно:
+\[
+    \left\| \frac{1}{k} \sum_{i=1}^{k} \mathbf{H}_i(\mathbf{w}^*) \right\|_2 \leqslant \frac{1}{k} \cdot k M = M.
+\]
+Объединяя полученные оценки, получаем:
+\[
+    \left\| \mathbf{H}_{k+1}(\mathbf{w}^*) - \frac{1}{k} \sum_{i=1}^{k} \mathbf{H}_i(\mathbf{w}^*) \right\|_2 \leqslant M + M = 2M.
+\]
+Теперь оценим вклад второго слагаемого в общую разность функций потерь:
+\begin{align}
+    \frac{1}{2 (k+1)} \left\| \mathbf{w} - \mathbf{w}^* \right\|_2^2 \left\| \mathbf{H}_{k+1}(\mathbf{w}^*) - \mathbf{H}_k(\mathbf{w}^*) \right\|_2 &\leqslant \frac{2M}{2 (k+1)} \left\| \mathbf{w} - \mathbf{w}^* \right\|_2^2 = \\
+    &=\frac{M \left\| \mathbf{w} - \mathbf{w}^* \right\|_2^2}{k+1}.
+\end{align}
+
+
+Комбинируя оценки для обоих слагаемых, получаем итоговую оценку:
+\[
+    \left| \mathcal{L}_{k+1}(\mathbf{w}) - \mathcal{L}_k(\mathbf{w}) \right| \leqslant \frac{2L}{k+1} + \frac{M \left\| \mathbf{w} - \mathbf{w}^* \right\|_2^2}{k+1}.
+\]
+\end{proof}
