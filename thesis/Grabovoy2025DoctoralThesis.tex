@@ -23,7 +23,6 @@
 
 \newcommand{\paragraph}[1]{\noindent\textbf{#1}\quad}
 
-
 %https://tex.stackexchange.com/questions/163451/total-number-of-citations
 \usepackage{totcount}
 \newtotcounter{citnum} %From the package documentation
@@ -54,12 +53,16 @@
 \bibliographystyle{utf8gost71u}     % Оформляем библиографию по ГОСТ 7.1 (ГОСТ Р 7.0.11-2011, 5.6.7)
 \makeatother
 
+\usepackage{silence}
+\WarningFilter*{latex}{Text page \thepage\space contains only floats}
 
 % Нужные мне пакеты
 \usepackage[bookmarksnumbered]{hyperref}
+\usepackage{booktabs} 
 \usepackage{diagbox}
 \usepackage{amsthm}
 \usepackage{graphicx}
+\usepackage{placeins}
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{graphicx}
 \usepackage{subfig}
@@ -102,7 +105,7 @@
 
 % Первая глава
 \clearpage
-\chapter{Сложность моделей и данных}
+\chapter{Сложность моделей и данных}\label{chapter:complexity}
 \input{chapter-1}
 
 % Вторая глава
