@@ -575,4 +575,264 @@
 
 \section{Результаты вычислительных экспериментов}
 
+В данном разделе описываются результаты вычислительных экспериментов для методов, описанных в данной главе.
+
+\begin{figure}[h!t]\center
+    \includegraphics[width=0.5\linewidth]{thesis/figures/chapter-1/transformer/assumption}
+    \caption{Проверка Предположения~\ref{chapter:complex:assumption-local-optima-not-change} о сходимости локальных минимумов при увеличении объема выборки.}
+    \label{chapter:complex:experiment:fig:ass_1_validation}
+\end{figure}
+
+На Рис.~\ref{chapter:complex:experiment:fig:ass_1_validation} представлены соответствующие результаты, показывающие, что хотя Предположение~\ref{chapter:complex:assumption-local-optima-not-change} может быть ослаблено, его выполнимость улучшается с увеличением длины последовательностей.
+
+
+\subsection{Полносвязная нейросетевая модель глубокого обучения}
+
+\begin{figure}[h!t]\center
+    \includegraphics[width=0.5\linewidth]{thesis/figures/chapter-1/landscape-hessian/figs/mnist_hidden_size}\hfill
+    \includegraphics[width=0.5\linewidth]{thesis/figures/chapter-1/landscape-hessian/figs/mnist_num_layers.pdf}
+    \caption{Зависимость абсолютного значения разности функций потерь от доступного размера выборки, прямая классификация изображений. Графики слева показывают уменьшение значений с увеличением размерности скрытого слоя. Графики справа показывают увеличение значений с увеличением количества слоев.}
+    \label{chapter:complex:experiment:fig:mnist}
+\end{figure}
+
+\begin{figure}[h!t]\center
+    \includegraphics[width=0.5\linewidth]{thesis/figures/chapter-1/landscape-hessian/figs_extraction/mnist_hidden_size.pdf}\hfill
+    \includegraphics[width=0.5\linewidth]{thesis/figures/chapter-1/landscape-hessian/figs_extraction/mnist_num_layers.pdf}
+    \caption{Зависимость абсолютного значения разности функций потерь от доступного размера выборки, \textbf{извлечение признаков изображений}. Графики слева показывают уменьшение значений с увеличением размерности скрытого слоя. Графики справа показывают увеличение значений с увеличением количества слоев.}
+    \label{chapter:complex:experiment:fig:mnist-extraction}
+\end{figure}
+
+\begin{table}[h!t]\center
+  \caption{Описание наборов данных для классификации изображений}
+  \label{chapter:complex:experiment:table:datasets}
+  \begin{tabular}{llll}
+    \toprule
+    Название     & Описание     & Формат & Разрешение \\
+    \midrule
+    MNIST \cite{deng2012mnist} & Рукописные цифры & Оттенки серого & $28 \times 28$ \\
+    FashionMNIST \cite{xiao2017fashionmnistnovelimagedataset} & Элементы одежды & Оттенки серого & $28 \times 28$ \\
+    CIFAR10 \cite{krizhevsky2009learning} & Различные объекты & RGB & $32\times 32$ \\
+    CIFAR100 \cite{krizhevsky2009learning} & Различные объекты & RGB & $32 \times 32$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{figure}[!ht]\center
+  \begin{subfigure}[b]{0.5\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{thesis/figures/chapter-1/landscape-hessian/figs/fashion_mnist_hidden_size} 
+  \end{subfigure}%% 
+  \begin{subfigure}[b]{0.5\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{thesis/figures/chapter-1/landscape-hessian/figs/fashion_mnist_num_layers} 
+  \end{subfigure} 
+  \begin{subfigure}[b]{0.5\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{thesis/figures/chapter-1/landscape-hessian/figs/cifar10_hidden_size} 
+  \end{subfigure}%%
+  \begin{subfigure}[b]{0.5\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{thesis/figures/chapter-1/landscape-hessian/figs/cifar10_num_layers} 
+  \end{subfigure} 
+  \begin{subfigure}[b]{0.5\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{thesis/figures/chapter-1/landscape-hessian/figs/cifar100_hidden_size} 
+  \end{subfigure}%%
+  \begin{subfigure}[b]{0.5\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{thesis/figures/chapter-1/landscape-hessian/figs/cifar100_num_layers} 
+  \end{subfigure} 
+  \caption{Зависимость абсолютного значения разности функций потерь от доступного размера выборки, прямая классификация изображений. Графики слева показывают уменьшение значений с увеличением размерности скрытого слоя. Графики справа показывают увеличение значений с увеличением количества слоев. Результаты для различных наборов данных: FashionMNIST, CIFAR10 и CIFAR100.}
+  \label{chapter:complex:experiment:fig:additional-exp} 
+\end{figure}
+
+\begin{figure}[h!t]\center
+  \begin{subfigure}[b]{0.5\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{thesis/figures/chapter-1/landscape-hessian/figs_extraction/fashion_mnist_hidden_size} 
+  \end{subfigure}%% 
+  \begin{subfigure}[b]{0.5\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{thesis/figures/chapter-1/landscape-hessian/figs_extraction/fashion_mnist_num_layers} 
+  \end{subfigure} 
+  \begin{subfigure}[b]{0.5\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{thesis/figures/chapter-1/landscape-hessian/figs_extraction/cifar10_hidden_size} 
+  \end{subfigure}%%
+  \begin{subfigure}[b]{0.5\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{thesis/figures/chapter-1/landscape-hessian/figs_extraction/cifar10_num_layers} 
+  \end{subfigure} 
+  \begin{subfigure}[b]{0.5\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{thesis/figures/chapter-1/landscape-hessian/figs_extraction/cifar100_hidden_size} 
+  \end{subfigure}%%
+  \begin{subfigure}[b]{0.5\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{thesis/figures/chapter-1/landscape-hessian/figs_extraction/cifar100_num_layers} 
+  \end{subfigure} 
+  \caption{Зависимость абсолютного значения разности функций потерь от доступного размера выборки, извлечение признаков изображений. Графики слева показывают уменьшение значений с увеличением размерности скрытого слоя. Графики справа показывают увеличение значений с увеличением количества слоев. Результаты для различных наборов данных: FashionMNIST, CIFAR10 и CIFAR100.}
+  \label{chapter:complex:experiment:fig:additional-exp-extraction} 
+\end{figure}
+
+Для проверки полученных теоретических оценок мы провели детальное эмпирическое исследование.
+В данном разделе представлены результаты обучения полносвязной нейронной сети для задачи классификации изображений.
+Основной целью этих экспериментов является эмпирическое подтверждение сходимости ландшафта функции потерь с увеличением размера выборки.
+Для достижения этой цели мы обучили полносвязную нейронную сеть на полном наборе данных и получили соответствующие параметры $\hat{\boldsymbol{\theta}}$ как точку вблизи минимума.
+Впоследствии мы исследовали зависимость между средней разностью потерь и доступным размером выборки.
+
+Мы использовали библиотеку \texttt{pytorch}~\cite{pytorch2019} в качестве Python-фреймворка для обучения нейронных сетей.
+Архитектура сети была единообразной и состояла из нескольких линейных слоев с функцией активации ReLU после каждого слоя, за исключением последнего.
+Размер $h$ был фиксированным для всех скрытых слоев $L$.
+Сеть обучалась в течение многочисленных эпох с использованием оптимизатора \texttt{Adam}~\cite{adam2015} с постоянной скоростью обучения $10^{-3}$.
+Использовались различные наборы данных для классификации изображений, доступные в библиотеке \texttt{torchvision}.
+Для процесса обучения был выбран размер батча (англ. batch size) 64.
+Эксперименты проводились на GPU Tesla A100 80GB с 16 CPU ядрами и 243 GB оперативной памяти.
+
+В этом эксперименте мы использовали значения пикселей изображений в качестве входных данных.
+На Рис.~\ref{chapter:complex:experiment:fig:mnist} представлены результаты, полученные при анализе 10 000 объектов из набора данных MNIST \cite{deng2012mnist}, при этом сеть обучалась в течение 10 эпох.
+Соответствующий размер входа составляет 784, а размер выхода~---~$10$.
+Графики слева были получены при фиксированном количестве слоев~$L=5$ в сети.
+Размер скрытого слоя во всех слоях варьировался от~$4$ до~$64$.
+В то же время, график справа иллюстрирует поведение разности потерь при изменении количества скрытых слоев от~$1$ до~$10$, при фиксированном размере скрытого слоя~$h=16$.
+Эта последовательность была повторена~$100$ раз для усреднения.
+К полученным результатам было применено экспоненциальное скользящее среднее с коэффициентом сглаживания~$0{,}99$.
+Из наблюдаемых зависимостей видно, что, хотя изменение и не является значительным, добавление большего количества слоев приводит к большей разнице в функциях потерь.
+И наоборот, увеличение размера скрытого слоя приводит к меньшей разнице между функциями потерь.
+Кроме того, на практике константа $M$, ограничивающая величину весов, оказывается относительно небольшой.
+Более того, поскольку задача классификации набора данных MNIST считается относительно простой, неглубокая, но широкая нейронная сеть может давать хорошие результаты классификации.
+Следовательно, наблюдалось, что значения функции потерь ниже для больших значений $h$, и поэтому их разница также меньше.
+
+В отличие от предыдущего эксперимента, в этой части используется предварительно обученный экстрактор признаков изображений.
+Полносвязная сеть используется в качестве многоклассового классификатора.
+Мы выбрали Vision Transformer (ViT)~\cite{wu2020visual} от Google.
+Мы аналогичным образом выбрали случайным образом~$10\,000$ объектов из набора данных MNIST и варьировали размер скрытого слоя и количество слоев.
+Результаты согласуются с наблюдениями при прямой классификации изображений.
+Эта согласованность подтверждает, что представленная сходимость не зависит от природы пространства исходных объектов $\mathcal{X}$.
+Для наблюдения сходимости ландшафта функции потерь достаточно ограниченности этого пространства.
+
+Наш эксперимент подтверждает сходимость, доказанную в Теореме~\ref{chapter:complex:theorem-kiselev-loss}.
+Кроме того, верхняя оценка скорости этой сходимости остается верной.
+Действительно, изменение параметров нейронной сети, таких как количество слоев и размер слоя, приводит к незначительному изменению разности функций потерь.
+
+Приведем расширенную версию проведенных экспериментов.
+Ниже в Таблице~\ref{chapter:complex:experiment:table:datasets} представлено описание используемых наборов данных.
+Мы выбрали четыре набора данных из библиотеки \texttt{torchivison}: MNIST~\cite{deng2012mnist}, FashionMNIST~\cite{xiao2017fashionmnistnovelimagedataset}, CIFAR10 и CIFAR100~\cite{krizhevsky2009learning}.
+Единственной предобработкой данных являлась нормализация для приведения значений к диапазону~$[-1; 1]$.
+
+На Рис.~\ref{chapter:complex:experiment:fig:additional-exp} графики слева были получены при фиксированном количестве слоев $L=5$ в сети.
+Мы изменяли размер скрытого слоя на всех уровнях от $4$ до $64$.
+В то же время, график справа демонстрирует поведение разности потерь при изменении количества скрытых слоев от $1$ до $10$, при сохранении размера $h = 16$ неизменным.
+Данная последовательность была повторена $100$ раз для усреднения. Для полученных результатов мы применили экспоненциальное скользящее среднее с коэффициентом сглаживания $0.99$.
+
+Аналогично Рис.~\ref{chapter:complex:experiment:fig:mnist-extraction} на Рис.~\ref{chapter:complex:experiment:fig:additional-exp-extraction} результаты подтверждают сходимость, доказанную в Теореме~\ref{chapter:complex:theorem-kiselev-loss}.
+Также верна верхняя оценка скорости этой сходимости.
+В частности, изменение параметров нейронной сети: количества слоев и размера слоя приводит к изменению разности функций потерь.
+
+
+\subsection{Сверточные модели глубокого обучения}
+\begin{figure}[h!t]
+  \begin{subfigure}[b]{0.5\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{thesis/figures/chapter-1/matricized-networks/mnist_change_layers} 
+  \end{subfigure}%% 
+  \begin{subfigure}[b]{0.5\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{thesis/figures/chapter-1/matricized-networks/cifar10_change_layers.pdf} 
+  \end{subfigure} 
+  \caption{Переменное количество скрытых сверточных слоев $L$ с фиксированным размером ядра $k = 3$ и количеством каналов $C = 6$. Анализ полученных графиков показывает немонотонный характер зависимости выходных значений от количества слоев.}
+   \label{chapter:complex:experiment:matricez:fig:layers}
+\end{figure}
+
+\begin{figure}[h!t]
+  \begin{subfigure}[b]{0.5\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{thesis/figures/chapter-1/matricized-networks/mnist_change_kers} 
+  \end{subfigure}%% 
+  \begin{subfigure}[b]{0.5\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{thesis/figures/chapter-1/matricized-networks/cifar10_change_kers} 
+  \end{subfigure} 
+  \caption{Изменение размера ядра $k$ при фиксированном количестве сверточных слоев $L$ и количестве каналов $C = 6$. Данные демонстрируют немонотонный характер зависимости относительно размера ядра.}
+   \label{chapter:complex:experiment:matricez:fig:kernels}
+\end{figure}
+
+\begin{figure}[h!t]
+  \begin{subfigure}[b]{0.5\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{thesis/figures/chapter-1/matricized-networks/mnist_change_channels.pdf} 
+  \end{subfigure}%% 
+  \begin{subfigure}[b]{0.5\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{thesis/figures/chapter-1/matricized-networks/cifar10_change_channels.pdf} 
+  \end{subfigure} 
+  \caption{Изменение количества каналов $C$ при фиксированном количестве сверточных слоев $L$ и размере ядра $k=3$. Зависимость значения от количества каналов имеет монотонный характер.}
+   \label{chapter:complex:experiment:matricez:fig:channels}
+\end{figure}
+
+\begin{figure}[h!t]
+  \begin{subfigure}[b]{0.5\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{thesis/figures/chapter-1/matricized-networks/cifar10_change_maxpool_pos} 
+  \end{subfigure}%% 
+  \begin{subfigure}[b]{0.5\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{thesis/figures/chapter-1/matricized-networks/cifar10_change_avgpool_pos} 
+  \end{subfigure} 
+  \caption{Изменение количества каналов $C$ при фиксированном количестве сверточных слоев $L$ и размере ядра $k=3$. График показывает монотонную зависимость значения от позиции пулинга в сети.}
+   \label{chapter:complex:experiment:matricez:fig:pool_pos}
+\end{figure}
+
+Для проверки теоретических оценок мы провели комплексное эмпирическое исследование.
+В данном разделе представлены результаты обучения сверточных сетей с различными параметрами.
+Основной целью экспериментов является демонстрация зависимости ландшафта функции потерь от таких параметров, как количество слоев, размер ядра, количество каналов, позиции пулинга, и наблюдение того, как скорость сходимости зависит от этих параметров.
+Для достижения этой цели мы обучили сверточные сети и получили параметры $\hat{\boldsymbol{\theta}}$ вблизи оптимума.
+Мы использовали сверточную архитектуру с функцией активации ReLU после каждого слоя.
+Чтобы проследить влияние конкретного параметра на сходимость, мы фиксировали ключевые параметры нейронной сети, варьировали интересующий гиперпараметр и обучали соответствующий набор моделей.
+Затем мы исследовали зависимость между средним абсолютным различием между значениями средней функции потерь и доступным размером выборки.
+Далее, для каждой модели, чтобы получить более надежные результаты, мы усредняли разность потерь по перемешанным выборкам.
+Дополнительно, для улучшения визуализации, мы использовали экспоненциальное сглаживание с коэффициентом $0.995$.
+Для данного исследования мы использовали числовое представление пикселей изображений в качестве входных данных.
+Результаты получены на основе анализа выборок из баз данных MNIST~\cite{deng2012mnist}, FashionMNIST~\cite{xiao2017fashionmnistnovelimagedataset} и CIFAR10~\cite{krizhevsky2009learning}.
+Во всех экспериментах использовались следующие гиперпараметры: постоянная скорость обучения 1e-3, оптимизатор Adam, мини-пакеты размером 64, обучение проводилось в течение 10 эпох на наборах данных MNIST и Fashion-MNIST и 15 эпох на наборе данных CIFAR-10.
+Если параметр не варьировался, он сохранялся одинаковым во всех слоях.
+
+\subsection{Трансформер модели глубокого обучения}
+
+\begin{figure}[h!t]\center
+    \includegraphics[width=0.5\textwidth]{thesis/figures/chapter-1/transformer/loss_landscape_convergence}
+    \caption{Абсолютная разность потерь в зависимости от количества обучающих примеров в наборе данных, отображенная в двойном логарифмическом масштабе. \textcolor{blue}{Синяя} линия представляет экспоненциальное скользящее среднее (EMA) желаемой зависимости, а \textcolor{gray}{серая} линия соответствует линейному тренду.}
+    \label{chapter:complex:experiment:fig:loss_landscape_convergence}
+\end{figure}
+
+Для более глубокого изучения зависимости между функцией потерь и ее гессианом мы проводим эксперимент, соответствующий Теореме~\ref{chapter:complex:theorem-transformer-loss}.
+Здесь мы используем другую конфигурацию модели на наборе данных CIFAR-100~\cite{krizhevsky2009learning}.
+По сравнению с аналогичной моделью для набора данных MNIST, эта модель имеет в $8$ раз больше блоков Трансформера, а также скрытые слои в $8$ раз шире.
+Во время обучения модель также обучалась в течение ряда эпох для достижения точности >50\% на валидационном наборе данных.
+Результаты представлены на Рис.~\ref{chapter:complex:experiment:fig:loss_landscape_convergence}.
+Настройка эксперимента следующая:
+\begin{enumerate}
+    \item Обучаем модель до сходимости и сохраняем вектор параметры~$\mathbf{w*}.$
+    \item Начинаем с пустого набора данных, добавлять данные батч за батчем (англ. batch) и вычисляем среднее значение потерь по просмотренным батчам;
+    \item Вычисляем абсолютную разность в соответствии с выражением:
+        \[
+            \left| \mathcal{L}_{k+1}(\mathbf{w}) - \mathcal{L}_k(\mathbf{w}) \right|.
+        \]
+\end{enumerate}
+
 \section{Заключение по главе}
+В данной главе проведено комплексное исследование сходимости ландшафта функции потерь при увеличении объема выборки для различных архитектур нейронных сетей.
+
+Теоретический анализ и эмпирические результаты для полносвязных нейронных сетей демонстрируют, что абсолютная разность между средними значениями функции потерь при добавлении нового объекта в выборку стремится к нулю при увеличении количества доступных объектов до бесконечности.
+Это достигнуто за счет доказательства теоремы о верхней оценке нормы гессиана. Полученные результаты подтверждают сходимость поверхности функции потерь для задачи классификации изображений как при прямом использовании исходных представлений, так и при работе с предобученным экстрактором признаков.
+
+Для сверточных нейронных сетей установлено, что абсолютная разность между средними значениями функции потерь демонстрирует монотонную зависимость от размера слоя и позиции пулинга, в то время как зависимость от размера ядра и количества слоев имеет немонотонный характер.
+Это указывает на преобладающее влияние значения функции потерь в точке оптимума.
+Предложенный метод оценки нормы гессиана и его использования для анализа сходимости ландшафта потерь предоставляет вклад в теорию анализа локальной геометрии ландшафтов функции потерь.
+
+В случае трансформерных моделей работа восполняет ключевой пробел в анализе путем явного вывода якобианов и гессианов для LayerNorm и FFN.
+Теоретические результаты показывают гетерогенность гессиана по блокам, причем наибольший вклад вносят компоненты, связанные с Values и Keys.
+Установленное неравенство сходимости $|\mathcal{L}_{k+1}(\mathbf{w})-\mathcal{L}_{k}(\mathbf{w})| \le 2L/(k+1) + M\|\mathbf{w}-\mathbf{w}^*\|_2^2/(k+1)$ объясняет наблюдаемую стабилизацию ландшафта потерь с ростом объема данных.
+
+Основные ограничения исследования включают детерминистический характер анализа, предположение о существовании единой точки минимума для последовательных размеров выборки, а также возможность улучшения верхних оценок за счет учета специфики разреженных матриц.
+Полученные результаты открывают перспективы для разработки методов определения достаточного размера выборки и алгоритмов обучения.

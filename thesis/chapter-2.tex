@@ -4,7 +4,7 @@
 Матрица Гессе содержит информацию о локальном поведении функции в окрестности заданной точки, позволяя не только предсказывать траекторию оптимизации, но и анализировать устойчивость найденных решений.
 
 Формальное определение матрицы Гессе для функции $\mathcal{L}(\boldsymbol{\theta})$ от $n$ параметров задается следующим выражением:
-\[thm:transformer_hessian_estimate
+\[
     \mathbf{H}(\mathcal{L})_{ij} = \frac{\partial^2 \mathcal{L}}{\partial \theta_i \partial \theta_j},
 \]
 где индексы $i, j = 1, \dots, n$ соответствуют компонентам вектора параметров $\boldsymbol{\theta}$.
@@ -2073,4 +2073,104 @@ $\mathbf{H}=\tfrac{\partial \mathbf{P}}{\partial \mathbf{X}}$, и $\mathbf{P}=\m
 
 \section{Результаты вычислительных экспериментов}
 
+Данный раздел носит больше теоретический характер по оценке норм матриц Гессе для различных классов моделей глубокого обучения.
+
+В рамках вычислительного эксперимента проанализируем вид матриц Гессе для моделей глубукого обучения на базе архитектуры трансформер.
+
+В этой части мы используем один блок Transformer, который мы обучаем на наборе данных MNIST~\cite{deng2012mnist}.
+Сначала мы подаем всего один батч из обучающего загрузчика данных в инициализированную модель и вычисляем точный гессиан с использованием пакета \texttt{curvlinops} для эффективного вычисления линейного оператора гессиана.
+Визуализируя его в логарифмическом масштабе, на Рис.~\ref{chapter:gesian:experiment:fig:hessian_entries} мы подчеркиваем неоднородность в величинах элементов матрицы.
+
+\begin{table}[h!t]
+    \centering
+    \begin{tabular}{c|cccc}
+        набор данных & размер патча & скрытая размерность & размер FFN & количество блоков  \\
+        \hline
+        MNIST & 4 & 16 & 64 & 1 \\
+        CIFAR-100 & 4 & 128 & 512 & 8 \\
+    \end{tabular}
+    \caption{Гиперпараметры архитектур Vision Transformer (ViT), используемые в наших экспериментах}
+    \label{chapter:gesian:experiment:table:vit}
+\end{table}
+
+\begin{figure}[h!t]
+    \centering
+    \includegraphics[width=0.72\linewidth]{thesis/figures/chapter-2/transformer/hessian_entries}
+    \caption{Визуализация элементов гессиана для инициализированной модели с одним блоком Трансформера. Мы наблюдаем общую неоднородность величин, при этом блоки, соответствующие \textcolor{olive}{Values}, имеют большие значения.}
+    \label{chapter:gesian:experiment:fig:hessian_entries}
+\end{figure}
+
+\begin{figure}[h!t]
+    \centering
+    \includegraphics[width=0.72\linewidth]{thesis/figures/chapter-2/transformer/hessian_entries_trained}
+    \caption{Визуализация элементов гессиана для \textbf{модели, обученной в течение нескольких эпох}, с одним блоком Трансформера. Мы наблюдаем общую неоднородность величин, при этом блок, соответствующий {Values}-{Values}, имеет наибольшие значения.}
+    \label{chapter:gesian:experiment:fig:hessian_entries_trained}
+\end{figure}
+
+\begin{figure}[h!t]
+    \centering
+    \includegraphics[width=0.43\linewidth]{thesis/figures/chapter-2/transformer/parameters_norm}\hfill
+    \includegraphics[width=0.43\linewidth]{thesis/figures/chapter-2/transformer/hessians_norm}
+    \caption{Нормы блоков параметров и нормы их гессианов, рассчитанные точно на одном батче, содержащем 128 примеров из обучающего набора данных MNIST.}
+    \label{chapter:gesian:experiment:fig:norm}
+\end{figure}
+
+\begin{figure}[h!t]
+    \centering
+    \includegraphics[width=\linewidth]{thesis/figures/chapter-2/transformer/hessian_entries_queries.pdf}
+    \caption{Визуализация элементов (Queries).}
+    \label{chapter:gesian:experiment:fig:hessian_entries_queries}
+\end{figure}
+
+\begin{figure}[h!t]
+    \centering
+    \includegraphics[width=\linewidth]{thesis/figures/chapter-2/transformer/hessian_entries_keys.pdf}
+    \caption{Визуализация элементов (Keys).}
+    \label{chapter:gesian:experiment:fig:hessian_entries_keys}
+\end{figure}
+
+\begin{figure}[h!t]
+    \centering
+    \includegraphics[width=\linewidth]{thesis/figures/chapter-2/transformer/hessian_entries_values.pdf}
+    \caption{Визуализация элементов (Values).}
+    \label{chapter:gesian:experiment:fig:hessian_entries_values}
+\end{figure}
+
+\begin{figure}[h!t]
+    \centering
+    \includegraphics[width=\linewidth]{thesis/figures/chapter-2/transformer/hessian_entries_layernorm.pdf}
+    \caption{Визуализация элементов (LayerNorm).}
+    \label{chapter:gesian:experiment:fig:hessian_entries_layernorm}
+\end{figure}
+
+\begin{figure}[h!t]
+    \centering
+    \includegraphics[width=\linewidth]{thesis/figures/chapter-2/transformer/hessian_entries_feedforward.pdf}
+    \caption{Визуализация элементов (FeedForward).}
+    \label{chapter:gesian:experiment:fig:hessian_entries_feedforward}
+\end{figure}
+
+Мы обучаем модель в течение нескольких эпох, достигая достаточно высокой точности на валидационном наборе данных (>50\%), а затем снова визуализируем элементы матрицы Гессе, как показано на Рис.~\ref{chapter:gesian:experiment:fig:hessian_entries_trained}.
+На Рис.~\ref{chapter:gesian:experiment:fig:hessian_entries_trained} видно, что каждый из блоков гессиана приобретает большую величину, однако блок {Values}-{Values} демонстрирует наибольшие значения.
+
+Данный эксперимент наглядно показывает, как организована матрица Гессе Трансформера в целом, что позволяет нам исследовать каждую его часть отдельно.
+Далее продолжается предыдущий эксперимент, детализируя изменения элементов для отдельных блоков параметров, что показано на Рис.~\ref{chapter:gesian:experiment:fig:hessian_entries_queries},~\ref{chapter:gesian:experiment:fig:hessian_entries_keys},~\ref{chapter:gesian:experiment:fig:hessian_entries_values},~\ref{chapter:gesian:experiment:fig:hessian_entries_layernorm},~\ref{chapter:gesian:experiment:fig:hessian_entries_feedforward}.
+
+Далее мы вычисляем нормы матриц и нормы их гессианов и отображаем их на Рис.~\ref{chapter:gesian:experiment:fig:norm}.
+Результаты показывают, что наибольшая величина соответствует блокам Keys и Values, в то время как остальные блоки демонстрируют значительно меньшие абсолютные значения элементов.
+
 \section{Заключение по главе}
+Проведенное во второй главе исследование матриц Гессе для нейросетевых моделей глубокого обучения представляет собой систематический теоретический анализ локальных свойств оптимизационного ландшафта параметрических семейств функций.
+Полученные результаты формируют строгий математический аппарат для количественной оценки сложности современных архитектур глубокого обучения.
+
+Для полносвязных нейронных сетей установлены точные верхние оценки спектральной нормы матрицы Гессе, демонстрирующие экспоненциальную зависимость от глубины сети и полиномиальную зависимость от ширины слоев. Разработанный метод матричной факторизации гессиана позволил унифицировать анализ для широкого класса моделей, включая сверточные архитектуры.
+Для одномерных и двумерных сверточных сетей получены явные оценки нормы гессиана через структурные параметры архитектуры, а также исследовано регуляризирующее влияние операций пулинга на сложность оптимизационного ландшафта.
+
+Наиболее значительным результатом главы является комплексный анализ матриц Гессе для трансформерных архитектур.
+Впервые получены явные выражения для матриц Якоби и Гессе ключевых компонентов трансформера: механизма самовнимания, слоя LayerNorm и блока FFN.
+Теоретически установлена гетерогенность вклада различных параметров в общую кривизну функции потерь.
+
+Теоретическая значимость полученных результатов заключается в установлении прямой связи между спектральными свойствами матриц Гессе и введенной в первой главе ландшафтной мерой сложности моделей.
+Практическая ценность работы состоит в создании аппарата для сравнительного анализа архитектур и прогнозирования их поведения при масштабировании.
+
+Перспективными направлениями дальнейших исследований являются уточнение оценок за счет учета стохастичности и спектральных распределений, а также разработка методов оптимизации и регуляризации на основе полученных теоретических результатов.
