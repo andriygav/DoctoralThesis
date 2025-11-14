@@ -58,9 +58,10 @@
 
 % Нужные мне пакеты
 \usepackage[bookmarksnumbered]{hyperref}
-\usepackage{booktabs} 
+\usepackage{booktabs}
 \usepackage{diagbox}
 \usepackage{amsthm}
+\usepackage{mathrsfs}
 \usepackage{graphicx}
 \usepackage{placeins}
 \usepackage{amsmath,amssymb,amsfonts}
@@ -81,6 +82,13 @@
 \newtheorem{corollary}{Следствие}
 \newtheorem{remark}{Замечание}
 \newtheorem{hypothesis}{Гипотеза}
+
+% \usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage[ruled,vlined]{algorithm2e}
+\SetKwInOut{KwIn}{Input}
+\SetKwInOut{KwOut}{Output}
+\SetKwFor{ForEach}{for each}{do}{end}
 
 
 \usepackage{comment}
@@ -142,6 +150,11 @@
 \addcontentsline{toc}{section}{Общие свойства и определения}
 \input{dis_external}
 
+\clearpage
+\chapter*{Дополнительные Леммы и утверждения}
+\addcontentsline{toc}{section}{Дополнительные Леммы и утверждения}
+\input{dis_extralemmas}
+
 \clearpage 
 \addcontentsline{toc}{section}{Список иллюстраций}
 \listoffigures
@@ -156,10 +169,5 @@
 
 \nocite{*}
 \bibliography{dis_literature}
-
-\appendix
-\clearpage
-\chapter{Дополнительные Леммы и утверждения}
-\input{dis_extralemmas}
 
 \end{document}
