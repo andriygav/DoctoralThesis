@@ -496,8 +496,6 @@
     \label{fig-chapter-2-posterior-ru}
 \end{figure}
 
-In this paper, the question of the correctness of this approach is considered. The method is studied in an arbitrary probabilistic model. As a measure of proximity, it is proposed to use not only the Kullback-Leibler divergence, but also the s-score similarity function from~\cite{aduenko2017}.
-
 В рамках данного раздела предлагается использовать не только расхождение Кульбака-Лейблера, но и функцию схожести s-score из работы~\cite{aduenko2017}, для этого рассмотрим две подвыборки~$\mathfrak{D}^1\subseteq\mathfrak{D}_m$ и~$\mathfrak{D}^2\subseteq\mathfrak{D}_m$.
 Пусть~$\mathcal{I}_1 \subseteq \mathcal{I} = \{1, \ldots, m\}$ и~$\mathcal{I}_2 \subseteq \mathcal{I} =\{1, \ldots,m\}$~--- соответствующие им подмножества индексов.
 
@@ -507,11 +505,6 @@ In this paper, the question of the correctness of this approach is considered. T
         \left| \mathcal{I}_1 \triangle \mathcal{I}_2 \right| = \left| \left( \mathcal{I}_1 \setminus \mathcal{I}_2 \right) \cup \left( \mathcal{I}_2 \setminus \mathcal{I}_1 \right) \right| = 1.
     \]
 \end{definition}
-
-Consider two similar subsamples~$\mathfrak{D}_k = (\mathbf{X}_k,\mathbf{y}_k)$ and~$\mathfrak{D}_{k+1} = (\mathbf{X}_{k+1}, \mathbf{y}_{k+1})$ of sizes~$k$ and~$k+1$, respectively. This means that the larger one is obtained by adding one element to the smaller one. Let's find the posterior distribution of the model parameters over these subsamples:
-\[
-    p_j(\mathbf{w}) = p(\mathbf{w} | \mathfrak{D}_j) = \frac{p(\mathfrak{D}_j | \mathbf{w}) p(\mathbf{w})}{p(\mathfrak{D}_j)} \propto p(\mathfrak{D}_j | \mathbf{w}) p(\mathbf{w}), \quad j = k, k+1.
-\]
 
 Рассмотрим две похожие подвыборки~$\mathfrak{D}_k = (\mathbf{X}_k,\mathbf{y}_k)$ и~$\mathfrak{D}_{k+1} = (\mathbf{X}_{k+1}, \mathbf{y}_{k+1})$ размеров~$k$ и~$k+1$ соответственно, то есть выборка~$\mathfrak{D}_{k+1}~$ получена путем добавления одного элемента к выборке~$\mathfrak{D}_k$.
 Найдем апостериорное распределение параметров модели по этим подвыборкам:
@@ -526,10 +519,6 @@ Consider two similar subsamples~$\mathfrak{D}_k = (\mathbf{X}_k,\mathbf{y}_k)$ a
         KL(k) = D_{KL}(p_k \| p_{k+1}) = \int p_k(\mathbf{w}) \log{\frac{p_k(\mathbf{w})}{p_{k+1}(\mathbf{w})}} d\mathbf{w} \leqslant \varepsilon.
     \]
 \end{definition}
-
-For a pair of normal distributions, the Kullback-Leibler divergence has a fairly simple form.
-Assume that the posterior distribution is normal, that is,~$p_k(\mathbf{w}) = \mathcal{N}\left(\mathbf{w}|\mathbf{m}_k, \mathbf{\Sigma}_k\right)$.
-Guided by the heuristic that the convergence of the moments of such a distribution should entail the proximity of posterior distributions on similar subsamples, the following statement can be formulated.
 
 Для пары нормальных распределений расхождение Кульбака-Лейблера имеет достаточно простой вид, а следовательно предположив, что апостериорное распределение является нормальным, то есть~$p_k(\mathbf{w}) = \mathcal{N}\left(\mathbf{w}|\mathbf{m}_k, \mathbf{\Sigma}_k\right)$ получаем формулировку теоремы~\ref{chapter:samplesize:theorem-kiselev-posterior-similiarity}
 
@@ -597,7 +586,7 @@ Guided by the heuristic that the convergence of the moments of such a distributi
 Следовательно, для любого~$\varepsilon > 0$ существует такой~$m^*$, что для всех~$k \geqslant m^*$ выполняется~$KL(k) \leqslant \varepsilon$, что и требовалось доказать.
 \end{proof}
 
-Теорема~\ref{chapter:samplesize:theorem-kiselev-posterior-similiarity} implies что расстояние между двумя гауссовскими распределениями стремится к нулю по мере сходимости их векторов математических ожиданий и ковариационных матриц.
+Теорема~\ref{chapter:samplesize:theorem-kiselev-posterior-similiarity} указывает, что расстояние между двумя гауссовскими распределениями стремится к нулю по мере сходимости их векторов математических ожиданий и ковариационных матриц.
 Это позволяет нам глубже изучить вопрос сходимости расхождения Кульбака-Лейблера, анализируя аналитические выражения для математических ожиданий и дисперсий.
 
 Рассмотрим функцию схожести s-score из работы~\cite{aduenko2017} в качестве меры близости распределений по аналогии, как это было с KL-дивергенцией:
@@ -861,7 +850,7 @@ Therefore,~$\text{s-score}(p_k, p_{k+1}) \to 1$ as~$\|\mathbf{m}_{k+1} - \mathbf
 \label{chapter:samplesize:experiment:static:table2}
 \begin{tabular}{|l|c|c|c|c|c|}
 \hline
-Методы и наборы данных                        & Boston Housing & Diabetes & Forest Fires & Servo & NBA \\ \hline\hline
+Методы                       & Boston & Diabetes & Forest Fires & Servo & NBA \\ \hline\hline
 Lagrange Multipliers Test & 18             & 25       & 44          & 38    & 218 \\ \hline
 Likelihood Ratio Test     & 17             & 25       & 43          & 18    & 110 \\ \hline
 Wald Test                 & 66             & 51       & 46          & 76    & 200 \\ \hline

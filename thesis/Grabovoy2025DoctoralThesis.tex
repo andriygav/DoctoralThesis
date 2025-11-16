@@ -73,6 +73,7 @@
 \usepackage{tabularx}
 \usepackage{url}
 \usepackage{multirow}
+\usepackage{indentfirst}
 
 \newtheorem{theorem}{Теорема}
 \newtheorem{lemma}[theorem]{Лемма}
@@ -113,6 +114,11 @@
 \addcontentsline{toc}{section}{Введение}
 \input{dis_intro}
 
+% Нулевая глава
+\clearpage
+\chapter{Теория обучаемости моделей машинного обучения}\label{chapter:curent-learnability-theory}
+\input{chapter-0}
+
 % Первая глава
 \clearpage
 \chapter{Сложность моделей и данных}\label{chapter:complexity}
@@ -130,12 +136,12 @@
 
 % Четвертая глава
 \clearpage
-\chapter{Методы снижения сложности моделей глубокого обучения}
+\chapter{Методы снижения сложности моделей глубокого обучения}\label{chapter:pruning}
 \input{chapter-4}
 
 % Шестая глава
 \clearpage
-\chapter{Применение теоретических оценок в прикладных задачах}
+\chapter{Применение теоретических оценок в прикладных задачах}\label{chapter:other-aplication}
 \input{chapter-5}
 
 
