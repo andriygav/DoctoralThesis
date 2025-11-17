@@ -1,0 +1,308 @@
+\documentclass[10pt,pdf]{beamer}
+
+\mode<presentation>
+{
+\usetheme{boxes}
+\beamertemplatenavigationsymbolsempty
+
+\setbeamertemplate{footline}[page number]
+\setbeamersize{text margin left=1em, text margin right=1em}
+}
+
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english, russian]{babel}
+\usepackage{bm}
+\usepackage{multirow}
+\usepackage{ragged2e}
+\usepackage{indentfirst}
+\usepackage{multicol}
+\usepackage{subfig}
+\usepackage{amsmath,amssymb}
+\usepackage{enumerate}
+\usepackage{mathtools}
+\usepackage{comment}
+\usepackage{multicol}
+\usepackage{color}
+\definecolor{python-green}{RGB}{55,126,33}
+
+\usepackage[all]{xy}
+
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows}
+
+\tikzstyle{name} = [parameters]
+\definecolor{name}{rgb}{0.5,0.5,0.5}
+
+\usepackage{caption}
+\captionsetup{skip=0pt,belowskip=0pt}
+
+\newtheorem{rustheorem}{Теорема}
+\newtheorem{rusdefinition}{Определение}
+\newtheorem{rusassumption}{Предположение}
+\newtheorem{rusremark}{Замечание}
+\newtheorem{ruscorollary}{Следствие}
+
+
+% colors
+\definecolor{darkgreen}{rgb}{0.0, 0.2, 0.13}
+\definecolor{darkcyan}{rgb}{0.0, 0.55, 0.55}
+
+\AtBeginEnvironment{figure}{\setcounter{subfigure}{0}}%
+
+%----------------------------------------------------------------------------------------------------------
+
+\title[О сложности моделей и данных]{О сложности моделей и данных \\в современных моделях глубокого обучения}
+\author{А.В. Грабовой}
+
+\institute[]{Диссертация на соискание ученой степени\\
+доктора физико-математических наук\\1.2.1~--- Искусственный интеллект и машинное обучение\\Научный консультант: д.ф.-м.н. К.\,В. Воронцов\\}
+\date[2026]{\small 1\;мая\;2026\,г.}
+
+%---------------------------------------------------------------------------------------------------------
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+%----------------------------------------------------------------------------------------------------------
+\section{Актуальность данного исследования}
+\begin{frame}{Актуальность данного исследования}
+\bigskip
+\justifying
+TODO
+\end{frame}
+
+\begin{frame}{Цели и методы исследования}
+\bigskip
+\justifying
+
+\begin{block}{Основная цель диссертационной работы}
+\justifying
+Создание нового математического аппарата для оценки сложности моделей и данных в современных моделях глубокого обучения.
+\end{block}
+
+\begin{block}{Основные этапы исследования}
+\justifying
+\begin{enumerate}
+    \justifying
+    \item Введение общего определения меры сложности и введение частного случая ландшафтной меры и достаточного размера выборки.
+    \item Получение связи ландшафтной меры с нормами матриц Гессе функции ошибки.
+    \item Получение оценок матриц Гессе для различных семейств моделей глубокого обучения.
+    \item Получение оценок на достаточный размер выборки для моделей глубокого обучения.
+    \item Предложение методов снижения сложности моделей глубокого обучения.
+    \item Исследование практического применения теории сложности моделей и данных.
+\end{enumerate}
+\end{block}
+\end{frame}
+
+%----------------------------------------------------------------------------------------------------------
+\section{Общее введение теории ландшафтной меры}
+\begin{frame}{Мера сложности выборки}
+\justifying
+
+\begin{rusdefinition}
+    \justifying
+    Генеральной совокупностью данных~$\Gamma$ назовем произвольное множество объектов, которые исследуются в рамках той либо иной задаче.
+\end{rusdefinition}
+
+\begin{rusdefinition}
+    \justifying
+    Генеральную совокупность~$\Gamma$ назовем однородной, если все объекты генеральной совокупности порождаются из одного распределения. В противном случае выборку назовем~$k$-родной.
+\end{rusdefinition}
+
+
+Рассмотрим кольцо выборок: $\mathfrak{D} = \{D_\Gamma^i\}, \quad D_\Gamma^i \subset \Gamma.$
+
+\begin{rusdefinition}
+    \justifying
+    Мерой сложности выборки назовем отображение~$\mu_D,$ такое, что: 
+    \[
+        \mu_D(D_i) : \mathfrak{D}_\Gamma \to \mathbb{R}_+,
+    \]
+    удовлетворяющее свойству:
+    \begin{align}
+        \mu_D(D_i\cup D_j) \leq \mu_D(D_i)+\mu_D(D_j),
+    \end{align}
+    где равенство достигается при условии~$D_i\cap D_j=\emptyset.$
+\end{rusdefinition}
+
+\end{frame}
+
+\begin{frame}{Мера сложности модели}
+\justifying
+Задано множество моделей: $\mathfrak{F} = \left\{f_i\right\}.$
+
+\begin{rusdefinition}
+    \justifying
+    Мерой сложности модели~$f$ назовем отображение~$\mu_f(f_i)$:
+    \[
+        \mu_f(f_i) : \mathfrak{F} \to \mathbb{R}_+.
+    \]
+\end{rusdefinition}
+
+
+\begin{rusdefinition}
+    \justifying
+    Назовем модель $f\in\mathfrak{F}$ \textit{обучаемой} на выборке $D\in\mathfrak{D},$ если 
+    \[
+        \mu_f(f)\leq \mu_D(D).
+    \]
+\end{rusdefinition}
+
+
+\begin{rustheorem}
+    \justifying
+    Если для исходной выборки~$D\in\mathfrak{D}$ выполняется условие~$\mu_f(f) \leq \mu_D(D)$, тогда для новой выборки~$D'\in\mathfrak{D}$ модель дообучаема при условии:
+    \[
+        \mu_f(f) - \mu_D(D) \leq \mu_D(D').
+    \]
+\end{rustheorem}
+
+\end{frame}
+
+%----------------------------------------------------------------------------------------------------------
+\section{Достаточный объем выборки, как мера сложности данных}
+\begin{frame}{Условная сложность и однородность выборки}
+\justifying
+\begin{rusdefinition}
+    \justifying
+    Условной сложностью выборки~$D$ относительно заданной параметрической модели~$f$ назовем отображение~$\mu_D(D|f) : \mathfrak{D} \to \mathbb{R}_+,$ определяющиеся выражением:
+    $$\mu_D(D|f) = \inf \{ \mu_D(D') : D' \subseteq D, \quad \mu_f(f) \leq \mu_D(D') \}.$$
+\end{rusdefinition}
+
+\begin{rusdefinition}
+    \justifying
+    Однородную генеральную совокупность~$\Gamma_C$ назовем простой, если она состоит из объектов одинаковой сложности~$C.$
+\end{rusdefinition}
+
+\begin{rustheorem}
+    \justifying
+    Для простой генеральной совокупности, мера сложности любой выборки $D \subset \Gamma$ равна ее объему:
+    \[
+        \mu_D(D) = C\cdot|D|.
+    \]
+\end{rustheorem}
+\end{frame}
+
+\section{Ландшафтная мера}
+\begin{frame}{Изменения ландшафта при вариации выборки}
+\justifying
+Пусть задана выборка из~$\Gamma_C$:
+\begin{equation}
+    D = \left\{ (\mathbf{x}_i, \mathbf{y}_i) \right\}, \quad i = 1, \ldots, m, \quad \mathbf{x} \in \mathcal{X}, \ \mathbf{y} \in \mathcal{Y}, \quad D\subset \Gamma_C.
+\end{equation}
+
+Пусть, используется метод минимизации эмпирического риска:
+\[
+    \hat{\boldsymbol{\theta}} = \arg\min_{\boldsymbol{\theta}} \mathcal{L}_m(\boldsymbol{\theta}) = \arg\min_{\boldsymbol{\theta}}\frac{1}{m} \sum\limits_{i=1}^{m} \ell(f_{\boldsymbol{\theta}}(\mathbf{x}_i), \mathbf{y}_i) \approx \arg\min_{\boldsymbol{\theta}}\mathsf{E}_{(\mathbf{x}, \mathbf{y})} \left[ \ell(f_{\boldsymbol{\theta}}(\mathbf{x}), \mathbf{y}) \right].
+\]
+
+Рассмотрим изменение функции~$\mathcal{L}_m(\boldsymbol{\theta})$:
+\[
+    \mathcal{L}_{k+1}(\boldsymbol{\theta}) - \mathcal{L}_k(\boldsymbol{\theta}) = \frac{1}{k+1} \left(\ell(f_{\boldsymbol{\theta}}(\mathbf{x}_{k+1}), \mathbf{y}_{k+1}) - \mathcal{L}_{k}(\boldsymbol{\theta})\right),
+\]
+где~$\mathcal{L}_{k+1}(\boldsymbol{\theta})$ и~$\mathcal{L}_k(\boldsymbol{\theta})$ вычислены на выборках размера~$k+1$ и $k,$ различающимися ровно в~$1$ объекте.
+\end{frame}
+
+\begin{frame}{Предположение устойчивости локального минимума}
+\justifying
+\begin{rusassumption}
+    \justifying
+    Пусть $\boldsymbol{\theta}^*$ является локальным минимумом обеих эмпирических функций потерь $\mathcal{L}_{k}(\boldsymbol{\theta})$ и $\mathcal{L}_{k+1}(\boldsymbol{\theta})$, т.е: $\nabla \mathcal{L}_{k}(\boldsymbol{\theta}^*) = \nabla \mathcal{L}_{k+1}(\boldsymbol{\theta}^*) = \mathbf{0}.$
+\end{rusassumption}
+
+В рамках предположения: $\mathcal{L}_{k}(\boldsymbol{\theta}) \approx \mathcal{L}_{k}(\boldsymbol{\theta}^*) + \frac{1}{2} (\boldsymbol{\theta} - \boldsymbol{\theta}^*)^\top \mathbf{H}^{(k)}(\boldsymbol{\theta}^*) (\boldsymbol{\theta} - \boldsymbol{\theta}^*).$
+
+\begin{align*}
+    \mathcal{L}_{k+1}(\boldsymbol{\theta}) - \mathcal{L}_k(\boldsymbol{\theta}) &= \frac{1}{k+1} \left( \ell(f_{\boldsymbol{\theta}^*}(\mathbf{x}_{k+1}), \mathbf{y}_{k+1}) - \frac{1}{k} \sum\limits_{i=1}^{k} \ell(f_{\boldsymbol{\theta}^*}(\mathbf{x}_{i}), \mathbf{y}_{i}) \right) +\\
+    &\quad+ \frac{1}{k+1} (\boldsymbol{\theta} - \boldsymbol{\theta}^*)^\top \left( \mathbf{H}_{k+1}(\boldsymbol{\theta}^*) - \frac{1}{k} \sum\limits_{i=1}^{k} \mathbf{H}_{i}(\boldsymbol{\theta}^*) \right) (\boldsymbol{\theta} - \boldsymbol{\theta}^*).
+\end{align*}
+
+\begin{rusremark}
+    Первое слагаемое может быть легко ограничено константой,
+поскольку сама функция потерь принимает ограниченные значения. Основной интерес представляет выражение с матрицами Гессе.
+\end{rusremark}
+
+\end{frame}
+
+\begin{frame}{Ландшафтная мера}
+\justifying
+
+\begin{rusdefinition}
+    \justifying
+    Условной сложностью параметрической модели~$f$ относительно заданной выборки~$D$ назовем отображение~$\mu_f(f|D) : \mathfrak{F} \to \mathbb{R}_+$.
+\end{rusdefinition}
+
+\begin{rusdefinition}
+    \justifying
+    Ландшафтноя мерой сложности параметрической функции~$f$ назовем условную сложность параметрической модели~$f$ заданной выражением:
+    \[
+        \mu_f(f|D) = \mathsf{E}_{\mathbf{x}_i\in D}\left\| \mathbf{H}_{i}(\boldsymbol{\theta}^*) -  \mathsf{E}_{\mathbf{x}_i\in D}\mathbf{H}_{i}(\boldsymbol{\theta}^*) \right\|_2.
+    \]
+\end{rusdefinition}
+
+Получаем связь между изменением функции ошибки и ландшафтной мерой: 
+\[
+    \left| \mathcal{L}_{k+1}(\boldsymbol{\theta}) - \mathcal{L}_k(\boldsymbol{\theta}) \right| \leqslant \frac{M_l}{k+1}+ \frac{\mu_f(f|D)}{k+1}\left\|\boldsymbol{\theta} - \boldsymbol{\theta}^*\right\|_2^2.
+\]
+\end{frame}
+
+%----------------------------------------------------------------------------------------------------------
+\section{Ландшафтные меры для некоторых семейств}
+\begin{frame}{Ландшафтная мера полносвязной сетевой модели}
+\justifying
+\begin{rustheorem}
+    Пусть параметры $\boldsymbol{\theta}$ выбраны так, что $\left\|\boldsymbol{\theta} - \boldsymbol{\theta}^*\right\|_2^2 \leqslant R^2$ для некоторого $R > 0$. Если существует неотрицательная константа $M_{\ell}$ такая, что $\left| \ell(f_{\boldsymbol{\theta}^*}(\mathbf{x}_{i}), \mathbf{y}_{i}) \right| \leqslant M_{\ell}$ для всех объектов $i = 1, \ldots, m$ в наборе данных справедливо:
+    \begin{align*}
+        \left| \mathcal{L}_{k+1}(\boldsymbol{\theta}) - \mathcal{L}_k(\boldsymbol{\theta}) \right| \leqslant \frac{2}{k+1}\left( M_{\ell} + \left( L \sqrt{2} M_{\mathbf{x}}^2 M_{\mathbf{W}}^{2L} + \sqrt{2} \frac{M_{\mathbf{W}}^2 (M_{\mathbf{W}}^{2L} - 1)}{M_{\mathbf{W}}^2 - 1} \right) R^2 \right),
+    \end{align*}
+    причем:~$
+        \left| \mathcal{L}_{k+1}(\boldsymbol{\theta}) - \mathcal{L}_k(\boldsymbol{\theta}) \right| \to 0~\text{при}~k \to \infty.$
+\end{rustheorem}
+
+\begin{ruscorollary}
+    Ландшафтная мера сложности параметрической функции~$f$ полносвязной нейросетевой модели глубокого обучения имеет асимптотику:
+    \[
+        \mu_f(f|D) \propto L(hM)^{2L},
+    \]
+    где~$M$ некоторая константа зависящая ограничивающая параметры и данные.
+\end{ruscorollary}
+\end{frame}
+
+\begin{frame}{Ландшафтная мера сверточной сетевой модели}
+\justifying
+\begin{rustheorem}
+    Пусть параметры $\boldsymbol{\theta}$ находятся в $R$-окрестности оптимума: $\|\boldsymbol{\theta} - \boldsymbol{\theta}^*\| \leqslant R.$
+    Также функция потерь ограничена некоторой константой~$\exists \; W_l > 0: \; \forall i\; |\ell_i| \leqslant W_l.$
+    Пусть все объекты в наборе данных ограничены~$\exists W_x\; \forall i \; \|{x_i}\| \leqslant W_x.$
+    
+    Тогда справедливо:
+    \begin{align*}
+        & \big|\mathcal{L}_{k+1}(\boldsymbol{\theta}) - \mathcal{L}_{k}(\boldsymbol{\theta})\big| \leqslant \frac{2}{k+1}W_{\ell} +\\
+        & + \frac{2}{k+1}R^2\sqrt{2}q^2W_{x}^2(L+1)(C^2k^2w^2mn)^L,
+    \end{align*}
+    где $q^2 = C^2k^2mn$.
+\end{rustheorem}
+
+\begin{ruscorollary}
+    Ландшафтная мера сложности параметрической функции~$f$ полносвязной нейросетевой модели глубокого обучения имеет асимптотику:
+    \[
+        \mu_f(f|D) \propto L(hM)^{2L},
+    \]
+    где~$M$ некоторая константа зависящая ограничивающая параметры и данные.
+\end{ruscorollary}
+\end{frame}
+
+%----------------------------------------------------------------------------------------------------------
+\section{Выносится на защиту}
+\begin{frame}{Выносится на защиту}
+\justifying
+	\begin{enumerate}
+	\justifying
+	    \item 1
+	\end{enumerate}
+\end{frame}
+
+\end{document} 
