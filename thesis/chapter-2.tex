@@ -308,15 +308,7 @@
 \end{proof}
 
 Полученные результаты указывают на то, что норма матрицы Гессе является степенной функцией от размера скрытого слоя~$h$ и экспоненциальной функцией от количества слоев~$L$.
-Хотя может показаться, что полученная оценка является завышенной, на самом деле это не так.
-Дело в том, что если выбрать значение~$h$ большим, то ограничивающая константа~$M$, скорее всего, будет очень малой.
-Благодаря этому значение под знаком степени~$2L$, вероятно, окажется меньше единицы. В дальнейшем эта верхняя оценка используется для получения неравенства разности функции потерь.
-
-\begin{remark}
-    Полученная оценка имеет важное значение для теории глубокого обучения, поскольку она раскрывает компромисс между шириной и глубиной нейронной сети с точки зрения сложности оптимизации.
-    Экспоненциальная зависимость от глубины сети~$L$ объясняет известные практические трудности при обучении очень глубоких сетей, в то время как степенная зависимость от ширины $h$ указывает на более управляемый рост сложности при увеличении размера слоев.
-    Учет взаимосвязи между~$h$ и~$M$ позволяет более адекватно интерпретировать полученные оценки и использовать их для практического анализа сходимости методов оптимизации.
-\end{remark}
+С одно стороны, полученная оценка является завышенной, но с другой, если выбрать значение~$h$ большим, то ограничивающая константа~$M$, будет малой, на что указывают эмпирические исследования.
 
 \section{Матричные модели глубокого обучения}
 
@@ -489,36 +481,6 @@
     \]
 \end{theorem}
 \begin{proof}
-Using the results of the previous Lemma~\ref{theorem:m-net:hesstruct}, it is enough for us to evaluate the upper bound of the expression: $\left\|\mathbf{Q}\right\|^2\left\|\mathbf{F}\right\|^2\left\|\mathbf{A}\right\|$
-
-In the work~\cite{grabovoi2024unraveling748584228}, the norm of matrix $\mathbf{A}$ was examined, and it was proven that: 
-\[
-    \left\|\mathbf{A}\right\| \leqslant \sqrt{2}.
-\] 
-Norm of block-diagonal matrix is not greater than max of block's norm \\
-\[
-    \left\|\mathbf{Q}\right\|^2 \leqslant \max\limits_{i=1,\dots,L+1}\left\|\mathbf{Q}^{(i)}\right\|^2 \leqslant q^2.
-\]
-
-Norm of matrix product is less or equal then product of norms:
-\[
-    \left\|\mathbf{G}^{(p)}\right\|^2 \leqslant \left\|\mathbf{T}^{(p+1)}\right\|^2 \dots\left\|\mathbf{T}^{(L+1)}\right\|^2 \leqslant w_{\mathbf{T}}^{2(L - p + 1)}.
-\]
-\[
-    \left\|\mathbf{R}^{(p-1)}\right\|^2 \leqslant \left\|\mathbf{T}^{(1)}\right\|^2 \dots \left\|\mathbf{T}^{(p-1)}\right\|^2 \leqslant w_{\mathbf{T}}^{2(p-1)}.
-\]
-The spectral matrix norm of the Kronecker product is equal to their ordinary product norm. Spectral norm of vertical stacked matrices is less or equal then sum of norms of it's blocks
-\begin{align}
-    & \left\|\mathbf{F}\right\|^2 \leqslant \sum\limits_{p=1}^{L+1}\left\|\mathbf{G}^{(p+1)\top}\otimes \mathbf{R}^{(p-1)}\mathbf{x}\right\|^2 = \\ 
-    & = \sum\limits_{p=1}^{L+1}\left\|\mathbf{G}^{(p)}\right\|^2\left\|\mathbf{R}^{(p-1)}\mathbf{x}\right\|^2.
-\end{align}
-Substituting the obtained estimates into the $\left\|\mathbf{H}_O\right\|$ formula we get
-\begin{align}
-    & \left\|\mathbf{F}\right\|^2 \leqslant \left\|\mathbf{x}\right\|^2\sum\limits_{p=1}^{L+1}w_{\mathbf{T}}^{2L} \leqslant \left\|\mathbf{x}\right\|^2(L+1)w_{\mathbf{T}}^{2L}. \\
-    & \left\|\mathbf{H}_O\right\| \leqslant \left\|\mathbf{Q}\right\|^2 \left\|\mathbf{F}\right\|^2\left\|\mathbf{A}\right\| \leqslant \sqrt{2}\left\|\mathbf{x}\right\|^2q^2(L+1)w_{\mathbf{T}}^{2L}.
-\end{align}
-\end{proof}
-\begin{proof}
 Согласно Теоремы~\ref{theorem:m-net:hesstruct}, матрица Гессе  представима в виде~$\mathbf{H}_O = \mathbf{Q}^\top \mathbf{F}^\top \mathbf{A} \mathbf{F} \mathbf{Q}$. 
 Используя субмультипликативное свойство спектральной нормы, получаем:
 \[
@@ -574,7 +536,7 @@ Substituting the obtained estimates into the $\left\|\mathbf{H}_O\right\|$ formu
 \end{proof}
 
 Рассмотрим частный случай модели глубокого оюучения, удовлетворяющего условию матричной факторизации для сверточной нейронной сети~(англ. CNN) с одномерной сверткой можно получить оценки на норму матрицу Гессе, как показано далее в Теореме~\ref{thm:1Dconv}. Здесь для простоты сохраняется обозначение $\mathbf{T}^{(p)}$, но теперь используется для одномерных сверток в виде линейных операторов.
-Известно, что сверточные сети часто могут быть представлены в виде линейных сверточных нейронных сетей (LCN).
+Известно, что сверточные сети часто могут быть представлены в виде линейных сверточных нейронных сетей (англ. LCN).
 Обычно это относится к представлению сверточных сетей с помощью матриц Теплица~\cite{kohn2022geometrylinearconvolutionalnetworks, qin2023toeplitzneuralnetworksequence}.
 Здесь же, используется обозначения для матриц Теплица из работы~\cite{singh2023hessianperspectivenatureconvolutional}.
 Также в указанной работе авторы определили специальный тип матрицы~$\mathbf{Q}^{(p)}$, соответствующий структуре одномерной матрицы Теплица.

@@ -500,7 +500,7 @@
 Пусть~$\mathcal{I}_1 \subseteq \mathcal{I} = \{1, \ldots, m\}$ и~$\mathcal{I}_2 \subseteq \mathcal{I} =\{1, \ldots,m\}$~--- соответствующие им подмножества индексов.
 
 \begin{definition}
-    Подвыборки~$\mathfrak{D}^1$ и~$\mathfrak{D}^2$ назовем \textbf{близкими}, если~$\mathcal{I}_2$ может быть получено из~$\mathcal{I}_1$ путем удаления, замены или добавления одного элемента, то есть
+    Подвыборки~$\mathfrak{D}^1$ и~$\mathfrak{D}^2$ назовем близкими, если~$\mathcal{I}_2$ может быть получено из~$\mathcal{I}_1$ путем удаления, замены или добавления одного элемента, то есть
     \[
         \left| \mathcal{I}_1 \triangle \mathcal{I}_2 \right| = \left| \left( \mathcal{I}_1 \setminus \mathcal{I}_2 \right) \cup \left( \mathcal{I}_2 \setminus \mathcal{I}_1 \right) \right| = 1.
     \]
@@ -514,7 +514,7 @@
 
 \begin{definition}
     Пусть задано некоторое~$\varepsilon > 0$.
-    Размер выборки~$m^*$ называется \textbf{KL-достаточным}, если для всех~$k\geqslant m^*$
+    Размер выборки~$m^*$ называется KL-достаточным, если для всех~$k\geqslant m^*$
     \[
         KL(k) = D_{KL}(p_k \| p_{k+1}) = \int p_k(\mathbf{w}) \log{\frac{p_k(\mathbf{w})}{p_{k+1}(\mathbf{w})}} d\mathbf{w} \leqslant \varepsilon.
     \]
@@ -595,7 +595,7 @@
 \]
 \begin{definition}
     Пусть задано некоторое~$\varepsilon > 0$.
-    Размер выборки~$m^*$ называется \textbf{S-достаточным}, если для всех~$k\geqslant m^*$
+    Размер выборки~$m^*$ называется S-достаточным, если для всех~$k\geqslant m^*$
     \[
         S(k) = \text{s-score}(p_k, p_{k+1}) \geqslant 1-\varepsilon.
     \]

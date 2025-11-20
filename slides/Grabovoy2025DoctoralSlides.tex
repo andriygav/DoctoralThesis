@@ -6,7 +6,7 @@
 \beamertemplatenavigationsymbolsempty
 
 \setbeamertemplate{footline}[page number]
-\setbeamersize{text margin left=1em, text margin right=1em}
+\setbeamersize{text margin left=1.5em, text margin right=1.5em}
 }
 
 \usepackage[T2A]{fontenc}
@@ -56,8 +56,8 @@
 \author{А.В. Грабовой}
 
 \institute[]{Диссертация на соискание ученой степени\\
-доктора физико-математических наук\\1.2.1~--- Искусственный интеллект и машинное обучение\\Научный консультант: д.ф.-м.н. К.\,В. Воронцов\\}
-\date[2026]{\small 1\;мая\;2026\,г.}
+доктора физико-математических наук\\~\\1.2.1~--- Искусственный интеллект и машинное обучение\\~\\Научный консультант: профессор РАН К.\,В. Воронцов}
+\date[2026]{\small 2026\,г.}
 
 %---------------------------------------------------------------------------------------------------------
 \begin{document}
@@ -280,10 +280,9 @@ TODO
     
     Тогда справедливо:
     \begin{align*}
-        & \big|\mathcal{L}_{k+1}(\boldsymbol{\theta}) - \mathcal{L}_{k}(\boldsymbol{\theta})\big| \leqslant \frac{2}{k+1}W_{\ell} +\\
-        & + \frac{2}{k+1}R^2\sqrt{2}q^2W_{x}^2(L+1)(C^2k^2w^2mn)^L,
+        \big|\mathcal{L}_{k+1}(\boldsymbol{\theta}) - \mathcal{L}_{k}(\boldsymbol{\theta})\big| &\leqslant \frac{2}{k+1}W_{\ell} +\\
+        & + \frac{2}{k+1}R^2\sqrt{2}C^4k^4m^2n^2W_{x}^2(L+1)(C^2k^2w^2mn)^L.
     \end{align*}
-    где $q^2 = C^2k^2mn$.
 \end{rustheorem}
 
 \begin{ruscorollary}
@@ -296,13 +295,328 @@ TODO
 \end{frame}
 
 %----------------------------------------------------------------------------------------------------------
+\section{Оценка матриц Гессе для нейросетевых моделей}
+\begin{frame}{Декомпозиция матрицы Гессе на G и H компоненты}
+\justifying
+
+Матрица Гессе для функции $\mathcal{L}(\boldsymbol{\theta})$ от $n$ параметров:
+\[
+    \mathbf{H}(\mathcal{L})_{ij} = \frac{\partial^2 \mathcal{L}}{\partial \theta_i \partial \theta_j} = \sum_{i=1}^{l}\frac{\partial^2 \ell(\mathbf{z}_i, \mathbf{y}_i)}{\partial \theta_i \partial \theta_j},
+\]
+
+Используя цепное правило, матрица Гессе представима в виде двух слагаемых:
+\[
+    \mathbf{H}_{i}(\boldsymbol{\theta}) = \underbrace{\nabla_{\boldsymbol{\theta}} \mathbf{z}_i \dfrac{\partial^2 \ell(\mathbf{z}_i, \mathbf{y}_i)}{\partial \mathbf{z}_{i}^2} \nabla_{\boldsymbol{\theta}} \mathbf{z}_i^{\text{T}} }_{\text{G-компонента}} + \underbrace{\sum\limits_{k=1}^{K} \dfrac{\partial \ell(\mathbf{z}_i, \mathbf{y}_i)}{\partial z_{ik}} \nabla^2_{\boldsymbol{\theta}} z_{ik}}_{\text{H-компонента}}.
+\]
+
+\begin{ruscorollary}
+    \justifying
+    Эмперически установлено, что H-компонента близка к нулю, а особый интерес представляет G-компонента:
+\[
+    \mathbf{H}_{i}(\boldsymbol{\theta}) \approx \nabla_{\boldsymbol{\theta}} \mathbf{z}_i \dfrac{\partial^2 \ell(\mathbf{z}_i, \mathbf{y}_i)}{\partial \mathbf{z}_{i}^2} \nabla_{\boldsymbol{\theta}} \mathbf{z}_i^{\text{T}}.
+\]
+\end{ruscorollary}
+\end{frame}
+
+\begin{frame}{Оценка матрицы Гессе для полносвязной сети}
+\begin{rustheorem}
+    \justifying
+    Для~$L$-слойной полносвязной нейронную сеть с функцией активации ReLU, применяемую для решения задачи классификации на~$K$ классов.
+    Пусть: $\| \mathbf{W}^{(p)} \|_2 \leqslant M_{\mathbf{W}}, \| \mathbf{x}_i \|_2 \leqslant M_{\mathbf{x}},$
+    для всех слоев~$p = 1, \ldots, L$ в сети и для всех объектов~$i = 1, \ldots, m.$
+    Тогда для любого объекта~$i = 1, \ldots, m$ выполняется следующее неравенство: $\left\| \mathbf{H}_i(\boldsymbol{\theta}) \right\|_2 \leqslant L \sqrt{2} M_{\mathbf{x}}^2 M_{\mathbf{W}}^{2L} + \sqrt{2} \dfrac{M_{\mathbf{W}}^2 (M_{\mathbf{W}}^{2L} - 1)}{M_{\mathbf{W}}^2 - 1}.$
+\end{rustheorem}
+
+\begin{rustheorem}
+    \justifying
+    Пусть все параметры модели ограничены некоторой константой~$M > 0$, то есть для всех $i, j = 1, \ldots, h$ и для всех слоев $p = 1, \ldots, L$ выполняется условие~$|w_{ij}^{(p)}| \leqslant M,$ тогда при выполнении условий предыдущей теоремы справедлива оценка: $\left\| \mathbf{H}_i(\boldsymbol{\theta}) \right\|_2 \leqslant L \sqrt{2} M_{\mathbf{x}}^2 (hM)^{2L} + \sqrt{2} \dfrac{(hM)^2 ((hM)^{2L} - 1)}{(hM)^2 - 1}.$
+\end{rustheorem}
+
+\begin{ruscorollary}
+    \justifying
+    Частным случаем является оценка на матрицу Гессе для однослойной сети~$L=1$ вида: $\left\| \mathbf{H}_i(\boldsymbol{\theta}) \right\|_2 \leqslant \sqrt{2} M_{\mathbf{W}}^{2} \left( M_{\mathbf{x}}^2 + 1 \right).$
+\end{ruscorollary}
+\end{frame}
+
+\begin{frame}{Факторизация матричных моделей глубокого обучения}
+\justifying
+Пусть $f_{\boldsymbol{\theta}}(\mathbf{x})$ является суперпозицией линейных операторов:
+\begin{equation*}
+    f_{\boldsymbol{\theta}}(\mathbf{x}) = \mathbf{T}^{(L+1)}\boldsymbol{\Lambda}^{(L)}\dots \boldsymbol{\Lambda}^{(1)}\mathbf{T}^{(1)}\mathbf{x},
+\end{equation*}
+где~$\boldsymbol{\theta} = \mathrm{col}(\mathbf{W}^{(L+1)}, \dots, \mathbf{W}^{(1)}).$
+
+\begin{rustheorem}
+    \justifying
+    Пусть функция нейронной сети~$f_{\boldsymbol{\theta}}(\mathbf{x})$ представима в виде суперпозиции линейных операторов, тогда матрица Гессе функции потерь относительно параметров модели представляется в факторизованной форме:
+    $\mathbf{H}(\boldsymbol{\theta}) \approx \mathbf{Q}^{T}\mathbf{F}^{T}\mathbf{A}\mathbf{F}\mathbf{Q}$, описывающие G-компоненту матрицы Гессе.
+\end{rustheorem}
+
+\begin{rustheorem}
+    \justifying
+    Пусть функция нейронной сети~$f_{\boldsymbol{\theta}}(\mathbf{x})$ представима в виде суперпозиции линейных операторов.
+    Пусть для всех $p$ выполняется: $\left\|\mathbf{Q}^{(p)}\right\| \leqslant q, \left\|\mathbf{T}^{(p)}\right\|^2 \leqslant w_{\mathbf{T}}^2.$
+    Тогда справедлива оценка: $\left\|\mathbf{H}_O\right\| \leqslant \sqrt{2}q^2\left\|\mathbf{x}\right\|^2(L+1)w_{\mathbf{T}}^{2L}.$
+\end{rustheorem}
+
+\end{frame}
+
+\begin{frame}{Сверточные модели глубокого обучения}
+\justifying
+\begin{rustheorem}
+    \justifying
+    Пусть задана функция нейронной сети~$f_{\boldsymbol{\theta}}x = C_{\mathbf{W}^{(L+1)}} \circ \sigma \circ \dots \circ \sigma \circ C_{\mathbf{W}^{(1)}},$
+    где~$C_{\mathbf{W}^{(i)}}$~--- одномерная свертка с ядром~$\mathbf{W}^{(i)}$. Пусть заданы следующие верхние оценки на параметры:~$C_l \leqslant C, k_i \leqslant k, d_i \leqslant d_1:=d, |\mathbf{W}^{(p)}_{i,j,k}|^2 \leqslant w^2.$
+    Тогда норма матрицы Гессе имеет следующую верхнюю оценку: $\left\|\mathbf{H}\right\| \leqslant \sqrt{2}\left\|x\right\|^2d^2(L+1)(C^2w^2kd)^L.$
+\end{rustheorem}
+
+\begin{rustheorem}
+    \justifying
+    Пусть задана функция нейронной сети~$f_{\boldsymbol{\theta}}\mathbf{x} = C_{\mathbf{W}^{(L+1)}} \circ \dots \circ C_{\mathbf{W}^{(1)}},$
+    где $C_{\mathbf{W}^{(l)}}$~--- двумерная свертка с ядром $\mathbf{W}^{(i)}$.
+    Пусть заданы следующие верхние оценки на параметры:~$C_l \leqslant C, k_i \leqslant k, m_i \leqslant m_1:=m, n_i \leqslant n_1:=n, |\mathbf{W}^{(p)}_{i,j,k}|^2 \leqslant w^2.$
+    Тогда норма матрицы Гессе имеет следующую верхнюю оценку:~$\left\|\mathbf{H}_{O}\right\| \leqslant \sqrt{2}\left\|\mathbf{x}\right\|^2C^4k^4m^2n^2(L+1)(C^2k^2w^2mn)^{L}.$
+\end{rustheorem}
+
+\begin{rusremark}
+    \justifying
+    Полученные оценки имеют недостаток связанный с тем, что они не учитывают уменьшение размеров после сверточных операций и зависят только от верхних границ параметров.
+\end{rusremark}
+\end{frame}
+
+\begin{frame}{Снижение сложности в сверточных моделях}
+\justifying
+\begin{rustheorem}
+    \justifying
+    Пусть задана функция нейронной сети~$f_{\boldsymbol{\theta}}{\mathbf{x}} = \mathbf{T}^{(L+1)}\boldsymbol{\Lambda}^{(L)}\dots \boldsymbol{\Lambda}^{(1)}\mathbf{T}^{(1)}\mathbf{x},$
+    содержащий слой MaxPool2D в позиции~$\boldsymbol{\Lambda}^{(l)}$ с ядром~$k_{\mathrm{pool}} \times k_{\mathrm{pool}}$ вместо активации ReLU.
+    Тогда имеет следующую верхнюю оценку нормы матрицы Гессе:
+    $\left\|\mathbf{H}\right\| \leqslant \sqrt{2}\left\|\mathbf{x}\right\|^2q^2\big(\frac{1}{k_{\mathrm{pool}}^2}\big)^{L-l+2}(L+1)(k^2C^2w^2mn)^{L}.$
+    где~$q^2 = mnC^2k^2$.
+\end{rustheorem}
+
+\begin{rustheorem}
+    \justifying
+    Пусть задана функция нейронной сети~
+    $f_{\boldsymbol{\theta}}{\mathbf{x}} = \mathbf{T}^{(L+1)}\boldsymbol{\Lambda}^{(L)}\dots \boldsymbol{\Lambda}^{(1)}\mathbf{T}^{(1)}\mathbf{x},$
+    содержащая слой AvgPool2D в позиции~$\boldsymbol{\Lambda}^{(l)}$ вместо активации ReLU с ядром размера~$k_{\mathrm{pool}} \times k_{\mathrm{pool}}$.
+    Тогда оценка нормы матрицы Гессе имеет следующую верхнюю оценку:
+    $\left\|\mathbf{H}_O\right\| \leqslant \sqrt{2}\left\|\mathbf{x}\right\|^2C^4k^4m^2n^2\big(\frac{1}{k_{\mathrm{pool}}^2}\big)^{L-l+2}(L+1)(k^2C^2w^2mn)^{L}.$
+\end{rustheorem}
+
+\begin{rusremark}
+    \justifying
+    Полученные оценки в рамках теорем указывает, что операции усредняющего пулинга и макс-пулинга влияет на сложность оптимизационного ландшафта, уменьшая норму гессиана за счет множителя $\left(\frac{1}{k_{\mathrm{pool}}^2}\right)^{L-l+2}$. То есть, операции пулинга снижают сложность модели и рассматриваются как механизм регуляризации в глубоких сверточных нейронных сетях.
+\end{rusremark}
+
+\end{frame}
+
+\section{Достаточный объем выборки}
+\begin{frame}{Достаточный объем выборки}
+\justifying
+
+\begin{rustheorem}
+    \justifying
+    Для простой генеральной совокупности, мера сложности любой выборки $D \subset \Gamma$ равна ее объему:
+    \[
+        \mu_D(D) = C\cdot|D|.
+    \]
+\end{rustheorem}
+
+\begin{rusdefinition}
+    \justifying
+    Размер выборки $m^*$ называется \textit{достаточным} согласно критерию $T$, если $T$ выполняется для всех $k \geqslant m^*$.
+\end{rusdefinition}
+
+\end{frame}
+
+\begin{frame}{Cэмлирования эмпирической функции ошибки}
+\justifying
+\begin{rusdefinition}
+    \justifying
+    Пусть задано некоторое~$\varepsilon > 0$.
+    Размер выборки~$m^*$ назовем D-достаточным, если для всех~$k\geqslant m^*$ выполняется условие:~$D(k) = \mathbb{D}_{\hat{\mathbf{w}}_{k}} L(\mathfrak{D}_m, \hat{\mathbf{w}}_{k}) \leqslant \varepsilon.$
+\end{rusdefinition}
+
+\begin{rusdefinition}
+    \justifying
+    Пусть задано некоторое~$\varepsilon > 0$.
+    Размер выборки~$m^*$ назовем M-достаточным, если для всех~$k\geqslant m^*$ выполняется условие:~$M(k) = \left| \mathbb{E}_{\hat{\mathbf{w}}_{k+1}} L(\mathfrak{D}_m, \hat{\mathbf{w}}_{k+1}) - \mathbb{E}_{\hat{\mathbf{w}}_{k}} L(\mathfrak{D}_m, \hat{\mathbf{w}}_{k}) \right| \leqslant \varepsilon.$
+\end{rusdefinition}
+
+\begin{rustheorem}
+    \justifying
+    Пусть~$\|\mathbf{m}_{k+1} - \mathbf{m}_k\|_2 \to 0$ и~$\|\bm{\Sigma}_{k+1} - \bm{\Sigma}_k\|_{F}\to 0$ при~$k\to \infty$. 
+    Тогда в модели линейной регрессии определение M-достаточного размера выборки корректно.
+    А именно, для любого~$\varepsilon > 0$ существует такой~$m^*$, что для всех~$k\geqslant m^*$ выполняется~$M(k)\leqslant\varepsilon$.
+\end{rustheorem}
+
+\begin{ruscorollary}
+    \justifying
+    Пусть~$\|\mathbf{m}_k - \mathbf{w}\|_2\to 0$ и~$\|\mathbf{\Sigma}_k - \left[k\mathcal{I}(\mathbf{w})\right]^{-1}\|_{F}\to 0$ при~$k \to \infty$.
+    Тогда в модели линейной регрессии определение M-достаточного размера выборки корректно.
+\end{ruscorollary}
+
+\end{frame}
+
+\begin{frame}{KL-близость апостериорных распределений}
+\justifying
+\begin{rusdefinition}
+    \justifying
+    Подвыборки~$\mathfrak{D}^1$ и~$\mathfrak{D}^2$ назовем близкими, если~$\mathcal{I}_2$ может быть получено из~$\mathcal{I}_1$ путем удаления, замены или добавления одного элемента, то есть
+    \[
+        \left| \mathcal{I}_1 \triangle \mathcal{I}_2 \right| = \left| \left( \mathcal{I}_1 \setminus \mathcal{I}_2 \right) \cup \left( \mathcal{I}_2 \setminus \mathcal{I}_1 \right) \right| = 1.
+    \]
+\end{rusdefinition}
+
+\begin{rusdefinition}
+    \justifying
+    Пусть задано некоторое~$\varepsilon > 0$.
+    Размер выборки~$m^*$ называется KL-достаточным, если для всех~$k\geqslant m^*$
+    \[
+        KL(k) = D_{KL}(p_k \| p_{k+1}) = \int p_k(\mathbf{w}) \log{\frac{p_k(\mathbf{w})}{p_{k+1}(\mathbf{w})}} d\mathbf{w} \leqslant \varepsilon.
+    \]
+\end{rusdefinition}
+
+\begin{rustheorem}
+    \justifying
+    Пусть~$\|\mathbf{m}_{k+1} - \mathbf{m}_k\|_2 \to 0$ и~$\|\bm{\Sigma}_{k+1} - \bm{\Sigma}_k\|_{F}\to 0$ при~$k\to \infty$.
+    Тогда в модели с нормальным апостериорным распределением параметров определение KL-достаточного размера выборки корректно.
+    А именно, для любого~$\varepsilon > 0$ существует такой~$m^*$, что для всех~$k\geqslant m^*$ выполняется~$KL(k)\leqslant\varepsilon$.
+\end{rustheorem}
+
+\end{frame}
+
+\begin{frame}{S-близость апостериорных распределений}
+\justifying
+\begin{rusdefinition}
+    \justifying
+    Пусть задано некоторое~$\varepsilon > 0$.
+    Размер выборки~$m^*$ называется S-достаточным, если для всех~$k\geqslant m^*$
+    \[
+        S(k) = \text{s-score}(p_k, p_{k+1}) \geqslant 1-\varepsilon.
+    \]
+\end{rusdefinition}
+
+\begin{rustheorem}
+    \justifying
+    Пусть~$\|\mathbf{m}_{k+1} - \mathbf{m}_k\|_2\to 0$ при~$k \to \infty$.
+    Тогда в модели с нормальным апостериорным распределением параметров определение S-достаточного размера выборки корректно.
+    А именно, для любого~$\varepsilon > 0$ существует такой~$m^*$, что для всех~$k\geqslant m^*$ выполняется~$S(k)\geqslant 1-\varepsilon$.
+\end{rustheorem}
+
+\end{frame}
+
+\begin{frame}{KL-достаточность против S-достаточности}
+\justifying
+\begin{figure}[h!t]\center
+    \includegraphics[width=\textwidth]{thesis/figures/chapter-3/posterior-distribution/sufficient-vs-threshold}
+\end{figure}
+
+Зависимость достаточного размера выборки от порогового параметра.
+Для S-достаточного размера выборки требуются более низкие значения порога.
+Таким образом, он оказывается более требовательным к этому значению.
+
+\end{frame}
+
+%----------------------------------------------------------------------------------------------------------
+\section{Снижение сложности моделей}
+\begin{frame}{Дистилляция на многих генеральных совокупностях}
+\justifying
+
+\begin{figure}[h!t]\center
+    {\includegraphics[width=0.4 \textwidth]{thesis/figures/chapter-4/multidomain-distillation/Distillation_only}}
+    {\includegraphics[width=0.4 \textwidth]{thesis/figures/chapter-4/multidomain-distillation/Distillation_DA}}
+\end{figure}
+
+\begin{rusdefinition}
+    \justifying
+    Генеральная совокупность~$B$ называется близкой к генеральной совокупности~$A$, если существует инъективное отображение $\varphi: A \rightarrow B$.
+\end{rusdefinition}
+
+Заданы выборки из двух близких генеральных совокупностей отображением~$\varphi$:
+\[
+    \mathfrak{D}_{A}=\{(\mathbf{x_i},\mathbf{y_i})\}_{i=1}^n,
+\mathbf{x_i} \in \mathbb{X}_{A},
+\mathbf{y_i} \in \mathbb{Y}, \qquad \mathfrak{D}_{B}=\{(\mathbf{x_i},\mathbf{y_i})\}_{i=1}^m, \mathbf {x_i} \in \mathbb{X}_{B}, \mathbf{y_i} \in \mathbb{Y}.
+\]
+Оптимизационная задача для дистилляции:
+\begin{align*}
+    \mathcal{L}(\mathbf{w,X,Y,f,\varphi}) =&
+    -\lambda\sum\limits_{i=1}^{m}\sum\limits_{r=1}^{ R}\mathbb{I}[y_{i}=r]\log{g^{r}(\mathbf{x}_{i},\mathbf{w})} -\\
+    &-(1-\lambda)\sum\limits_{i=1}^{m}\sum\limits_{r=1}^{R}(f\circ \varphi)^{r}(\mathbf{x }_{i})\log{g^{r}(\mathbf{x}_{i},\mathbf{w})}.
+\end{align*}
+
+\end{frame}
+
+%----------------------------------------------------------------------------------------------------------
+\section{Применение теоретических оценок в прикладных задачах}
+\begin{frame}{Радамахеровская сложность многозадачного обучения}
+\justifying
+\begin{rustheorem}
+    \justifying
+    Пусть $S_t=\{x_i\}_{i=1}^n$~--- выборка фиксированной целевой задачи $t$ с $\|x_i\|_2 \le R$.
+    Пусть $\phi(\cdot;w)$~--- энкодер, и рассмотрим линейные головы
+    $f_{w,h}(x)=h^\top \phi(x;w)$ с $\|h\|_2 \le B_{\mathrm{head}}$.
+    Предположим:
+    \begin{enumerate}
+        \item Ограничение на признаки: для всех $x,w$ 
+        $\|\phi(x;w)\|_2 \le L\,\|w\|\,\|x\|_2$.
+        \item Энкодер STL удовлетворяет $\|w_{\mathrm{enc}}\|\le B_{\mathrm{enc}}$,
+        общий энкодер MTL удовлетворяет $\|w_{\mathrm{shared}}\|\le B_{\mathrm{shared}}$.
+        \item Многозадачное масштабирование: $B_{\mathrm{shared}} \le B_{\mathrm{enc}}/\sqrt{T}$.
+    \end{enumerate}
+
+    Тогда справедлива оценка сложности: $\widehat{\mathfrak R}_n\big(\mathcal{F}_{\mathrm{MTL}}^{(t)};S_t\big) \le \frac{1}{\sqrt{T}}\widehat{\mathfrak R}_n\big(\mathcal{F}_{\mathrm{STL}}^{(t)};S_t\big).$
+\end{rustheorem}
+
+\begin{rusremark}
+    \justifying
+    В постановке Бакстера, количество задач $T$ само по себе способствует оценке общего индуктивного смещения: с ростом $T$ сложность данных на задачу уменьшается пропорционально $1/T$.
+    В отличие от этого, наш анализ сохраняет размер выборки целевой задачи $n$ фиксированным и сравнивает STL и MTL на одном и том же $n$, поэтому улучшение проявляется как множитель $1/\sqrt{T}$ в сложности Радемахера на задачу.
+\end{rusremark}
+
+\end{frame}
+
+%----------------------------------------------------------------------------------------------------------
 \section{Выносится на защиту}
 \begin{frame}{Выносится на защиту}
 \justifying
 	\begin{enumerate}
 	\justifying
-	    \item 1
+        \item Оценки сложности моделей глубокого обучения.
+        \item Оценки сложности данных.
+        \item Ландшафтная мера сложности моделей глубокого обучения и ее связь со сложностью данных.
+        \item Оценки матриц Гессе для некоторых классов нейросетевых архитектур и их связь с ландшафтной мерой сложности моделей глубокого обучения.
+        \item Оценки достаточного размера выборки и их связь со сложностью моделей и данных.
+        \item Методы снижения размерности пространства параметров моделей глубокого обучения на основе анализа матриц Гессе.
 	\end{enumerate}
+\end{frame}
+
+\begin{frame}{Основные публикации}
+\justifying
+	\begin{enumerate}
+	\justifying
+        \item Киселев Н. С., Грабовой А. В. Раскрытие Гессиана: ключ к плавной сходимости поверхности функции потерь // Доклады Российской академии наук. Математика, информатика, процессы управления.~--- 2024.~--- Т. 520, № 2.~--- С. 57–70.
+        \item Грабовой А. В., Стрижов В. В. Вероятностная интерпретация задачи дистилляции // Автоматика и телемеханика.~--- 2022.~--- № 1.~--- С. 150–168. 
+        \item Numerical methods of sufficient sample size estimation for generalised linear models / A. V. Grabovoy, T. T. Gadaev, A. P. Motrenko, V. V. Strijov // Lobachevskii Journal of Mathematics.~--- 2022.~--- Vol. 43, no. 9.~--- P. 2453–2462.
+        \item Грабовой А. В., Стрижов В. В. Байесовская дистилляция моделей глубокого обучения // Автоматика и телемеханика.~--- 2021.~--- № 11.~--- С. 16–29.
+        \item Грабовой\;А.\;В., Бахтеев\;О.\;Ю., Стрижов\;В.\;В. Определение релевантности параметров нейросети // Информатика и ее применения.~--- 2019. 
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}{Публикации по теме исследований}
+\justifying
+	\begin{itemize}
+	\justifying
+        \item Всего публикаций: \textbf{90}.
+        \item Публикаций по теме диссертации: \textbf{43}.
+        \item Публикации в списке ВАК: \textbf{24}.
+        \item Журнальные публикации в WoS, Scopus: \textbf{18}.
+        \item Публикации из RSCI: \textbf{17}.
+        \item Конференции в WoS, Scopus: \textbf{20}.
+        \item Тезисы докладов и другие публикации: \textbf{32}.
+	\end{itemize}
 \end{frame}
 
 \end{document} 
