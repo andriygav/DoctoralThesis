@@ -118,7 +118,7 @@
 Теорема~\ref{theorem:hess-kiselev-theorem} устанавливает верхнюю оценку спектральной нормы матрицы Гессе для полносвязной нейронной сети с функцией активации ReLU. Условия теоремы включают ограниченность спектральных норм матриц весов всех слоев и норм входных векторов, что представляет собой естественное предположение для большинства практических приложений.
 
 Полученная оценка демонстрирует экспоненциальную зависимость от глубины сети~$L$, что согласуется с известными результатами о возрастании сложности оптимизационного ландшафта с увеличением глубины нейронной сети.
-\begin{theorem}\label{theorem:hess-kiselev-theorem}
+\begin{theorem}[Оценка нормы матрицы Гессе для полносвязных сетей]\label{theorem:hess-kiselev-theorem}
     Рассмотрим~$L$-слойную полносвязную нейронную сеть с функцией активации ReLU и без членов смещения, применяемую для решения задачи классификации на~$K$ классов.
     Предположим, что выполнены условия:
     \begin{align}
@@ -254,7 +254,7 @@
 
 Экспоненциальный характер зависимости объясняет известную эмпирическую оценку о том, что глубокие и широкие сети обладают значительно более сложной геометрией функции потерь, что создает дополнительные сложности для методов оптимизации. Полученный результат также подчеркивает важность контроля норм параметров на протяжении всего процесса обучения для обеспечения устойчивости алгоритмов оптимизации.
 
-\begin{theorem}\label{theorem:hess-kiselev-lemma}
+\begin{theorem}[Асимптотика нормы матрицы Гессе для полносвязных сетей]\label{theorem:hess-kiselev-lemma}
     Пусть все параметры модели ограничены некоторой константой~$M > 0$, то есть для всех $i, j = 1, \ldots, h$ и для всех слоев $p = 1, \ldots, L$ выполняется условие~$|w_{ij}^{(p)}| \leqslant M,$ тогда при выполнении условий Теоремы~\ref{theorem:hess-kiselev-theorem} справедливо следующее неравенство:
     \[ 
         \left\| \mathbf{H}_i(\boldsymbol{\theta}) \right\|_2 \leqslant L \sqrt{2} M_{\mathbf{x}}^2 (hM)^{2L} + \sqrt{2} \dfrac{(hM)^2 ((hM)^{2L} - 1)}{(hM)^2 - 1}.
@@ -401,7 +401,7 @@
 
 \subsection{Матричная факторизация матрицы Гессе}
 
-\begin{theorem}\label{theorem:m-net:hesstruct}
+\begin{theorem}[Факторизация матрицы Гессе]\label{theorem:m-net:hesstruct}
     Пусть функция нейронной сети $f_{\boldsymbol{\theta}}(\mathbf{x})$ представима в виде \eqref{eq::m-net:repr}, тогда матрица Гессе функции потерь относительно параметров модели может быть представлена в факторизованной форме:
     $\mathbf{H}_O(\boldsymbol{\theta}) = \mathbf{Q}^{T}\mathbf{F}^{T}\mathbf{A}\mathbf{F}\mathbf{Q}$, где $\mathbf{H}_O$ описывает G-компоненту матрицы Гессе.
 \end{theorem}
@@ -473,7 +473,7 @@
 
 Особенностью данной теоремы является учет влияния всех слоев сети через мультипликативные члены~$w_{\mathbf{T}}^{2L}$ и аддитивные члены~$(L+1)$, что качественно отражает накопление сложности при увеличении глубины архитектуры. Оценка также подчеркивает важность контроля норм весовых матриц на протяжении всего процесса обучения для обеспечения устойчивости оптимизации.
 
-\begin{theorem}\label{theorem:m-net:hessnorm} 
+\begin{theorem}[Оценка нормы матрицы Гессе для матричных сетей]\label{theorem:m-net:hessnorm} 
     Пусть нейронная сеть $f_{\boldsymbol{\theta}}(\mathbf{x})$ представима в виде~\eqref{eq::m-net:repr}.
     Пусть для всех слоев $p$ выполнены условия:
     \begin{align}
@@ -556,7 +556,7 @@
 
 Теорема~\ref{thm:1Dconv} доказывает верхнюю оценку нормы гессиана для глубокой одномерной сверточной сети. Особенностью полученной оценки является мультипликативная зависимость от глубины сети~$L$ и полиномиально-экспоненциальная зависимость от параметров модели~--- числа каналов $C$, размера ядра $k$ и длины последовательности $d$.
 
-\begin{theorem}\label{thm:1Dconv}
+\begin{theorem}[Оценка нормы матрицы Гессе для 1D-сверточных сетей]\label{thm:1Dconv}
     Пусть задана сеть вида:
     \[
         f_{\boldsymbol{\theta}}x = C_{\mathbf{W}^{(L+1)}} \circ \sigma \circ \dots \circ \sigma \circ C_{\mathbf{W}^{(1)}},
@@ -621,7 +621,7 @@
 Далее теорема~\ref{thm:2Dconv} устанавливает оценку нормы гессиана для глубоких двумерных сверточных сетей.
 Особенностью полученной оценки является экспоненциальная зависимость от глубины сети~$L$ и полиномиальная зависимость от основных параметров архитектуры: числа каналов~$C$, размера ядра~$k$ и пространственных размеров $m \times n$.
 
-\begin{theorem}\label{thm:2Dconv}
+\begin{theorem}[Оценка нормы матрицы Гессе для 2D-сверточных сетей]\label{thm:2Dconv}
     Пусть задана сеть вида
     \[
         f_{\boldsymbol{\theta}}\mathbf{x} = C_{\mathbf{W}^{(L+1)}} \circ \dots \circ C_{\mathbf{W}^{(1)}},
@@ -690,7 +690,7 @@
 
 Теорема~\ref{theorem:maxpool} описывает связь между параметрами сети с операцией макс-пулинга и сложностью оптимизационного ландшафта через норму матрицы Гессе. Полученная оценка показывает, что введение слоя макс-пулинга существенно модифицирует зависимость сложности модели от ее параметров.
 
-\begin{theorem}\label{theorem:maxpool}
+\begin{theorem}[Оценка нормы матрицы Гессе для MaxPool]\label{theorem:maxpool}
     Пусть задана сеть вида: 
     \[
         f_{\boldsymbol{\theta}}{\mathbf{x}} = \mathbf{T}^{(L+1)}\boldsymbol{\Lambda}^{(L)}\dots \boldsymbol{\Lambda}^{(1)}\mathbf{T}^{(1)}\mathbf{x},
@@ -737,7 +737,7 @@
 
 Следующая теорема~\ref{theorem:avgpool} устанавливает оценку нормы матрицы Гессе для сверточной сети, содержащей слой усредняющего пулинга.
 
-\begin{theorem}\label{theorem:avgpool}
+\begin{theorem}[Оценка нормы матрицы Гессе для AvgPool]\label{theorem:avgpool}
     Пусть задана сеть вида:
     \[
         f_{\boldsymbol{\theta}}{\mathbf{x}} = \mathbf{T}^{(L+1)}\boldsymbol{\Lambda}^{(L)}\dots \boldsymbol{\Lambda}^{(1)}\mathbf{T}^{(1)}\mathbf{x},
@@ -776,7 +776,7 @@
 Теорема~\ref{theorem:fc-head} устанавливает оценку нормы матрицы Гессе для гибридной архитектуры, сочетающей сверточные слои и полносвязный слой.
 Полученная оценка указывает на мультипликативный вклад обеих частей сети, причем сверточная часть вносит множитель~$(k^2C^2w^2mn)^L$, а полносвязная~--- $(h^2\tilde{w}^2)^P$.
 
-\begin{theorem}\label{theorem:fc-head}
+\begin{theorem}[Оценка нормы матрицы Гессе для полносвязной головы]\label{theorem:fc-head}
 Пусть задана сеть с~$P$ полносвязными слоями следующего вида:
 \begin{align}
     f_{\boldsymbol{\theta}}{\mathbf{x}} &= \mathbf{T}^{(L+P+1)}\boldsymbol{\Lambda}^{(L+P)} \dots \\
@@ -851,7 +851,7 @@
 \]
 где $\mu_i = \frac{1}{m} \sum_{j=1}^m \mathbf{U}_{i,j}, \quad \sigma_i^2 = \frac{1}{m} \sum_{j=1}^m (\mathbf{U}_{i,j} - \mu_i)^2$.
 
-\begin{assumption}\label{assumption:LayerNorm}
+\begin{assumption}[Условие положительности дисперсии для LayerNorm]\label{assumption:LayerNorm}
 Для входной матрицы слоя LayerNorm: $\mathbf{X} + \mathbf{F}(\mathbf{X})$, $\mathbf{Y} + \mathrm{FFN}(\mathbf{Y})$, построчная дисперсия удовлетворяет условию $\min_i \sigma_i^2 > 0$.
 \end{assumption}
 
@@ -883,7 +883,7 @@
 
 В настоящем подразделе проводится оценка нормы матрицы Гессе для одного слоя самовнимания. Результат данной оценки формулируется в теореме~\ref{thm:self_attention_hessian_estimation}.
 
-\begin{theorem}\label{thm:self_attention_hessian_estimation}
+\begin{theorem}[Оценка нормы матрицы Гессе для слоя самовнимания]\label{thm:self_attention_hessian_estimation}
 
 Пусть $\|\cdot\|_2$ является спектральной нормой, тогда для слоя самовнимания получаем:
 \[
@@ -1104,7 +1104,7 @@ M &= 3\cdot\max \Bigg(\frac{2L}{d_V} \| \mathbf{X}\|^2_2, \\
 \subsection{Матрица Гессе для LayerNorm слоя}
 
 Для начала вычислим для функции~$\mathrm{LayerNorm}$ матрицу Якоби относительно параметров модели, для этого докажем теорему~\ref{thm:layernorm_derivative}.
-\begin{theorem}\label{thm:layernorm_derivative}
+\begin{theorem}[Производная LayerNorm]\label{thm:layernorm_derivative}
     Пусть задана матрица $\mathbf{X} \in \mathbb{R}^{L \times d_V}$. Определим функцию~$\mathbf{M}(\mathbf{X})$ следующим образом:
     \begin{align}
         \mathbf{M}(\mathbf{X}) &= \mathbf{X} - \tfrac{1}{d_V}\mathbf{X}\mathbf{1}_{d_V}\mathbf{1}_{d_V}^\top, \\
@@ -1189,7 +1189,7 @@ M &= 3\cdot\max \Bigg(\frac{2L}{d_V} \| \mathbf{X}\|^2_2, \\
 \end{proof}
 
 Теперь вычислим для функции матрицу Гессе относительно параметров модели, для этого докажем теорему~\ref{thm:layernorm_second_derivative}.
-\begin{theorem}\label{thm:layernorm_second_derivative}
+\begin{theorem}[Вторая производная LayerNorm]\label{thm:layernorm_second_derivative}
     Пусть задан оператор~$\text{LayerNorm}$ в виде, аналогичном теореме~\ref{thm:layernorm_derivative}:
     \[
         \text{LayerNorm}(\mathbf{X}) = \mathbf{P}(\mathbf{X}) \mathbf{M}(\mathbf{X}),
@@ -1313,7 +1313,7 @@ M &= 3\cdot\max \Bigg(\frac{2L}{d_V} \| \mathbf{X}\|^2_2, \\
 
 \subsection{Матрица Гессе для нелинейности ReLU}
 
-\begin{theorem}\label{theorem:relu_derivative_hessian}
+\begin{theorem}[Производные ReLU]\label{theorem:relu_derivative_hessian}
 Пусть задана матрица~$\mathbf{X} \in \mathbb{R}^{m \times n},$ тогда для оператора~$\mathrm{ReLU}$ почти всюду верно следующее выражение:
 \begin{align}
     \frac{\partial \mathrm{ReLU}(\mathbf{X})}{\partial \mathbf{X}} &= \mathrm{diag}\!\big(\mathrm{vec}_r(\mathbf{1}_{\{\mathbf{X}>0\}})\big), \\
@@ -1365,7 +1365,7 @@ M &= 3\cdot\max \Bigg(\frac{2L}{d_V} \| \mathbf{X}\|^2_2, \\
 
 \subsection{Матрица Гессе для трансформера}
 
-\begin{lemma}\label{lemma:attention_phi_from_functional_hessian}
+\begin{lemma}[Оценка нормы для слоя внимания]\label{lemma:attention_phi_from_functional_hessian}
 Рассмотрим слой внимания следующего вида:
 \[
     \mathbf{F}(\mathbf{X}) = \mathbf{A}(\mathbf{T})  \mathbf{X}\mathbf{W}_V,
@@ -1453,7 +1453,7 @@ M &= 3\cdot\max \Bigg(\frac{2L}{d_V} \| \mathbf{X}\|^2_2, \\
 Явные формы для~$\mathbf{H}_{\mathrm{f}}$ описаны в~\cite[Thm.~3.2]{ormaniec2024attentionhessian}. Используя выражения для~$\mathbf{H}_{\mathrm{f}}$ получаем выражения~$\boldsymbol{\Phi}_{ij}$ просто удаляя ведущей метрицы~$\mathbf{R}_{n_i}$.
 \end{proof}
 
-\begin{lemma}\label{lemma:Y_S_norm_bounds}
+\begin{lemma}[Оценка норм для FFN и LayerNorm]\label{lemma:Y_S_norm_bounds}
 Пусть заданы матрицы~$\mathbf{X}\in\mathbb{R}^{L\times d_V}$, $\mathbf{Y}=\mathrm{LayerNorm}(\mathbf{F}(\mathbf{X})+\mathbf{X})\in\mathbb{R}^{L\times d_V}$ и задана сеть
 \[
     \mathrm{FFN}(\mathbf{Y})=\sigma(\mathbf{Y}\mathbf{W}_1)\mathbf{W}_2,\qquad\mathbf{W}_1\in\mathbb{R}^{d_V\times d_{ff}},\quad\mathbf{W}_2\in\mathbb{R}^{d_{ff}\times d_V},
@@ -1526,7 +1526,7 @@ M &= 3\cdot\max \Bigg(\frac{2L}{d_V} \| \mathbf{X}\|^2_2, \\
 откуда подставляя~\eqref{eq:Y_norm_bound} и~\eqref{eq:FFN_norm_bound}, получаем~\eqref{eq:S_norm_bound}.
 \end{proof}
 
-\begin{lemma}\label{lemma:layernorm_deriv_hessian_norm}
+\begin{lemma}[Оценка норм производных LayerNorm]\label{lemma:layernorm_deriv_hessian_norm}
 Пусть заданы матрицы~$\mathbf{X} \in \mathbb{R}^{m \times n}$.
 Производная LayerNorm $\mathbf{J}_{\mathrm{LN}}(\mathbf{X}) = \frac{\partial \text{LayerNorm}(\mathbf{X})}{\partial \mathbf{X}}$ вычисляется в соответствии с Теоремой~\ref{thm:layernorm_derivative}, а ее гессиан $\mathbf{H}_{\mathrm{LN}}(\mathbf{X}) = \frac{\partial^2 \text{LayerNorm}(\mathbf{X})}{\partial \mathbf{X}^2}$ вычисляется как в Теореме \ref{thm:layernorm_second_derivative}.
 
@@ -1623,7 +1623,7 @@ $\mathbf{H}=\tfrac{\partial \mathbf{P}}{\partial \mathbf{X}}$, и $\mathbf{P}=\m
 \end{align}
 \end{proof}
 
-\begin{theorem}\label{thm:transformer_derivative}
+\begin{theorem}[Матрица Якоби трансформера]\label{thm:transformer_derivative}
 Для модели глубокого обучения архитектуры трансформер~\ref{eq:transformer} матрица Якоби~$\frac{\partial\mathbf{Z}}{\partial \mathbf{W}_i}$ вычисляется в следующем виде:
 \begin{align}
     \frac{\partial\mathbf{Z}}{\partial \mathbf{W}_i} &= \frac{\partial \text{LayerNorm}(\text{FFN}(\mathbf{Y}) + \mathbf{Y})}{\partial (\text{FFN}(\mathbf{Y}) + \mathbf{Y})} \frac{\partial (\text{FFN}(\mathbf{Y}) + \mathbf{Y})}{\partial \mathbf{W}_i},\qquad i \in \{1,2\},
@@ -1744,7 +1744,7 @@ $\mathbf{H}=\tfrac{\partial \mathbf{P}}{\partial \mathbf{X}}$, и $\mathbf{P}=\m
 
 В теореме~\ref{thm:transformer_derivative} получен вид матрицы Якоби для полного блока трансформера. Переходим к вычислению матрицы Гессе, который формулируется в теореме~\ref{thm:transformer_hessian}.
 
-\begin{theorem}\label{thm:transformer_hessian}
+\begin{theorem}[Матрица Гессе трансформера]\label{thm:transformer_hessian}
 Пусть заданы матрицы параметров модели трансформера~$\mathbf{X} \in \mathbb{R}^{L \times d_V}$, $\mathbf{Y} \in \mathbb{R}^{L \times d_V}$, $\mathbf{W}_1 \in \mathbb{R}^{d_V \times d_{ff}}$, $\mathbf{W}_2 \in \mathbb{R}^{d_{ff} \times d_V}$, $\mathbf{W}_Q, \mathbf{W}_K \in \mathbb{R}^{d_V \times d_K}$, $\mathbf{W}_V \in \mathbb{R}^{d_V \times d_V},$
 где блок трансформатор описан в виде следующих матричнозначных функций:
 \[
@@ -1915,7 +1915,7 @@ $\mathbf{H}=\tfrac{\partial \mathbf{P}}{\partial \mathbf{X}}$, и $\mathbf{P}=\m
 
 \subsection{Спектральные оценки матрицы Гессе для трансформера}
 
-\begin{theorem}\label{thm:transformer_hessian_estimate}
+\begin{theorem}[Оценка нормы матрицы Гессе трансформера]\label{thm:transformer_hessian_estimate}
 Пусть матрица Гессе~$\mathbf{H}_{\mathrm{tr}}^{(i,j)}$ описывает матрицу Гессе между~$(i,j)$-м блоком трансформер модели~\eqref{eq:block_hessian_transformer}, где~$i,j\in\{1,2,K,Q,V\}, n_i=\dim(\mathbf{W}_i).$
 Тогда для каждой пары~$(i,j)$ получаем оценку нормы:
 \begin{equation}\label{eq:block_bound_transformer}

@@ -23,13 +23,13 @@
 
 Как было указано во введении, существующие подходы рассматривают сложность модели и сложность данных изолированно, не устанавливая формальных критериев их соответствия. В настоящем разделе производится формализация мер сложности выборки и модели в рамках теории мер, что позволяет установить строгий критерий обучаемости, связывающий свойства модели с характеристиками данных.
 
-\begin{definition}\label{chapter:complex:def-gamma}
+\begin{definition}[Генеральная совокупность данных]\label{chapter:complex:def-gamma}
     Генеральной совокупностью данных~$\Gamma$ назовем произвольное множество объектов, которые исследуются в рамках той или иной задачи. В общем случае нет никаких ограничений на счетность множества генеральной совокупности.
 \end{definition}
 
 Определение~\ref{chapter:complex:def-gamma} позволяет работать как с однородными, так и с многородовыми генеральными совокупностями.
 
-\begin{definition}\label{chapter:complex:def-gamma-modality}
+\begin{definition}[Однородная и многородная генеральная совокупность]\label{chapter:complex:def-gamma-modality}
     Генеральную совокупность~$\Gamma$ назовем однородной, если все объекты генеральной совокупности порождаются из одного распределения. В противном случае генеральную совокупность назовем~$k$-родной, где~$k$ является числом распределений, на основе которых была сгенерирована генеральная совокупность.
 \end{definition}
 
@@ -86,7 +86,7 @@
     \mathfrak{F} = \left\{f_i\right\},
 \]
 где каждое~$f_i$ является некоторым множеством параметрических функций. В определении~\ref{chapter:complex:def-model} вводится характеристика параметрического семейства функций~$f$, которые в дальнейшем рассматриваются в качестве моделей глубокого обучения.
-\begin{definition}\label{chapter:complex:def-model}
+\begin{definition}[Мера сложности модели]\label{chapter:complex:def-model}
     Мерой сложности модели~$f$ назовем отображение~$\mu_f(f_i)$:
     \[
         \mu_f(f_i) : \mathfrak{F} \to \mathbb{R}_+.
@@ -98,7 +98,7 @@
 
 После введения определений меры сложности как для выборки, так и для модели, переходим к определению обучаемости модели на выборке, которое сформулировано в определении~\ref{chapter:complex:def-model-bound-data}.
 
-\begin{definition}\label{chapter:complex:def-model-bound-data}
+\begin{definition}[Обучаемость модели на выборке]\label{chapter:complex:def-model-bound-data}
     Назовем модель $f\in\mathfrak{F}$ \textit{обучаемой} на выборке $D\in\mathfrak{D},$ если 
     \[
         \mu_f(f)\leq \mu_D(D).
@@ -111,7 +111,7 @@
 
 В диссертационной работе предполагается исследовать частный случай меры сложности модели на основе оценок ландшафта оптимизационных задач, используя матрицы Гессе для различных нейросетевых архитектур, которые описаны в главе~\ref{chapter:gesian}. Подробнее о частном случае меры сложности см. раздел~\ref{chapter:complexity:loss}.
 
-\begin{theorem}\label{chapter:complex:theorem-finetunning}
+\begin{theorem}[Необходимое условие дообучаемости модели]\label{chapter:complex:theorem-finetunning}
     Если для исходной выборки~$D\in\mathfrak{D}$ выполняется условие~$\mu_f(f) \leq \mu_D(D)$, тогда для новой выборки~$D'\in\mathfrak{D}$ необходимое условие дообучаемости модели на объединенной выборке $D \cup D'$ имеет вид:
     \[
         \mu_f(f) - \mu_D(D) \leq \mu_D(D').
@@ -166,7 +166,7 @@
 \end{equation}
 то есть условная сложность выборки может быть задана как минимальная сложность данных, при которой модель $f$ остается обучаемой.
 
-\begin{definition}
+\begin{definition}[Условная сложность выборки]
     Условной сложностью выборки~$D$ относительно заданной параметрической модели~$f$ назовем отображение~\eqref{chapter:complex:eq-data-submessure}, определяемое выражением~\eqref{chapter:complex:eq-data-submessure-infinum}.
 \end{definition}
 
@@ -182,11 +182,11 @@
 На практике $C$ может зависеть от характеристик генеральной совокупности~$\Gamma$ и должна калиброваться экспериментально.
 \end{remark}
 
-\begin{definition}
+\begin{definition}[Простая генеральная совокупность]
     Однородную генеральную совокупность~$\Gamma_C$ назовем простой, если она состоит из объектов одинаковой сложности~$C.$
 \end{definition}
 
-\begin{theorem}
+\begin{theorem}[Мера сложности выборки из простой генеральной совокупности]
     Для простой генеральной совокупности~$\Gamma_C$ мера сложности любой выборки $D \subset \Gamma_C$ равна ее объему, умноженному на константу сложности:
     \[
         \mu_D(D) = C\cdot|D|.
@@ -224,7 +224,7 @@
 
 Достаточный объем выборки представляет собой частный случай~\textit{условной сложности выборки}~--- минимальный объем данных из выборки~$D$, необходимый для обучения модели~$f$.
 
-\begin{definition}
+\begin{definition}[Достаточный размер выборки]
     Размер выборки $m^*$ называется \textit{достаточным} согласно критерию $T$, если $T$ выполняется для всех $k \geqslant m^*$.
 \end{definition}
 
@@ -270,7 +270,7 @@
 
 Дальнейшее исследование ландшафта нацелено на изучение данной разницы. Особый интерес представляют предельные свойства при стремлении размера выборки к бесконечности. Для дальнейших оценок данной разности вводится предположение~\ref{chapter:complex:assumption-local-optima-not-change}, которое подтверждается на практике, однако является достаточно сильным, что упрощает дальнейшие выкладки.
 
-\begin{assumption}\label{chapter:complex:assumption-local-optima-not-change}
+\begin{assumption}[Сохранение локальных минимумов]\label{chapter:complex:assumption-local-optima-not-change}
     Пусть $\boldsymbol{\theta}^*$ является локальным минимумом обеих эмпирических функций потерь $\mathcal{L}_{k}(\boldsymbol{\theta})$ и $\mathcal{L}_{k+1}(\boldsymbol{\theta})$, т.е.
     \[
         \nabla \mathcal{L}_{k}(\boldsymbol{\theta}^*) = \nabla \mathcal{L}_{k+1}(\boldsymbol{\theta}^*) = \mathbf{0}.
@@ -325,11 +325,11 @@
     \mu_f(f|D) = \mathsf{E}_{\mathbf{x}_i\in D}\left\| \mathbf{H}_{i}(\boldsymbol{\theta}^*) -  \mathsf{E}_{\mathbf{x}_i\in D}\mathbf{H}_{i}(\boldsymbol{\theta}^*) \right\|_2.
 \end{equation}
 
-\begin{definition}\label{chapter:complex:definition-subcomplex-model}
+\begin{definition}[Условная сложность параметрической модели]\label{chapter:complex:definition-subcomplex-model}
     Условной сложностью параметрической модели~$f$ относительно заданной выборки~$D$ назовем отображение~\eqref{chapter:complex:equantion-subcomplex-model}.
 \end{definition}
 
-\begin{definition}\label{chapter:complex:definition-subcomplex-model-surface}
+\begin{definition}[Ландшафтная мера сложности]\label{chapter:complex:definition-subcomplex-model-surface}
     Ландшафтной мерой сложности параметрической функции~$f$ назовем условную сложность параметрической модели~$f$, заданную выражением~\eqref{chapter:complex:equantion-subcomplex-model-surface}.
 \end{definition}
 
@@ -346,7 +346,7 @@
     \left| \mathcal{L}_{k+1}(\boldsymbol{\theta}) - \mathcal{L}_k(\boldsymbol{\theta}) \right| \leqslant \frac{M_{\ell}}{k+1}+ \frac{\mu_f(f|D)}{k+1}\left\|\boldsymbol{\theta} - \boldsymbol{\theta}^*\right\|_2^2.
 \end{equation}
 
-\begin{lemma}\label{chapter:complex:lemma-surface-data-complexity}
+\begin{lemma}[Связь ландшафтной меры и условной сложности выборки]\label{chapter:complex:lemma-surface-data-complexity}
     Пусть задан некоторый~$\varepsilon$, описывающий допустимое изменение ландшафта при добавлении одного объекта в некоторой окрестности оптимума~$\boldsymbol{\theta}^*$ радиуса~$R$,
     причем выборка~$D$ принадлежит простой генеральной совокупности~$\Gamma_C$.
 
@@ -410,7 +410,7 @@
 \]
 из которой следует, что спектральная норма матрицы Гессе имеет полиномиальную зависимость от размера слоя и экспоненциальную зависимость от числа слоев.
 
-\begin{theorem}\label{chapter:complex:theorem-kiselev-loss}
+\begin{theorem}[Сходимость ландшафта функции потерь для полносвязных сетей]\label{chapter:complex:theorem-kiselev-loss}
     Пусть параметры $\boldsymbol{\theta}$ выбраны так, что $\left\|\boldsymbol{\theta} - \boldsymbol{\theta}^*\right\|_2^2 \leqslant R^2$ для некоторого $R > 0$. Если существует неотрицательная константа $M_{\ell}$ такая, что $\left| \ell(f_{\boldsymbol{\theta}^*}(\mathbf{x}_{i}), \mathbf{y}_{i}) \right| \leqslant M_{\ell}$ для всех объектов $i = 1, \ldots, m$ в наборе данных, то при выполнении условий Теоремы~\ref{theorem:hess-kiselev-theorem} справедливо:
     \begin{align}
         \left| \mathcal{L}_{k+1}(\boldsymbol{\theta}) - \mathcal{L}_k(\boldsymbol{\theta}) \right| \leqslant \frac{2}{k+1}\left( M_{\ell} + \left( L \sqrt{2} M_{\mathbf{x}}^2 M_{\mathbf{W}}^{2L} + \sqrt{2} \frac{M_{\mathbf{W}}^2 (M_{\mathbf{W}}^{2L} - 1)}{M_{\mathbf{W}}^2 - 1} \right) R^2 \right),
@@ -486,7 +486,7 @@
 
 На основе теоремы~\ref{chapter:complex:theorem-kiselev-loss} и использованных в ее доказательстве оценок нормы матрицы Гессе получается выражение для ландшафтной меры полносвязной нейросетевой модели глубокого обучения, которое сформулировано в следствии~\ref{chapter:complex:corollary-theorem-kiselev-loss}.
 
-\begin{corollary}\label{chapter:complex:corollary-theorem-kiselev-loss}
+\begin{corollary}[Асимптотика ландшафтной меры для полносвязных сетей]\label{chapter:complex:corollary-theorem-kiselev-loss}
     Ландшафтная мера сложности параметрической функции~$f$ полносвязной нейросетевой модели глубокого обучения имеет асимптотику:
     \[
         \mu_f(f|D) \propto L(hM)^{2L},
@@ -504,7 +504,7 @@
 
 Начнем с анализа 1D-сверточных сетей, применяющихся в обработке последовательностей, временных рядов и сигналов. Основные результаты для определения ландшафтной меры сложности сформулированы в теореме~\ref{chapter:complex:theorem-1Dconv-loss}.
 
-\begin{theorem}\label{chapter:complex:theorem-1Dconv-loss}
+\begin{theorem}[Сходимость ландшафта для 1D-сверточных сетей]\label{chapter:complex:theorem-1Dconv-loss}
 Пусть параметры~$\boldsymbol{\theta}$ находятся в $R$-окрестности оптимума:
 \[
     \|\boldsymbol{\theta} - \boldsymbol{\theta}^*\| \leqslant R,
@@ -530,7 +530,7 @@
 
 На основе теоремы~\ref{chapter:complex:theorem-1Dconv-loss} и использованных в ее доказательстве оценок нормы матрицы Гессе получается выражение для ландшафтной меры 1D-сверточной нейросетевой модели, которое сформулировано в следствии~\ref{chapter:complex:corollary-theorem-1Dconv-loss}.
 
-\begin{corollary}\label{chapter:complex:corollary-theorem-1Dconv-loss}
+\begin{corollary}[Асимптотика ландшафтной меры для 1D-сверточных сетей]\label{chapter:complex:corollary-theorem-1Dconv-loss}
     Ландшафтная мера сложности параметрической функции~$f$ 1D-сверточной модели глубокого обучения имеет асимптотику:
     \[
         \mu_f(f|D) \propto L(C^2M^2kd)^{L},
@@ -545,7 +545,7 @@
 
 Основные результаты для определения ландшафтной меры сложности 2D-сверточных сетей сформулированы в теореме~\ref{chapter:complex:theorem-2Dconv-loss}.
 
-\begin{theorem}\label{chapter:complex:theorem-2Dconv-loss}
+\begin{theorem}[Сходимость ландшафта для 2D-сверточных сетей]\label{chapter:complex:theorem-2Dconv-loss}
 Пусть параметры $\boldsymbol{\theta}$ находятся в $R$-окрестности оптимума:
 \[
     \|\boldsymbol{\theta} - \boldsymbol{\theta}^*\| \leqslant R.
@@ -572,7 +572,7 @@
 
 На основе теоремы~\ref{chapter:complex:theorem-2Dconv-loss} и использованных в ее доказательстве оценок нормы матрицы Гессе получается выражение для ландшафтной меры 2D-сверточной нейросетевой модели, которое сформулировано в следствии~\ref{chapter:complex:corollary-theorem-2Dconv-loss}.
 
-\begin{corollary}\label{chapter:complex:corollary-theorem-2Dconv-loss}
+\begin{corollary}[Асимптотика ландшафтной меры для 2D-сверточных сетей]\label{chapter:complex:corollary-theorem-2Dconv-loss}
     Ландшафтная мера сложности параметрической функции~$f$ 2D-сверточной модели глубокого обучения имеет асимптотику:
     \[
         \mu_f(f|D) \propto C^2k^2L(C^2k^2M^2mn)^{L},
@@ -586,7 +586,7 @@
 
 Архитектура трансформеров представляет собой один из наиболее значительных прорывов в области глубокого обучения последних лет. Указанные модели демонстрируют state-of-the-art результаты в задачах обработки естественного языка, компьютерного зрения и других областях. Особенностью трансформеров является механизм самовнимания, который позволяет модели учитывать глобальные зависимости в данных независимо от их положения. В настоящем подразделе получены оценки ландшафтной меры сложности для трансформерных моделей, основанные на анализе матриц Гессе компонентов трансформера.
 
-\begin{theorem}\label{chapter:complex:theorem-transformer-loss}
+\begin{theorem}[Сходимость ландшафта для трансформеров]\label{chapter:complex:theorem-transformer-loss}
 Для одного блока самовнимания и одного блока трансформера \ref{eq:transformer} при условии ограниченности функции потерь \[
     0 \leqslant \ell(\mathbf{f}_{\mathbf{w}^*}(\mathbf{x}_i), \mathbf{y}_i) \leqslant L,
 \]

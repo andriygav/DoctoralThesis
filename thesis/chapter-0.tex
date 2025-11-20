@@ -16,7 +16,7 @@
 \]
 а в задачах регрессии --- квадратичную или абсолютную потери.
 
-\begin{definition}
+\begin{definition}[Риск модели]
     Риском модели $f \in \mathfrak{F}$ называют математическое ожидание потерь относительно истинного распределения данных:
     \[
         R(f) = \mathbb{E}_{(\mathbf{X},\mathbf{Y}) \sim \mathbb{P}_{\mathbf{X},\mathbf{Y}}}\left[\ell(f(\mathbf{X}), \mathbf{Y})\right].
@@ -33,7 +33,7 @@
     В главах~\ref{chapter:complexity}, \ref{chapter:gesian} и далее для эмпирического риска параметризованных моделей используется обозначение $\mathcal{L}_m(\boldsymbol{\theta})$, которое совпадает с $\hat{R}_m(f)$ при параметризации $f_{\boldsymbol{\theta}}$. В настоящей главе оба обозначения рассматриваются как взаимозаменяемые.
 \end{remark}
 
-\begin{definition}
+\begin{definition}[Алгоритм минимизации эмпирического риска]
     Алгоритмом минимизации эмпирического риска называют отображение, которое по выборке $D \in \mathfrak{D}$ возвращает модель
     \[
         \hat{f}_{\mathrm{ERM}} \in \arg\min_{f \in \mathfrak{F}} \hat{R}_m(f).
@@ -42,7 +42,7 @@
 
 Даже если класс моделей достаточно богат, чтобы аппроксимировать зависимость между $\mathbf{X}$ и $\mathbf{Y}$, для конечной выборки $D$ может возникать \textit{переобучение}: алгоритм подстраивается под случайные шумы в данных, достигая малого эмпирического риска при высоком истинном риске. Поэтому важной задачей является построение оценок отклонения $|R(f) - \hat{R}_m(f)|$ для различных классов $\mathfrak{F}$ и схем выбора моделей.
 
-\begin{definition}
+\begin{definition}[Наилучшая модель в классе и избыточный риск]
     Модель $f^{*}$, минимизирующая риск в фиксированном классе $\mathfrak{F}$,
     \[
         f^{*} \in \arg\min_{f \in \mathfrak{F}} R(f),
@@ -56,7 +56,7 @@
 
 В идеальном случае теоретические оценки должны гарантировать, что избыточный риск $\bigl(R(\hat{f}_{\mathrm{ERM}}) - R(f^{*})\bigr)$ мал с высокой вероятностью при разумном объеме выборки $m$. При этом ключевую роль играет мера сложности класса моделей $\mathfrak{F}$, определяющая скорость сходимости эмпирического риска к истинному.
 
-\begin{definition}
+\begin{definition}[Обучаемость класса моделей]
     Пусть $\mathfrak{D}_m = \{D \subset \Gamma : |D| = m\}$ обозначает множество всех выборок размера $m$. \textit{Класс моделей} $\mathfrak{F}$ называется \textit{обучаемым} в заданной постановке, если существует алгоритм $A \colon \bigcup_{m=1}^{\infty} \mathfrak{D}_m \to \mathfrak{F}$, такой что для любого распределения $\mathbb{P}_{\mathbf{X},\mathbf{Y}}$ и любых $\varepsilon > 0$, $\delta \in (0,1)$ найдется такое число наблюдений $m(\varepsilon,\delta) \in \mathbb{N}$, что для любой выборки $D$ размера $m \geq m(\varepsilon,\delta)$ выполняется
     \[
         \mathbb{P}\left\{ R(A(D)) - R(f^{*}) \leq \varepsilon \right\} \geq 1 - \delta,
@@ -70,11 +70,11 @@
 
 Первые строгие представления о сложности моделей сформировались в рамках статистической теории распознавания~\cite[глава~5]{vapnik1974StatTheory}, где ключевую роль сыграли понятия VC-размерности и структурного риска. Пусть задано пространство объектов $\mathcal{X}$ и класс булевых моделей $\mathfrak{F} \subset \{0,1\}^{\mathcal{X}}$.
 
-\begin{definition}
+\begin{definition}[Разделимость выборки]
     Набор точек $D = \{\mathbf{x}_1, \ldots, \mathbf{x}_m\} \subset \mathcal{X}$ называется \textit{разделимым} классом $\mathfrak{F}$, если для любого разметочного вектора $(\mathbf{y}_1,\ldots,\mathbf{y}_m) \in \{0,1\}^m$ существует модель $f \in \mathfrak{F}$ такая, что $f(\mathbf{x}_i) = \mathbf{y}_i$ для всех $i = 1,\ldots,m$.
 \end{definition}
 
-\begin{definition}
+\begin{definition}[VC-размерность]
     VC-размерностью класса $\mathfrak{F}$ называется величина
     \[
         \mathrm{VC}(\mathfrak{F}) = \sup \left\{ m \in \mathbb{N} : \exists D \subset \mathcal{X},\ |D| = m,\ \text{$D$ разделим классом $\mathfrak{F}$} \right\}.
@@ -89,7 +89,7 @@
 
 Развитие PAC-подхода дополнило картину формальными критериями обучаемости~\cite[раздел~2]{valiant1984LearnableTheory}.
 
-\begin{definition}
+\begin{definition}[PAC-обучаемость]
     Класс моделей $\mathfrak{F}$ называется \textit{PAC-обучаемым} (англ. Probably Approximately Correct learnable), если существует алгоритм $A \colon \bigcup_{m=1}^{\infty} \mathfrak{D}_m \to \mathfrak{F}$ и функция $m \colon (0,1) \times (0,1) \to \mathbb{N}$, такие что для любого распределения $\mathbb{P}_{\mathbf{X},\mathbf{Y}}$ на $\mathcal{X} \times \{0,1\}$ и любых $\varepsilon > 0$, $\delta \in (0,1)$ для любой выборки $D$ размера $m \geq m(\varepsilon,\delta)$ выполняется
     \[
         \mathbb{P}\left\{ R(A(D)) - R(f^{*}) \leq \varepsilon \right\} \geq 1 - \delta,
@@ -105,7 +105,7 @@
 
 Более тонким инструментом анализа является Rademacher-сложность, связывающая способность класса функций к переобучению с эмпирическими оценками~\cite[раздел~2]{koltchinskii2000RadamakherTheory}.
 
-\begin{definition}
+\begin{definition}[Эмпирическая Rademacher-сложность]
     Пусть $\mathcal{F}$ --- класс вещественных функций на $\mathcal{X}$, $D = \{\mathbf{x}_1,\ldots,\mathbf{x}_m\} \subset \mathcal{X}$ --- конечная выборка, и $\sigma_1,\ldots,\sigma_m$ --- независимые случайные переменные Радемахера, то есть $\mathbb{P}\{\sigma_i = +1\} = \mathbb{P}\{\sigma_i = -1\} = 1/2$ для всех $i = 1,\ldots,m$. \textit{Эмпирическая Rademacher-сложность} класса $\mathcal{F}$ на выборке $D$ определяется как
     \[
         \hat{\mathfrak{R}}_D(\mathcal{F}) = \mathbb{E}_{\sigma}\left[\sup_{f \in \mathcal{F}} \frac{1}{m} \sum_{i=1}^{m} \sigma_i f(\mathbf{x}_i)\right],
@@ -113,7 +113,7 @@
     где математическое ожидание берется по распределению случайных переменных Радемахера.
 \end{definition}
 
-\begin{definition}
+\begin{definition}[Ожидаемая Rademacher-сложность]
     \textit{Ожидаемая Rademacher-сложность} класса $\mathcal{F}$ для выборок размера $m$ определяется как
     \[
         \mathfrak{R}_m(\mathcal{F}) = \mathbb{E}_{D \sim \mathbb{P}^m}\left[\hat{\mathfrak{R}}_D(\mathcal{F})\right],
@@ -131,14 +131,14 @@
 
 Одним из центральных понятий классической теории обучаемости является \textit{ростовая функция} (англ. growth function) класса моделей.
 
-\begin{definition}
+\begin{definition}[Индуцированные разметки]
     Для конечной выборки $D = \{\mathbf{x}_1,\ldots,\mathbf{x}_m\} \subset \mathcal{X}$ множество \textit{индуцированных разметок} класса $\mathfrak{F}$ на выборке $D$ определяется как
     \[
         \mathfrak{F}|_D = \{(f(\mathbf{x}_1),\ldots,f(\mathbf{x}_m)) : f \in \mathfrak{F}\} \subseteq \{0,1\}^m.
     \]
 \end{definition}
 
-\begin{definition}
+\begin{definition}[Ростовая функция]
     \textit{Ростовая функция} класса $\mathfrak{F}$ определяется как
     \[
         \Pi_{\mathfrak{F}}(m) = \max_{D \subset \mathcal{X},\, |D| = m} |\mathfrak{F}|_D|,

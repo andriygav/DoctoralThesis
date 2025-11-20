@@ -1,12 +1,12 @@
 \begin{lemma}[Производная умножения матричнозначных функций]\label{lemma:matrix_funcs_product_derivative}
-    Пусть заданы~$\mathbf{A}(\mathbf{X}) \in \mathbb{R}^{p \times r}$ и~$\mathbf{B}(\mathbf{X}) \in \mathbb{R}^{r \times q}$ матрицезначные функции переменной~$\mathbf{X}$, тогда
+    Пусть заданы~$\mathbf{A}(\mathbf{X}) \in \mathbb{R}^{p \times r}$ и~$\mathbf{B}(\mathbf{X}) \in \mathbb{R}^{r \times q}$ матричнозначные функции переменной~$\mathbf{X}$, тогда справедливо равенство
     \begin{equation}
         \frac{\partial\mathbf{A}(\mathbf{X})\mathbf{B}(\mathbf{X})}{\partial \mathbf{X}} = \left(\mathbf{A} \otimes \mathbf{I}_q 
      \right) \frac{\partial\mathbf{B}}{\partial\mathbf{X}} + \left( \mathbf{I}_p \otimes \mathbf{B}^\top\right) \frac{\partial\mathbf{A}}{\partial\mathbf{X}}
     \end{equation}
 \end{lemma}
 \begin{proof}
-Применить цепное правило для вычисления производной сложной функции, а затем объединим его со свойством~\ref{prop:matrix_product_derivative}
+Применим цепное правило для вычисления производной сложной функции, а затем объединим его со свойством~\ref{prop:matrix_product_derivative}
     \begin{align}
         \frac{\partial\mathbf{A}(\mathbf{X}) \mathbf{B}(\mathbf{X})}{\partial \mathbf{X}} &= \frac{\partial \mathbf{A}\mathbf{B}}{\partial\mathbf{B}}\frac{\partial\mathbf{B}}{\partial \mathbf{X}} + \frac{\partial \mathbf{A}\mathbf{B}}{\partial\mathbf{A}}\frac{\partial\mathbf{A}}{\partial \mathbf{X}} =\\
         &=\frac{\partial \mathbf{A}\mathbf{B}\mathbf{I}_q}{\partial\mathbf{B}}\frac{\partial\mathbf{B}}{\partial \mathbf{X}} + \frac{\partial \mathbf{I}_p\mathbf{A}\mathbf{B}}{\partial\mathbf{A}}\frac{\partial\mathbf{A}}{\partial \mathbf{X}} = \\
@@ -15,105 +15,106 @@
 \end{proof}
 
 \begin{lemma}[Теорема идентификации для построчной векторизации] \label{lemma:identification_theorem_vec_r}
-
-Пусть отображение~$\mathbf{F}: \mathbb{R}^{m\times n} \rightarrow \mathbb{R}^{p, q}$ является дифференциальной матричнозначной функцией от~$\mathbf{X} \in \mathbb{R}^{m \times n}$.
-Если дифференциал функции~$\mathbf{F}$ может быть записан в виде:
-\begin{equation}
-    d \mathrm{vec}_r(\mathbf{F}(\mathbf{X})) = \mathbf{J} \cdot d \mathrm{vec}_r(\mathbf{X}),
-\end{equation}
-где матрица~$\mathbf{J} \in \mathbb{R}^{pq \times mn}$ является, некоторой константной матрицей относительно переменной~$d\mathbf{X}$, тогда матрица~$\mathbf{J}$ является матрицей Якоби преобразования $\mathbf{F}(\mathbf{X})$ относительно построчной векторизации. Обозначим это в следующем виде:
-\begin{equation}
-    \frac{\partial \mathbf{F}(\mathbf{X})}{\partial \mathbf{X}} := \frac{\partial \mathrm{vec}_r(\mathbf{F}(\mathbf{X}))}{\partial (\mathrm{vec}_r(\mathbf{X}))^\top} = \mathbf{J}
-\end{equation}
-    
+    Пусть отображение~$\mathbf{F}: \mathbb{R}^{m\times n} \rightarrow \mathbb{R}^{p \times q}$ является дифференцируемой матричнозначной функцией от~$\mathbf{X} \in \mathbb{R}^{m \times n}$.
+    Если дифференциал функции~$\mathbf{F}$ может быть записан в виде:
+    \begin{equation}
+        d \mathrm{vec}_r(\mathbf{F}(\mathbf{X})) = \mathbf{J} \cdot d \mathrm{vec}_r(\mathbf{X}),
+    \end{equation}
+    где матрица~$\mathbf{J} \in \mathbb{R}^{pq \times mn}$ является некоторой константной матрицей относительно переменной~$d\mathbf{X}$, тогда матрица~$\mathbf{J}$ является матрицей Якоби преобразования $\mathbf{F}(\mathbf{X})$ относительно построчной векторизации. Обозначим это в следующем виде:
+    \begin{equation}
+        \frac{\partial \mathbf{F}(\mathbf{X})}{\partial \mathbf{X}} := \frac{\partial \mathrm{vec}_r(\mathbf{F}(\mathbf{X}))}{\partial (\mathrm{vec}_r(\mathbf{X}))^\top} = \mathbf{J}
+    \end{equation}
 \end{lemma}
 \begin{proof}
-Это построчный $\mathrm{vec}_r$-аналог первой теоремы об идентификации (англ. first identification theorem) в главе 12~\cite{magnus1988matrix} для векторизации по столбцам.
+    Это построчный $\mathrm{vec}_r$-аналог первой теоремы об идентификации (англ. first identification theorem) в главе 12~\cite{magnus1988matrix} для векторизации по столбцам.
 \end{proof}
 
 \begin{lemma}[Производная квадрата Адамара]\label{lemma:hadamard_square_derivative}
-Для матрицы~$\mathbf{A} \in \mathbb{R}^{m \times n}$, производная поэлементного квадрата равна
-\[
-    \frac{\partial \mathbf{A}^{\circ 2}}{\partial \mathbf{A}}
-    = 2 \cdot \mathrm{diag}\!\big(\mathrm{vec}_r(\mathbf{A})\big).
-\]
+    Для матрицы~$\mathbf{A} \in \mathbb{R}^{m \times n}$ справедливо равенство
+    \begin{equation}
+        \frac{\partial \mathbf{A}^{\circ 2}}{\partial \mathbf{A}}
+        = 2 \cdot \mathrm{diag}\!\big(\mathrm{vec}_r(\mathbf{A})\big).
+    \end{equation}
 \end{lemma}
 \begin{proof}
-Используя определение~\ref{def:vec_elem_ops}, а именно $(\mathbf{A}^{\circ 2}){ij} = (\mathbf{A}{ij})^2$.
-Выполняя поэлеметное взятие дифференциала, получаем, что:
-\[
-    d(\mathbf{A}^{\circ 2}) = 2\mathbf{A} \circ d\mathbf{A}.
-\]
-Далее, применяя оператор~$\mathrm{vec}_r$ и используя свойство~\ref{prop:vec_r_hadamard_product} получаем выражение:
-\[
-    \mathrm{vec}_r(d(\mathbf{A}^{\circ 2})) = 2 \textit{diag}(\mathrm{vec}_r(\mathbf{A})) \mathrm{vec}_r (d\mathbf{A}),
-\]
-причем, используя построчный аналог первой теоремы об идентификации~\ref{lemma:identification_theorem_vec_r} получаем следующий вид:
-\[
-    \frac{\partial \mathbf{A}^{\circ 2}}{\partial \mathbf{A}}
-    = \frac{\partial \mathrm{vec}_r(\mathbf{A}^{\circ 2})}{\partial \mathrm{vec}_r(\mathbf{A})} = 2 \cdot \mathrm{diag}\!\big(\mathrm{vec}_r(\mathbf{A})\big).
-\]
+    Используем определение~\ref{def:vec_elem_ops}, а именно $(\mathbf{A}^{\circ 2})_{ij} = (\mathbf{A}_{ij})^2$.
+    Выполняя поэлементное взятие дифференциала, получим:
+    \begin{equation}
+        d(\mathbf{A}^{\circ 2}) = 2\mathbf{A} \circ d\mathbf{A}.
+    \end{equation}
+    Далее, применяя оператор~$\mathrm{vec}_r$ и используя свойство~\ref{prop:vec_r_hadamard_product}, получим выражение:
+    \begin{equation}
+        \mathrm{vec}_r(d(\mathbf{A}^{\circ 2})) = 2 \mathrm{diag}(\mathrm{vec}_r(\mathbf{A})) \mathrm{vec}_r (d\mathbf{A}),
+    \end{equation}
+    причем, используя построчный аналог первой теоремы об идентификации~\ref{lemma:identification_theorem_vec_r}, получим следующий вид:
+    \begin{equation}
+        \frac{\partial \mathbf{A}^{\circ 2}}{\partial \mathbf{A}}
+        = \frac{\partial \mathrm{vec}_r(\mathbf{A}^{\circ 2})}{\partial \mathrm{vec}_r(\mathbf{A})} = 2 \cdot \mathrm{diag}\!\big(\mathrm{vec}_r(\mathbf{A})\big).
+    \end{equation}
 \end{proof}
 
 \begin{lemma}[Производная корня Адамара]\label{lemma:hadamard_root_derivative}
-Для матричнозначной функции~$\mathbf{A} \in \mathbb{R_+}^{m \times n}$ с положительными элементами, производная поэлементного корня равна
-\[
-    \frac{\partial \mathbf{A}^{\circ \frac{1}{2}}}{\partial \mathbf{A}}
-    = \tfrac{1}{2} \mathrm{diag}^{-1}\!\big(\mathrm{vec}_r^{\circ \frac{1}{2}}(\mathbf{A})\big).
-\]
+    Для матрицы~$\mathbf{A} \in \mathbb{R}^{m \times n}$ такой, что $a_{ij} > 0$ для всех $i = 1, \ldots, m$ и $j = 1, \ldots, n$, справедливо равенство
+    \begin{equation}
+        \frac{\partial \mathbf{A}^{\circ \frac{1}{2}}}{\partial \mathbf{A}}
+        = \tfrac{1}{2} \mathrm{diag}^{-1}\!\big(\mathrm{vec}_r^{\circ \frac{1}{2}}(\mathbf{A})\big).
+    \end{equation}
 \end{lemma}
 \begin{proof}
-Аналогично, доказательству леммы~\ref{lemma:hadamard_square_derivative} получаем~$d(\mathbf{A}^{\circ 1/2}) = \frac{1}{2}\mathbf{A}^{\circ -1/2} \circ d\mathbf{A},$  откуда в векторном виде получаем, следующее выражение:
-\[
-    \frac{\partial \mathbf{A}^{\circ \frac{1}{2}}}{\partial \mathbf{A}}
-    = \frac{\partial \mathrm{vec}_r(\mathbf{A}^{\circ \frac{1}{2}})}{\partial \mathrm{vec}_r(\mathbf{A})} = \tfrac{1}{2} \mathrm{diag}^{-1}\!\big(\mathrm{vec}_r^{\circ \frac{1}{2}}(\mathbf{A})\big).
-\]
+    Аналогично доказательству леммы~\ref{lemma:hadamard_square_derivative} получим~$d(\mathbf{A}^{\circ 1/2}) = \frac{1}{2}\mathbf{A}^{\circ -1/2} \circ d\mathbf{A}$, откуда в векторном виде получим следующее выражение:
+    \begin{equation}
+        \frac{\partial \mathbf{A}^{\circ \frac{1}{2}}}{\partial \mathbf{A}}
+        = \frac{\partial \mathrm{vec}_r(\mathbf{A}^{\circ \frac{1}{2}})}{\partial \mathrm{vec}_r(\mathbf{A})} = \tfrac{1}{2} \mathrm{diag}^{-1}\!\big(\mathrm{vec}_r^{\circ \frac{1}{2}}(\mathbf{A})\big).
+    \end{equation}
 \end{proof}
 
 \begin{lemma}[Производная обратной матрицы]\label{lemma:invert_derivative}
-Пусть задана обратимая квадратная матрица~$\mathbf{D} \in \mathbb{R}^{n \times n}$, тогда производная операции обращения равно:
-\[
-    \frac{\partial \mathbf{D}^{-1}}{\partial \mathbf{D}} 
-    = -\mathbf{D}^{-1} \otimes \mathbf{D}^{-\top}.
-\]
+    Пусть задана обратимая квадратная матрица~$\mathbf{D} \in \mathbb{R}^{n \times n}$ такая, что $\det(\mathbf{D}) \neq 0$, тогда справедливо равенство:
+    \begin{equation}
+        \frac{\partial \mathbf{D}^{-1}}{\partial \mathbf{D}} 
+        = -\mathbf{D}^{-1} \otimes \mathbf{D}^{-\top}.
+    \end{equation}
 \end{lemma}
 \begin{proof}
-По определению из~\cite{petersen2012matrix} и~\cite{magnus1988matrix}:
-\[
-    d(\mathbf{D}^{-1}) = -\mathbf{D}^{-1} (d\mathbf{D}) \mathbf{D}^{-1}.
-\] 
-Используя оператор~$\mathrm{vec}_r$ и свойство~\ref{prop:vec_r_matrix_product}, получаем 
-\[
-    \mathrm{vec}_r(-\mathbf{D}^{-1} (d\mathbf{D}) \mathbf{D}^{-1}) = (-\mathbf{D}^{-1} \otimes \mathbf{D}^{-\top}) \mathrm{vec}_r(d\mathbf{D}),
-\]
-причем, используя лемму~\ref{lemma:identification_theorem_vec_r} получаем:
-\[
-    \mathrm{vec}_r(d\mathbf{D}^{-1}) = \frac{\partial \mathrm{vec}_r \mathbf{D}^{-1}}{\partial\mathrm{vec}_r\mathbf{D}} \mathrm{vec}_r(d\mathbf{D}).
-\]
-Следовательно получаем выражение, которое заканчивает доказательство леммы~ $\frac{\partial \mathrm{vec}_r \mathbf{D}^{-1}}{\partial\mathrm{vec}_r\mathbf{D}} = (-\mathbf{D}^{-1} \otimes \mathbf{D}^{-\top})$
+    По определению из~\cite{petersen2012matrix} и~\cite{magnus1988matrix}:
+    \begin{equation}
+        d(\mathbf{D}^{-1}) = -\mathbf{D}^{-1} (d\mathbf{D}) \mathbf{D}^{-1}.
+    \end{equation}
+    Используя оператор~$\mathrm{vec}_r$ и свойство~\ref{prop:vec_r_matrix_product}, получим 
+    \begin{equation}
+        \mathrm{vec}_r(-\mathbf{D}^{-1} (d\mathbf{D}) \mathbf{D}^{-1}) = (-\mathbf{D}^{-1} \otimes \mathbf{D}^{-\top}) \mathrm{vec}_r(d\mathbf{D}),
+    \end{equation}
+    причем, используя лемму~\ref{lemma:identification_theorem_vec_r}, получим:
+    \begin{equation}
+        \mathrm{vec}_r(d\mathbf{D}^{-1}) = \frac{\partial \mathrm{vec}_r \mathbf{D}^{-1}}{\partial\mathrm{vec}_r\mathbf{D}} \mathrm{vec}_r(d\mathbf{D}).
+    \end{equation}
+    Следовательно, получим выражение, которое завершает доказательство леммы:
+    \begin{equation}
+        \frac{\partial \mathrm{vec}_r \mathbf{D}^{-1}}{\partial\mathrm{vec}_r\mathbf{D}} = (-\mathbf{D}^{-1} \otimes \mathbf{D}^{-\top}).
+    \end{equation}
 \end{proof}
 
 \begin{lemma}[Производная $\mathrm{diag}(\cdot)$]\label{lemma:diag_derivative}
-Для вектора~$\mathbf{v} \in \mathbb{R}^{L \times 1}$, производная оператора диагонализации является:
-\[
-    \frac{\partial \mathrm{diag}(\mathbf{v})}{\partial \mathbf{v}}
-    = \big(\mathbf{e}_1 \otimes \mathbf{e}_1 \quad \dots \quad \mathbf{e}_L \otimes \mathbf{e}_L\big),
-\]
-где вектора~$\mathbf{e}_i$ являются базисными в пространстве~$\mathbb{R}^L$.
+    Для вектора~$\mathbf{v} \in \mathbb{R}^{L \times 1}$ справедливо равенство:
+    \begin{equation}
+        \frac{\partial \mathrm{diag}(\mathbf{v})}{\partial \mathbf{v}}
+        = \big(\mathbf{e}_1 \otimes \mathbf{e}_1 \quad \dots \quad \mathbf{e}_L \otimes \mathbf{e}_L\big),
+    \end{equation}
+    где векторы~$\mathbf{e}_i$ являются базисными в пространстве~$\mathbb{R}^L$.
 \end{lemma}
 
 \begin{proof}
-По определению~\ref{def:vec_elem_ops} оператор~$\mathrm{diag}(\mathbf{v})$ отображает элемент~$v_i,$ в позицию~$(i,i)$ результирующей диагональной матрицы.
-Тогда производная оператора~$\mathrm{diag}(\mathbf{v})$ является матрицей~$\mathbf{E}_{ii} = \mathbf{e}_i \mathbf{e}_i^\top,$ в которой~$1$ в позиции~$(i,i)$~и $0$ иначе. Причем используя свойство~\ref{prop:vec_r_matrix_product}, применяя оператор построчной векторизации, получаем:
-\[
-    \mathrm{vec}_r(\mathbf{E}_{i,i}) = \mathbf{e}_i \otimes \mathbf{e}_i.
-\]
+    По определению~\ref{def:vec_elem_ops} оператор~$\mathrm{diag}(\mathbf{v})$ отображает элемент~$v_i$ в позицию $(i,i)$ результирующей диагональной матрицы.
+    Тогда производная оператора~$\mathrm{diag}(\mathbf{v})$ является матрицей~$\mathbf{E}_{ii} = \mathbf{e}_i \mathbf{e}_i^\top$, в которой $1$ в позиции $(i,i)$ и $0$ иначе. Причем, используя свойство~\ref{prop:vec_r_matrix_product} и применяя оператор построчной векторизации, получим:
+    \begin{equation}
+        \mathrm{vec}_r(\mathbf{E}_{i,i}) = \mathbf{e}_i \otimes \mathbf{e}_i.
+    \end{equation}
 
-Итого, применяя для всех~$i=1,\dots,L$, матрица Якоби принимает вид:
-\[
-    \frac{\partial \mathrm{diag}(\mathbf{v})}{\partial \mathbf{v}}
-    = \big(\mathbf{e}_1 \otimes \mathbf{e}_1 \quad \dots \quad \mathbf{e}_L \otimes \mathbf{e}_L\big).
-\]
+    Таким образом, применяя для всех $i=1,\dots,L$, матрица Якоби принимает вид:
+    \begin{equation}
+        \frac{\partial \mathrm{diag}(\mathbf{v})}{\partial \mathbf{v}}
+        = \big(\mathbf{e}_1 \otimes \mathbf{e}_1 \quad \dots \quad \mathbf{e}_L \otimes \mathbf{e}_L\big).
+    \end{equation}
 \end{proof}
 
 \begin{lemma}[Производная транспонированной матрицы]\label{lemma:transposed_matrix_derivative}
@@ -124,18 +125,18 @@
     где матрица~$\mathbf{K}_{n, m}$ является коммутационной матрицей (англ. commutation matrix) описанной в определении~\ref{def:commutation_matrix}.
 \end{lemma} 
 \begin{proof}
-    Объединяя аналогичное свойство из~\cite{magnus1988matrix} для постолбцовой векторизации с правилом соединения столбцов и строк~\ref{prop:vec_relation} и \ref{def:commutation_matrix}, получаем утверждение теоремы.
+    Объединяя аналогичное утверждение из~\cite{magnus1988matrix} для постолбцовой векторизации с правилом соединения столбцов и строк~\ref{prop:vec_relation} и \ref{def:commutation_matrix}, получим утверждение леммы.
 \end{proof}
 
 
 \begin{lemma}[Производная произведения Кронекера матричнозначных функций]\label{lemma:matrix_funcs_kronecker_product_derivative}
-    Пусть заданы матричнозначные функции~$\mathbf{A}(\mathbf{X}) \in \mathbb{R}^{n \times q}$ и~$\mathbf{B}(\mathbf{X}) \in \mathbb{R}^{p \times r}$ матрицы $\mathbf{X}$, тогда
+    Пусть заданы матричнозначные функции~$\mathbf{A}(\mathbf{X}) \in \mathbb{R}^{n \times q}$ и~$\mathbf{B}(\mathbf{X}) \in \mathbb{R}^{p \times r}$ переменной~$\mathbf{X} \in \mathbb{R}^{m \times s}$, тогда справедливо равенство
     \begin{equation}
         \frac{\partial\mathbf{A}(\mathbf{X}) \otimes \mathbf{B}(\mathbf{X})}{\partial \mathbf{X}} = (\mathbf{I}_n \otimes \mathbf{K}_{p,q} \otimes \mathbf{I}_r) \left( \left( \mathrm{vec}_r \mathbf{A} \otimes \mathbf{I}_{pr} \right) \frac{\partial\mathbf{B}}{\partial \mathbf{X}} + \left( \mathbf{I}_{nq} \otimes \mathrm{vec}_r \mathbf{B} \right) \frac{\partial\mathbf{A}}{\partial \mathbf{X}}\right).
     \end{equation}
 \end{lemma}
 \begin{proof}
-    Применить цепное правило для вычисления производной сложной функции, а затем объединим его со свойством~\ref{prop:kronecker_product_derivative}
+    Применим цепное правило для вычисления производной сложной функции, а затем объединим его со свойством~\ref{prop:kronecker_product_derivative}
     \begin{align}
         \frac{\partial\mathbf{A}(\mathbf{X}) \otimes \mathbf{B}(\mathbf{X})}{\partial \mathbf{X}} &= \frac{\partial \mathbf{A}\otimes\mathbf{B}}{\partial\mathbf{B}}\frac{\partial\mathbf{B}}{\partial \mathbf{X}} + \frac{\partial \mathbf{A}\otimes\mathbf{B}}{\partial\mathbf{A}}\frac{\partial\mathbf{A}}{\partial \mathbf{X}} = \\
         &= (\mathbf{I}_n \otimes \mathbf{K}_{p,q} \otimes \mathbf{I}_r) \left( \mathrm{vec}_r \mathbf{A} \otimes \mathbf{I}_{pr} \right) \frac{\partial\mathbf{B}}{\partial \mathbf{X}} +\\
@@ -144,16 +145,16 @@
     \end{align}
 \end{proof}
 
-\begin{lemma}\label{lemma:1_spectral_norm}
-    Пусть задана единичная матрица~$\mathbf{A} = \mathbf{1}_{L \times L}$. Тогда ее спектральная норма принимает следующее значение:
+\begin{lemma}[Спектральная норма матрицы из единиц]\label{lemma:1_spectral_norm}
+    Пусть задана матрица~$\mathbf{A} = \mathbf{1}_{L \times L}$, все элементы которой равны единице. Тогда ее спектральная норма принимает следующее значение:
     \begin{equation}
         \|\mathbf{A}\|_2 = L
     \end{equation}
 \end{lemma}
 \begin{proof}
-Используя основные свойства линейной алгебры, получаем~$\mathrm{tr}(\mathbf{A}) = L$ и~$\mathrm{rank}(\mathbf{A}) = 1 = \mathrm{dim}(\mathrm{Im}(\mathbf{X}))$.
-Следовательно, используя~$\mathrm{dim}(\mathrm{Im}(\mathbf{X})) + \mathrm{dim}(\mathrm{Ker}(\mathbf{X})) = L$, получаем~$\mathrm{dim}(\mathrm{Ker}(\mathbf{X})) = L - 1$.
-Таким образом, для~$i \in \{2, \dots L\}$ имеем~$\lambda_i = 0$, а~$\lambda_1 = L$.
-Тогда единственное ненулевое сингулярное число матрицы~$\mathbf{A}$ равно $\sqrt{L^2} = L$.
-Следовательно, получаем, что~$\|\mathbf{A}\|_2 = L$, в соответствии с определением~\ref{def:matrix_norms}.
+    Используя основные свойства линейной алгебры, получим $\mathrm{tr}(\mathbf{A}) = L$ и $\mathrm{rank}(\mathbf{A}) = 1 = \mathrm{dim}(\mathrm{Im}(\mathbf{A}))$.
+    Следовательно, используя $\mathrm{dim}(\mathrm{Im}(\mathbf{A})) + \mathrm{dim}(\mathrm{Ker}(\mathbf{A})) = L$, получим $\mathrm{dim}(\mathrm{Ker}(\mathbf{A})) = L - 1$.
+    Таким образом, для $i \in \{2, \dots, L\}$ имеем $\lambda_i = 0$, а $\lambda_1 = L$.
+    Тогда единственное ненулевое сингулярное число матрицы $\mathbf{A}$ равно $\sqrt{L^2} = L$.
+    Следовательно, получим, что $\|\mathbf{A}\|_2 = L$, в соответствии с определением~\ref{def:matrix_norms}.
 \end{proof}

@@ -1,27 +1,27 @@
 \begin{property}[Норма матричного произведения]
 \label{prop:matrix_product_norm}
-    Пусть матрицы $\mathbf{A} \in \mathbb{R}^{m \times n}$ и $\mathbf{B} \in \mathbb{R}^{n \times q}$, тогда выполняется следующее неравенство
+    Пусть матрицы $\mathbf{A} \in \mathbb{R}^{m \times n}$ и $\mathbf{B} \in \mathbb{R}^{n \times q}$, тогда справедливо неравенство
     \begin{equation}
         \| \mathbf{A} \mathbf{B}\|_2 \leq \| \mathbf{A}\|_2 \| \mathbf{B}\|_2
     \end{equation}
 \end{property}
 
 \begin{property}[Норма матричного произведения Кронекера]\label{prop:kronecker_product_norm}
-    Пусть матрицы $\mathbf{A} \in \mathbb{R}^{m \times n}$ и $\mathbf{B} \in \mathbb{R}^{p \times q}$, тогда выполняется следующее равенство
+    Пусть матрицы $\mathbf{A} \in \mathbb{R}^{m \times n}$ и $\mathbf{B} \in \mathbb{R}^{p \times q}$, тогда справедливо равенство
     \begin{equation}
         \| \mathbf{A} \otimes \mathbf{B}\|_2 = \| \mathbf{A}\|_2 \| \mathbf{B}\|_2
     \end{equation}
 \end{property}
 
 \begin{property}[Норма матричного транспонирования]\label{prop:transposed_matrix_norm}
-    Пусть матрица $\mathbf{A} \in \mathbb{R}^{m \times n}$, тогда
+    Пусть матрица $\mathbf{A} \in \mathbb{R}^{m \times n}$, тогда справедливо равенство
     \begin{equation}
         \| \mathbf{A}\|_2 = \| \mathbf{A}^\top\|_2
     \end{equation}
 \end{property}
 
 \begin{property}[Соотношения между матричными нормами] \label{prop:matrix_norm_inequalities}
-    Пусть матрица $\mathbf{A} \in \mathbb{R}^{m \times n}$, тогда следующие неравенства между матричными нормами являются верными:
+    Пусть матрица $\mathbf{A} \in \mathbb{R}^{m \times n}$, тогда следующие неравенства между матричными нормами справедливы:
     
     \begin{center}
         \begin{tabular}{c|ccccc}
@@ -31,15 +31,15 @@
             $\|\mathbf{A}\|_1$ & $m$ &  & $m$ & $\sqrt{m}$ & $\sqrt{m}$ \\
             $\|\mathbf{A}\|_\infty$ & $n$ & $n$ &  & $\sqrt{n}$ & $\sqrt{n}$ \\
             $\|\mathbf{A}\|_2$ & $\sqrt{mn}$ & $\sqrt{n}$ & $\sqrt{m}$ &  & 1 \\
-            $\|\mathbf{A}\|_F$ & $\sqrt{mn}$ & $\sqrt{n}$ & $\sqrt{m}$ & $\sqrt{d}$ & \\
+            $\|\mathbf{A}\|_F$ & $\sqrt{mn}$ & $\sqrt{n}$ & $\sqrt{m}$ & $\sqrt{d}$ & 1 \\
         \end{tabular}
     \end{center}
     где $d = \operatorname{rank}(\mathbf{A})$.
     Таблица читается следующим образом: для каждой пары норм $\|\cdot\|_X$ и $\|\cdot\|_Y$,
-    \[
+    \begin{equation}
         \|\mathbf{A}\|_X \leq c \cdot \|\mathbf{A}\|_Y
-    \]
-    где $c$ это константа на пересечения строки $X$ и колонки $Y$.
+    \end{equation}
+    где $c \geq 0$ --- неотрицательная константа на пересечении строки $X$ и столбца $Y$.
 \end{property}
 
 \begin{property}[Связь между $\mathrm{vec}$ и $\mathrm{vec}_r$]\label{prop:vec_relation}
@@ -50,31 +50,30 @@
 \end{property}
 
 \begin{property}[Норма матричной суммы]\label{prop:matrix_sum_norm}
-    Пусть матрица $\mathbf{A}$ и матрица $\mathbf{B}$ является матрицами из пространства матриц $\mathbb{R}^{m \times n}$, тогда
+    Пусть матрицы $\mathbf{A}$ и $\mathbf{B}$ принадлежат пространству матриц $\mathbb{R}^{m \times n}$, тогда
     \begin{equation}
         \| \mathbf{A} + \mathbf{B}\|_2 \leq \| \mathbf{A}\|_2 + \| \mathbf{B}\|_2
     \end{equation}
 \end{property}
 
 \begin{property}[Неравенство для нормы блочной матрицы]\label{prop:block_matrix_norm}
-    Пусть задана матрица~$\mathbf{A} \in \mathbb{R}^{m \times n}$ представляет собой блочную матрицу, каждый блок которой является матрицей $\mathbf{B}_{i,j}$. Тогда выполняется следующее неравенство:
+    Пусть матрица~$\mathbf{A} \in \mathbb{R}^{m \times n}$ представляет собой блочную матрицу, разбитую на блоки $\mathbf{B}_{i,j}$ размеров $m_i \times n_j$, где $\sum_i m_i = m$ и $\sum_j n_j = n$. Тогда справедливо неравенство:
     \begin{equation}
         \| \mathbf{A} \|_2 \leq \sqrt{m n} \max\limits_{i,j}\| \mathbf{B}_{i,j}\|_2
     \end{equation}
     
-    Заметим, что если матрица~$\mathbf{A}$ является блочно-диагональной, то имеет место строгое равенство~$\| \mathbf{A} \|_2 = \max\limits_{i}\| \mathbf{B}_{i,i}\|_2$.
+    Отметим, что если матрица~$\mathbf{A}$ является блочно-диагональной, то имеет место строгое равенство~$\| \mathbf{A} \|_2 = \max\limits_{i}\| \mathbf{B}_{i,i}\|_2$, что следует из того, что спектральная норма блочно-диагональной матрицы равна максимальной спектральной норме диагональных блоков.
 \end{property}
 
 \begin{property}[Поэлементное деление]\label{prop:elem_wise_division}
-    Пусть задана матрица~$\mathbf{A} \in \mathbb{R}^{m\times n}$ и вектор~$\mathbf{b} \in \mathbb{R}^{m \times 1}$.
-    Тогда для матрицы $\mathbf{C} \in \mathbb{R}^{m \times n}$, где $c_{i,j} = \frac{a_{i,j}}{b_i}$, выполняется
+    Пусть задана матрица~$\mathbf{A} \in \mathbb{R}^{m\times n}$ и вектор~$\mathbf{b} \in \mathbb{R}^{m \times 1}$ такой, что $b_i \neq 0$ для всех $i = 1, \ldots, m$. Тогда для матрицы $\mathbf{C} \in \mathbb{R}^{m \times n}$, где $c_{i,j} = \frac{a_{i,j}}{b_i}$, справедливо равенство
     \begin{equation}
-        \mathbf{C} = \textit{diag}^{-1}(\mathbf{b})\mathbf{A}
+        \mathbf{C} = \mathrm{diag}^{-1}(\mathbf{b})\mathbf{A}
     \end{equation}
 \end{property}
 
 \begin{property}[Производная матричного произведения]\label{prop:matrix_product_derivative}
-    Пусть заданы матрицы~$\mathbf{X}, \mathbf{A}, \mathbf{B}$ соответствующих размерностей, тогда
+    Пусть заданы матрицы~$\mathbf{A} \in \mathbb{R}^{m \times n}$, $\mathbf{X} \in \mathbb{R}^{n \times q}$ и $\mathbf{B} \in \mathbb{R}^{q \times p}$, тогда
     \begin{equation}
         \frac{\partial\mathbf{A}\mathbf{X}\mathbf{B}}{\partial\mathbf{X}} = \mathbf{A} \otimes \mathbf{B}^\top
     \end{equation}
@@ -82,17 +81,17 @@
 \end{property}
 
 \begin{property}[Построчная векторизация произведения Адамара] \label{prop:vec_r_hadamard_product}
-Пусть заданы матрицы~$\mathbf{A}, \mathbf{B} \in \mathbb{R}^{m \times n}$. Тогда
-\[
-    \mathrm{vec}_r(\mathbf{A} \circ \mathbf{B}) = \textit{diag}(\mathrm{vec}_r(\mathbf{A})) \mathrm{vec}_r(\mathbf{B})
-\]
-где $\circ$ обозначает произведение Адамара.
+    Пусть заданы матрицы~$\mathbf{A}, \mathbf{B} \in \mathbb{R}^{m \times n}$. Тогда
+    \begin{equation}
+        \mathrm{vec}_r(\mathbf{A} \circ \mathbf{B}) = \mathrm{diag}(\mathrm{vec}_r(\mathbf{A})) \mathrm{vec}_r(\mathbf{B})
+    \end{equation}
+    где $\circ$ обозначает произведение Адамара.
 
-Данный результат непосредственно следует из \cite{magnus1988matrix}, где был получен аналогичный результат для покоординатной векторизации.
+    Утверждение непосредственно следует из \cite{magnus1988matrix}, где был получен аналогичный результат для покоординатной векторизации.
 \end{property}
 
 \begin{property}[Построчная векторизация матричного произведения]\label{prop:vec_r_matrix_product}
-    Пусть заданы матрицы~$\mathbf{X}, \mathbf{A}, \mathbf{B}$ соответствующих размерностей, тогда
+    Пусть заданы матрицы~$\mathbf{A} \in \mathbb{R}^{m \times n}$, $\mathbf{X} \in \mathbb{R}^{n \times q}$ и $\mathbf{B} \in \mathbb{R}^{q \times p}$, тогда
     \begin{equation}
         \mathrm{vec}_r(\mathbf{A} \mathbf{X}\mathbf{B}) = (\mathbf{A} \otimes \mathbf{B}^\top) \mathrm{vec}_r(\mathbf{X})
     \end{equation}
@@ -100,21 +99,21 @@
 
 \begin{property}[Производная произведения Кронекера]\label{prop:kronecker_product_derivative}
     Пусть заданы матрица~$\mathbf{X} \in \mathbb{R}^{n \times q}$ и матрица~$ \mathbf{Y} \in \mathbb{R}^{p \times r}$. Тогда
-    \[
-        \frac{\partial (\mathbf{X} \otimes \mathbf{Y})}{\partial \mathbf{X}} = (\mathbf{I}_n \otimes \mathbf{K}_{p,q} \otimes \mathbf{I}_r) \left( \mathbf{I}_{nq} \otimes \mathrm{vec}_r \mathbf{Y} \right),
-    \]
+    \begin{equation}
+        \frac{\partial (\mathbf{X} \otimes \mathbf{Y})}{\partial \mathbf{X}} = (\mathbf{I}_n \otimes \mathbf{K}_{p,q} \otimes \mathbf{I}_r) \left( \mathbf{I}_{nq} \otimes \mathrm{vec}_r(\mathbf{Y}) \right),
+    \end{equation}
     и аналогично
-    \[
-        \frac{\partial (\mathbf{X} \otimes \mathbf{Y})}{\partial \mathbf{Y}} = (\mathbf{I}_n \otimes \mathbf{K}_{p,q} \otimes \mathbf{I}_r) \left( \mathrm{vec}_r \mathbf{X} \otimes \mathbf{I}_{pr} \right).
-    \]
+    \begin{equation}
+        \frac{\partial (\mathbf{X} \otimes \mathbf{Y})}{\partial \mathbf{Y}} = (\mathbf{I}_n \otimes \mathbf{K}_{p,q} \otimes \mathbf{I}_r) \left( \mathrm{vec}_r(\mathbf{X}) \otimes \mathbf{I}_{pr} \right).
+    \end{equation}
 \end{property}
 
 \begin{definition}[Матрица перестановки]\label{def:commutation_matrix}
-    Матрица перестановки~$\mathbf{K}_{m,n} \in \mathbb{R}^{mn \times mn}$ это такая единственная матрица, что для любой матрицы~$\mathbf{A} \in \mathbb{R}^{m \times n}$ выполняется:
+    Матрица перестановки~$\mathbf{K}_{m,n} \in \mathbb{R}^{mn \times mn}$ --- это единственная матрица такая, что для любой матрицы~$\mathbf{A} \in \mathbb{R}^{m \times n}$ выполняется:
     \begin{equation}
         \mathbf{K}_{m,n} \mathrm{vec}(\mathbf{A}) = \mathrm{vec}(\mathbf{A}^\top)
     \end{equation}
-    Используя свойство~\ref{prop:vec_relation}, получаем соотношение:
+    В силу свойства~\ref{prop:vec_relation} справедливо соотношение:
     \begin{equation}
         \mathrm{vec}_r(\mathbf{A}) = \mathbf{K}_{m,n} \mathrm{vec}(\mathbf{A}) \quad \text{и} \quad \mathrm{vec}(\mathbf{A}) = \mathbf{K}_{n,m} \mathrm{vec}_r(\mathbf{A})
     \end{equation}
@@ -122,21 +121,21 @@
 \end{definition}
 
 \begin{definition}[Векторизация и поэлементные операции]\label{def:vec_elem_ops}
-Пусть задана матрица~$\mathbf{A}$ и вектор~$\mathbf{v}$. Тогда
-\begin{itemize}
-    \item $\mathrm{vec}_r(\mathbf{A})$ обозначает построчную векторизацию матрицы $\mathbf{A}$.
-    \item $\mathbf{A}^{\circ \alpha}$ обозначает поэлементное возведение матрицы $\mathbf{A}$ в степень $\alpha$, т.е. $(\mathbf{A}^{\circ \alpha})_{ij} = (\mathbf{A}_{ij})^\alpha$.
-    \item $\textit{diag}(\mathbf{v})$ создаёт диагональную матрицу с вектором $\mathbf{v}$ на главной диагонали.
-\end{itemize}
+    Пусть задана матрица~$\mathbf{A} \in \mathbb{R}^{m \times n}$ и вектор~$\mathbf{v} \in \mathbb{R}^{n}$. Тогда
+    \begin{itemize}
+        \item $\mathrm{vec}_r(\mathbf{A})$ обозначает построчную векторизацию матрицы $\mathbf{A}$, отображающую матрицу $\mathbf{A}$ в вектор размерности $mn$ путем последовательной записи строк матрицы.
+        \item $\mathbf{A}^{\circ \alpha}$ обозначает поэлементное возведение матрицы $\mathbf{A}$ в степень $\alpha$, то есть $(\mathbf{A}^{\circ \alpha})_{ij} = (\mathbf{A}_{ij})^\alpha$ для всех $i = 1, \ldots, m$ и $j = 1, \ldots, n$.
+        \item $\mathrm{diag}(\mathbf{v})$ создает диагональную матрицу размерности $n \times n$ с вектором $\mathbf{v}$ на главной диагонали и нулями вне главной диагонали.
+    \end{itemize}
 \end{definition}
 
-\begin{definition}\label{def:matrix_norms}
-Для матрицы $\mathbf{A} \in \mathbb{R}^{m \times n}$:
-\begin{align}
-    \|\mathbf{A}\|_2 &= \sigma_1, \\
-    \|\mathbf{A}\|_F &= \sqrt{\sum_{i=1}^m \sum_{j=1}^n |a_{ij}|^2} = \sqrt{\sum_{i=1}^r \sigma_i^2}, \\
-    \|\mathbf{A}\|_1 &= \max_{1 \leq j \leq n} \sum_{i=1}^m |a_{ij}|,  \\
-    \|\mathbf{A}\|_\infty &= \max_{1 \leq i \leq m} \sum_{j=1}^n |a_{ij}|, \\
-    \|\mathbf{A}\|_{\max} &= \max_{i,j} |a_{ij}|.
-\end{align}
+\begin{definition}[Матричные нормы]\label{def:matrix_norms}
+    Для матрицы $\mathbf{A} \in \mathbb{R}^{m \times n}$, где $r = \operatorname{rank}(\mathbf{A})$ и $\sigma_1 \geq \sigma_2 \geq \ldots \geq \sigma_r > 0$ --- упорядоченные по убыванию сингулярные числа матрицы $\mathbf{A}$ (с учетом кратности), определены следующие нормы:
+    \begin{align}
+        \|\mathbf{A}\|_2 &= \sigma_1, \\
+        \|\mathbf{A}\|_F &= \sqrt{\sum_{i=1}^m \sum_{j=1}^n |a_{ij}|^2} = \sqrt{\sum_{i=1}^r \sigma_i^2}, \\
+        \|\mathbf{A}\|_1 &= \max_{1 \leq j \leq n} \sum_{i=1}^m |a_{ij}|,  \\
+        \|\mathbf{A}\|_\infty &= \max_{1 \leq i \leq m} \sum_{j=1}^n |a_{ij}|, \\
+        \|\mathbf{A}\|_{\max} &= \max_{i,j} |a_{ij}|.
+    \end{align}
 \end{definition}

@@ -428,7 +428,7 @@
 
 Критерий определяется в определении~\ref{sufficient-variance}.
 
-\begin{definition}\label{sufficient-variance}
+\begin{definition}[D-достаточный размер выборки]\label{sufficient-variance}
     Пусть задано некоторое~$\varepsilon > 0$.
     Размер выборки~$m^*$ назовем D-достаточным, если для всех~$k\geqslant m^*$ выполняется условие:
     \[
@@ -440,7 +440,7 @@
 
 С другой стороны, при наличии достаточного количества объектов естественно ожидать, что при добавлении еще одного объекта к рассмотрению результирующая оценка параметра изменится незначительно; на основе данного свойства получаем определение~\ref{sufficient-difference}.
 
-\begin{definition}\label{sufficient-difference}
+\begin{definition}[M-достаточный размер выборки]\label{sufficient-difference}
     Пусть задано некоторое~$\varepsilon > 0$.
     Размер выборки~$m^*$ назовем M-достаточным, если для всех~$k\geqslant m^*$ выполняется условие:
     \[
@@ -466,7 +466,7 @@
 Для удобства обозначим параметры распределения~$\hat{\mathbf{w}}_k$ следующим образом: математическое ожидание~$\mathbb{E}\hat{\mathbf{w}}_k=\mathbf{m}_k$ и матрица ковариаций~$\mathbb{D} \hat{\mathbf{w}}_k = \mathbf{\Sigma}_k$.
 Тогда справедлива теорема~\ref{chapter:samplesize:theorem-kiselev-likelihood-bootstraping}, которая доказывает сходимость параметров.
 
-\begin{theorem}\label{chapter:samplesize:theorem-kiselev-likelihood-bootstraping}
+\begin{theorem}[Корректность M-достаточного размера выборки]\label{chapter:samplesize:theorem-kiselev-likelihood-bootstraping}
     Пусть~$\|\mathbf{m}_{k+1} - \mathbf{m}_k\|_2 \to 0$ и~$\|\mathbf{\Sigma}_{k+1} - \mathbf{\Sigma}_k\|_{F}\to 0$ при~$k\to \infty$. 
     Тогда в модели линейной регрессии определение M-достаточного размера выборки корректно.
     А именно, для любого~$\varepsilon > 0$ существует такой~$m^*$, что для всех~$k\geqslant m^*$ выполняется~$M(k)\leqslant\varepsilon$.
@@ -512,7 +512,7 @@
 
 Теорема~\ref{chapter:samplesize:theorem-kiselev-likelihood-bootstraping} устанавливает корректность определения M-достаточного размера выборки для модели линейной регрессии при выполнении условий сходимости моментов оценок параметров. Указанные условия являются естественными для асимптотически нормальных оценок максимального правдоподобия и выполняются при стандартных предположениях о регулярности модели.
 
-\begin{corollary}\label{chapter:samplesize:corollary-kiselev-likelihood-bootstraping}
+\begin{corollary}[Корректность M-достаточного размера выборки при сходимости к истинным параметрам]\label{chapter:samplesize:corollary-kiselev-likelihood-bootstraping}
     Пусть~$\|\mathbf{m}_k - \mathbf{w}\|_2\to 0$ и~$\|\mathbf{\Sigma}_k - \left[k\mathcal{I}(\mathbf{w})\right]^{-1}\|_{F}\to 0$ при~$k \to \infty$. 
     
     Тогда в модели линейной регрессии определение M-достаточного размера выборки корректно.
@@ -543,7 +543,7 @@
 В рамках данного раздела предлагается использовать не только расхождение Кульбака-Лейблера, но и функцию схожести s-score из работы~\cite{aduenko2017}, для этого рассмотрим две подвыборки~$\mathfrak{D}^1\subseteq\mathfrak{D}_m$ и~$\mathfrak{D}^2\subseteq\mathfrak{D}_m$.
 Пусть~$\mathcal{I}_1 \subseteq \mathcal{I} = \{1, \ldots, m\}$ и~$\mathcal{I}_2 \subseteq \mathcal{I} =\{1, \ldots,m\}$~--- соответствующие им подмножества индексов.
 
-\begin{definition}
+\begin{definition}[Близкие подвыборки]
     Подвыборки~$\mathfrak{D}^1$ и~$\mathfrak{D}^2$ назовем близкими, если~$\mathcal{I}_2$ может быть получено из~$\mathcal{I}_1$ путем удаления, замены или добавления одного элемента. Формально это условие записывается как
     \[
         \left| \mathcal{I}_1 \triangle \mathcal{I}_2 \right| = \left| \left( \mathcal{I}_1 \setminus \mathcal{I}_2 \right) \cup \left( \mathcal{I}_2 \setminus \mathcal{I}_1 \right) \right| = 1,
@@ -558,7 +558,7 @@
     p_j(\mathbf{w}) = p(\mathbf{w} | \mathfrak{D}_j) = \frac{p(\mathfrak{D}_j | \mathbf{w}) p(\mathbf{w})}{p(\mathfrak{D}_j)} \propto p(\mathfrak{D}_j | \mathbf{w}) p(\mathbf{w}), \quad j = k, k+1.
 \]
 
-\begin{definition}
+\begin{definition}[KL-достаточный размер выборки]
     Пусть задано некоторое~$\varepsilon > 0$.
     Размер выборки~$m^*$ называется KL-достаточным, если для всех~$k\geqslant m^*$
     \[
@@ -568,7 +568,7 @@
 
 Для пары нормальных распределений расхождение Кульбака-Лейблера имеет аналитическое выражение. Предположив, что апостериорное распределение является нормальным,~$p_k(\mathbf{w}) = \mathcal{N}\left(\mathbf{w}|\mathbf{m}_k, \mathbf{\Sigma}_k\right)$, где~$\mathbf{m}_k$ --- вектор математического ожидания, а~$\mathbf{\Sigma}_k$ --- ковариационная матрица, получаем формулировку теоремы~\ref{chapter:samplesize:theorem-kiselev-posterior-similiarity}
 
-\begin{theorem}\label{chapter:samplesize:theorem-kiselev-posterior-similiarity}
+\begin{theorem}[Корректность KL-достаточного размера выборки]\label{chapter:samplesize:theorem-kiselev-posterior-similiarity}
     Пусть~$\|\mathbf{m}_{k+1} - \mathbf{m}_k\|_2 \to 0$ и~$\|\mathbf{\Sigma}_{k+1} - \mathbf{\Sigma}_k\|_{F}\to 0$ при~$k\to \infty$.
     
     Тогда в модели с нормальным апостериорным распределением параметров определение KL-достаточного размера выборки корректно.
@@ -638,7 +638,7 @@
 \[
     \text{s-score}(g_1, g_2) = \frac{\int_{\mathbf{w}} g_1(\mathbf{w}) g_2(\mathbf{w}) d\mathbf{w}}{\max_{\mathbf{b}} \int_{\mathbf{w}} g_1(\mathbf{w} - \mathbf{b}) g_2(\mathbf{w}) d\mathbf{w}}.
 \]
-\begin{definition}
+\begin{definition}[S-достаточный размер выборки]
     Пусть задано некоторое~$\varepsilon > 0$.
     Размер выборки~$m^*$ называется S-достаточным, если для всех~$k\geqslant m^*$
     \[
@@ -647,7 +647,7 @@
 \end{definition}
 Как и в случае с KL-достаточным размером выборки, в модели с нормальным апостериорным распределением можно записать выражение для используемого критерия, который записан в виде теоремы~\ref{chapter:samplesize:theorem-kiselev-posterior-similiarity-s-score}
 
-\begin{theorem}\label{chapter:samplesize:theorem-kiselev-posterior-similiarity-s-score}
+\begin{theorem}[Корректность S-достаточного размера выборки]\label{chapter:samplesize:theorem-kiselev-posterior-similiarity-s-score}
     Пусть~$\|\mathbf{m}_{k+1} - \mathbf{m}_k\|_2\to 0$ при~$k \to \infty$.
     
     Тогда в модели с нормальным апостериорным распределением параметров определение S-достаточного размера выборки корректно.
@@ -672,7 +672,7 @@
 Таким образом, приходим к одному из простейших примеров модели, для которой справедливы приведенные выше теоремы.
 Фактически, для линейной регрессии могут быть сформулированы более простые утверждения.
 
-\begin{theorem}\label{chapter:samplesize:theorem-kiselev-posterior-similiarity-linear-regression}
+\begin{theorem}[Сходимость апостериорных распределений в линейной регрессии]\label{chapter:samplesize:theorem-kiselev-posterior-similiarity-linear-regression}
     Пусть множества значений признаков и целевой переменной ограничены, то есть существует константа~$M\in \mathbb{R}$ такая, что~$\|\mathbf{x}\|_2\leqslant M$ и~$|y|\leqslant M$ для всех объектов выборки.
     Если~$\lambda_{\min}\left(\mathbf{X}^{\top}_k \mathbf{X}_k \right) = \omega(\sqrt{k})$ при~$k\to \infty$, то в модели линейной регрессии с нормальным априорным распределением параметров~$\|\mathbf{m}_{k+1} - \mathbf{m}_k\|_2\to 0$ и~$\|\mathbf{\Sigma}_{k+1} - \mathbf{\Sigma}_k\|_{F}\to 0$ при~$k\to \infty$.
 \end{theorem}
