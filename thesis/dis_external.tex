@@ -39,7 +39,7 @@
     \begin{equation}
         \|\mathbf{A}\|_X \leq c \cdot \|\mathbf{A}\|_Y
     \end{equation}
-    где $c \geq 0$ --- неотрицательная константа на пересечении строки $X$ и столбца $Y$.
+    где $c \geq 0$~--- неотрицательная константа на пересечении строки $X$ и столбца $Y$.
 \end{property}
 
 \begin{property}[Связь между $\mathrm{vec}$ и $\mathrm{vec}_r$]\label{prop:vec_relation}
@@ -109,7 +109,7 @@
 \end{property}
 
 \begin{definition}[Матрица перестановки]\label{def:commutation_matrix}
-    Матрица перестановки~$\mathbf{K}_{m,n} \in \mathbb{R}^{mn \times mn}$ --- это единственная матрица такая, что для любой матрицы~$\mathbf{A} \in \mathbb{R}^{m \times n}$ выполняется:
+    Матрица перестановки~$\mathbf{K}_{m,n} \in \mathbb{R}^{mn \times mn}$~--- это единственная матрица такая, что для любой матрицы~$\mathbf{A} \in \mathbb{R}^{m \times n}$ выполняется:
     \begin{equation}
         \mathbf{K}_{m,n} \mathrm{vec}(\mathbf{A}) = \mathrm{vec}(\mathbf{A}^\top)
     \end{equation}
@@ -130,7 +130,7 @@
 \end{definition}
 
 \begin{definition}[Матричные нормы]\label{def:matrix_norms}
-    Для матрицы $\mathbf{A} \in \mathbb{R}^{m \times n}$, где $r = \operatorname{rank}(\mathbf{A})$ и $\sigma_1 \geq \sigma_2 \geq \ldots \geq \sigma_r > 0$ --- упорядоченные по убыванию сингулярные числа матрицы $\mathbf{A}$ (с учетом кратности), определены следующие нормы:
+    Для матрицы $\mathbf{A} \in \mathbb{R}^{m \times n}$, где $r = \operatorname{rank}(\mathbf{A})$ и $\sigma_1 \geq \sigma_2 \geq \ldots \geq \sigma_r > 0$~--- упорядоченные по убыванию сингулярные числа матрицы $\mathbf{A}$ (с учетом кратности), определены следующие нормы:
     \begin{align}
         \|\mathbf{A}\|_2 &= \sigma_1, \\
         \|\mathbf{A}\|_F &= \sqrt{\sum_{i=1}^m \sum_{j=1}^n |a_{ij}|^2} = \sqrt{\sum_{i=1}^r \sigma_i^2}, \\

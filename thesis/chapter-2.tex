@@ -365,7 +365,7 @@
 \end{align}
 и преобразования, которые предшествовали $p$-му слою:
 \begin{align}
-    \mathbf{R}^{(p)} &:= \boldsymbol{\Lambda}^{(p)}\mathbf{T}^{(p)} \dots \boldsymbol{\Lambda}^{(1)}\mathbf{T}^{(1)};\;\;p = \overline{1,L}; \\ 
+    \mathbf{R}^{(p)} &:= \boldsymbol{\Lambda}^{(p)}\mathbf{T}^{(p)} \dots \boldsymbol{\Lambda}^{(1)}\mathbf{T}^{(1)};p = \overline{1,L}; \\ 
     \mathbf{R}^{(0)} &:= \mathbf{I}.
 \end{align}
 Матрица $\mathbf{G}^{(p)}$ описывает линейные преобразования от $p$-го слоя к выходу сети, в то время как $\mathbf{R}^{(p)}$ описывает линейные преобразование входа до $p$-го слоя.
@@ -1777,7 +1777,7 @@ $\mathbf{H}=\tfrac{\partial \mathbf{P}}{\partial \mathbf{X}}$, и $\mathbf{P}=\m
 
 Тогда матрицы Гессе трансформера~$\mathbf{Z}$ по параметрам модели~$(\mathbf{W}_i,\mathbf{W}_j)$ задается в виде:
 \begin{equation}\label{eq:block_hessian_transformer}
-    \;\mathbf{H}_{\mathrm{tr}}^{(i,j)} := \frac{\partial^2 \mathbf{Z}}{\partial \mathbf{W}_i \partial \mathbf{W}_j}
+    \mathbf{H}_{\mathrm{tr}}^{(i,j)} := \frac{\partial^2 \mathbf{Z}}{\partial \mathbf{W}_i \partial \mathbf{W}_j}
     = \left( \mathbf{J}_Z \otimes \mathbf{I}_{n_i} \right) \boldsymbol{\xi}_{ij}
       + \left( \mathbf{I}_{L d_V} \otimes \mathbf{B}_i^\top \right) \mathbf{H}_Z \mathbf{B}_j,
 \end{equation}
@@ -1822,7 +1822,7 @@ $\mathbf{H}=\tfrac{\partial \mathbf{P}}{\partial \mathbf{X}}$, и $\mathbf{P}=\m
 
 На 1-м шаге для всех $i \in \{1,2,K,Q,V\}$ получаем:
 \begin{align}
-    \frac{\partial \mathbf{Z}}{\partial \mathbf{W}_i} \;=\; \mathbf{J}_Z  \mathbf{B}_i,\qquad\mathbf{J}_Z \in \mathbb{R}^{L d_V \times L d_V},
+    \frac{\partial \mathbf{Z}}{\partial \mathbf{W}_i} = \mathbf{J}_Z  \mathbf{B}_i,\qquad\mathbf{J}_Z \in \mathbb{R}^{L d_V \times L d_V},
 \end{align}
 где $\mathbf{B}_i := \frac{\partial \mathbf{S}}{\partial \mathbf{W}_i}$ задается следующим образом:
 \begin{align}
@@ -2165,7 +2165,7 @@ $\mathbf{H}=\tfrac{\partial \mathbf{P}}{\partial \mathbf{X}}$, и $\mathbf{P}=\m
 
 Для полносвязных нейронных сетей установлены точные верхние оценки спектральной нормы матрицы Гессе.
 Теорема~\ref{theorem:hess-kiselev-theorem} демонстрирует, что норма гессиана ограничена выражением $\|\mathbf{H}_i(\boldsymbol{\theta})\|_2 \leqslant L\sqrt{2}M_{\mathbf{x}}^2M_{\mathbf{W}}^{2L} + \sqrt{2}\frac{M_{\mathbf{W}}^2(M_{\mathbf{W}}^{2L}-1)}{M_{\mathbf{W}}^2-1}$, что устанавливает экспоненциальную зависимость от глубины сети $L$ и полиномиальную зависимость от ширины слоев.
-Теорема~\ref{theorem:hess-kiselev-lemma} уточняет данную оценку, показывая асимптотическую пропорциональность $\|\mathbf{H}_i(\boldsymbol{\theta})\|_2 \propto L(hM)^{2L}$, где $h$ --- размер скрытого слоя, а $M$ --- константа, ограничивающая параметры.
+Теорема~\ref{theorem:hess-kiselev-lemma} уточняет данную оценку, показывая асимптотическую пропорциональность $\|\mathbf{H}_i(\boldsymbol{\theta})\|_2 \propto L(hM)^{2L}$, где $h$~--- размер скрытого слоя, а $M$~--- константа, ограничивающая параметры.
 
 Для сверточных нейронных сетей получены явные оценки нормы гессиана через структурные параметры архитектуры.
 Теорема~\ref{thm:1Dconv} устанавливает оценку для одномерных сверточных сетей: $\|\mathbf{H}_O\| \leqslant \sqrt{2}\|\mathbf{x}\|^2d^2(L+1)(C^2w^2kd)^L$, демонстрируя мультипликативную зависимость от глубины и полиномиально-экспоненциальную зависимость от числа каналов $C$, размера ядра $k$ и длины последовательности $d$.
@@ -2174,7 +2174,7 @@ $\mathbf{H}=\tfrac{\partial \mathbf{P}}{\partial \mathbf{X}}$, и $\mathbf{P}=\m
 
 Наиболее значительным результатом главы является комплексный анализ матриц Гессе для трансформерных архитектур, восполняющий существенный пробел в теоретическом понимании этих моделей.
 Впервые получены явные выражения для матриц Якоби и Гессе ключевых компонентов трансформера.
-Теорема~\ref{thm:layernorm_derivative} устанавливает выражение для матрицы Якоби слоя LayerNorm, а теорема~\ref{thm:layernorm_second_derivative} --- для матрицы Гессе, что представляет собой нетривиальный результат ввиду сложной нелинейной структуры операции нормализации.
+Теорема~\ref{thm:layernorm_derivative} устанавливает выражение для матрицы Якоби слоя LayerNorm, а теорема~\ref{thm:layernorm_second_derivative}~--- для матрицы Гессе, что представляет собой нетривиальный результат ввиду сложной нелинейной структуры операции нормализации.
 Теорема~\ref{thm:self_attention_hessian_estimation} определяет оценки нормы гессиана для механизма самовнимания, демонстрируя зависимость от структурных параметров трансформера.
 Теорема~\ref{thm:transformer_hessian_estimate} устанавливает верхние оценки для полной матрицы Гессе трансформера, показывая гетерогенность вклада различных блоков параметров (Queries, Keys, Values, FFN, LayerNorm) в общую кривизну функции потерь.
 Эмпирические результаты, представленные в разделе~\ref{chapter:gesian:experiment:fig:norm}, подтверждают теоретические оценки и демонстрируют, что наибольшие значения норм соответствуют блокам Keys и Values, что согласуется с полученными теоретическими предсказаниями.
