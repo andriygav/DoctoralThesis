@@ -231,14 +231,14 @@
 \begin{itemize}
     \justifying
     \item \textbf{Отсутствие единого формального языка.} Введение мер сложности $\mu_D(D)$ и $\mu_f(f)$; критерий обучаемости $\mu_f(f) \le \mu_D(D)$.
-    \item \textbf{Нет аналитических оценок сложности.} Ландшафтная мера $\mu_f(f|D) = \mathbb{E}\| \mathbf{H}_i - \mathbb{E}\mathbf{H}_i \|$; строгие оценки $\|\mathbf{H}\|_2$ для полносвязных, свёрточных и трансформерных сетей.
-    \item \textbf{Невозможность определить необходимый объём данных.} Методы D, M, KL, S-достаточности с доказанной сходимостью (теоремы 28–31).
+    \item \textbf{Нет аналитических оценок сложности.} Ландшафтная мера $\mu_f(f|D) = \mathbb{E}\| \mathbf{H}_i - \mathbb{E}\mathbf{H}_i \|$; строгие оценки $\|\mathbf{H}\|_2$ для полносвязных, сверточных и трансформерных сетей.
+    \item \textbf{Невозможность определить необходимый объем данных.} Методы D, M, KL, S-достаточности с доказанной сходимостью (теоремы 28–31).
     \item \textbf{Отсутствие теоретически обоснованных методов.} Прореживание на основе ковариации градиентов; мультидоменная дистилляция; анти-дистилляция.
     \item \textbf{Эмпирический характер законов масштабирования.} Теоремы о состоятельности LoRA; снижение сложности Радемахера в многозадачном обучении в $1/\sqrt{T}$ раз.
 \end{itemize}
 
 \vspace{0.2cm}
-\small{Работа создаёт единый теоретический аппарат, связывающий классическую теорию сложности с современными архитектурами и эмпирическими наблюдениями.}
+\small{Работа создает единый теоретический аппарат, связывающий классическую теорию сложности с современными архитектурами и эмпирическими наблюдениями.}
 \end{frame}
 %----------------------------------------------------------------------------------------------------------
 \begin{frame}{Диссертация в контексте теории сложности}
@@ -258,7 +258,7 @@
     \node[draw, rectangle, rounded corners, fill=blue!30, text width=2.8cm, text centered, minimum height=1.2cm, font=\small] (complexity) at (4.5,3.0) {\textbf{Единый аппарат}\\теории мер};
     \node[draw, rectangle, rounded corners, fill=green!30, text width=2.4cm, text centered, minimum height=0.9cm, font=\footnotesize, below left=0.9cm and 0.2cm of complexity] (landscape) {\textbf{Ландшафтная}\\мера};
     \node[draw, rectangle, rounded corners, fill=orange!30, text width=2.4cm, text centered, minimum height=0.9cm, font=\footnotesize, below right=0.9cm and 0.2cm of complexity] (hessian) {\textbf{Оценки}\\матриц Гессе};
-    \node[draw, rectangle, rounded corners, fill=red!25, text width=2.4cm, text centered, minimum height=0.9cm, font=\footnotesize, below=0.9cm of landscape] (sample) {\textbf{Достаточный}\\объём выборки};
+    \node[draw, rectangle, rounded corners, fill=red!25, text width=2.4cm, text centered, minimum height=0.9cm, font=\footnotesize, below=0.9cm of landscape] (sample) {\textbf{Достаточный}\\объем выборки};
     \node[draw, rectangle, rounded corners, fill=purple!25, text width=2.4cm, text centered, minimum height=0.9cm, font=\footnotesize, below=0.9cm of hessian] (reduction) {\textbf{Снижение}\\сложности};
     \node[draw, rectangle, rounded corners, fill=yellow!30, text width=2.4cm, text centered, minimum height=0.9cm, font=\footnotesize, below=0.9cm of sample, xshift=1.2cm] (applications) {\textbf{Практические}\\применения};
     
@@ -295,7 +295,7 @@
     \begin{enumerate}
         \item Меры сложности выборки и модели
         \item Критерий обучаемости
-        \item Условная сложность и достаточный объём данных
+        \item Условная сложность и достаточный объем данных
         \item Ландшафтная мера: определение и интерпретация
         \item Экспериментальная проверка
     \end{enumerate}
@@ -331,170 +331,218 @@
 \end{rusdefinition}
 
 \end{frame}
-
-\begin{frame}{Мера сложности модели и критерий обучаемости}
+%----------------------------------------------------------------------------------------------------------
+\begin{frame}{Мера сложности модели}
 \justifying
-Задано множество моделей: $\mathfrak{F} = \left\{f_i\right\}.$
 
 \begin{rusdefinition}
-    \justifying
-    Мерой сложности модели~$f$ назовем отображение~$\mu_f(f_i)$:
-    \[
-        \mu_f(f_i) : \mathfrak{F} \to \mathbb{R}_+.
-    \]
+\justifying
+Для параметрического семейства функций $\mathfrak{F} = \{f_i\}$ вводится отображение
+\[
+\mu_f(f_i) : \mathfrak{F} \to \mathbb{R}_+,
+\]
+называемое \textbf{мерой сложности модели}.
 \end{rusdefinition}
 
-\begin{block}{Ключевой критерий обучаемости}
+\vspace{0.3cm}
+\textbf{Примеры мер:}
+\begin{itemize}
+    \item Число параметров модели.
+    \item Норма вектора весов $\|\mathbf{w}\|$.
+    \item Эффективная емкость, оцениваемая через след гессиана.
+    \item В дальнейшем будет введена \textit{ландшафтная мера} $\mu_f(f|D)$, учитывающая данные.
+\end{itemize}
+
+\vspace{0.3cm}
+\textit{Примечание:} Конкретный вид меры зависит от задачи и модели; важно лишь, что она задает числовую характеристику сложности.
+\end{frame}
+%----------------------------------------------------------------------------------------------------------
+\begin{frame}{Критерий обучаемости и дообучение}
 \justifying
-Модель $f\in\mathfrak{F}$ \textbf{обучаема} на выборке $D\in\mathfrak{D}$, если 
+
+\begin{rusdefinition}
+\justifying
+Модель $f$ \textbf{обучаема} на выборке $D$, если
 \[
-    \mu_f(f)\leq \mu_D(D).
+\mu_f(f) \;\le\; \mu_D(D).
 \]
-\end{block}
+Интуиция: сложность модели не должна превышать сложность данных, иначе неизбежно переобучение.
+\end{rusdefinition}
 
+\vspace{0.3cm}
 \begin{rustheorem}
-    \justifying
-    Если для исходной выборки~$D\in\mathfrak{D}$ выполняется условие~$\mu_f(f) \leq \mu_D(D)$, тогда для новой выборки~$D'\in\mathfrak{D}$ модель дообучаема при условии:
-    \[
-        \mu_f(f) - \mu_D(D) \leq \mu_D(D').
-    \]
+\justifying
+Если модель уже обучаема на исходной выборке $D$, то для добавления новой выборки $D'$ достаточно выполнения условия
+\[
+\mu_f(f) - \mu_D(D) \;\le\; \mu_D(D').
+\]
 \end{rustheorem}
+Это означает, что остаточная емкость модели должна покрываться сложностью новых данных.
 
-\begin{rusremark}
-    \justifying
-    Критерий обучаемости формализует необходимое условие предотвращения переобучения и устанавливает связь между сложностью модели и сложностью данных.
-\end{rusremark}
+\textit{Примечание:} Критерии дают формальную основу для планирования экспериментов и оценки необходимости сбора дополнительных данных.
 
 \end{frame}
-
 %----------------------------------------------------------------------------------------------------------
-\section{Достаточный объем выборки, как мера сложности данных}
-\begin{frame}{Условная сложность и однородность выборки}
+\begin{frame}{Условная сложность выборки}
 \justifying
-\begin{rusdefinition}
-    \justifying
-    Условной сложностью выборки~$D$ относительно заданной параметрической модели~$f$ назовем отображение~$\mu_D(D|f) : \mathfrak{D} \to \mathbb{R}_+,$ определяющиеся выражением:
-    $$\mu_D(D|f) = \inf \{ \mu_D(D') : D' \subseteq D, \quad \mu_f(f) \leq \mu_D(D') \}.$$
-\end{rusdefinition}
+
+Мера $\mu_D(D)$ оценивает абсолютную сложность данных, но для конкретной модели важна \textit{относительная} сложность.
 
 \begin{rusdefinition}
     \justifying
-    Однородную генеральную совокупность~$\Gamma_C$ назовем простой, если она состоит из объектов одинаковой сложности~$C.$
+    Условная сложность выборки $D$ относительно модели $f$:
+    \[
+        \mu_D(D|f) = \inf\{\mu_D(D'): D'\subseteq D,\; \mu_f(f) \le \mu_D(D')\}.
+    \]
+\end{rusdefinition}
+Это минимальная сложность подвыборки, достаточная для выполнения критерия обучаемости.
+
+\begin{block}{Свойства}
+    \begin{itemize}
+        \item $\mu_D(D|f) \le \mu_D(D)$
+        \item Если $\mu_f(f) \le \mu_D(D)$, то $\mu_D(D|f) \le \mu_D(D)$
+        \item Зависит как от данных, так и от архитектуры модели
+    \end{itemize}
+\end{block}
+\end{frame}
+%----------------------------------------------------------------------------------------------------------
+\begin{frame}{Простая генеральная совокупность}
+\justifying
+
+\begin{rusdefinition}
+    \justifying
+    Однородную генеральную совокупность $\Gamma_C$ назовем \textbf{простой}, если все ее объекты имеют одинаковую сложность $C$:
+    \[
+        \forall \gamma\in\Gamma_C\; \mu_D(\{\gamma\}) = C.
+    \]
 \end{rusdefinition}
 
 \begin{rustheorem}
-    \justifying
-    Для простой генеральной совокупности, мера сложности любой выборки $D \subset \Gamma$ равна ее объему:
+    Для простой совокупности мера сложности любой конечной выборки пропорциональна ее размеру:
     \[
         \mu_D(D) = C\cdot|D|.
     \]
 \end{rustheorem}
-\end{frame}
 
+\textit{Примечание:} Условная сложность превращается в минимальный размер подвыборки:
+\[
+    \mu_D(D|f) = C\cdot m^*, \quad 
+    m^* = \min\{k: \mu_f(f) \le Ck\}.
+\]
+$m^*$~--- минимальное количество объектов для обучения модели $f$.
+\end{frame}
 %----------------------------------------------------------------------------------------------------------
-\section{Ландшафтная мера}
 \begin{frame}{От общей теории к конкретной мере сложности}
 \justifying
-\begin{block}{Необходимость конкретизации}
-Общие определения мер сложности требуют конкретизации для практического применения к моделям глубокого обучения.
-\end{block}
 
-\begin{block}{Ландшафтная мера}
-Анализ изменения ландшафта функции потерь при вариации выборки через матрицы Гессе.
-\end{block}
+\begin{figure}[h!t]\center
+    \includegraphics[width=0.9\textwidth]{thesis/figures/chapter-1/losses_difference.pdf}  
+\end{figure}
 
 \vspace{0.3cm}
-\textbf{Основная идея:} Если добавление нового объекта данных существенно изменяет ландшафт оптимизации, то модель недостаточно обучена на текущей выборке.
-\end{frame}
+Если добавление нового объекта данных существенно изменяет ландшафт оптимизации, то модель недостаточно обучена на текущей выборке.
 
+\end{frame}
+%----------------------------------------------------------------------------------------------------------
 \begin{frame}{Изменения ландшафта при вариации выборки}
 \justifying
+
 Пусть задана выборка из~$\Gamma_C$:
-\begin{equation}
+\[
     D = \left\{ (\mathbf{x}_i, \mathbf{y}_i) \right\}, \quad i = 1, \ldots, m, \quad \mathbf{x} \in \mathcal{X}, \ \mathbf{y} \in \mathcal{Y}, \quad D\subset \Gamma_C.
-\end{equation}
-
-Пусть, используется метод минимизации эмпирического риска:
-\[
-    \hat{\boldsymbol{\theta}} = \arg\min_{\boldsymbol{\theta}} \mathcal{L}_m(\boldsymbol{\theta}) = \arg\min_{\boldsymbol{\theta}}\frac{1}{m} \sum\limits_{i=1}^{m} \ell(f_{\boldsymbol{\theta}}(\mathbf{x}_i), \mathbf{y}_i) \approx \arg\min_{\boldsymbol{\theta}}\mathsf{E}_{(\mathbf{x}, \mathbf{y})} \left[ \ell(f_{\boldsymbol{\theta}}(\mathbf{x}), \mathbf{y}) \right].
 \]
 
-Рассмотрим изменение функции~$\mathcal{L}_m(\boldsymbol{\theta})$:
+Рассмотрим эмпирический риск на выборках размера $k$ и $k+1$:
 \[
-    \mathcal{L}_{k+1}(\boldsymbol{\theta}) - \mathcal{L}_k(\boldsymbol{\theta}) = \frac{1}{k+1} \left(\ell(f_{\boldsymbol{\theta}}(\mathbf{x}_{k+1}), \mathbf{y}_{k+1}) - \mathcal{L}_{k}(\boldsymbol{\theta})\right),
+\mathcal{L}_k(\boldsymbol{\theta}) = \frac{1}{k}\sum_{i=1}^k \ell(f_{\boldsymbol{\theta}}(\mathbf{x}_i), \mathbf{y}_i), \quad 
+\mathcal{L}_{k+1}(\boldsymbol{\theta}) = \frac{1}{k+1}\sum_{i=1}^{k+1} \ell(f_{\boldsymbol{\theta}}(\mathbf{x}_i), \mathbf{y}_i).
 \]
-где~$\mathcal{L}_{k+1}(\boldsymbol{\theta})$ и~$\mathcal{L}_k(\boldsymbol{\theta})$ вычислены на выборках размера~$k+1$ и $k,$ различающимися ровно в~$1$ объекте.
+
+Их разность:
+\[
+\mathcal{L}_{k+1}(\boldsymbol{\theta}) - \mathcal{L}_k(\boldsymbol{\theta}) = 
+\frac{1}{k+1}\Bigl(\ell(f_{\boldsymbol{\theta}}(\mathbf{x}_{k+1}), \mathbf{y}_{k+1}) - \mathcal{L}_k(\boldsymbol{\theta})\Bigr).
+\]
+
+\vspace{0.2cm}
+\textit{Примечание:} при $k\to\infty$ эта разность стремится к нулю. 
+Скорость убывания определяется тем, насколько новый объект ``не похож'' на уже имеющиеся.
+Далее эта скорость оценивается через спектральные свойства матрицы Гессе.
 \end{frame}
-
-\begin{frame}{Предположение устойчивости локального минимума}
+%----------------------------------------------------------------------------------------------------------
+\begin{frame}{Предположение о стационарности точки минимума}
 \justifying
+
 \begin{rusassumption}
-    \justifying
-    Пусть $\boldsymbol{\theta}^*$ является локальным минимумом обеих эмпирических функций потерь $\mathcal{L}_{k}(\boldsymbol{\theta})$ и $\mathcal{L}_{k+1}(\boldsymbol{\theta})$, т.е: $\nabla \mathcal{L}_{k}(\boldsymbol{\theta}^*) = \nabla \mathcal{L}_{k+1}(\boldsymbol{\theta}^*) = \mathbf{0}.$
+\justifying
+Пусть $\boldsymbol{\theta}^*$~--- локальный минимум обеих функций потерь $\mathcal{L}_k(\boldsymbol{\theta})$ и $\mathcal{L}_{k+1}(\boldsymbol{\theta})$, т.е.
+\[
+    \nabla\mathcal{L}_k(\boldsymbol{\theta}^*) = \nabla\mathcal{L}_{k+1}(\boldsymbol{\theta}^*) = \mathbf{0}.
+\]
 \end{rusassumption}
 
-В рамках предположения: $\mathcal{L}_{k}(\boldsymbol{\theta}) \approx \mathcal{L}_{k}(\boldsymbol{\theta}^*) + \frac{1}{2} (\boldsymbol{\theta} - \boldsymbol{\theta}^*)^\top \mathbf{H}^{(k)}(\boldsymbol{\theta}^*) (\boldsymbol{\theta} - \boldsymbol{\theta}^*).$
+В окрестности минимума функции аппроксимируются квадратично:
+\[
+\mathcal{L}_k(\boldsymbol{\theta}) \approx \mathcal{L}_k(\boldsymbol{\theta}^*) + \frac{1}{2}(\boldsymbol{\theta} - \boldsymbol{\theta}^*)^\top \mathbf{H}^{(k)}(\boldsymbol{\theta}^*)(\boldsymbol{\theta} - \boldsymbol{\theta}^*).
+\]
 
-\begin{align*}
-    \mathcal{L}_{k+1}(\boldsymbol{\theta}) - \mathcal{L}_k(\boldsymbol{\theta}) &= \frac{1}{k+1} \left( \ell(f_{\boldsymbol{\theta}^*}(\mathbf{x}_{k+1}), \mathbf{y}_{k+1}) - \frac{1}{k} \sum\limits_{i=1}^{k} \ell(f_{\boldsymbol{\theta}^*}(\mathbf{x}_{i}), \mathbf{y}_{i}) \right) +\\
-    &\quad+ \frac{1}{k+1} (\boldsymbol{\theta} - \boldsymbol{\theta}^*)^\top \left( \mathbf{H}_{k+1}(\boldsymbol{\theta}^*) - \frac{1}{k} \sum\limits_{i=1}^{k} \mathbf{H}_{i}(\boldsymbol{\theta}^*) \right) (\boldsymbol{\theta} - \boldsymbol{\theta}^*).
-\end{align*}
+Тогда разность потерь принимает вид:
+\[
+\begin{aligned}
+\mathcal{L}_{k+1}(\boldsymbol{\theta}) - \mathcal{L}_k(\boldsymbol{\theta}) &\approx 
+\frac{1}{k+1}\Bigl(\ell(f_{\boldsymbol{\theta}^*}(\mathbf{x}_{k+1}), \mathbf{y}_{k+1}) - \mathcal{L}_k(\boldsymbol{\theta}^*)\Bigr) \\
+&\quad + \frac{1}{k+1}(\boldsymbol{\theta} - \boldsymbol{\theta}^*)^\top 
+\Bigl(\mathbf{H}_{k+1}(\boldsymbol{\theta}^*) - \frac{1}{k}\sum_{i=1}^{k}\mathbf{H}_i(\boldsymbol{\theta}^*)\Bigr)(\boldsymbol{\theta} - \boldsymbol{\theta}^*).
+\end{aligned}
+\]
 
 \begin{rusremark}
-    Первое слагаемое может быть ограничено константой,
-поскольку сама функция потерь принимает ограниченные значения. Основной интерес представляет выражение с матрицами Гессе.
+\justifying
+Первое слагаемое ограничено константой, не зависящей от $k$. Второе содержит разность матриц Гессе~--- именно она определяет скорость сходимости ландшафта и используется в основе ландшафтной меры.
 \end{rusremark}
-
 \end{frame}
-
-\begin{frame}{Ландшафтная мера сложности}
+%----------------------------------------------------------------------------------------------------------
+\begin{frame}{Ландшафтная мера сложности модели}
 \justifying
 
 \begin{rusdefinition}
-    \justifying
-    \textbf{Ландшафтной мерой} сложности параметрической функции~$f$ назовем:
+\justifying
+    \textbf{Ландшафтной мерой} сложности параметрической функции $f$ называется
     \[
-        \mu_f(f|D) = \mathsf{E}_{\mathbf{x}_i\in D}\left\| \mathbf{H}_{i}(\boldsymbol{\theta}^*) -  \mathsf{E}_{\mathbf{x}_i\in D}\mathbf{H}_{i}(\boldsymbol{\theta}^*) \right\|_2.
+        \mu_f(f|D) = \mathbb{E}_{\mathbf{x}_i\in D}\left\| \mathbf{H}_i(\boldsymbol{\theta}^*) - \mathbb{E}_{\mathbf{x}_i\in D}\mathbf{H}_i(\boldsymbol{\theta}^*) \right\|_2,
     \]
+    где $\mathbf{H}_i(\boldsymbol{\theta}^*)$~--- матрица Гессе для $i$-го объекта в точке минимума $\boldsymbol{\theta}^*$.
 \end{rusdefinition}
 
-\begin{block}{Интерпретация}
-Ландшафтная мера характеризует \textbf{вариативность} матриц Гессе по объектам выборки. Большая вариативность означает, что различные объекты по-разному влияют на ландшафт оптимизации.
-\end{block}
+Ландшафтная мера характеризует \textbf{вариативность} гессианов по объектам выборки:
+\begin{itemize}
+    \item Малая вариативность~--- объекты одинаково влияют на ландшафт, модель насытилась данными.
+    \item Большая вариативность~--- разные объекты по-разному искривляют ландшафт, данных недостаточно.
+\end{itemize}
 
 \begin{block}{Связь с изменением функции потерь}
 \[
     \left| \mathcal{L}_{k+1}(\boldsymbol{\theta}) - \mathcal{L}_k(\boldsymbol{\theta}) \right| \leqslant \frac{M_l}{k+1}+ \frac{\mu_f(f|D)}{k+1}\left\|\boldsymbol{\theta} - \boldsymbol{\theta}^*\right\|_2^2.
 \]
 \end{block}
-
-\begin{rusremark}
-    \justifying
-    Ландшафтная мера связывает сложность модели со сложностью данных через анализ матриц Гессе, что позволяет получить вычислимо осуществимые оценки без прямого вычисления полных матриц Гессе.
-\end{rusremark}
 \end{frame}
-
+%----------------------------------------------------------------------------------------------------------
 \begin{frame}{Экспериментальная проверка ландшафтной меры}
 \justifying
-\begin{block}{Экспериментальная постановка}
-Исследование зависимости между средним абсолютным различием значений функции потерь $|\mathcal{L}_{k+1}(\boldsymbol{\theta}) - \mathcal{L}_k(\boldsymbol{\theta})|$ и доступным размером выборки $k$ для различных архитектур.
-\end{block}
+
+\textbf{Цель:} проверить, что разность потерь $|\mathcal{L}_{k+1}-\mathcal{L}_k|$ убывает с ростом выборки $k$, а скорость убывания зависит от архитектуры (как предсказывает ландшафтная мера $\mu_f(f|D)$).
 
 \begin{figure}[h!t]\center
     \includegraphics[width=0.45\textwidth]{thesis/figures/chapter-1/landscape-hessian/figs/mnist_hidden_size}
     \includegraphics[width=0.45\textwidth]{thesis/figures/chapter-1/landscape-hessian/figs/mnist_num_layers}
-    \caption{Зависимость разности функций потерь от размера выборки для полносвязных сетей на MNIST. Слева: зависимость от размера скрытого слоя при $L=5$. Справа: зависимость от количества слоев при $h=16$.}
 \end{figure}
 
-\begin{block}{Результаты}
 \begin{itemize}
-    \item Эксперименты на наборах данных MNIST, FashionMNIST, CIFAR10 подтверждают теорему о сходимости;
-    \item Наблюдается монотонное убывание разности потерь с ростом размера выборки;
-    \item Скорость сходимости зависит от параметров архитектуры, что согласуется с теоретическими предсказаниями.
+    \item Монотонное убывание подтверждено для MNIST, FashionMNIST, CIFAR10.
+    \item Увеличение глубины $L$ дает более медленную сходимость (больше $\mu_f$).
+    \item Увеличение ширины $h$ слабее влияет на сходимость~--- согласуется с асимптотикой $\mu_f\propto L(hM)^{2L}$.
 \end{itemize}
-\end{block}
 \end{frame}
-
 %----------------------------------------------------------------------------------------------------------
 \section{Ландшафтные меры для некоторых семейств}
 \begin{frame}{Ландшафтная мера полносвязной сетевой модели}
