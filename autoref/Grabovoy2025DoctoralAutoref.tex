@@ -1,0 +1,161 @@
+\documentclass{dissert}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+
+\usepackage{fullpage}
+\usepackage{lastpage}
+\usepackage{enumerate}
+
+\usepackage[all]{xy}
+% colors
+\usepackage{xcolor}
+\definecolor{darkgreen}{rgb}{0.0, 0.2, 0.13}
+\definecolor{darkcyan}{rgb}{0.0, 0.55, 0.55}
+
+\usepackage{geometry}
+\geometry{left=2.5cm}
+\geometry{right=1.0cm}
+\geometry{top=2.0cm}
+\geometry{bottom=2.0cm}
+\renewcommand{\baselinestretch}{1.0}
+
+\newcommand{\paragraph}[1]{\noindent\textbf{#1}\quad}
+
+
+%https://tex.stackexchange.com/questions/163451/total-number-of-citations
+\usepackage{totcount}
+\newtotcounter{citnum} %From the package documentation
+\def\oldbibitem{} \let\oldbibitem=\bibitem
+\def\bibitem{\stepcounter{citnum}\oldbibitem}
+
+\makeatletter
+\long\def\@makecaption#1#2{%
+  \vskip\abovecaptionskip
+  \sbox\@tempboxa{#1.~#2}%
+  \ifdim \wd\@tempboxa >\hsize
+    #1.~#2\par
+  \else
+    \global \@minipagefalse
+    \hb@xt@\hsize{\hfil\box\@tempboxa\hfil}%
+  \fi
+  \vskip\belowcaptionskip}
+\makeatother
+
+\reversemarginpar
+
+\renewcommand{\contentsname}{Содержание}
+\renewcommand{\contentsdesc}{Стр.}
+\renewcommand{\chaptername}{Глава}
+
+%%% Библиография %%%
+\makeatletter
+\bibliographystyle{utf8gost71u}     % Оформляем библиографию по ГОСТ 7.1 (ГОСТ Р 7.0.11-2011, 5.6.7)
+\makeatother
+
+
+% Нужные мне пакеты
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{subfig}
+\usepackage{caption}
+\usepackage{color}
+\usepackage{bm}
+\usepackage{tabularx}
+\usepackage{url}
+\usepackage{multirow}
+
+\newtheorem{theorem}{Теорема}
+\newtheorem{lemma}[theorem]{Лемма}
+\newtheorem{definition}{Определение}
+
+\usepackage{comment}
+\usepackage{rotating}
+
+\usepackage{autonum}
+
+\begin{document}
+
+\begin{titlepage}
+\begin{flushright}
+{На правах рукописи}
+\end{flushright}
+\vspace{1.5cm}
+\begin{center}
+{Грабовой Андрей Валериевич}
+\par
+\vspace{2cm}
+\textsc{О сложности моделей и данных \\ в современных моделях глубокого обучения}
+\par
+\vspace{2cm}
+{1.2.1~--- Искусственный интеллект и машинное обучение}
+\par
+\vspace{2cm}
+{АВТОРЕФЕРАТ\\
+диссертации на соискание ученой степени\\
+доктора физико-математических наук}
+\end{center}
+\par
+\vspace{3.5cm}
+\begin{center}
+{Москва~--- 2026}
+\end{center}
+\end{titlepage}
+
+%\clearpage\maketitle
+\setcounter{page}{2}
+%\pretolerance=10000
+%\thispagestyle{empty}
+\noindent {Работа выполнена в Лаборатории 42 <<Интеллектуального анализа данных>> Института проблем управления им. В.А.Трапезникова РАН.
+
+\vspace{0.1cm}
+
+%\begin{sloppy}
+%\fontdimen2\font=3pt
+
+\vskip1ex\noindent
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+  Научный консультант: & \textbf{Воронцов Константин Вячеславович}\\
+  & доктор физико-математических наук, профессор РАН, Федеральный исследовательский~центр <<Информатика и управление>> Российской академии наук, отдел интеллектуальных систем, ведущий научный сотрудник.
+  \\[2pt]
+  Официальные оппоненты: & \textbf{TODO}\\
+  & TODO\\[2pt]
+  & \textbf{TODO}\\
+  & TODO\\[2pt]
+  & \textbf{TODO}\\
+  & TODO\\[2pt]
+  Ведущая организация: & Автономная некоммерческая организация высшего образования «Университет Иннополис».
+\end{tabularx}
+\vskip2ex\noindent
+
+\vspace{0.2cm}
+\noindent Защита состоится~ДЕНЬ~МЕСЯЦ ГОД года~в~14:00 на~заседании диссертационного совета Д 002.073.05 при Федеральном исследовательском центре <<Информатика и управление>> Российской академии наук (ФИЦ~ИУ~РАН) по адресу: 119333, г.\,Москва, ул.\,Вавилова, д.\,40.
+
+\vspace{0.2cm}
+\noindent С диссертацией можно ознакомиться в библиотеке Федерального государственного учреждения Федеральный исследовательский центр <<Информатика и управление>> Российской академии наук и на сайте http://www.frccsc.ru/
+
+\vspace{0.2cm}
+\noindent Автореферат разослан  \qquad \qquad \qquad \qquad 2022 года.
+
+\vspace{0.3cm}
+\noindent Ученый секретарь\\
+диссертационного совета Д 002.073.05\\
+к.т.н.
+\hspace{12cm} И.\,А.\;Рейер
+}
+
+\clearpage
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\pretolerance=-1
+
+%\setcounter{page}{0}
+
+\section*{Общая характеристика работы}
+
+\end{document}

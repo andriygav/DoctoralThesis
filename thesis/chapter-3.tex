@@ -471,44 +471,44 @@
     Тогда в модели линейной регрессии определение M-достаточного размера выборки корректно.
     А именно, для любого~$\varepsilon > 0$ существует такой~$m^*$, что для всех~$k\geqslant m^*$ выполняется~$M(k)\leqslant\varepsilon$.
 \end{theorem}
-\begin{proof}
-Рассмотрим определение M-достаточного размера выборки в терминах логарифма функции правдоподобия. В модели линейной регрессии
-\begin{align}
-    L\left( \mathfrak{D}_m, \hat{\mathbf{w}}_k \right) &= p(\mathbf{y} | \mathbf{X}, \hat{\mathbf{w}}_k) = \prod_{i=1}^{m} p(y_i | \mathbf{x}_i, \hat{\mathbf{w}}_k) = \prod_{i=1}^{m} \mathcal{N}\left( y_i | \hat{\mathbf{w}}_k^{\top} \mathbf{x}_i, \sigma^2 \right) =\\
-    &= \left(2\pi\sigma^2 \right)^{-m/2} \exp\left(-\frac{1}{2\sigma^2}\|\mathbf{y} -\mathbf{X} \hat{\mathbf{w}}_k\|_2^2 \right).
-\end{align}
-Возьмем логарифм:
-\[
-    l\left( \mathfrak{D}_m, \hat{\mathbf{w}}_k \right) = \log p(\mathbf{y} | \mathbf{X}, \hat{\mathbf{w}}_k) = -\frac{m}{2}\log\left( 2\pi\sigma^2 \right) - \frac{1}{2\sigma^2} \| \mathbf{y} - \mathbf{X} \hat{\mathbf{w}}_k \|_2^2.
-\]
-Возьмем математическое ожидание по~$\mathfrak{D}_k$, учитывая что~$\mathbb{E}_{\mathfrak{D}_k}\hat{\mathbf{w}}_k=\mathbf{m}_k$ и~$\text{cov}(\hat{\mathbf{w}}_k) = \mathbf{\Sigma}_k$:
-\[
-    \mathbb{E}_{\mathfrak{D}_k} l\left( \mathfrak{D}_m, \hat{\mathbf{w}}_k \right) = -\frac{m}{2}\log\left( 2\pi\sigma^2 \right) - \frac{1}{2\sigma^2} \Big( \| \mathbf{y} - \mathbf{X} \mathbf{m}_k \|_2^2 + \text{tr}\left( \mathbf{X}^{\top}\mathbf{X} \mathbf{\Sigma}_k \right) \Big).
-\]
-Запишем выражение для разности математических ожиданий:
-\begin{align}
-    &\mathbb{E}_{\mathfrak{D}_{k+1}} l(\mathfrak{D}_m, \hat{\mathbf{w}}_{k+1}) - \mathbb{E}_{\mathfrak{D}_k} l(\mathfrak{D}_m, \hat{\mathbf{w}}_{k}) = \\
-    &\quad= \frac{1}{2\sigma^2} \Big( \| \mathbf{y} - \mathbf{X} \mathbf{m}_k \|_2^2 - \| \mathbf{y} - \mathbf{X} \mathbf{m}_{k+1} \|_2^2 \Big) + \frac{1}{2\sigma^2} \text{tr} \Big( \mathbf{X}^{\top}\mathbf{X} \left( \mathbf{\Sigma}_k - \mathbf{\Sigma}_{k+1} \Big) \right) = \\
-    &\quad= \frac{1}{2\sigma^2} \Big( 2 \mathbf{y}^{\top} \mathbf{X} (\mathbf{m}_{k+1} - \mathbf{m}_k) + (\mathbf{m}_k - \mathbf{m}_{k+1})^{\top} \mathbf{X}^{\top}\mathbf{X} (\mathbf{m}_k + \mathbf{m}_{k+1}) \Big) + \\
-    &\qquad+ \frac{1}{2\sigma^2} \text{tr} \Big( \mathbf{X}^{\top}\mathbf{X} \left( \mathbf{\Sigma}_k - \mathbf{\Sigma}_{k+1} \right) \Big).
-\end{align}
-Значение функции~$M(k)$ представляет собой модуль от приведенного выше выражения. Применим неравенство треугольника для модуля, а затем оценим каждое слагаемое.\\
-Оценим первое слагаемое, используя неравенство Коши-Буняковского:
-\[
-    \big| \mathbf{y}^{\top}\mathbf{X}(\mathbf{m}_{k+1}-\mathbf{m}_k)\big| \leqslant \| \mathbf{X}^{\top}\mathbf{y} \|_2 \|\mathbf{m}_{k+1} - \mathbf{m}_k\|_2.
-\]
-Второе слагаемое оцениваем с помощью неравенства Коши-Буняковского, свойства согласованности спектральной нормы матрицы, а также ограниченности последовательности векторов~$\mathbf{m}_k$, что следует из приведенного условия сходимости:
-\begin{align}
-    \big| (\mathbf{m}_k - \mathbf{m}_{k+1})^{\top} \mathbf{X}^{\top}\mathbf{X} (\mathbf{m}_k + \mathbf{m}_{k+1}) \big| &\leqslant \| \mathbf{X} (\mathbf{m}_k - \mathbf{m}_{k+1}) \|_2 \| \mathbf{X} (\mathbf{m}_k + \mathbf{m}_{k+1}) \|_2 \leqslant \\
-    &\leqslant \| \mathbf{X} \|_2^2 \| \mathbf{m}_k - \mathbf{m}_{k+1} \|_2 \| \mathbf{m}_k + \mathbf{m}_{k+1} \|_2 \leqslant \\
-    &\leqslant C \| \mathbf{X} \|_2^2 \| \mathbf{m}_k - \mathbf{m}_{k+1} \|_2.
-\end{align}
-Последнее слагаемое оцениваем, используя неравенство Гельдера для нормы Фробениуса:
-\[
-    \Big| \text{tr} \Big( \mathbf{X}^{\top}\mathbf{X} \left( \mathbf{\Sigma}_k - \mathbf{\Sigma}_{k+1} \right) \Big) \Big| \leqslant \| \mathbf{X}^{\top}\mathbf{X} \|_F \| \mathbf{\Sigma}_k - \mathbf{\Sigma}_{k+1} \|_F.
-\]
-Наконец, поскольку~$\|\mathbf{m}_k - \mathbf{m}_{k+1} \|_2\to 0$ и~$\|\mathbf{\Sigma}_k - \mathbf{\Sigma}_{k+1}\|_{F}\to 0$ при~$k\to\infty$, то~$M(k)\to 0$ при~$k\to \infty$, что и доказывает теорему.
-\end{proof}
+% \begin{proof}
+% Рассмотрим определение M-достаточного размера выборки в терминах логарифма функции правдоподобия. В модели линейной регрессии
+% \begin{align}
+%     L\left( \mathfrak{D}_m, \hat{\mathbf{w}}_k \right) &= p(\mathbf{y} | \mathbf{X}, \hat{\mathbf{w}}_k) = \prod_{i=1}^{m} p(y_i | \mathbf{x}_i, \hat{\mathbf{w}}_k) = \prod_{i=1}^{m} \mathcal{N}\left( y_i | \hat{\mathbf{w}}_k^{\top} \mathbf{x}_i, \sigma^2 \right) =\\
+%     &= \left(2\pi\sigma^2 \right)^{-m/2} \exp\left(-\frac{1}{2\sigma^2}\|\mathbf{y} -\mathbf{X} \hat{\mathbf{w}}_k\|_2^2 \right).
+% \end{align}
+% Возьмем логарифм:
+% \[
+%     l\left( \mathfrak{D}_m, \hat{\mathbf{w}}_k \right) = \log p(\mathbf{y} | \mathbf{X}, \hat{\mathbf{w}}_k) = -\frac{m}{2}\log\left( 2\pi\sigma^2 \right) - \frac{1}{2\sigma^2} \| \mathbf{y} - \mathbf{X} \hat{\mathbf{w}}_k \|_2^2.
+% \]
+% Возьмем математическое ожидание по~$\mathfrak{D}_k$, учитывая что~$\mathbb{E}_{\mathfrak{D}_k}\hat{\mathbf{w}}_k=\mathbf{m}_k$ и~$\text{cov}(\hat{\mathbf{w}}_k) = \mathbf{\Sigma}_k$:
+% \[
+%     \mathbb{E}_{\mathfrak{D}_k} l\left( \mathfrak{D}_m, \hat{\mathbf{w}}_k \right) = -\frac{m}{2}\log\left( 2\pi\sigma^2 \right) - \frac{1}{2\sigma^2} \Big( \| \mathbf{y} - \mathbf{X} \mathbf{m}_k \|_2^2 + \text{tr}\left( \mathbf{X}^{\top}\mathbf{X} \mathbf{\Sigma}_k \right) \Big).
+% \]
+% Запишем выражение для разности математических ожиданий:
+% \begin{align}
+%     &\mathbb{E}_{\mathfrak{D}_{k+1}} l(\mathfrak{D}_m, \hat{\mathbf{w}}_{k+1}) - \mathbb{E}_{\mathfrak{D}_k} l(\mathfrak{D}_m, \hat{\mathbf{w}}_{k}) = \\
+%     &\quad= \frac{1}{2\sigma^2} \Big( \| \mathbf{y} - \mathbf{X} \mathbf{m}_k \|_2^2 - \| \mathbf{y} - \mathbf{X} \mathbf{m}_{k+1} \|_2^2 \Big) + \frac{1}{2\sigma^2} \text{tr} \Big( \mathbf{X}^{\top}\mathbf{X} \left( \mathbf{\Sigma}_k - \mathbf{\Sigma}_{k+1} \Big) \right) = \\
+%     &\quad= \frac{1}{2\sigma^2} \Big( 2 \mathbf{y}^{\top} \mathbf{X} (\mathbf{m}_{k+1} - \mathbf{m}_k) + (\mathbf{m}_k - \mathbf{m}_{k+1})^{\top} \mathbf{X}^{\top}\mathbf{X} (\mathbf{m}_k + \mathbf{m}_{k+1}) \Big) + \\
+%     &\qquad+ \frac{1}{2\sigma^2} \text{tr} \Big( \mathbf{X}^{\top}\mathbf{X} \left( \mathbf{\Sigma}_k - \mathbf{\Sigma}_{k+1} \right) \Big).
+% \end{align}
+% Значение функции~$M(k)$ представляет собой модуль от приведенного выше выражения. Применим неравенство треугольника для модуля, а затем оценим каждое слагаемое.\\
+% Оценим первое слагаемое, используя неравенство Коши-Буняковского:
+% \[
+%     \big| \mathbf{y}^{\top}\mathbf{X}(\mathbf{m}_{k+1}-\mathbf{m}_k)\big| \leqslant \| \mathbf{X}^{\top}\mathbf{y} \|_2 \|\mathbf{m}_{k+1} - \mathbf{m}_k\|_2.
+% \]
+% Второе слагаемое оцениваем с помощью неравенства Коши-Буняковского, свойства согласованности спектральной нормы матрицы, а также ограниченности последовательности векторов~$\mathbf{m}_k$, что следует из приведенного условия сходимости:
+% \begin{align}
+%     \big| (\mathbf{m}_k - \mathbf{m}_{k+1})^{\top} \mathbf{X}^{\top}\mathbf{X} (\mathbf{m}_k + \mathbf{m}_{k+1}) \big| &\leqslant \| \mathbf{X} (\mathbf{m}_k - \mathbf{m}_{k+1}) \|_2 \| \mathbf{X} (\mathbf{m}_k + \mathbf{m}_{k+1}) \|_2 \leqslant \\
+%     &\leqslant \| \mathbf{X} \|_2^2 \| \mathbf{m}_k - \mathbf{m}_{k+1} \|_2 \| \mathbf{m}_k + \mathbf{m}_{k+1} \|_2 \leqslant \\
+%     &\leqslant C \| \mathbf{X} \|_2^2 \| \mathbf{m}_k - \mathbf{m}_{k+1} \|_2.
+% \end{align}
+% Последнее слагаемое оцениваем, используя неравенство Гельдера для нормы Фробениуса:
+% \[
+%     \Big| \text{tr} \Big( \mathbf{X}^{\top}\mathbf{X} \left( \mathbf{\Sigma}_k - \mathbf{\Sigma}_{k+1} \right) \Big) \Big| \leqslant \| \mathbf{X}^{\top}\mathbf{X} \|_F \| \mathbf{\Sigma}_k - \mathbf{\Sigma}_{k+1} \|_F.
+% \]
+% Наконец, поскольку~$\|\mathbf{m}_k - \mathbf{m}_{k+1} \|_2\to 0$ и~$\|\mathbf{\Sigma}_k - \mathbf{\Sigma}_{k+1}\|_{F}\to 0$ при~$k\to\infty$, то~$M(k)\to 0$ при~$k\to \infty$, что и доказывает теорему.
+% \end{proof}
 
 Теорема~\ref{chapter:samplesize:theorem-kiselev-likelihood-bootstraping} устанавливает корректность определения M-достаточного размера выборки для модели линейной регрессии при выполнении условий сходимости моментов оценок параметров. Указанные условия являются естественными для асимптотически нормальных оценок максимального правдоподобия и выполняются при стандартных предположениях о регулярности модели.
 
@@ -574,63 +574,63 @@
     Тогда в модели с нормальным апостериорным распределением параметров определение KL-достаточного размера выборки корректно.
     А именно, для любого~$\varepsilon > 0$ существует такой~$m^*$, что для всех~$k\geqslant m^*$ выполняется~$KL(k)\leqslant\varepsilon$.
 \end{theorem}
-\begin{proof}
-Рассмотрим выражение для расхождения Кульбака-Лейблера между двумя нормальными апостериорными распределениями~$p_k = \mathcal{N}(\mathbf{m}_k, \mathbf{\Sigma}_k)$ и~$p_{k+1} = \mathcal{N}(\mathbf{m}_{k+1}, \mathbf{\Sigma}_{k+1})$.
-Для двух многомерных нормальных распределений данная метрика имеет аналитическое выражение:
-\begin{align}
-    &D_{\text{KL}}\left( p_k \| p_{k+1} \right) =\\
-    &=\frac{1}{2} \left( \mathrm{tr}\left( \mathbf{\Sigma}_{k+1}^{-1} \mathbf{\Sigma}_k \right) + (\mathbf{m}_{k+1} - \mathbf{m}_k)^{\top} \mathbf{\Sigma}_{k+1}^{-1} (\mathbf{m}_{k+1} - \mathbf{m}_k) - n + \log{\left( \frac{\det \mathbf{\Sigma}_{k+1}}{\det \mathbf{\Sigma}_{k}} \right)} \right).
-\end{align}
-Для анализа поведения каждого слагаемого при~$k \to \infty$ введем обозначение для разности ковариационных матриц:~$\mathbf{\Sigma}_{k+1} = \mathbf{\Sigma}_k + \Delta\mathbf{\Sigma}$, где по условию теоремы~$\|\Delta \mathbf{\Sigma}\|_F = \|\mathbf{\Sigma}_{k+1} - \mathbf{\Sigma}_k\|_F \to 0$. Первое слагаемое представляет собой след произведения матриц:
-\begin{align}
-    \mathrm{tr}\left( \mathbf{\Sigma}_{k+1}^{-1} \mathbf{\Sigma}_k \right) &= \mathrm{tr}\left(\left(\mathbf{\Sigma}_k + \Delta \mathbf{\Sigma} \right)^{-1} \mathbf{\Sigma}_k \right).
-\end{align}
-Используя разложение в ряд для обратной матрицы при малых~$\Delta\mathbf{\Sigma}$, получаем:
-\[
-    (\mathbf{\Sigma}_k + \Delta \mathbf{\Sigma})^{-1} = \mathbf{\Sigma}_k^{-1} - \mathbf{\Sigma}_k^{-1} \Delta \mathbf{\Sigma} \mathbf{\Sigma}_k^{-1} + O(\|\Delta \mathbf{\Sigma}\|_F^2).
-\]
-Тогда:
-\[
-    (\mathbf{\Sigma}_k + \Delta \mathbf{\Sigma})^{-1} \mathbf{\Sigma}_k = \mathbf{I}_n - \mathbf{\Sigma}_k^{-1} \Delta \mathbf{\Sigma} + O(\|\Delta \mathbf{\Sigma}\|_F^2).
-\]
-Взяв след от этого выражения и учитывая, что~$\mathrm{tr}(\mathbf{I}_n) = n$, а~$\|\mathbf{\Sigma}_k^{-1} \Delta \mathbf{\Sigma}\|_F \to 0$ при~$\|\Delta \mathbf{\Sigma}\|_F \to 0$, получаем:
-\[
-    \mathrm{tr}\left( \mathbf{\Sigma}_{k+1}^{-1} \mathbf{\Sigma}_k \right) \to n \quad \text{при} \quad \| \Delta \mathbf{\Sigma} \|_F \to 0.
-\]
-Второе слагаемое представляет собой квадратичную форму:
-\begin{align}
-    (\mathbf{m}_{k+1} - \mathbf{m}_k)^{\top} \mathbf{\Sigma}_{k+1}^{-1} (\mathbf{m}_{k+1} - \mathbf{m}_k).
-\end{align}
-По условию теоремы~$\|\mathbf{m}_{k+1} - \mathbf{m}_k\|_2 \to 0$. Квадратичная форма оценивается сверху следующим образом:
-\[
-    \left| (\mathbf{m}_{k+1} - \mathbf{m}_k)^{\top} \mathbf{\Sigma}_{k+1}^{-1} (\mathbf{m}_{k+1} - \mathbf{m}_k) \right| \leqslant \| \mathbf{m}_{k+1} -\mathbf{m}_k\|_2^2 \cdot \|\mathbf{\Sigma}_{k+1}^{-1} \|_2.
-\]
-Поскольку ковариационная матрица~$\mathbf{\Sigma}_{k+1}$ является положительно определенной и сходится к некоторой предельной матрице, ее спектральная норма~$\|\mathbf{\Sigma}_{k+1}^{-1} \|_2$ ограничена. Следовательно, при~$\| \mathbf{m}_{k+1} - \mathbf{m}_k\|_2 \to 0$ данное слагаемое стремится к нулю.
-Третье и четвертое слагаемые составляют:
-\[
-    -n + \log{\left( \frac{\det \mathbf{\Sigma}_{k+1}}{\det \mathbf{\Sigma}_{k}} \right)} = \log{\left( \frac{\det \mathbf{\Sigma}_{k+1}}{\det \mathbf{\Sigma}_{k}} \right)} - n.
-\]
-Преобразуем отношение определителей:
-\[
-    \frac{\det \mathbf{\Sigma}_{k+1}}{\det \mathbf{\Sigma}_{k}} = \frac{\det (\mathbf{\Sigma}_k + \Delta \mathbf{\Sigma})}{\det \mathbf{\Sigma}_{k}} = \det (\mathbf{I}_n + \mathbf{\Sigma}_k^{-1} \Delta \mathbf{\Sigma}).
-\]
-Для малых~$\Delta \mathbf{\Sigma}$ используем приближение:
-\[
-    \det (\mathbf{I}_n + \mathbf{\Sigma}_k^{-1} \Delta \mathbf{\Sigma}) = 1 + \mathrm{tr}(\mathbf{\Sigma}_k^{-1} \Delta \mathbf{\Sigma}) + O(\|\Delta \mathbf{\Sigma}\|_F^2).
-\]
-Тогда:
-\[
-    \log{\left( \frac{\det \mathbf{\Sigma}_{k+1}}{\det \mathbf{\Sigma}_{k}} \right)} = \log \det (\mathbf{I}_n + \mathbf{\Sigma}_k^{-1} \Delta \mathbf{\Sigma}) = \mathrm{tr}(\mathbf{\Sigma}_k^{-1} \Delta \mathbf{\Sigma}) + O(\|\Delta \mathbf{\Sigma}\|_F^2).
-\]
-Поскольку~$\|\Delta \mathbf{\Sigma}\|_F \to 0$, то~$\mathrm{tr}(\mathbf{\Sigma}_k^{-1} \Delta \mathbf{\Sigma}) \to 0$, и следовательно:
-\[
-    \log{\left( \frac{\det \mathbf{\Sigma}_{k+1}}{\det \mathbf{\Sigma}_{k}} \right)} \to 0.
-\]
+% \begin{proof}
+% Рассмотрим выражение для расхождения Кульбака-Лейблера между двумя нормальными апостериорными распределениями~$p_k = \mathcal{N}(\mathbf{m}_k, \mathbf{\Sigma}_k)$ и~$p_{k+1} = \mathcal{N}(\mathbf{m}_{k+1}, \mathbf{\Sigma}_{k+1})$.
+% Для двух многомерных нормальных распределений данная метрика имеет аналитическое выражение:
+% \begin{align}
+%     &D_{\text{KL}}\left( p_k \| p_{k+1} \right) =\\
+%     &=\frac{1}{2} \left( \mathrm{tr}\left( \mathbf{\Sigma}_{k+1}^{-1} \mathbf{\Sigma}_k \right) + (\mathbf{m}_{k+1} - \mathbf{m}_k)^{\top} \mathbf{\Sigma}_{k+1}^{-1} (\mathbf{m}_{k+1} - \mathbf{m}_k) - n + \log{\left( \frac{\det \mathbf{\Sigma}_{k+1}}{\det \mathbf{\Sigma}_{k}} \right)} \right).
+% \end{align}
+% Для анализа поведения каждого слагаемого при~$k \to \infty$ введем обозначение для разности ковариационных матриц:~$\mathbf{\Sigma}_{k+1} = \mathbf{\Sigma}_k + \Delta\mathbf{\Sigma}$, где по условию теоремы~$\|\Delta \mathbf{\Sigma}\|_F = \|\mathbf{\Sigma}_{k+1} - \mathbf{\Sigma}_k\|_F \to 0$. Первое слагаемое представляет собой след произведения матриц:
+% \begin{align}
+%     \mathrm{tr}\left( \mathbf{\Sigma}_{k+1}^{-1} \mathbf{\Sigma}_k \right) &= \mathrm{tr}\left(\left(\mathbf{\Sigma}_k + \Delta \mathbf{\Sigma} \right)^{-1} \mathbf{\Sigma}_k \right).
+% \end{align}
+% Используя разложение в ряд для обратной матрицы при малых~$\Delta\mathbf{\Sigma}$, получаем:
+% \[
+%     (\mathbf{\Sigma}_k + \Delta \mathbf{\Sigma})^{-1} = \mathbf{\Sigma}_k^{-1} - \mathbf{\Sigma}_k^{-1} \Delta \mathbf{\Sigma} \mathbf{\Sigma}_k^{-1} + O(\|\Delta \mathbf{\Sigma}\|_F^2).
+% \]
+% Тогда:
+% \[
+%     (\mathbf{\Sigma}_k + \Delta \mathbf{\Sigma})^{-1} \mathbf{\Sigma}_k = \mathbf{I}_n - \mathbf{\Sigma}_k^{-1} \Delta \mathbf{\Sigma} + O(\|\Delta \mathbf{\Sigma}\|_F^2).
+% \]
+% Взяв след от этого выражения и учитывая, что~$\mathrm{tr}(\mathbf{I}_n) = n$, а~$\|\mathbf{\Sigma}_k^{-1} \Delta \mathbf{\Sigma}\|_F \to 0$ при~$\|\Delta \mathbf{\Sigma}\|_F \to 0$, получаем:
+% \[
+%     \mathrm{tr}\left( \mathbf{\Sigma}_{k+1}^{-1} \mathbf{\Sigma}_k \right) \to n \quad \text{при} \quad \| \Delta \mathbf{\Sigma} \|_F \to 0.
+% \]
+% Второе слагаемое представляет собой квадратичную форму:
+% \begin{align}
+%     (\mathbf{m}_{k+1} - \mathbf{m}_k)^{\top} \mathbf{\Sigma}_{k+1}^{-1} (\mathbf{m}_{k+1} - \mathbf{m}_k).
+% \end{align}
+% По условию теоремы~$\|\mathbf{m}_{k+1} - \mathbf{m}_k\|_2 \to 0$. Квадратичная форма оценивается сверху следующим образом:
+% \[
+%     \left| (\mathbf{m}_{k+1} - \mathbf{m}_k)^{\top} \mathbf{\Sigma}_{k+1}^{-1} (\mathbf{m}_{k+1} - \mathbf{m}_k) \right| \leqslant \| \mathbf{m}_{k+1} -\mathbf{m}_k\|_2^2 \cdot \|\mathbf{\Sigma}_{k+1}^{-1} \|_2.
+% \]
+% Поскольку ковариационная матрица~$\mathbf{\Sigma}_{k+1}$ является положительно определенной и сходится к некоторой предельной матрице, ее спектральная норма~$\|\mathbf{\Sigma}_{k+1}^{-1} \|_2$ ограничена. Следовательно, при~$\| \mathbf{m}_{k+1} - \mathbf{m}_k\|_2 \to 0$ данное слагаемое стремится к нулю.
+% Третье и четвертое слагаемые составляют:
+% \[
+%     -n + \log{\left( \frac{\det \mathbf{\Sigma}_{k+1}}{\det \mathbf{\Sigma}_{k}} \right)} = \log{\left( \frac{\det \mathbf{\Sigma}_{k+1}}{\det \mathbf{\Sigma}_{k}} \right)} - n.
+% \]
+% Преобразуем отношение определителей:
+% \[
+%     \frac{\det \mathbf{\Sigma}_{k+1}}{\det \mathbf{\Sigma}_{k}} = \frac{\det (\mathbf{\Sigma}_k + \Delta \mathbf{\Sigma})}{\det \mathbf{\Sigma}_{k}} = \det (\mathbf{I}_n + \mathbf{\Sigma}_k^{-1} \Delta \mathbf{\Sigma}).
+% \]
+% Для малых~$\Delta \mathbf{\Sigma}$ используем приближение:
+% \[
+%     \det (\mathbf{I}_n + \mathbf{\Sigma}_k^{-1} \Delta \mathbf{\Sigma}) = 1 + \mathrm{tr}(\mathbf{\Sigma}_k^{-1} \Delta \mathbf{\Sigma}) + O(\|\Delta \mathbf{\Sigma}\|_F^2).
+% \]
+% Тогда:
+% \[
+%     \log{\left( \frac{\det \mathbf{\Sigma}_{k+1}}{\det \mathbf{\Sigma}_{k}} \right)} = \log \det (\mathbf{I}_n + \mathbf{\Sigma}_k^{-1} \Delta \mathbf{\Sigma}) = \mathrm{tr}(\mathbf{\Sigma}_k^{-1} \Delta \mathbf{\Sigma}) + O(\|\Delta \mathbf{\Sigma}\|_F^2).
+% \]
+% Поскольку~$\|\Delta \mathbf{\Sigma}\|_F \to 0$, то~$\mathrm{tr}(\mathbf{\Sigma}_k^{-1} \Delta \mathbf{\Sigma}) \to 0$, и следовательно:
+% \[
+%     \log{\left( \frac{\det \mathbf{\Sigma}_{k+1}}{\det \mathbf{\Sigma}_{k}} \right)} \to 0.
+% \]
 
-Таким образом, все четыре слагаемых в выражении для~$D_{\text{KL}}$ сходятся к своим пределам при~$k \to \infty$: первое слагаемое стремится к~$n$, второе~--- к 0, третье равно~$-n$, четвертое~--- к 0.
-Сумма этих пределов равна~$n + 0 - n + 0 = 0$, что доказывает, что~$D_{\text{KL}}(p_k \| p_{k+1}) \to 0$ при~$k \to \infty$.
-Следовательно, для любого~$\varepsilon > 0$ существует такой~$m^*$, что для всех~$k \geqslant m^*$ выполняется~$KL(k) \leqslant \varepsilon$, что и требовалось доказать.
-\end{proof}
+% Таким образом, все четыре слагаемых в выражении для~$D_{\text{KL}}$ сходятся к своим пределам при~$k \to \infty$: первое слагаемое стремится к~$n$, второе~--- к 0, третье равно~$-n$, четвертое~--- к 0.
+% Сумма этих пределов равна~$n + 0 - n + 0 = 0$, что доказывает, что~$D_{\text{KL}}(p_k \| p_{k+1}) \to 0$ при~$k \to \infty$.
+% Следовательно, для любого~$\varepsilon > 0$ существует такой~$m^*$, что для всех~$k \geqslant m^*$ выполняется~$KL(k) \leqslant \varepsilon$, что и требовалось доказать.
+% \end{proof}
 
 Теорема~\ref{chapter:samplesize:theorem-kiselev-posterior-similiarity} устанавливает, что расхождение Кульбака-Лейблера между двумя нормальными апостериорными распределениями стремится к нулю по мере сходимости их векторов математических ожиданий и ковариационных матриц. Это позволяет использовать KL-дивергенцию в качестве критерия достаточности размера выборки, анализируя аналитические выражения для моментов апостериорных распределений.
 
@@ -653,18 +653,18 @@
     Тогда в модели с нормальным апостериорным распределением параметров определение S-достаточного размера выборки корректно.
     А именно, для любого~$\varepsilon > 0$ существует такой~$m^*$, что для всех~$k\geqslant m^*$ выполняется~$S(k)\geqslant 1-\varepsilon$.
 \end{theorem}
-\begin{proof}
-Используем выражение для s-score пары нормальных апостериорных распределений из работы~\cite{aduenko2017}:
-\[
-    \text{s-score}(p_k, p_{k+1}) = \exp{\left( -\frac{1}{2} (\mathbf{m}_{k+1} - \mathbf{m}_k)^{\top} \left( \mathbf{\Sigma}_k + \mathbf{\Sigma}_{k+1} \right)^{-1} (\mathbf{m}_{k+1} - \mathbf{m}_k) \right)}.
-\]
-Оценим квадратичную форму в показателе экспоненты:
-\[
-    \left| (\mathbf{m}_{k+1} - \mathbf{m}_k)^{\top} \left( \mathbf{\Sigma}_k + \mathbf{\Sigma}_{k+1} \right)^{-1} (\mathbf{m}_{k+1} - \mathbf{m}_k) \right| \leqslant \| \mathbf{m}_{k+1} - \mathbf{m}_k \|_2^2 \| \left( \mathbf{\Sigma}_k + \mathbf{\Sigma}_{k+1} \right)^{-1} \|_2.
-\]
-Поскольку ковариационные матрицы~$\mathbf{\Sigma}_k$ и~$\mathbf{\Sigma}_{k+1}$ являются положительно определенными и сходятся к некоторой предельной матрице, спектральная норма~$\| \left( \mathbf{\Sigma}_k + \mathbf{\Sigma}_{k+1} \right)^{-1} \|_2$ ограничена. При условии~$\|\mathbf{m}_{k+1} - \mathbf{m}_k\|_2\to 0$ значение квадратичной формы в показателе экспоненты стремится к нулю.
-Следовательно,~$\text{s-score}(p_k, p_{k+1}) \to 1$ при~$\|\mathbf{m}_{k+1} - \mathbf{m}_k\|_2\to 0$, что и требовалось доказать.
-\end{proof}
+% \begin{proof}
+% Используем выражение для s-score пары нормальных апостериорных распределений из работы~\cite{aduenko2017}:
+% \[
+%     \text{s-score}(p_k, p_{k+1}) = \exp{\left( -\frac{1}{2} (\mathbf{m}_{k+1} - \mathbf{m}_k)^{\top} \left( \mathbf{\Sigma}_k + \mathbf{\Sigma}_{k+1} \right)^{-1} (\mathbf{m}_{k+1} - \mathbf{m}_k) \right)}.
+% \]
+% Оценим квадратичную форму в показателе экспоненты:
+% \[
+%     \left| (\mathbf{m}_{k+1} - \mathbf{m}_k)^{\top} \left( \mathbf{\Sigma}_k + \mathbf{\Sigma}_{k+1} \right)^{-1} (\mathbf{m}_{k+1} - \mathbf{m}_k) \right| \leqslant \| \mathbf{m}_{k+1} - \mathbf{m}_k \|_2^2 \| \left( \mathbf{\Sigma}_k + \mathbf{\Sigma}_{k+1} \right)^{-1} \|_2.
+% \]
+% Поскольку ковариационные матрицы~$\mathbf{\Sigma}_k$ и~$\mathbf{\Sigma}_{k+1}$ являются положительно определенными и сходятся к некоторой предельной матрице, спектральная норма~$\| \left( \mathbf{\Sigma}_k + \mathbf{\Sigma}_{k+1} \right)^{-1} \|_2$ ограничена. При условии~$\|\mathbf{m}_{k+1} - \mathbf{m}_k\|_2\to 0$ значение квадратичной формы в показателе экспоненты стремится к нулю.
+% Следовательно,~$\text{s-score}(p_k, p_{k+1}) \to 1$ при~$\|\mathbf{m}_{k+1} - \mathbf{m}_k\|_2\to 0$, что и требовалось доказать.
+% \end{proof}
 
 Теорема~\ref{chapter:samplesize:theorem-kiselev-posterior-similiarity-s-score} устанавливает корректность определения S-достаточного размера выборки при более слабых условиях, чем теорема~\ref{chapter:samplesize:theorem-kiselev-posterior-similiarity}. В отличие от KL-дивергенции, для сходимости s-score к единице требуется только сходимость математических ожиданий апостериорных распределений, что делает данный критерий менее консервативным и более применимым на практике.
 
@@ -672,7 +672,7 @@
 Таким образом, приходим к одному из простейших примеров модели, для которой справедливы приведенные выше теоремы.
 Фактически, для линейной регрессии могут быть сформулированы более простые утверждения.
 
-\begin{theorem}[\emph{Киселев-Грабовой}, Сходимость апостериорных распределений в линейной регрессии]\label{chapter:samplesize:theorem-kiselev-posterior-similiarity-linear-regression}
+\begin{theorem}[\emph{Грабовой-Киселев}, Сходимость апостериорных распределений в линейной регрессии]\label{chapter:samplesize:theorem-kiselev-posterior-similiarity-linear-regression}
     Пусть множества значений признаков и целевой переменной ограничены, то есть существует константа~$M\in \mathbb{R}$ такая, что~$\|\mathbf{x}\|_2\leqslant M$ и~$|y|\leqslant M$ для всех объектов выборки.
     Если~$\lambda_{\min}\left(\mathbf{X}^{\top}_k \mathbf{X}_k \right) = \omega(\sqrt{k})$ при~$k\to \infty$, то в модели линейной регрессии с нормальным априорным распределением параметров~$\|\mathbf{m}_{k+1} - \mathbf{m}_k\|_2\to 0$ и~$\|\mathbf{\Sigma}_{k+1} - \mathbf{\Sigma}_k\|_{F}\to 0$ при~$k\to \infty$.
 \end{theorem}
@@ -1176,17 +1176,15 @@ KL-достаточный размер выборки, как правило, т
 
 В главе проведен систематический обзор существующих подходов к определению достаточного размера выборки, включая статистические методы, байесовские методы и эвристические методы. Выявлены ключевые ограничения классических подходов: необходимость знания дисперсии оценки параметра или параметра нецентральности, отсутствие алгоритмических процедур для их получения, а также вычислительная сложность для моделей глубокого обучения.
 
-Основным теоретическим вкладом главы является разработка двух новых методов определения достаточного размера выборки, основанных на анализе стабильности процесса обучения.
+Основным теоретическим вкладом главы является анализ новых разработанных двух новых методов определения достаточного размера выборки, основанных на анализе стабильности процесса обучения.
 
 Первый метод основан на анализе функции правдоподобия при изменении объема данных. Введены два критерия достаточности: D-достаточность, использующая дисперсию функции правдоподобия на бутстрэп-подвыборках, и M-достаточность, анализирующая разность математических ожиданий функции правдоподобия при последовательном добавлении объектов в выборку. Теорема~\ref{chapter:samplesize:theorem-kiselev-likelihood-bootstraping} строго доказывает корректность определения M-достаточного размера выборки для модели линейной регрессии при выполнении условий сходимости математических ожиданий и ковариационных матриц оценок параметров. Следствие~\ref{chapter:samplesize:corollary-kiselev-likelihood-bootstraping} устанавливает достаточные условия сходимости к истинным значениям параметров и информационной матрице Фишера.
 
-Второй метод основан на анализе близости апостериорных распределений параметров модели на близких подвыборках, отличающихся одним объектом. Введены критерии KL-достаточности и S-достаточности, использующие расхождение Кульбака-Лейблера и функцию схожести s-score соответственно. Для нормального апостериорного распределения получены аналитические выражения для этих мер близости, что позволило провести строгий теоретический анализ. Теорема~\ref{chapter:samplesize:theorem-kiselev-posterior-similiarity} доказывает корректность определения KL-достаточного размера выборки при сходимости математических ожиданий и ковариационных матриц апостериорных распределений. Теорема~\ref{chapter:samplesize:theorem-kiselev-posterior-similiarity-s-score} устанавливает корректность S-достаточности при более слабых условиях~--- требуется только сходимость математических ожиданий. Теорема~\ref{chapter:samplesize:theorem-kiselev-posterior-similiarity-linear-regression} для модели линейной регрессии с нормальным априорным распределением устанавливает достаточные условия сходимости моментов апостериорного распределения при условии роста минимального собственного значения матрицы $\mathbf{X}_k^\top \mathbf{X}_k$ как $\omega(\sqrt{k})$ при $k \to \infty$.
+Второй метод основан на анализе близости апостериорных распределений параметров модели на близких подвыборках, отличающихся одним объектом. Введены критерии KL-достаточности и S-достаточности, использующие расхождение Кульбака-Лейблера и функцию схожести s-score соответственно. Теорема~\ref{chapter:samplesize:theorem-kiselev-posterior-similiarity-linear-regression} для модели линейной регрессии с нормальным априорным распределением устанавливает достаточные условия сходимости моментов апостериорного распределения при условии роста минимального собственного значения матрицы $\mathbf{X}_k^\top \mathbf{X}_k$ как $\omega(\sqrt{k})$ при $k \to \infty$.
 
 Проведены обширные вычислительные эксперименты на синтетических и реальных данных, подтвердившие эффективность предложенных методов. Эксперименты на синтетических данных регрессии и классификации, а также на наборах данных Liver Disorders, Boston Housing, Diabetes, Forest Fires, Servo и других продемонстрировали сходимость функций $D(k)$, $M(k)$ и $KL(k)$ к нулю, а функции $S(k)$~--- к единице с ростом объема выборки, что согласуется с теоретическими предсказаниями. Сравнительный анализ с классическими методами выявил особенности различных критериев: KL-дивергенция дает более консервативные оценки, требующие почти полной выборки, в то время как S-достаточность часто указывает на достаточность минимального размера выборки, что связано с высокой чувствительностью расхождения Кульбака-Лейблера к изменениям распределений.
 
 Практические рекомендации включают использование относительных отклонений от значений на полной выборке с порогами $0.05-0.1$ для методов на основе функции правдоподобия, а также применение бутстрэпирования с $B=1000$ подвыборок для оценки математических ожиданий и дисперсий. Для методов на основе близости апостериорных распределений рекомендуется использовать порог $\varepsilon=0.05$ для S-достаточности.
-
-Основные ограничения методов связаны с вычислительной сложностью обращения ковариационных матриц для моделей с большим количеством параметров, а также с предположением о нормальности апостериорного распределения для методов KL- и S-достаточности. Кроме того, теоретическое обоснование методов в настоящее время ограничено моделями линейной регрессии и логистической регрессии.
 
 Перспективными направлениями дальнейших исследований являются расширение теоретического обоснования методов на более сложные модели, в том числе нейронные сети, преодоление ограничения о нормальности апостериорного распределения, разработка приближенных методов для оценки близости распределений в высокомерных пространствах параметров, а также интеграция предложенных методов с теоретическими оценками ландшафтной меры сложности из главы~\ref{chapter:complexity}.
 

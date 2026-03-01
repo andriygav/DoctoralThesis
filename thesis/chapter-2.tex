@@ -1,4 +1,4 @@
-Как было установлено в предыдущей главе, ландшафтная мера сложности модели определяется через спектральные свойства матриц Гессе функции потерь. Анализ сходимости ландшафта оптимизационной задачи при увеличении объема выборки сводится к анализу спектральной нормы матрицы Гессе. Для практического применения введенного в главе~\ref{chapter:complexity:models-data} формализма необходимо получить конкретные оценки спектральных норм матриц Гессе для различных архитектур нейронных сетей. Это составляет основную задачу настоящей главы.
+Как было установлено в предыдущей главе, ландшафтная мера сложности модели определяется через спектральные свойства матриц Гессе функции потерь. Анализ сходимости ландшафта оптимизационной задачи при увеличении объема выборки сводится к анализу спектральной нормы матрицы Гессе. Для практического применения введенного в главе~\ref{chapter:complexity:models-data} формализма необходимо получить конкретные оценки спектральных норм матриц Гессе для различных архитектур нейронных сетей. Это составляет основную задачу настоящей главы. Все полученные результаты в рамках данной главы получены совместно с учениками, где основной вклад автора диссертации заключается в постановке задач и научном руководстве исследованиями. Теоремы, где основной вклад в доказательство внесен учениками приводятся без доказательства в рамках главы. Хоть и результаты данной главы не выносятся на защиту в качестве результатов, но являются неотьемлемой частью понимания диссертационной работы в целом.
 
 В современных задачах оптимизации, к которым редуцируется процесс обучения моделей глубокого обучения, фундаментальную роль играет анализ свойств целевой функции потерь $\mathcal{L}(\boldsymbol{\theta})$, заданной на многомерном пространстве параметров $\boldsymbol{\theta} \in \mathbb{R}^n$.
 
@@ -131,116 +131,116 @@
         \left\| \mathbf{H}_i(\boldsymbol{\theta}) \right\|_2 \leqslant L \sqrt{2} M_{\mathbf{x}}^2 M_{\mathbf{W}}^{2L} + \sqrt{2} \dfrac{M_{\mathbf{W}}^2 (M_{\mathbf{W}}^{2L} - 1)}{M_{\mathbf{W}}^2 - 1}.
     \end{align}
 \end{theorem}
-\begin{proof}
-    Для упрощения, опустим индекс~$i$, соответствующий конкретному объекту в выборке, поскольку оценка проводится для произвольного фиксированного объекта.
+% \begin{proof}
+%     Для упрощения, опустим индекс~$i$, соответствующий конкретному объекту в выборке, поскольку оценка проводится для произвольного фиксированного объекта.
     
-    Вначале воспользуемся факторизацией гессиана, полученной ранее: $\mathbf{H}(\boldsymbol{\theta}) = \mathbf{F}^\top \mathbf{A} \mathbf{F}$.
-    В силу субмультипликативности спектральной нормы матрицы, получаем следующую оценку:
-    \begin{align}
-        \left\| \mathbf{H}(\boldsymbol{\theta}) \right\|_2 = \left\| \mathbf{F}^\top \mathbf{A} \mathbf{F} \right\|_2 \leqslant \left\| \mathbf{F}^\top \right\|_2 \cdot \left\| \mathbf{A} \right\|_2 \cdot \left\| \mathbf{F} \right\|_2.
-    \end{align}
-    Учитывая, что~$\left\| \mathbf{F}^\top \right\|_2 = \left\| \mathbf{F} \right\|_2$ для любой матрицы, приходим к оценке:
-    \[
-        \left\| \mathbf{H}(\boldsymbol{\theta}) \right\|_2 \leqslant \left\| \mathbf{A} \right\|_2 \cdot \left\| \mathbf{F} \right\|_2^2.
-    \]
+%     Вначале воспользуемся факторизацией гессиана, полученной ранее: $\mathbf{H}(\boldsymbol{\theta}) = \mathbf{F}^\top \mathbf{A} \mathbf{F}$.
+%     В силу субмультипликативности спектральной нормы матрицы, получаем следующую оценку:
+%     \begin{align}
+%         \left\| \mathbf{H}(\boldsymbol{\theta}) \right\|_2 = \left\| \mathbf{F}^\top \mathbf{A} \mathbf{F} \right\|_2 \leqslant \left\| \mathbf{F}^\top \right\|_2 \cdot \left\| \mathbf{A} \right\|_2 \cdot \left\| \mathbf{F} \right\|_2.
+%     \end{align}
+%     Учитывая, что~$\left\| \mathbf{F}^\top \right\|_2 = \left\| \mathbf{F} \right\|_2$ для любой матрицы, приходим к оценке:
+%     \[
+%         \left\| \mathbf{H}(\boldsymbol{\theta}) \right\|_2 \leqslant \left\| \mathbf{A} \right\|_2 \cdot \left\| \mathbf{F} \right\|_2^2.
+%     \]
     
-    Далее детально рассмотрим каждое слагаемое отдельно, начиная с оценки спектральной нормы матрицы $\mathbf{A}$. В силу эквивалентности матричных норм выполняется неравенство между спектральной нормой и нормой Фробениуса:
-    \[
-        \left\| \mathbf{A} \right\|_2 \leqslant \left\| \mathbf{A} \right\|_F,
-    \]
-    где $\left\| \mathbf{A} \right\|_F$~--- норма Фробениуса, определяемая как квадратный корень из суммы квадратов всех элементов матрицы. Используя свойства этой нормы для оценки указанного слагаемого. Согласно определению нормы Фробениуса получаем:
-    \begin{align}
-        \left\| \mathbf{A} \right\|_F^2 &= \left\| \mathrm{diag}(\mathbf{p}) - \mathbf{p} \mathbf{p}^\top \right\|_F^2 = \sum\limits_{k=1}^{K} (p_k - p_k^2)^2 + \sum\limits_{k \neq l} p_k^2 p_l^2 =\\
-        &=\sum\limits_{k=1}^{K} p_k^2 (1 - p_k)^2 + \sum\limits_{k \neq l} p_k^2 p_l^2.
-    \end{align}
-    Поскольку все вероятности удовлетворяют следующему неравенству~$0 \leqslant p_k \leqslant 1$ для всех $k = 1, \ldots, K$ получаем:
-    \[
-        0 \leqslant p_k^2 \leqslant p_k \quad \text{и} \quad 0 \leqslant (1 - p_k)^2 \leqslant (1 - p_k),
-    \]
-    Следовательно, для первого слагаемого получаем оценку:
-    \[
-        \sum\limits_{k=1}^{K} p_k^2 (1 - p_k)^2 \leqslant \sum\limits_{k=1}^{K} p_k (1 - p_k) \leqslant \sum\limits_{k=1}^{K} p_k = 1,
-    \]
-    где последнее неравенство следует из того, что $p_k(1-p_k) \leqslant p_k$ и $\sum_{k=1}^K p_k = 1$.
-    Для второго слагаемого получаем:
-    \[
-        \sum\limits_{k \neq l} p_k^2 p_l^2 \leqslant \sum\limits_{k \neq l} p_k p_l = \left( \sum\limits_{k=1}^{K} p_k \right)^2 - \sum\limits_{k=1}^{K} p_k^2 = 1 - \sum\limits_{k=1}^{K} p_k^2,
-    \]
-    поскольку $\left( \sum_{k=1}^K p_k \right)^2 = 1$, а двойная сумма $\sum_{k \neq l} p_k p_l$ равна квадрату суммы за вычетом суммы квадратов.
-    Комбинируя полученные оценки, получаем:
-    \[
-        \left\| \mathbf{A} \right\|_F^2 \leqslant 1 + \left(1 - \sum\limits_{k=1}^{K} p_k^2\right) = 2 - \sum\limits_{k=1}^{K} p_k^2 \leqslant 2,
-    \]
-    где последнее неравенство следует из неотрицательности~$\sum_{k=1}^K p_k^2$.
-    Таким образом, норма Фробениуса матрицы $\mathbf{A}$ ограничена сверху значением $\sqrt{2}$, и следовательно:
-    \[
-        \left\| \mathbf{A} \right\|_2 \leqslant \left\| \mathbf{A} \right\|_F \leqslant \sqrt{2}.
-    \]
+%     Далее детально рассмотрим каждое слагаемое отдельно, начиная с оценки спектральной нормы матрицы $\mathbf{A}$. В силу эквивалентности матричных норм выполняется неравенство между спектральной нормой и нормой Фробениуса:
+%     \[
+%         \left\| \mathbf{A} \right\|_2 \leqslant \left\| \mathbf{A} \right\|_F,
+%     \]
+%     где $\left\| \mathbf{A} \right\|_F$~--- норма Фробениуса, определяемая как квадратный корень из суммы квадратов всех элементов матрицы. Используя свойства этой нормы для оценки указанного слагаемого. Согласно определению нормы Фробениуса получаем:
+%     \begin{align}
+%         \left\| \mathbf{A} \right\|_F^2 &= \left\| \mathrm{diag}(\mathbf{p}) - \mathbf{p} \mathbf{p}^\top \right\|_F^2 = \sum\limits_{k=1}^{K} (p_k - p_k^2)^2 + \sum\limits_{k \neq l} p_k^2 p_l^2 =\\
+%         &=\sum\limits_{k=1}^{K} p_k^2 (1 - p_k)^2 + \sum\limits_{k \neq l} p_k^2 p_l^2.
+%     \end{align}
+%     Поскольку все вероятности удовлетворяют следующему неравенству~$0 \leqslant p_k \leqslant 1$ для всех $k = 1, \ldots, K$ получаем:
+%     \[
+%         0 \leqslant p_k^2 \leqslant p_k \quad \text{и} \quad 0 \leqslant (1 - p_k)^2 \leqslant (1 - p_k),
+%     \]
+%     Следовательно, для первого слагаемого получаем оценку:
+%     \[
+%         \sum\limits_{k=1}^{K} p_k^2 (1 - p_k)^2 \leqslant \sum\limits_{k=1}^{K} p_k (1 - p_k) \leqslant \sum\limits_{k=1}^{K} p_k = 1,
+%     \]
+%     где последнее неравенство следует из того, что $p_k(1-p_k) \leqslant p_k$ и $\sum_{k=1}^K p_k = 1$.
+%     Для второго слагаемого получаем:
+%     \[
+%         \sum\limits_{k \neq l} p_k^2 p_l^2 \leqslant \sum\limits_{k \neq l} p_k p_l = \left( \sum\limits_{k=1}^{K} p_k \right)^2 - \sum\limits_{k=1}^{K} p_k^2 = 1 - \sum\limits_{k=1}^{K} p_k^2,
+%     \]
+%     поскольку $\left( \sum_{k=1}^K p_k \right)^2 = 1$, а двойная сумма $\sum_{k \neq l} p_k p_l$ равна квадрату суммы за вычетом суммы квадратов.
+%     Комбинируя полученные оценки, получаем:
+%     \[
+%         \left\| \mathbf{A} \right\|_F^2 \leqslant 1 + \left(1 - \sum\limits_{k=1}^{K} p_k^2\right) = 2 - \sum\limits_{k=1}^{K} p_k^2 \leqslant 2,
+%     \]
+%     где последнее неравенство следует из неотрицательности~$\sum_{k=1}^K p_k^2$.
+%     Таким образом, норма Фробениуса матрицы $\mathbf{A}$ ограничена сверху значением $\sqrt{2}$, и следовательно:
+%     \[
+%         \left\| \mathbf{A} \right\|_2 \leqslant \left\| \mathbf{A} \right\|_F \leqslant \sqrt{2}.
+%     \]
 
-    Переходим к оценке нормы~$\left\| \mathbf{F} \right\|_2$. Для оценки $\left\| \mathbf{F} \right\|_2$ анализируем спектральную норму матриц $\mathbf{G}^{(p)}$, которые определяются как:
-    \[
-        \mathbf{G}^{(p)} = \mathbf{W}^{(L)} \mathbf{D}^{(L-1)} \mathbf{W}^{(L-1)} \mathbf{D}^{(L-2)} \cdot \ldots \cdot \mathbf{D}^{(p)}.
-    \]
-    Используя свойство субмультипликативности спектральной нормы, имеем:
-    \[
-        \| \mathbf{G}^{(p)} \|_2 \leqslant \|\mathbf{W}^{(L)}\|_2 \cdot \|\mathbf{D}^{(L-1)}\|_2 \cdot \|\mathbf{W}^{(L-1)}\|_2 \cdot \|\mathbf{D}^{(L-2)}\|_2 \cdot \ldots \cdot \|\mathbf{D}^{(p)}\|_2.
-    \]
-    Поскольку матрицы~$\mathbf{D}^{(p)}$ являются диагональными матрицами с элементами~$0$ или~$1$, их спектральная норма не превосходит~$1$. Таким образом, получаем:
-    \[
-        \|\mathbf{G}^{(p)} \|_2 \leqslant \prod_{s=p}^{L} \| \mathbf{W}^{(s)} \|_2.
-    \]
-    Поскольку матрица~$\mathbf{F}$ представляет собой вертикальную конкатенацию блоков вида $(\mathbf{G}^{(p)})^\top \otimes \mathbf{x}^{(p)}$ и $(\mathbf{G}^{(p)})^\top$, для спектральной нормы такой блочной матрицы справедливо неравенство:
-    \[
-        \| \mathbf{F} \|_2^2 \leqslant \sum\limits_{p=1}^{L} \left( \| (\mathbf{G}^{(p)})^\top \otimes \mathbf{x}^{(p)} \|_2^2 + \| (\mathbf{G}^{(p)})^\top \|_2^2 \right),
-    \]
-    где используя свойство спектральной нормы произведения Кронекера:
-    \[
-        \| \mathbf{A} \otimes \mathbf{B} \|_2 = \| \mathbf{A} \|_2 \cdot \| \mathbf{B} \|_2,
-    \]
-    а также учитывая, что $\| (\mathbf{G}^{(p)})^\top \|_2 = \| \mathbf{G}^{(p)} \|_2$, получаем:
-    \begin{align}
-        \| \mathbf{F} \|_2^2 &\leqslant \sum\limits_{p=1}^{L} \left( \| \mathbf{G}^{(p)} \|_2^2 \cdot \| \mathbf{x}^{(p)} \|_2^2 + \| \mathbf{G}^{(p)} \|_2^2 \right) =\\
-        &=\sum\limits_{p=1}^{L} \| \mathbf{G}^{(p)} \|_2^2 \left(\| \mathbf{x}^{(p)} \|_2^2 + 1\right).
-    \end{align}
-    Подставляя полученную ранее оценку для~$\| \mathbf{G}^{(p)} \|_2$, получаем итоговую оценку:
-    \[
-        \| \mathbf{F} \|_2^2 \leqslant \sum\limits_{p=1}^{L} \left(\| \mathbf{x}^{(p)} \|_2^2 + 1\right) \prod_{s=p}^{L} \| \mathbf{W}^{(s)} \|_2^2.
-    \]
+%     Переходим к оценке нормы~$\left\| \mathbf{F} \right\|_2$. Для оценки $\left\| \mathbf{F} \right\|_2$ анализируем спектральную норму матриц $\mathbf{G}^{(p)}$, которые определяются как:
+%     \[
+%         \mathbf{G}^{(p)} = \mathbf{W}^{(L)} \mathbf{D}^{(L-1)} \mathbf{W}^{(L-1)} \mathbf{D}^{(L-2)} \cdot \ldots \cdot \mathbf{D}^{(p)}.
+%     \]
+%     Используя свойство субмультипликативности спектральной нормы, имеем:
+%     \[
+%         \| \mathbf{G}^{(p)} \|_2 \leqslant \|\mathbf{W}^{(L)}\|_2 \cdot \|\mathbf{D}^{(L-1)}\|_2 \cdot \|\mathbf{W}^{(L-1)}\|_2 \cdot \|\mathbf{D}^{(L-2)}\|_2 \cdot \ldots \cdot \|\mathbf{D}^{(p)}\|_2.
+%     \]
+%     Поскольку матрицы~$\mathbf{D}^{(p)}$ являются диагональными матрицами с элементами~$0$ или~$1$, их спектральная норма не превосходит~$1$. Таким образом, получаем:
+%     \[
+%         \|\mathbf{G}^{(p)} \|_2 \leqslant \prod_{s=p}^{L} \| \mathbf{W}^{(s)} \|_2.
+%     \]
+%     Поскольку матрица~$\mathbf{F}$ представляет собой вертикальную конкатенацию блоков вида $(\mathbf{G}^{(p)})^\top \otimes \mathbf{x}^{(p)}$ и $(\mathbf{G}^{(p)})^\top$, для спектральной нормы такой блочной матрицы справедливо неравенство:
+%     \[
+%         \| \mathbf{F} \|_2^2 \leqslant \sum\limits_{p=1}^{L} \left( \| (\mathbf{G}^{(p)})^\top \otimes \mathbf{x}^{(p)} \|_2^2 + \| (\mathbf{G}^{(p)})^\top \|_2^2 \right),
+%     \]
+%     где используя свойство спектральной нормы произведения Кронекера:
+%     \[
+%         \| \mathbf{A} \otimes \mathbf{B} \|_2 = \| \mathbf{A} \|_2 \cdot \| \mathbf{B} \|_2,
+%     \]
+%     а также учитывая, что $\| (\mathbf{G}^{(p)})^\top \|_2 = \| \mathbf{G}^{(p)} \|_2$, получаем:
+%     \begin{align}
+%         \| \mathbf{F} \|_2^2 &\leqslant \sum\limits_{p=1}^{L} \left( \| \mathbf{G}^{(p)} \|_2^2 \cdot \| \mathbf{x}^{(p)} \|_2^2 + \| \mathbf{G}^{(p)} \|_2^2 \right) =\\
+%         &=\sum\limits_{p=1}^{L} \| \mathbf{G}^{(p)} \|_2^2 \left(\| \mathbf{x}^{(p)} \|_2^2 + 1\right).
+%     \end{align}
+%     Подставляя полученную ранее оценку для~$\| \mathbf{G}^{(p)} \|_2$, получаем итоговую оценку:
+%     \[
+%         \| \mathbf{F} \|_2^2 \leqslant \sum\limits_{p=1}^{L} \left(\| \mathbf{x}^{(p)} \|_2^2 + 1\right) \prod_{s=p}^{L} \| \mathbf{W}^{(s)} \|_2^2.
+%     \]
     
-    Собирая полученные оценки норм~$\|\mathbf{A}\|,\|\mathbf{F}\|$ получаем итоговую оценку для гессиана:
-    \[
-        \left\| \mathbf{H}_i(\boldsymbol{\theta}) \right\|_2 \leqslant \sqrt{2} \sum\limits_{p=1}^{L} \left(\| \mathbf{x}_i^{(p)} \|_2^2 + 1\right) \prod_{s=p}^{L} \| \mathbf{W}^{(s)} \|_2^2.
-    \]
+%     Собирая полученные оценки норм~$\|\mathbf{A}\|,\|\mathbf{F}\|$ получаем итоговую оценку для гессиана:
+%     \[
+%         \left\| \mathbf{H}_i(\boldsymbol{\theta}) \right\|_2 \leqslant \sqrt{2} \sum\limits_{p=1}^{L} \left(\| \mathbf{x}_i^{(p)} \|_2^2 + 1\right) \prod_{s=p}^{L} \| \mathbf{W}^{(s)} \|_2^2.
+%     \]
     
-    В случае, когда векторы смещений отсутствуют, т.е. $\mathbf{b}^{(p)} = \mathbf{0}$ для всех $p = 1, \ldots, L$. Получаем, что выход каждого слоя оценивается:
-    \[
-        \| \mathbf{x}_i^{(p)} \|_2 \leqslant \| \mathbf{x}_i \|_2 \prod_{s=1}^{p-1} \| \mathbf{W}^{(s)} \|_2,
-    \]
-    поскольку каждый слой осуществляет линейное преобразование с последующей нелинейностью ReLU, которая не увеличивает норму. Тогда используя данную оценку, получаем:
-    \begin{align}
-        \left\| \mathbf{H}_i(\boldsymbol{\theta}) \right\|_2 &\leqslant \sqrt{2} \sum\limits_{p=1}^{L} \left( \| \mathbf{x}_i \|_2^2 \prod_{s=1}^{p-1} \| \mathbf{W}^{(s)} \|_2^2 + 1\right) \prod_{s=p}^{L} \| \mathbf{W}^{(s)} \|_2^2 = \\
-        &= \sqrt{2} \sum\limits_{p=1}^{L} \left( \| \mathbf{x}_i \|_2^2 \prod_{s=1}^{L} \| \mathbf{W}^{(s)} \|_2^2 + \prod_{s=p}^{L} \| \mathbf{W}^{(s)} \|_2^2 \right) =\\
-        &= L \sqrt{2} \| \mathbf{x}_i \|_2^2 \prod_{p=1}^{L} \| \mathbf{W}^{(p)} \|_2^2 + \sqrt{2} \sum\limits_{p=1}^{L} \prod_{s=p}^{L} \| \mathbf{W}^{(s)} \|_2^2.
-    \end{align}
+%     В случае, когда векторы смещений отсутствуют, т.е. $\mathbf{b}^{(p)} = \mathbf{0}$ для всех $p = 1, \ldots, L$. Получаем, что выход каждого слоя оценивается:
+%     \[
+%         \| \mathbf{x}_i^{(p)} \|_2 \leqslant \| \mathbf{x}_i \|_2 \prod_{s=1}^{p-1} \| \mathbf{W}^{(s)} \|_2,
+%     \]
+%     поскольку каждый слой осуществляет линейное преобразование с последующей нелинейностью ReLU, которая не увеличивает норму. Тогда используя данную оценку, получаем:
+%     \begin{align}
+%         \left\| \mathbf{H}_i(\boldsymbol{\theta}) \right\|_2 &\leqslant \sqrt{2} \sum\limits_{p=1}^{L} \left( \| \mathbf{x}_i \|_2^2 \prod_{s=1}^{p-1} \| \mathbf{W}^{(s)} \|_2^2 + 1\right) \prod_{s=p}^{L} \| \mathbf{W}^{(s)} \|_2^2 = \\
+%         &= \sqrt{2} \sum\limits_{p=1}^{L} \left( \| \mathbf{x}_i \|_2^2 \prod_{s=1}^{L} \| \mathbf{W}^{(s)} \|_2^2 + \prod_{s=p}^{L} \| \mathbf{W}^{(s)} \|_2^2 \right) =\\
+%         &= L \sqrt{2} \| \mathbf{x}_i \|_2^2 \prod_{p=1}^{L} \| \mathbf{W}^{(p)} \|_2^2 + \sqrt{2} \sum\limits_{p=1}^{L} \prod_{s=p}^{L} \| \mathbf{W}^{(s)} \|_2^2.
+%     \end{align}
     
-    Воспользовавшись условиями теоремы, согласно которым для всех $p$ норма матриц~$\| \mathbf{W}^{(p)} \|_2 \leqslant M_{\mathbf{W}}$ и~$\| \mathbf{x}_i \|_2 \leqslant M_{\mathbf{x}}$, получаем:
-    \[ 
-        \left\| \mathbf{H}_i(\boldsymbol{\theta}) \right\|_2 \leqslant L \sqrt{2} M_{\mathbf{x}}^2 M_{\mathbf{W}}^{2L} + \sqrt{2} \sum\limits_{p=1}^{L} M_{\mathbf{W}}^{2(L-p+1)}.
-    \]
-    Сумма в правой части представляет собой сумму геометрической прогрессии:
-    \[
-        \sum\limits_{p=1}^{L} M_{\mathbf{W}}^{2(L-p+1)} = \sum\limits_{k=1}^{L} M_{\mathbf{W}}^{2k} = \dfrac{M_{\mathbf{W}}^2 (M_{\mathbf{W}}^{2L} - 1)}{M_{\mathbf{W}}^2 - 1},
-    \]
-    Следовательно, получаем итоговую оценку на матрицу Гессе:
-    \[
-        \left\| \mathbf{H}_i(\boldsymbol{\theta}) \right\|_2 \leqslant L \sqrt{2} M_{\mathbf{x}}^2 M_{\mathbf{W}}^{2L} + \sqrt{2} \dfrac{M_{\mathbf{W}}^2 (M_{\mathbf{W}}^{2L} - 1)}{M_{\mathbf{W}}^2 - 1}.
-    \]
+%     Воспользовавшись условиями теоремы, согласно которым для всех $p$ норма матриц~$\| \mathbf{W}^{(p)} \|_2 \leqslant M_{\mathbf{W}}$ и~$\| \mathbf{x}_i \|_2 \leqslant M_{\mathbf{x}}$, получаем:
+%     \[ 
+%         \left\| \mathbf{H}_i(\boldsymbol{\theta}) \right\|_2 \leqslant L \sqrt{2} M_{\mathbf{x}}^2 M_{\mathbf{W}}^{2L} + \sqrt{2} \sum\limits_{p=1}^{L} M_{\mathbf{W}}^{2(L-p+1)}.
+%     \]
+%     Сумма в правой части представляет собой сумму геометрической прогрессии:
+%     \[
+%         \sum\limits_{p=1}^{L} M_{\mathbf{W}}^{2(L-p+1)} = \sum\limits_{k=1}^{L} M_{\mathbf{W}}^{2k} = \dfrac{M_{\mathbf{W}}^2 (M_{\mathbf{W}}^{2L} - 1)}{M_{\mathbf{W}}^2 - 1},
+%     \]
+%     Следовательно, получаем итоговую оценку на матрицу Гессе:
+%     \[
+%         \left\| \mathbf{H}_i(\boldsymbol{\theta}) \right\|_2 \leqslant L \sqrt{2} M_{\mathbf{x}}^2 M_{\mathbf{W}}^{2L} + \sqrt{2} \dfrac{M_{\mathbf{W}}^2 (M_{\mathbf{W}}^{2L} - 1)}{M_{\mathbf{W}}^2 - 1}.
+%     \]
     
-    Для однослойной сети~$L=1$ оценка упрощается:
-    \[
-        \left\| \mathbf{H}_i(\boldsymbol{\theta}) \right\|_2 \leqslant \sqrt{2} M_{\mathbf{W}}^{2} \left( M_{\mathbf{x}}^2 + 1 \right).
-    \]
-\end{proof}
+%     Для однослойной сети~$L=1$ оценка упрощается:
+%     \[
+%         \left\| \mathbf{H}_i(\boldsymbol{\theta}) \right\|_2 \leqslant \sqrt{2} M_{\mathbf{W}}^{2} \left( M_{\mathbf{x}}^2 + 1 \right).
+%     \]
+% \end{proof}
 
 \begin{remark}
 В теореме~\ref{theorem:hess-kiselev-theorem} получена оценка на матрицу Гессе для однослойной сети~$L=1$ вида:
@@ -264,51 +264,51 @@
         \left\| \mathbf{H}_i(\boldsymbol{\theta}) \right\|_2 \propto L (hM)^{2L}.
     \]
 \end{theorem}
-\begin{proof}
-    Для произвольной матрицы~$\mathbf{W}^{(p)} \in \mathbb{R}^{h \times h}$ справедливо неравенство между спектральной и фробениусовой нормами:
-    \[
-        \| \mathbf{W}^{(p)} \|_2 \leqslant \| \mathbf{W}^{(p)} \|_F = \sum_{i=1}^{h} \sum_{j=1}^{h} \left(w_{ij}^{(p)}\right)^2.
-    \]
-    Из условия теоремы каждый элемент матрицы ограничен~$|w_{ij}^{(p)}| \leqslant M$ для всех $i, j = 1, \ldots, h$ и всех слоев $p = 1, \ldots, L$. Следовательно:
-    \[
-        \left(w_{ij}^{(p)}\right)^2 \leqslant M^2,
-    \]
-    Далее, так как матрица имеет размер $h \times h$, общее число элементов равно $h^2$. Следовательно:
-    \[
-        \| \mathbf{W}^{(p)} \|_F^2 \leqslant h^2 M^2.
-    \]
+% \begin{proof}
+%     Для произвольной матрицы~$\mathbf{W}^{(p)} \in \mathbb{R}^{h \times h}$ справедливо неравенство между спектральной и фробениусовой нормами:
+%     \[
+%         \| \mathbf{W}^{(p)} \|_2 \leqslant \| \mathbf{W}^{(p)} \|_F = \sum_{i=1}^{h} \sum_{j=1}^{h} \left(w_{ij}^{(p)}\right)^2.
+%     \]
+%     Из условия теоремы каждый элемент матрицы ограничен~$|w_{ij}^{(p)}| \leqslant M$ для всех $i, j = 1, \ldots, h$ и всех слоев $p = 1, \ldots, L$. Следовательно:
+%     \[
+%         \left(w_{ij}^{(p)}\right)^2 \leqslant M^2,
+%     \]
+%     Далее, так как матрица имеет размер $h \times h$, общее число элементов равно $h^2$. Следовательно:
+%     \[
+%         \| \mathbf{W}^{(p)} \|_F^2 \leqslant h^2 M^2.
+%     \]
     
-    В теореме~\ref{theorem:hess-kiselev-theorem} была получена следующая оценка:
-    \[
-        \left\| \mathbf{H}_i(\boldsymbol{\theta}) \right\|_2 \leqslant L \sqrt{2} M_{\mathbf{x}}^2 M_{\mathbf{W}}^{2L} + \sqrt{2} \dfrac{M_{\mathbf{W}}^2 (M_{\mathbf{W}}^{2L} - 1)}{M_{\mathbf{W}}^2 - 1},
-    \]
-    где~$M_{\mathbf{W}}$~--- верхняя оценка спектральных норм матриц весов всех слоев, причем ранее было получено, что~$M_{\mathbf{W}} \leqslant hM$. Следовательно, получаем:
-    \[
-        \left\| \mathbf{H}_i(\boldsymbol{\theta}) \right\|_2 \leqslant L \sqrt{2} M_{\mathbf{x}}^2 (hM)^{2L} + \sqrt{2} \dfrac{(hM)^2 ((hM)^{2L} - 1)}{(hM)^2 - 1}.
-    \]
+%     В теореме~\ref{theorem:hess-kiselev-theorem} была получена следующая оценка:
+%     \[
+%         \left\| \mathbf{H}_i(\boldsymbol{\theta}) \right\|_2 \leqslant L \sqrt{2} M_{\mathbf{x}}^2 M_{\mathbf{W}}^{2L} + \sqrt{2} \dfrac{M_{\mathbf{W}}^2 (M_{\mathbf{W}}^{2L} - 1)}{M_{\mathbf{W}}^2 - 1},
+%     \]
+%     где~$M_{\mathbf{W}}$~--- верхняя оценка спектральных норм матриц весов всех слоев, причем ранее было получено, что~$M_{\mathbf{W}} \leqslant hM$. Следовательно, получаем:
+%     \[
+%         \left\| \mathbf{H}_i(\boldsymbol{\theta}) \right\|_2 \leqslant L \sqrt{2} M_{\mathbf{x}}^2 (hM)^{2L} + \sqrt{2} \dfrac{(hM)^2 ((hM)^{2L} - 1)}{(hM)^2 - 1}.
+%     \]
     
-    Для анализа асимптотического поведения полученной оценки рассмотрим ее поведение при больших значениях~$h$ и~$L$. Первое слагаемое имеет асимптотику:
-    \[
-        L \sqrt{2} M_{\mathbf{x}}^2 (hM)^{2L} = \propto L h^{2L},
-    \]
-    поскольку~$M$ и~$M_{\mathbf{x}}$ являются константами. Второе слагаемое:
-    \[
-        \sqrt{2} \dfrac{(hM)^2 ((hM)^{2L} - 1)}{(hM)^2 - 1} \propto h^{2L},
-    \]
-    так как при~$hM > 1$ числитель растет как~$(hM)^{2L+2}$, а знаменатель как~$(hM)^2$. Таким образом, итоговая асимптотика:
-    \[
-        \left\| \mathbf{H}_i(\boldsymbol{\theta}) \right\|_2 \propto L h^{2L}.
-    \]
+%     Для анализа асимптотического поведения полученной оценки рассмотрим ее поведение при больших значениях~$h$ и~$L$. Первое слагаемое имеет асимптотику:
+%     \[
+%         L \sqrt{2} M_{\mathbf{x}}^2 (hM)^{2L} = \propto L h^{2L},
+%     \]
+%     поскольку~$M$ и~$M_{\mathbf{x}}$ являются константами. Второе слагаемое:
+%     \[
+%         \sqrt{2} \dfrac{(hM)^2 ((hM)^{2L} - 1)}{(hM)^2 - 1} \propto h^{2L},
+%     \]
+%     так как при~$hM > 1$ числитель растет как~$(hM)^{2L+2}$, а знаменатель как~$(hM)^2$. Таким образом, итоговая асимптотика:
+%     \[
+%         \left\| \mathbf{H}_i(\boldsymbol{\theta}) \right\|_2 \propto L h^{2L}.
+%     \]
     
-    Для однослойной сети оценка упрощается, то есть подставляя~$L=1$, получаем:
-    \[
-        \left\| \mathbf{H}_i(\boldsymbol{\theta}) \right\|_2 \leqslant \sqrt{2} M_{\mathbf{W}}^{2} (M_{\mathbf{x}}^2 + 1) \leqslant \sqrt{2} (hM)^2 (M_{\mathbf{x}}^2 + 1).
-    \]
-    Следовательно, в случае одного слоя норма гессиана растет квадратично с размером слоя:
-    \[
-        \left\| \mathbf{H}_i(\boldsymbol{\theta}) \right\|_2 \propto h^2.
-    \]
-\end{proof}
+%     Для однослойной сети оценка упрощается, то есть подставляя~$L=1$, получаем:
+%     \[
+%         \left\| \mathbf{H}_i(\boldsymbol{\theta}) \right\|_2 \leqslant \sqrt{2} M_{\mathbf{W}}^{2} (M_{\mathbf{x}}^2 + 1) \leqslant \sqrt{2} (hM)^2 (M_{\mathbf{x}}^2 + 1).
+%     \]
+%     Следовательно, в случае одного слоя норма гессиана растет квадратично с размером слоя:
+%     \[
+%         \left\| \mathbf{H}_i(\boldsymbol{\theta}) \right\|_2 \propto h^2.
+%     \]
+% \end{proof}
 
 Полученные результаты указывают на то, что норма матрицы Гессе является степенной функцией от размера скрытого слоя~$h$ и экспоненциальной функцией от количества слоев~$L$.
 
@@ -401,7 +401,7 @@
 
 \subsection{Матричная факторизация матрицы Гессе}
 
-\begin{theorem}[\emph{Киселев-Грабовой-Мешков}, Факторизация матрицы Гессе]\label{theorem:m-net:hesstruct}
+\begin{theorem}[\emph{Грабовой-Мешков-Киселев}, Факторизация матрицы Гессе]\label{theorem:m-net:hesstruct}
     Пусть функция нейронной сети $f_{\boldsymbol{\theta}}(\mathbf{x})$ представима в виде \eqref{eq::m-net:repr}, тогда матрица Гессе функции потерь относительно параметров модели может быть представлена в факторизованной форме:
     $\mathbf{H}_O(\boldsymbol{\theta}) = \mathbf{Q}^{T}\mathbf{F}^{T}\mathbf{A}\mathbf{F}\mathbf{Q}$, где $\mathbf{H}_O$ описывает G-компоненту матрицы Гессе.
 \end{theorem}
@@ -473,7 +473,7 @@
 
 Особенностью данной теоремы является учет влияния всех слоев сети через мультипликативные члены~$w_{\mathbf{T}}^{2L}$ и аддитивные члены~$(L+1)$, что качественно отражает накопление сложности при увеличении глубины архитектуры. Оценка также подчеркивает важность контроля норм весовых матриц на протяжении всего процесса обучения для обеспечения устойчивости оптимизации.
 
-\begin{theorem}[\emph{Киселев-Грабовой-Мешков}, Оценка нормы матрицы Гессе для матричных сетей]\label{theorem:m-net:hessnorm} 
+\begin{theorem}[\emph{Грабовой-Мешков-Киселев}, Оценка нормы матрицы Гессе для матричных сетей]\label{theorem:m-net:hessnorm} 
     Пусть нейронная сеть $f_{\boldsymbol{\theta}}(\mathbf{x})$ представима в виде~\eqref{eq::m-net:repr}.
     Пусть для всех слоев $p$ выполнены условия:
     \begin{align}
@@ -556,7 +556,7 @@
 
 Теорема~\ref{thm:1Dconv} доказывает верхнюю оценку нормы гессиана для глубокой одномерной сверточной сети. Особенностью полученной оценки является мультипликативная зависимость от глубины сети~$L$ и полиномиально-экспоненциальная зависимость от параметров модели~--- числа каналов $C$, размера ядра $k$ и длины последовательности $d$.
 
-\begin{theorem}[\emph{Киселев-Грабовой-Мешков}, Оценка нормы матрицы Гессе для 1D-сверточных сетей]\label{thm:1Dconv}
+\begin{theorem}[\emph{Мешков-Киселев-Грабовой}, Оценка нормы матрицы Гессе для 1D-сверточных сетей]\label{thm:1Dconv}
     Пусть задана сеть вида:
     \[
         f_{\boldsymbol{\theta}}x = C_{\mathbf{W}^{(L+1)}} \circ \sigma \circ \dots \circ \sigma \circ C_{\mathbf{W}^{(1)}},
@@ -573,40 +573,40 @@
         \left\|\mathbf{H}_{O}\right\| \leqslant \sqrt{2}\left\|x\right\|^2d^2(L+1)(C^2w^2kd)^L.
     \]
 \end{theorem}
-\begin{proof}
-Из теоремы~\ref{theorem:m-net:hessnorm} следует, что требуется доказать следующие неравенства:
-\begin{align}
-    \left\|\mathbf{T}^{(p)}\right\|^2 &\leqslant C^2dkw^2, \\
-    \left\|\mathbf{Q}^{(p)}\right\|^2 &\leqslant d^2.
-\end{align}
+% \begin{proof}
+% Из теоремы~\ref{theorem:m-net:hessnorm} следует, что требуется доказать следующие неравенства:
+% \begin{align}
+%     \left\|\mathbf{T}^{(p)}\right\|^2 &\leqslant C^2dkw^2, \\
+%     \left\|\mathbf{Q}^{(p)}\right\|^2 &\leqslant d^2.
+% \end{align}
 
-Согласно работе~\cite{singh2023hessianperspectivenatureconvolutional}, матрица~$\mathbf{T}^{(p)}$ состоит из блоков размером $C_l \times C_{l-1}$, каждый из которых содержит $d_{l-1}$ строк с расположением элементов ядра в соответствующих позициях.
-Учитывая ограничения на число каналов $C_l \leqslant C$, длину последовательности $d_{l-1} \leqslant d$, размер ядра $k_l \leqslant k$ и ограниченность элементов ядра $|\mathbf{W}^{(p)}_{i,j,k}|^2 \leqslant w^2$, получаем оценку:
-\[
-    \left\|\mathbf{T}^{(p)}\right\|^2 \leqslant C^2dkw^2.
-\]
+% Согласно работе~\cite{singh2023hessianperspectivenatureconvolutional}, матрица~$\mathbf{T}^{(p)}$ состоит из блоков размером $C_l \times C_{l-1}$, каждый из которых содержит $d_{l-1}$ строк с расположением элементов ядра в соответствующих позициях.
+% Учитывая ограничения на число каналов $C_l \leqslant C$, длину последовательности $d_{l-1} \leqslant d$, размер ядра $k_l \leqslant k$ и ограниченность элементов ядра $|\mathbf{W}^{(p)}_{i,j,k}|^2 \leqslant w^2$, получаем оценку:
+% \[
+%     \left\|\mathbf{T}^{(p)}\right\|^2 \leqslant C^2dkw^2.
+% \]
 
-Согласно работе~\cite{singh2023hessianperspectivenatureconvolutional} рассмотрим матрицы:
-\[
-    \frac{\partial \mathbf{T}^{(l)}}{\partial \mathbf{Q}^{(l)}} =: \mathbf{Q}^{(l)} = \mathbf{I}_{C_l} \otimes
-    \begin{pmatrix}
-        \mathbf{I}_{C_{l-1}} \otimes (\pi_R^0\mathbf{I}_{d_{l-1} \times k_l}) \\
-        \vdots \\
-        \mathbf{I}_{C_{l-1}} \otimes (\pi_R^{d_{l-1} - k_l}\mathbf{I}_{d_{l-1} \times k_l})
-    \end{pmatrix}.
-\]
-Оценим норму этой вертикально сконкатенированной матрицы:
-\begin{align}
-    \left\|\mathbf{Q}^{(l)}\right\| &\leqslant \sum\limits_{i=0}^{d_{l-1} - k_l}\left\|\pi_R^i\mathbf{I}_{d_{l-1} \times k_l}\right\| \leqslant \sum\limits_{i=0}^{d_{l-1} - k_l}\left\|\pi_R\right\| = \\
-    &= \sum\limits_{i=0}^{d_{l-1}-k_l} 1 = d_{l-1} - k_l + 1 = d_l \leqslant d_1 = d,
-\end{align}
-Следовательно, получаем, что~$\left\|\mathbf{Q}^{(l)}\right\|^2 \leqslant d^2$.
+% Согласно работе~\cite{singh2023hessianperspectivenatureconvolutional} рассмотрим матрицы:
+% \[
+%     \frac{\partial \mathbf{T}^{(l)}}{\partial \mathbf{Q}^{(l)}} =: \mathbf{Q}^{(l)} = \mathbf{I}_{C_l} \otimes
+%     \begin{pmatrix}
+%         \mathbf{I}_{C_{l-1}} \otimes (\pi_R^0\mathbf{I}_{d_{l-1} \times k_l}) \\
+%         \vdots \\
+%         \mathbf{I}_{C_{l-1}} \otimes (\pi_R^{d_{l-1} - k_l}\mathbf{I}_{d_{l-1} \times k_l})
+%     \end{pmatrix}.
+% \]
+% Оценим норму этой вертикально сконкатенированной матрицы:
+% \begin{align}
+%     \left\|\mathbf{Q}^{(l)}\right\| &\leqslant \sum\limits_{i=0}^{d_{l-1} - k_l}\left\|\pi_R^i\mathbf{I}_{d_{l-1} \times k_l}\right\| \leqslant \sum\limits_{i=0}^{d_{l-1} - k_l}\left\|\pi_R\right\| = \\
+%     &= \sum\limits_{i=0}^{d_{l-1}-k_l} 1 = d_{l-1} - k_l + 1 = d_l \leqslant d_1 = d,
+% \end{align}
+% Следовательно, получаем, что~$\left\|\mathbf{Q}^{(l)}\right\|^2 \leqslant d^2$.
 
-Собирая все полученные оценки воедино:
-\[
-    \left\|\mathbf{H}_{O}\right\| \leqslant \|\mathbf{Q}\|^2 \|\mathbf{F}\|^2 \|\mathbf{A}\|\leqslant \sqrt{2}\left\|x\right\|^2d^2(L+1)(C^2w^2kd)^L.
-\]
-\end{proof}
+% Собирая все полученные оценки воедино:
+% \[
+%     \left\|\mathbf{H}_{O}\right\| \leqslant \|\mathbf{Q}\|^2 \|\mathbf{F}\|^2 \|\mathbf{A}\|\leqslant \sqrt{2}\left\|x\right\|^2d^2(L+1)(C^2w^2kd)^L.
+% \]
+% \end{proof}
 
 Переходим к рассмотрению двумерных сверточных сетей.
 Аналогично, для простоты сохраним обозначение~$\mathbf{T}^{(p)}$ для слоев сверточной сети.
@@ -621,7 +621,7 @@
 Далее теорема~\ref{thm:2Dconv} устанавливает оценку нормы гессиана для глубоких двумерных сверточных сетей.
 Особенностью полученной оценки является экспоненциальная зависимость от глубины сети~$L$ и полиномиальная зависимость от основных параметров архитектуры: числа каналов~$C$, размера ядра~$k$ и пространственных размеров $m \times n$.
 
-\begin{theorem}[\emph{Киселев-Грабовой-Мешков}, Оценка нормы матрицы Гессе для 2D-сверточных сетей]\label{thm:2Dconv}
+\begin{theorem}[\emph{Мешков-Киселев-Грабовой}, Оценка нормы матрицы Гессе для 2D-сверточных сетей]\label{thm:2Dconv}
     Пусть задана сеть вида
     \[
         f_{\boldsymbol{\theta}}\mathbf{x} = C_{\mathbf{W}^{(L+1)}} \circ \dots \circ C_{\mathbf{W}^{(1)}},
@@ -640,47 +640,47 @@
     \] 
     где~$q^2 = C^2k^2mn$.
 \end{theorem}
-\begin{proof}
-Для двумерных сверток в матрице~$\mathbf{T}^{(p)}$ выполняется равенство:
-\[
-    \left\|\mathbf{T}^{(p)}_{i, *}\right\|^2 = \sum\limits_{c, k, l}^{C_{p-1}, k_p^1, k_p^2}|\mathbf{W}^{(p)}_{c, c_2, k, l}|^2,
-\]
-Следовательно:
-\begin{equation}\label{eq:estim_toep_2d}
-    \left\|\mathbf{T}^{(p)}\right\|_F^2 = \sum\limits_{c_1, i, k, l}^{C_{p-1}, C_pn_pm_p, k_p^1, k_p^2}\big(\mathbf{W}^{(p)}_{c_1, c_2(i), k, l}\big)^2,
-\end{equation}
-где предполагается соответствие между выходным каналом~$c_2$ и строкой~$\mathbf{T}^{(p)}$ $i$.
+% \begin{proof}
+% Для двумерных сверток в матрице~$\mathbf{T}^{(p)}$ выполняется равенство:
+% \[
+%     \left\|\mathbf{T}^{(p)}_{i, *}\right\|^2 = \sum\limits_{c, k, l}^{C_{p-1}, k_p^1, k_p^2}|\mathbf{W}^{(p)}_{c, c_2, k, l}|^2,
+% \]
+% Следовательно:
+% \begin{equation}\label{eq:estim_toep_2d}
+%     \left\|\mathbf{T}^{(p)}\right\|_F^2 = \sum\limits_{c_1, i, k, l}^{C_{p-1}, C_pn_pm_p, k_p^1, k_p^2}\big(\mathbf{W}^{(p)}_{c_1, c_2(i), k, l}\big)^2,
+% \end{equation}
+% где предполагается соответствие между выходным каналом~$c_2$ и строкой~$\mathbf{T}^{(p)}$ $i$.
 
-По аналогии с доказательством~\ref{thm:1Dconv}, используя~\ref{theorem:m-net:hessnorm} необходимо доказать два неравенства:
-\begin{align}
-    \left\|\mathbf{T}^{(p)}\right\| &\leqslant C^2k^2w^2mn,\\
-    \left\|\mathbf{Q}^{(p)}\right\| &\leqslant C^2k^2mn.
-\end{align}
+% По аналогии с доказательством~\ref{thm:1Dconv}, используя~\ref{theorem:m-net:hessnorm} необходимо доказать два неравенства:
+% \begin{align}
+%     \left\|\mathbf{T}^{(p)}\right\| &\leqslant C^2k^2w^2mn,\\
+%     \left\|\mathbf{Q}^{(p)}\right\| &\leqslant C^2k^2mn.
+% \end{align}
 
-Оценим норму $\mathbf{T}^{(p)}$, используя~\eqref{eq:estim_toep_2d}, получаем:
-\[
-    \left\|\mathbf{T}^{(p)}\right\|^2 \leqslant \left\|\mathbf{T}^{(p)}\right\|_F^2 \leqslant \sum\limits_{i} Ck^2w^2 \leqslant C^2k^2w^2mn.
-\]
+% Оценим норму $\mathbf{T}^{(p)}$, используя~\eqref{eq:estim_toep_2d}, получаем:
+% \[
+%     \left\|\mathbf{T}^{(p)}\right\|^2 \leqslant \left\|\mathbf{T}^{(p)}\right\|_F^2 \leqslant \sum\limits_{i} Ck^2w^2 \leqslant C^2k^2w^2mn.
+% \]
 
-Оценим норму производной слоя по параметрам:
-\[
-    \left\|\mathbf{Q}^{(p)}\right\| = \left\|\frac{\partial \mathbf{T}^{(p)}}{\partial \mathbf{W}^{(p)}}\right\|.
-\]
-Как упоминалось ранее, строка $\mathbf{T}^{(p)}$~--- является $vec_r(\mathbf{W}^{(p)}_{*, i, *, *})$, расположенная в правильном порядке.
-Тогда норма строки~$\frac{\partial \mathbf{T}^{(p)}_{(i, j)}}{\partial \mathbf{W}^{(p)}_{c_1, c_2, k_1, k_2}} \neq 0 \iff$ индексы выбраны таким образом, что $T^{(p)}_i$ соответствует $c_2$, и в то же время $\mathbf{T}^{(p)}_{i, j}$ соответствует $c_1, k_1, k_2$.
-Это соответствие зависит от конкретной матрицы~$\mathbf{T}^{(p)}$. Один индекс~$i$ соответствует только одному~$c_2$, поскольку каждая строка участвует в формировании только одного элемента одного канала.
-Поскольку только~$\mathbf{W}^{(p)}_{*, c_2, *, *}$ участвует в формировании одной строки~$\mathbf{T}^{(p)}_{i, *}$, индекс~$i$ фиксируется, и соответствующий~$c_2$ также фиксируется. Следовательно, для каждых~$c_1, k_1, k_2$ существует только один столбец~$j$ такой, что~$\mathbf{T}^{(p)}_{i, j} = \mathbf{W}^{(p)}_{c_1, c_2, k_1, k_2}$. Получаем:
-\begin{align}
-    \sum\limits_{j,c_1, k_1, k_2}\bigg(\frac{\partial \mathbf{T}^{(p)}_{i, j}}{\partial\mathbf{W}^{(p)}_{c_1, c_2, k_1, k_2}}\bigg)^2 &= \sum\limits_{c_1, k_1, k_2}\sum\limits_{j}\bigg(\frac{\partial \mathbf{T}^{(p)}_{i, j}}{\partial\mathbf{W}^{(p)}_{c_1, c_2, k_1, k_2}}\bigg)^2 = \\
-    & = \sum\limits_{c_1, k_1, k_2}1 = C_{p-1}k_p^1k_p^2 \leqslant Ck^2.
-\end{align}
-Используем свойство нормы Фробениуса как верхней оценки спектральной нормы:
-\begin{align}
-    \left\|\mathbf{Q}\right\|^2 &\leqslant \left\|\mathbf{Q}\right\|^2_F = \sum\limits_{i, j, c_1, c_2, k_1, k_2}\bigg(\frac{\partial \mathbf{T}^{(p)}_{i,j}}{\partial \mathbf{W}^{(p)}_{c_1, c_2, k_1, k_2}}\bigg)^2 = \\
-    & = \sum\limits_{i, c_2}\sum\limits_{j, c_1, k_1, k_2}\bigg(\frac{\partial \mathbf{T}^{(p)}_{i,j}}{\partial \mathbf{W}^{(p)}_{c_1, c_2, k_1, k_2}}\bigg)^2 \leqslant \\
-    & \leqslant \sum\limits_{i}Ck^2 = CmnCk^2 \leqslant C^2k^2mn.
-\end{align}
-\end{proof}
+% Оценим норму производной слоя по параметрам:
+% \[
+%     \left\|\mathbf{Q}^{(p)}\right\| = \left\|\frac{\partial \mathbf{T}^{(p)}}{\partial \mathbf{W}^{(p)}}\right\|.
+% \]
+% Как упоминалось ранее, строка $\mathbf{T}^{(p)}$~--- является $vec_r(\mathbf{W}^{(p)}_{*, i, *, *})$, расположенная в правильном порядке.
+% Тогда норма строки~$\frac{\partial \mathbf{T}^{(p)}_{(i, j)}}{\partial \mathbf{W}^{(p)}_{c_1, c_2, k_1, k_2}} \neq 0 \iff$ индексы выбраны таким образом, что $T^{(p)}_i$ соответствует $c_2$, и в то же время $\mathbf{T}^{(p)}_{i, j}$ соответствует $c_1, k_1, k_2$.
+% Это соответствие зависит от конкретной матрицы~$\mathbf{T}^{(p)}$. Один индекс~$i$ соответствует только одному~$c_2$, поскольку каждая строка участвует в формировании только одного элемента одного канала.
+% Поскольку только~$\mathbf{W}^{(p)}_{*, c_2, *, *}$ участвует в формировании одной строки~$\mathbf{T}^{(p)}_{i, *}$, индекс~$i$ фиксируется, и соответствующий~$c_2$ также фиксируется. Следовательно, для каждых~$c_1, k_1, k_2$ существует только один столбец~$j$ такой, что~$\mathbf{T}^{(p)}_{i, j} = \mathbf{W}^{(p)}_{c_1, c_2, k_1, k_2}$. Получаем:
+% \begin{align}
+%     \sum\limits_{j,c_1, k_1, k_2}\bigg(\frac{\partial \mathbf{T}^{(p)}_{i, j}}{\partial\mathbf{W}^{(p)}_{c_1, c_2, k_1, k_2}}\bigg)^2 &= \sum\limits_{c_1, k_1, k_2}\sum\limits_{j}\bigg(\frac{\partial \mathbf{T}^{(p)}_{i, j}}{\partial\mathbf{W}^{(p)}_{c_1, c_2, k_1, k_2}}\bigg)^2 = \\
+%     & = \sum\limits_{c_1, k_1, k_2}1 = C_{p-1}k_p^1k_p^2 \leqslant Ck^2.
+% \end{align}
+% Используем свойство нормы Фробениуса как верхней оценки спектральной нормы:
+% \begin{align}
+%     \left\|\mathbf{Q}\right\|^2 &\leqslant \left\|\mathbf{Q}\right\|^2_F = \sum\limits_{i, j, c_1, c_2, k_1, k_2}\bigg(\frac{\partial \mathbf{T}^{(p)}_{i,j}}{\partial \mathbf{W}^{(p)}_{c_1, c_2, k_1, k_2}}\bigg)^2 = \\
+%     & = \sum\limits_{i, c_2}\sum\limits_{j, c_1, k_1, k_2}\bigg(\frac{\partial \mathbf{T}^{(p)}_{i,j}}{\partial \mathbf{W}^{(p)}_{c_1, c_2, k_1, k_2}}\bigg)^2 \leqslant \\
+%     & \leqslant \sum\limits_{i}Ck^2 = CmnCk^2 \leqslant C^2k^2mn.
+% \end{align}
+% \end{proof}
 
 \begin{remark}
     Полученные оценки в теоремах~\ref{thm:1Dconv} и~\ref{thm:2Dconv} имеют недостаток, связанный с тем, что они не учитывают уменьшение размеров после сверточных операций и зависят только от верхних границ параметров.
@@ -690,7 +690,7 @@
 
 Теорема~\ref{theorem:maxpool} описывает связь между параметрами сети с операцией макс-пулинга и сложностью оптимизационного ландшафта через норму матрицы Гессе. Полученная оценка показывает, что введение слоя макс-пулинга существенно модифицирует зависимость сложности модели от ее параметров.
 
-\begin{theorem}[\emph{Киселев-Грабовой-Мешков}, Оценка нормы матрицы Гессе для MaxPool]\label{theorem:maxpool}
+\begin{theorem}[\emph{Мешков-Киселев-Грабовой}, Оценка нормы матрицы Гессе для MaxPool]\label{theorem:maxpool}
     Пусть задана сеть вида: 
     \[
         f_{\boldsymbol{\theta}}{\mathbf{x}} = \mathbf{T}^{(L+1)}\boldsymbol{\Lambda}^{(L)}\dots \boldsymbol{\Lambda}^{(1)}\mathbf{T}^{(1)}\mathbf{x},
@@ -702,30 +702,30 @@
     \]
     где~$q^2 = mnC^2k^2$.
 \end{theorem}
-\begin{proof}
-Введем обозначение $\mathbf{M}^{(l)}$ для слоя 2D-Max-Pool. 
-Аналогично сверточным слоям, опишем каждую строку $\mathbf{M}^{(l)}.$
-Установим некоторые свойства матрицы $\mathbf{M}$, используемые в дальнейшем: строка~$\mathbf{M}_{i*}$ соответствует определенному окну пулинга, а столбец~$\mathbf{M}_{*j}$ соответствует элементам, которые умножаются на $j$-й элемент входа.
+% \begin{proof}
+% Введем обозначение $\mathbf{M}^{(l)}$ для слоя 2D-Max-Pool. 
+% Аналогично сверточным слоям, опишем каждую строку $\mathbf{M}^{(l)}.$
+% Установим некоторые свойства матрицы $\mathbf{M}$, используемые в дальнейшем: строка~$\mathbf{M}_{i*}$ соответствует определенному окну пулинга, а столбец~$\mathbf{M}_{*j}$ соответствует элементам, которые умножаются на $j$-й элемент входа.
 
-Поскольку каждое окно покрывает только один элемент и два различных окна не пересекаются, в каждой строке имеется только один ненулевой элемент. Следовательно,
-\[
-    \left\|\mathbf{M}^{(l)}\right\| = \sqrt{\lambda_{\max}({\mathbf{M}^{(l)\top} \mathbf{M}^{(l)}})} = 1,
-\] 
-так как~$(\mathbf{M}^{(l)}_{*, i}, \mathbf{M}^{(l)}_{*, j}) \neq 0 \iff (\mathbf{M}^{(l)}_{*, i}, \mathbf{M}^{(l)}_{*, j}) = 1 \iff i = j,$ а~$i$-й элемент является максимальным в соответствующем окне.
+% Поскольку каждое окно покрывает только один элемент и два различных окна не пересекаются, в каждой строке имеется только один ненулевой элемент. Следовательно,
+% \[
+%     \left\|\mathbf{M}^{(l)}\right\| = \sqrt{\lambda_{\max}({\mathbf{M}^{(l)\top} \mathbf{M}^{(l)}})} = 1,
+% \] 
+% так как~$(\mathbf{M}^{(l)}_{*, i}, \mathbf{M}^{(l)}_{*, j}) \neq 0 \iff (\mathbf{M}^{(l)}_{*, i}, \mathbf{M}^{(l)}_{*, j}) = 1 \iff i = j,$ а~$i$-й элемент является максимальным в соответствующем окне.
 
-Для простоты предположим, что $\mathbf{M}^{(l)}$ уменьшает оба размера в ${k_{\mathrm{pool}}}$ раз. Аналогично доказательству теоремы~\ref{thm:2Dconv} оцениваем компоненты $\mathbf{G}^{(p)}$ и $\mathbf{R}^{(p-1)}$, однако с учетом нового слоя:
-\begin{align}
-    \left\|\mathbf{G}^{(p)}\right\|\left\|\mathbf{R}^{(p-1)}\right\| &\leqslant \frac{\prod\limits_{i=1}^{L+1}\left\|T^{(i)}\right\|}{\left\|T^{(p)}\right\|} \leqslant \\
-    &\leqslant (C^2k^2w^2mn)^{2L}\bigg(\frac{1}{k_{\mathrm{pool}}^2}\bigg)^{L - l + 2 - I\{p-1 \leqslant l\}} \leqslant \\
-    &\leqslant (C^2k^2w^2mn)^{2L}\bigg(\frac{1}{k_{\mathrm{pool}}^2}\bigg)^{L - l + 2},
-\end{align}
-Используя данные оценки, получаем
-\begin{align}
-    \left\|\mathbf{F}\right\|^2 &\leqslant \left\|\mathbf{x}\right\|^2(L+1)(k^2C^2w^2mn)^{(L)}\big(\frac{1}{k_{\mathrm{pool}}^2}\big)^{L - l + 2}, \\
-    \left\|\mathbf{H}_O\right\| &\leqslant \sqrt{2}\left\|\mathbf{x}^2\right\|q^2\big(\frac{1}{k_{\mathrm{pool}}^2}\big)^{L-l+2}(L+1)(k^2C^2w^2mn)^{L},
-\end{align}
-где $q^2 = mnC^2k^2.$
-\end{proof}
+% Для простоты предположим, что $\mathbf{M}^{(l)}$ уменьшает оба размера в ${k_{\mathrm{pool}}}$ раз. Аналогично доказательству теоремы~\ref{thm:2Dconv} оцениваем компоненты $\mathbf{G}^{(p)}$ и $\mathbf{R}^{(p-1)}$, однако с учетом нового слоя:
+% \begin{align}
+%     \left\|\mathbf{G}^{(p)}\right\|\left\|\mathbf{R}^{(p-1)}\right\| &\leqslant \frac{\prod\limits_{i=1}^{L+1}\left\|T^{(i)}\right\|}{\left\|T^{(p)}\right\|} \leqslant \\
+%     &\leqslant (C^2k^2w^2mn)^{2L}\bigg(\frac{1}{k_{\mathrm{pool}}^2}\bigg)^{L - l + 2 - I\{p-1 \leqslant l\}} \leqslant \\
+%     &\leqslant (C^2k^2w^2mn)^{2L}\bigg(\frac{1}{k_{\mathrm{pool}}^2}\bigg)^{L - l + 2},
+% \end{align}
+% Используя данные оценки, получаем
+% \begin{align}
+%     \left\|\mathbf{F}\right\|^2 &\leqslant \left\|\mathbf{x}\right\|^2(L+1)(k^2C^2w^2mn)^{(L)}\big(\frac{1}{k_{\mathrm{pool}}^2}\big)^{L - l + 2}, \\
+%     \left\|\mathbf{H}_O\right\| &\leqslant \sqrt{2}\left\|\mathbf{x}^2\right\|q^2\big(\frac{1}{k_{\mathrm{pool}}^2}\big)^{L-l+2}(L+1)(k^2C^2w^2mn)^{L},
+% \end{align}
+% где $q^2 = mnC^2k^2.$
+% \end{proof}
 
 \begin{remark}
     Как и в предыдущих случаях, норма гессиана растет экспоненциально с глубиной сети~$L$, что согласуется с предыдущими оценками, но появление множителя $\left(\frac{1}{k_{\mathrm{pool}}^2}\right)^{L-l+2}$ указывает на снижающий эффект операции пулинга на сложность оптимизации.
@@ -737,7 +737,7 @@
 
 Следующая теорема~\ref{theorem:avgpool} устанавливает оценку нормы матрицы Гессе для сверточной сети, содержащей слой усредняющего пулинга.
 
-\begin{theorem}[\emph{Киселев-Грабовой-Мешков}, Оценка нормы матрицы Гессе для AvgPool]\label{theorem:avgpool}
+\begin{theorem}[\emph{Мешков-Киселев-Грабовой}, Оценка нормы матрицы Гессе для AvgPool]\label{theorem:avgpool}
     Пусть задана сеть вида:
     \[
         f_{\boldsymbol{\theta}}{\mathbf{x}} = \mathbf{T}^{(L+1)}\boldsymbol{\Lambda}^{(L)}\dots \boldsymbol{\Lambda}^{(1)}\mathbf{T}^{(1)}\mathbf{x},
@@ -749,24 +749,24 @@
     \]
 где $q^2 = mnC^2k^2$.
 \end{theorem}
-\begin{proof}
-    Введем обозначение~$\mathbf{A}^{(l)}$ для слоя 2D-Avg-Pool. 
-    Установим, что
-    \[
-        (\mathbf{A}_{*, i}, \mathbf{A}_{*,j}) = \frac{1}{k_{\mathrm{pool}}^4}I\{\text{i, j соответствуют одному и тому же окну}\}.
-    \] 
-    Для обоснования этого рассмотрим формулу:
-    \[
-        (\mathbf{A}_{*j}, \mathbf{A}_{*i}) = \sum\limits_{k}\mathbf{A}_{ki}\mathbf{A}_{kj} = \sum\limits_{k:\mathbf{A}_{ki} \neq 0, \mathbf{A}_{kj} \neq 0}\frac{1}{k_{\mathrm{pool}}^4}.
-    \]
-    После этого, применяя элементарные преобразования над строками и столбцами, приводим матрицу $\mathbf{A}^{(p)\top}\mathbf{A}^{(p)}$ к блочно-диагональной форме, где блоки соответствуют индексам в одном окне усредняющего пулинга.
-    Каждый блок матрицы $\mathbf{A}^{(p)\top}\mathbf{A}^{(p)}$ имеет вид $\mathbf{B}_i = \frac{1}{k_{\mathrm{pool}}^2}\mathbf{11}^\top$, где $\mathbf{1} = \mathbf{1}_{k_{\mathrm{pool}}^2} \in \mathbb{R}^{k_{\mathbf{A}}^2}$~--- вектор из единиц, и его норма $\left\|\mathbf{B}_i\right\| = \frac{1}{k_{\mathrm{pool}}^2}\left\|\mathbf{11}^\top\right\| = \frac{1}{k_{\mathrm{pool}}}$.
-    Норма блочно-диагональной матрицы равна максимуму норм блоков:
-    \[
-        \left\|\mathbf{A}^{(p)}\right\| = \max\limits_{i}\left\|\mathbf{B}_{i}\right\| = \frac{1}{k_{\mathrm{pool}}}.
-    \]
-    Учитывая, что $\left\|\mathbf{A}^{(p)}\right\| \leqslant 1$, повторим полностью вычисления доказательства Теоремы~\ref{theorem:maxpool} и получим тот же результат.
-\end{proof}
+% \begin{proof}
+%     Введем обозначение~$\mathbf{A}^{(l)}$ для слоя 2D-Avg-Pool. 
+%     Установим, что
+%     \[
+%         (\mathbf{A}_{*, i}, \mathbf{A}_{*,j}) = \frac{1}{k_{\mathrm{pool}}^4}I\{\text{i, j соответствуют одному и тому же окну}\}.
+%     \] 
+%     Для обоснования этого рассмотрим формулу:
+%     \[
+%         (\mathbf{A}_{*j}, \mathbf{A}_{*i}) = \sum\limits_{k}\mathbf{A}_{ki}\mathbf{A}_{kj} = \sum\limits_{k:\mathbf{A}_{ki} \neq 0, \mathbf{A}_{kj} \neq 0}\frac{1}{k_{\mathrm{pool}}^4}.
+%     \]
+%     После этого, применяя элементарные преобразования над строками и столбцами, приводим матрицу $\mathbf{A}^{(p)\top}\mathbf{A}^{(p)}$ к блочно-диагональной форме, где блоки соответствуют индексам в одном окне усредняющего пулинга.
+%     Каждый блок матрицы $\mathbf{A}^{(p)\top}\mathbf{A}^{(p)}$ имеет вид $\mathbf{B}_i = \frac{1}{k_{\mathrm{pool}}^2}\mathbf{11}^\top$, где $\mathbf{1} = \mathbf{1}_{k_{\mathrm{pool}}^2} \in \mathbb{R}^{k_{\mathbf{A}}^2}$~--- вектор из единиц, и его норма $\left\|\mathbf{B}_i\right\| = \frac{1}{k_{\mathrm{pool}}^2}\left\|\mathbf{11}^\top\right\| = \frac{1}{k_{\mathrm{pool}}}$.
+%     Норма блочно-диагональной матрицы равна максимуму норм блоков:
+%     \[
+%         \left\|\mathbf{A}^{(p)}\right\| = \max\limits_{i}\left\|\mathbf{B}_{i}\right\| = \frac{1}{k_{\mathrm{pool}}}.
+%     \]
+%     Учитывая, что $\left\|\mathbf{A}^{(p)}\right\| \leqslant 1$, повторим полностью вычисления доказательства Теоремы~\ref{theorem:maxpool} и получим тот же результат.
+% \end{proof}
 
 \begin{remark}
     Полученная оценка в рамках Теоремы~\ref{theorem:avgpool} демонстрирует, что операция усредняющего пулинга оказывает аналогичное макс-пулингу влияние на сложность оптимизационного ландшафта, уменьшая норму гессиана за счет множителя $\left(\frac{1}{k_{\mathrm{pool}}^2}\right)^{L-l+2}$.
@@ -776,7 +776,7 @@
 Теорема~\ref{theorem:fc-head} устанавливает оценку нормы матрицы Гессе для гибридной архитектуры, сочетающей сверточные слои и полносвязный слой.
 Полученная оценка указывает на мультипликативный вклад обеих частей сети, причем сверточная часть вносит множитель~$(k^2C^2w^2mn)^L$, а полносвязная~--- $(h^2\tilde{w}^2)^P$.
 
-\begin{theorem}[\emph{Киселев-Грабовой-Мешков}, Оценка нормы матрицы Гессе для полносвязных выходных слоев]\label{theorem:fc-head}
+\begin{theorem}[\emph{Мешков-Киселев-Грабовой}, Оценка нормы матрицы Гессе для полносвязных выходных слоев]\label{theorem:fc-head}
 Пусть задана сеть с~$P$ полносвязными слоями следующего вида:
 \begin{align}
     f_{\boldsymbol{\theta}}{\mathbf{x}} &= \mathbf{T}^{(L+P+1)}\boldsymbol{\Lambda}^{(L+P)} \dots \\
@@ -790,39 +790,39 @@
     &\quad\times \big(L + 1 + P\frac{h^2\tilde{w}^2}{k^2C^2w^2mn}\big).
 \end{align}
 \end{theorem}
-\begin{proof}
-Как и в предыдущих доказательствах  необходимо оценить
-\[
-    \left\|\mathbf{G}^{(p)}\right\|^2\left\|\mathbf{R}^{(p-1)}\right\|^2,
-\]
-Известно, что
-\[
-    \left\|T^{(L+1+p)}\right\|^2 \leqslant (h^2\tilde{w}^2) \quad \forall p = 1, \dots, P,
-\]
-Следовательно, получаем:
-\[
-    \left\|\mathbf{G}^{(p)}\right\|^2\left\|\mathbf{R}^{(p-1)}\right\|^2 \leqslant (h^2\tilde{w}^2)^{P}(k^2C^2w^2mn)^L,
-\] 
-для $p \leqslant L+1$ и 
-\[
-    \left\|\mathbf{G}^{(p)}\right\|^2\left\|\mathbf{R}^{(p-1)}\right\|^2 \leqslant (h^2\tilde{w}^2)^{P-1}(k^2C^2w^2mn)^{L+1},
-\] 
-для $p = L+2 \dots L+P+1$.
-В общей форме:
-\[
-    \left\|\mathbf{G}^{(p)}\right\|^2\left\|\mathbf{R}^{(p-1)}\right\|^2 \leqslant (h^2\tilde{w}^2)^{P-I_{\{p > L+1\}}}(k^2C^2w^2mn)^{L + I_{\{p > L+1\}}},
-\]
-Следовательно, получаем:
-\begin{align}
-    \left\|F\right\|^2 &\leqslant \sum\limits_{p=1}^{L+P+1}\left\|\mathbf{G}^{(p)}\right\|^2\left\|\mathbf{R}^{(p-1)}\right\|^2\left\|x\right\|^2 \leqslant \\
-    &\leqslant (h^2\tilde{w}^2)^P(k^2C^2w^2mn)^{L}\left(L+1 + P\frac{h^2\tilde{w}^2}{k^2C^2w^2mn}\right).
-\end{align}
-Применяя этот результат к матрице Гессе:
-\begin{align}
-    \left\|\mathbf{H}_{O}\right\| &\leqslant \sqrt{2}\left\|\mathbf{x}\right\|^2q^2(h^2\tilde{w}^2)^P(k^2C^2w^2mn)^L\times \\
-    &\quad \times \left(L + 1 + P\frac{h^2\tilde{w}^2}{k^2C^2w^2mn}\right).
-\end{align}
-\end{proof}
+% \begin{proof}
+% Как и в предыдущих доказательствах  необходимо оценить
+% \[
+%     \left\|\mathbf{G}^{(p)}\right\|^2\left\|\mathbf{R}^{(p-1)}\right\|^2,
+% \]
+% Известно, что
+% \[
+%     \left\|T^{(L+1+p)}\right\|^2 \leqslant (h^2\tilde{w}^2) \quad \forall p = 1, \dots, P,
+% \]
+% Следовательно, получаем:
+% \[
+%     \left\|\mathbf{G}^{(p)}\right\|^2\left\|\mathbf{R}^{(p-1)}\right\|^2 \leqslant (h^2\tilde{w}^2)^{P}(k^2C^2w^2mn)^L,
+% \] 
+% для $p \leqslant L+1$ и 
+% \[
+%     \left\|\mathbf{G}^{(p)}\right\|^2\left\|\mathbf{R}^{(p-1)}\right\|^2 \leqslant (h^2\tilde{w}^2)^{P-1}(k^2C^2w^2mn)^{L+1},
+% \] 
+% для $p = L+2 \dots L+P+1$.
+% В общей форме:
+% \[
+%     \left\|\mathbf{G}^{(p)}\right\|^2\left\|\mathbf{R}^{(p-1)}\right\|^2 \leqslant (h^2\tilde{w}^2)^{P-I_{\{p > L+1\}}}(k^2C^2w^2mn)^{L + I_{\{p > L+1\}}},
+% \]
+% Следовательно, получаем:
+% \begin{align}
+%     \left\|F\right\|^2 &\leqslant \sum\limits_{p=1}^{L+P+1}\left\|\mathbf{G}^{(p)}\right\|^2\left\|\mathbf{R}^{(p-1)}\right\|^2\left\|x\right\|^2 \leqslant \\
+%     &\leqslant (h^2\tilde{w}^2)^P(k^2C^2w^2mn)^{L}\left(L+1 + P\frac{h^2\tilde{w}^2}{k^2C^2w^2mn}\right).
+% \end{align}
+% Применяя этот результат к матрице Гессе:
+% \begin{align}
+%     \left\|\mathbf{H}_{O}\right\| &\leqslant \sqrt{2}\left\|\mathbf{x}\right\|^2q^2(h^2\tilde{w}^2)^P(k^2C^2w^2mn)^L\times \\
+%     &\quad \times \left(L + 1 + P\frac{h^2\tilde{w}^2}{k^2C^2w^2mn}\right).
+% \end{align}
+% \end{proof}
 
 \section{Матрица Гессе для трансформерной модели глубокого обучения}\label{chapter:gesian:transformer}
 
@@ -883,7 +883,7 @@
 
 В настоящем подразделе проводится оценка нормы матрицы Гессе для одного слоя самовнимания. Результат данной оценки формулируется в теореме~\ref{thm:self_attention_hessian_estimation}.
 
-\begin{theorem}[\emph{Петров-Грабовой-Киселев}, Оценка нормы матрицы Гессе для слоя самовнимания]\label{thm:self_attention_hessian_estimation}
+\begin{theorem}[\emph{Грабовой-Петров-Киселев}, Оценка нормы матрицы Гессе для слоя самовнимания]\label{thm:self_attention_hessian_estimation}
 
 Пусть $\|\cdot\|_2$ является спектральной нормой, тогда для слоя самовнимания получаем:
 \[
@@ -1104,7 +1104,7 @@ M &= 3\cdot\max \Bigg(\frac{2L}{d_V} \| \mathbf{X}\|^2_2, \\
 \subsection{Матрица Гессе для LayerNorm слоя}
 
 Для начала вычислим для функции~$\mathrm{LayerNorm}$ матрицу Якоби относительно параметров модели, для этого докажем теорему~\ref{thm:layernorm_derivative}.
-\begin{theorem}[\emph{Петров-Грабовой-Киселев}, Производная LayerNorm]\label{thm:layernorm_derivative}
+\begin{theorem}[\emph{Петров-Киселев-Грабовой}, Производная LayerNorm]\label{thm:layernorm_derivative}
     Пусть задана матрица $\mathbf{X} \in \mathbb{R}^{L \times d_V}$. Определим функцию~$\mathbf{M}(\mathbf{X})$ следующим образом:
     \begin{align}
         \mathbf{M}(\mathbf{X}) &= \mathbf{X} - \tfrac{1}{d_V}\mathbf{X}\mathbf{1}_{d_V}\mathbf{1}_{d_V}^\top, \\
@@ -1128,68 +1128,68 @@ M &= 3\cdot\max \Bigg(\frac{2L}{d_V} \| \mathbf{X}\|^2_2, \\
     \end{align}
     где $\mathbf{D} = \mathrm{diag}(\sigma(\mathbf{X})).$
 \end{theorem}
-\begin{proof}
-Представим функцию LayerNorm в матричном виде:
-\begin{equation}
-    \text{LayerNorm}(\mathbf{X}) = \mathbf{P}(\mathbf{X})\mathbf{M}(\mathbf{X}),
-\end{equation}
-где матрица~$\mathbf{P}(\mathbf{X}) = \mathbf{D}^{-1}$, а матрица~$\mathbf{D} = \textit{diag}(\sigma(\mathbf{X})),$ в свою очередь согласно свойству~\ref{prop:elem_wise_division} матрица~$\mathbf{M}(\mathbf{X}) = (\mathbf{X} - \mu(\mathbf{X})\mathbf{1}^\top_{d_V}).$
+% \begin{proof}
+% Представим функцию LayerNorm в матричном виде:
+% \begin{equation}
+%     \text{LayerNorm}(\mathbf{X}) = \mathbf{P}(\mathbf{X})\mathbf{M}(\mathbf{X}),
+% \end{equation}
+% где матрица~$\mathbf{P}(\mathbf{X}) = \mathbf{D}^{-1}$, а матрица~$\mathbf{D} = \textit{diag}(\sigma(\mathbf{X})),$ в свою очередь согласно свойству~\ref{prop:elem_wise_division} матрица~$\mathbf{M}(\mathbf{X}) = (\mathbf{X} - \mu(\mathbf{X})\mathbf{1}^\top_{d_V}).$
 
-Используя Лемму~\ref{lemma:matrix_funcs_product_derivative} получаем выражение для произведения матричнозначных функций:
-\begin{equation}
-    \frac{\partial\text{LayerNorm}(\mathbf{X})}{\partial \mathbf{X}} = ( \mathbf{P}(\mathbf{X}) \otimes \mathbf{I}_{d_V}) \frac{\partial \mathbf{M}}{\partial \mathbf{X}} + (\mathbf{I}_L\otimes \mathbf{M}^\top)\frac{\partial \mathbf{P}}{\partial \mathbf{X}}
-\end{equation}
+% Используя Лемму~\ref{lemma:matrix_funcs_product_derivative} получаем выражение для произведения матричнозначных функций:
+% \begin{equation}
+%     \frac{\partial\text{LayerNorm}(\mathbf{X})}{\partial \mathbf{X}} = ( \mathbf{P}(\mathbf{X}) \otimes \mathbf{I}_{d_V}) \frac{\partial \mathbf{M}}{\partial \mathbf{X}} + (\mathbf{I}_L\otimes \mathbf{M}^\top)\frac{\partial \mathbf{P}}{\partial \mathbf{X}}
+% \end{equation}
 
-Вычислим значение производной~$\frac{\partial \mathbf{M}}{\partial \mathbf{X}},$ используя матричные вычисления~$\mathbf{M}(\mathbf{X}) = (\mathbf{X} - \mu(\mathbf{X}) \mathbf{1}^{\top}_{d_V}) = (\mathbf{X} - \frac{1}{d_V}\mathbf{X} \mathbf{1}_{d_V} \mathbf{1}^{\top}_{d_V}) = (\mathbf{X} - \frac{1}{d_V}\mathbf{X} \mathbf{1}_{d_V \times d_V})$. Получаем:
-\begin{equation}
-   \frac{\partial \mathbf{M}}{\partial \mathbf{X}} = \frac{\partial  (\mathbf{X} - \frac{1}{d_V}\mathbf{X} \mathbf{1}_{d_V \times d_V})}{\partial \mathbf{X}} = (\mathbf{I}_L \otimes \mathbf{I}_{d_V}) - \frac{1}{d_V}(\mathbf{I}_L \otimes \mathbf{1}_{d_V \times d_V})
-\end{equation}
+% Вычислим значение производной~$\frac{\partial \mathbf{M}}{\partial \mathbf{X}},$ используя матричные вычисления~$\mathbf{M}(\mathbf{X}) = (\mathbf{X} - \mu(\mathbf{X}) \mathbf{1}^{\top}_{d_V}) = (\mathbf{X} - \frac{1}{d_V}\mathbf{X} \mathbf{1}_{d_V} \mathbf{1}^{\top}_{d_V}) = (\mathbf{X} - \frac{1}{d_V}\mathbf{X} \mathbf{1}_{d_V \times d_V})$. Получаем:
+% \begin{equation}
+%    \frac{\partial \mathbf{M}}{\partial \mathbf{X}} = \frac{\partial  (\mathbf{X} - \frac{1}{d_V}\mathbf{X} \mathbf{1}_{d_V \times d_V})}{\partial \mathbf{X}} = (\mathbf{I}_L \otimes \mathbf{I}_{d_V}) - \frac{1}{d_V}(\mathbf{I}_L \otimes \mathbf{1}_{d_V \times d_V})
+% \end{equation}
 
-Вычислим значение производной~$\frac{\partial \mathbf{P}}{\partial \mathbf{X}}$.
-Для начала получим выражение для нелинейного преобразования~$\sigma(\mathbf{X}).$
-Данное выражение в матричном виде принимает вид:
-\[
-    \sigma(\mathbf{X}) =  \left(\frac{1}{d_V} (\mathbf{X} - \mu(X)\mathbf{1}_{d_V}^\top)^{\circ 2} \mathbf{1}_{d_V}\right)^{\circ \frac{1}{2}} = \frac{1}{\sqrt{d_V}} \left(\mathbf{M}(\mathbf{X})^{\circ 2} \mathbf{1}_{d_V}\right)^{\circ{\frac{1}{2}}},
-\]
-где~$\circ \alpha$ операция поэлементного взятия степени $\alpha$ описанного в определении~\ref{def:vec_elem_ops}.
-Далее, применив цепное правило получаем:
-\begin{align}
-    \frac{\partial \mathbf{P}}{\partial \mathbf{X}} &= \frac{\partial \mathbf{D}^{-1}}{\partial \mathbf{D}} \frac{\partial\textit{diag}(\sigma(\mathbf{X}))}{\partial \sigma(\mathbf{X})} \frac{\partial \sigma(\mathbf{X})}{\partial \mathbf{X}},
-\end{align}
-Используя свойства~\ref{lemma:hadamard_square_derivative}, \ref{lemma:hadamard_root_derivative} и~\ref{prop:matrix_product_derivative}, получаем выражение для~$\frac{\partial \sigma(\mathbf{X})}{\partial \mathbf{X}}:$
-\begin{equation}
-    \frac{\partial \sigma(\mathbf{X})}{\partial \mathbf{X}} = \frac{1}{\sqrt{d_V}} \frac{\partial \tau^{\circ \frac{1}{2}}}{\partial \tau} \frac{\partial \tau}{\partial \mathbf{Q}} \frac{\partial \mathbf{Q}}{\partial {\mathbf{X}}},
-\end{equation}
-где~$\tau = \mathbf{Q}\cdot\mathbf{1}_L$, $\mathbf{Q} = \mathbf{M}^{\circ{2}}$. Подставляя, получаем:
-\begin{align}
-    \frac{\partial \sigma(\mathbf{X})}{\partial \mathbf{X}} &= \frac{1}{\sqrt{d_V}} \frac{\partial \tau^{\circ \frac{1}{2}}}{\partial \tau} \frac{\partial \mathbf{Q}\cdot\mathbf{1}_{d_V}}{\partial \mathbf{Q}} \frac{\partial \mathbf{M}^{\circ{2}}}{\partial \mathbf{M}} \frac{\partial \mathbf{M}}{\partial \mathbf{X}} = \\
-    \\ &= \frac{1}{\sqrt{d_V}} \frac{1}{2} \textit{diag}^{-1}(\mathrm{vec}_r^{\circ \frac{1}{2}}(\tau)) (\mathbf{I}_L \otimes \mathbf{1}^T_{d_V}) 2\cdot \textit{diag}(\mathrm{vec}_r (\mathbf{M}))\frac{\partial \mathbf{M}}{\partial \mathbf{X}} = \\
-    &= \frac{1}{\sqrt{d_V}}\textit{diag}^{-1}(\mathrm{vec}_r^{\circ \frac{1}{2}}(\mathbf{M}^{\circ{2}}\cdot\mathbf{1}_{d_V}))\cdot (\mathbf{I}_L \otimes \mathbf{1}^T_{d_V})\cdot \textit{diag}(\mathrm{vec}_r (\mathbf{M})) \frac{\partial \mathbf{M}}{\partial \mathbf{X}}.
-\end{align}
+% Вычислим значение производной~$\frac{\partial \mathbf{P}}{\partial \mathbf{X}}$.
+% Для начала получим выражение для нелинейного преобразования~$\sigma(\mathbf{X}).$
+% Данное выражение в матричном виде принимает вид:
+% \[
+%     \sigma(\mathbf{X}) =  \left(\frac{1}{d_V} (\mathbf{X} - \mu(X)\mathbf{1}_{d_V}^\top)^{\circ 2} \mathbf{1}_{d_V}\right)^{\circ \frac{1}{2}} = \frac{1}{\sqrt{d_V}} \left(\mathbf{M}(\mathbf{X})^{\circ 2} \mathbf{1}_{d_V}\right)^{\circ{\frac{1}{2}}},
+% \]
+% где~$\circ \alpha$ операция поэлементного взятия степени $\alpha$ описанного в определении~\ref{def:vec_elem_ops}.
+% Далее, применив цепное правило получаем:
+% \begin{align}
+%     \frac{\partial \mathbf{P}}{\partial \mathbf{X}} &= \frac{\partial \mathbf{D}^{-1}}{\partial \mathbf{D}} \frac{\partial\textit{diag}(\sigma(\mathbf{X}))}{\partial \sigma(\mathbf{X})} \frac{\partial \sigma(\mathbf{X})}{\partial \mathbf{X}},
+% \end{align}
+% Используя свойства~\ref{lemma:hadamard_square_derivative}, \ref{lemma:hadamard_root_derivative} и~\ref{prop:matrix_product_derivative}, получаем выражение для~$\frac{\partial \sigma(\mathbf{X})}{\partial \mathbf{X}}:$
+% \begin{equation}
+%     \frac{\partial \sigma(\mathbf{X})}{\partial \mathbf{X}} = \frac{1}{\sqrt{d_V}} \frac{\partial \tau^{\circ \frac{1}{2}}}{\partial \tau} \frac{\partial \tau}{\partial \mathbf{Q}} \frac{\partial \mathbf{Q}}{\partial {\mathbf{X}}},
+% \end{equation}
+% где~$\tau = \mathbf{Q}\cdot\mathbf{1}_L$, $\mathbf{Q} = \mathbf{M}^{\circ{2}}$. Подставляя, получаем:
+% \begin{align}
+%     \frac{\partial \sigma(\mathbf{X})}{\partial \mathbf{X}} &= \frac{1}{\sqrt{d_V}} \frac{\partial \tau^{\circ \frac{1}{2}}}{\partial \tau} \frac{\partial \mathbf{Q}\cdot\mathbf{1}_{d_V}}{\partial \mathbf{Q}} \frac{\partial \mathbf{M}^{\circ{2}}}{\partial \mathbf{M}} \frac{\partial \mathbf{M}}{\partial \mathbf{X}} = \\
+%     \\ &= \frac{1}{\sqrt{d_V}} \frac{1}{2} \textit{diag}^{-1}(\mathrm{vec}_r^{\circ \frac{1}{2}}(\tau)) (\mathbf{I}_L \otimes \mathbf{1}^T_{d_V}) 2\cdot \textit{diag}(\mathrm{vec}_r (\mathbf{M}))\frac{\partial \mathbf{M}}{\partial \mathbf{X}} = \\
+%     &= \frac{1}{\sqrt{d_V}}\textit{diag}^{-1}(\mathrm{vec}_r^{\circ \frac{1}{2}}(\mathbf{M}^{\circ{2}}\cdot\mathbf{1}_{d_V}))\cdot (\mathbf{I}_L \otimes \mathbf{1}^T_{d_V})\cdot \textit{diag}(\mathrm{vec}_r (\mathbf{M})) \frac{\partial \mathbf{M}}{\partial \mathbf{X}}.
+% \end{align}
 
-Используя Леммы~\ref{lemma:invert_derivative} и \ref{lemma:diag_derivative} получаем:
-\begin{align}
-    \frac{\partial \mathbf{P}}{\partial \mathbf{X}} &= \frac{1}{\sqrt{d_V}}\left(-\mathbf{D}^{-1} \otimes \mathbf{D}^{-\top} \right) \Big(\mathbf{e}_1 \otimes \mathbf{e}_1 \quad \dots  \quad \mathbf{e}_L \otimes \mathbf{e}_L\Big) \cdot \\
-    &\quad\cdot\left(\textit{diag}^{-1}(\mathrm{vec}_r^{\circ \frac{1}{2}}(\mathbf{M}^{\circ{2}}\cdot\mathbf{1}_{d_V}))\cdot (\mathbf{I}_L \otimes \mathbf{1}^T_{d_V})\cdot \textit{diag}(\mathrm{vec}_r (\mathbf{M}))\frac{\partial \mathbf{M}}{\partial \mathbf{X}}\right).
-\end{align}
+% Используя Леммы~\ref{lemma:invert_derivative} и \ref{lemma:diag_derivative} получаем:
+% \begin{align}
+%     \frac{\partial \mathbf{P}}{\partial \mathbf{X}} &= \frac{1}{\sqrt{d_V}}\left(-\mathbf{D}^{-1} \otimes \mathbf{D}^{-\top} \right) \Big(\mathbf{e}_1 \otimes \mathbf{e}_1 \quad \dots  \quad \mathbf{e}_L \otimes \mathbf{e}_L\Big) \cdot \\
+%     &\quad\cdot\left(\textit{diag}^{-1}(\mathrm{vec}_r^{\circ \frac{1}{2}}(\mathbf{M}^{\circ{2}}\cdot\mathbf{1}_{d_V}))\cdot (\mathbf{I}_L \otimes \mathbf{1}^T_{d_V})\cdot \textit{diag}(\mathrm{vec}_r (\mathbf{M}))\frac{\partial \mathbf{M}}{\partial \mathbf{X}}\right).
+% \end{align}
 
-Итого получили все составляющие для вычисления матрицы Якоби для оператора LayerNorm:
-\begin{align}
-    &\frac{\partial\text{LayerNorm}(\mathbf{X})}{\partial \mathbf{X}} = ( \mathbf{P}(\mathbf{X}) \otimes \mathbf{I}_{d_V}) \frac{\partial \mathbf{M}}{\partial \mathbf{X}} + (\mathbf{I}_L\otimes \mathbf{M}^\top)\frac{\partial \mathbf{P}}{\partial \mathbf{X}} = \\
-    & = ( \mathbf{P}(\mathbf{X}) \otimes \mathbf{I}_{d_V}) \frac{\partial \mathbf{M}}{\partial \mathbf{X}} +\\
-    &\quad+ (\mathbf{I}_L\otimes \mathbf{M}^\top)\frac{1}{\sqrt{d_V}}\left(-\mathbf{D}^{-1} \otimes \mathbf{D}^{-\top} \right) \Big(\mathbf{e}_1 \otimes \mathbf{e}_1 \quad \dots  \quad \mathbf{e}_L \otimes \mathbf{e}_L\Big) \cdot \\
-    &\qquad\cdot \left(\textit{diag}^{-1}(\mathrm{vec}_r^{\circ \frac{1}{2}}(\mathbf{M}^{\circ{2}}\cdot\mathbf{1}_{d_V}))\cdot (\mathbf{I}_L \otimes \mathbf{1}^T_{d_V})\cdot \textit{diag}(\mathrm{vec}_r (\mathbf{M}))\frac{\partial \mathbf{M}}{\partial \mathbf{X}}\right),
-\end{align}
-где
-\begin{align}
-    \mathbf{M}(\mathbf{X}) &= (\mathbf{X} - \frac{1}{d_V}\mathbf{X} \mathbf{1}_{d_V \times d_V})\\
-    \mathbf{P}(\mathbf{X}) &= \textit{diag}^{-1}(\sigma(\mathbf{X}))\\
-    \frac{\partial \mathbf{M}}{\partial \mathbf{X}} &= (\mathbf{I}_L \otimes \mathbf{I}_{d_V}) - \frac{1}{d_V}(\mathbf{I}_L \otimes \mathbf{1}_{d_V \times d_V}.
-\end{align}
-\end{proof}
+% Итого получили все составляющие для вычисления матрицы Якоби для оператора LayerNorm:
+% \begin{align}
+%     &\frac{\partial\text{LayerNorm}(\mathbf{X})}{\partial \mathbf{X}} = ( \mathbf{P}(\mathbf{X}) \otimes \mathbf{I}_{d_V}) \frac{\partial \mathbf{M}}{\partial \mathbf{X}} + (\mathbf{I}_L\otimes \mathbf{M}^\top)\frac{\partial \mathbf{P}}{\partial \mathbf{X}} = \\
+%     & = ( \mathbf{P}(\mathbf{X}) \otimes \mathbf{I}_{d_V}) \frac{\partial \mathbf{M}}{\partial \mathbf{X}} +\\
+%     &\quad+ (\mathbf{I}_L\otimes \mathbf{M}^\top)\frac{1}{\sqrt{d_V}}\left(-\mathbf{D}^{-1} \otimes \mathbf{D}^{-\top} \right) \Big(\mathbf{e}_1 \otimes \mathbf{e}_1 \quad \dots  \quad \mathbf{e}_L \otimes \mathbf{e}_L\Big) \cdot \\
+%     &\qquad\cdot \left(\textit{diag}^{-1}(\mathrm{vec}_r^{\circ \frac{1}{2}}(\mathbf{M}^{\circ{2}}\cdot\mathbf{1}_{d_V}))\cdot (\mathbf{I}_L \otimes \mathbf{1}^T_{d_V})\cdot \textit{diag}(\mathrm{vec}_r (\mathbf{M}))\frac{\partial \mathbf{M}}{\partial \mathbf{X}}\right),
+% \end{align}
+% где
+% \begin{align}
+%     \mathbf{M}(\mathbf{X}) &= (\mathbf{X} - \frac{1}{d_V}\mathbf{X} \mathbf{1}_{d_V \times d_V})\\
+%     \mathbf{P}(\mathbf{X}) &= \textit{diag}^{-1}(\sigma(\mathbf{X}))\\
+%     \frac{\partial \mathbf{M}}{\partial \mathbf{X}} &= (\mathbf{I}_L \otimes \mathbf{I}_{d_V}) - \frac{1}{d_V}(\mathbf{I}_L \otimes \mathbf{1}_{d_V \times d_V}.
+% \end{align}
+% \end{proof}
 
 Теперь вычислим для функции матрицу Гессе относительно параметров модели, для этого докажем теорему~\ref{thm:layernorm_second_derivative}.
-\begin{theorem}[Вторая производная LayerNorm]\label{thm:layernorm_second_derivative}
+\begin{theorem}[\emph{Петров-Киселев-Грабовой}, Вторая производная LayerNorm]\label{thm:layernorm_second_derivative}
     Пусть задан оператор~$\text{LayerNorm}$ в виде, аналогичном теореме~\ref{thm:layernorm_derivative}:
     \[
         \text{LayerNorm}(\mathbf{X}) = \mathbf{P}(\mathbf{X}) \mathbf{M}(\mathbf{X}),
@@ -1213,103 +1213,103 @@ M &= 3\cdot\max \Bigg(\frac{2L}{d_V} \| \mathbf{X}\|^2_2, \\
     \end{align}
     Все матрицы в данном выражении явно вычислимы и задаются формулами, которые указаны ниже в доказательстве.
 \end{theorem}
-\begin{proof}
-Используя свойство матричного произведения~\ref{prop:matrix_product_derivative}, получаем следующее выражение матрицы Гессе для оператора~\text{LayerNorm}:
-\begin{align}
-    \frac{\partial^2\text{LayerNorm}}{\partial\mathbf{X}^2} &= \left( (\mathbf{P}(\mathbf{X})  \otimes  \mathbf{I}_{d_V}) \otimes \mathbf{I}_{Ld_V} \right)\frac{\partial^2 \mathbf{M}}{\partial \mathbf{X}^2} +\\
-    &\quad+\left( \mathbf{I}_{Ld_V} \otimes  \left(\frac{\partial \mathbf{M}}{\partial \mathbf{X}}\right)^\top \right) \frac{\partial (\mathbf{P}(\mathbf{X}) \otimes \mathbf{I}_{d_V})}{\partial \mathbf{X}} + \\
-    &\quad+ \left( (\mathbf{I}_L \otimes \mathbf{M}^\top ) \otimes \mathbf{I}_{L d_V}  \right) \frac{\partial^2 \mathbf{P}}{\partial \mathbf{X}^2} +\\
-    &\quad+\left( \mathbf{I}_{L d_V} \otimes \left(\frac{\partial \mathbf{P}}{\partial \mathbf{X}}\right)^\top \right) \frac{\partial (\mathbf{I}_L \otimes \mathbf{M}^\top )}{\partial\mathbf{X}},
-\end{align}
-Отметим, что~$\mathbf{P} \in \mathbb{R}^{L \times L}$, $\mathbf{M} \in \mathbb{R}^{L \times d_V}$, $\frac{\partial \mathbf{M}}{\partial \mathbf{X}} \in \mathbb{R}^{Ld_V \times Ld_V}$, $\frac{\partial \mathbf{P}}{\partial \mathbf{X}} \in \mathbb{R}^{L^2 \times Ld_V}$. Используя свойства~\ref{prop:kronecker_product_derivative} и лемму~\ref{lemma:transposed_matrix_derivative}, получаем следующие выражения первых и вторых производных: 
-\begin{align}
-    \frac{\partial^2 \mathbf{M}}{\partial \mathbf{X}^2} &= 0, \\
-    \frac{\partial (\mathbf{P}(\mathbf{X}) \otimes \mathbf{I}_{d_V} )}{\partial \mathbf{X}} &= \frac{\partial (\mathbf{P} \otimes \mathbf{I}_L)}{\partial \mathbf{P}} \frac{\partial \mathbf{P}}{\partial\mathbf{X}} = \left(\mathbf{I}_L \otimes \mathbf{K}_{L, L} \otimes \mathbf{I}_L \right) \left(\mathbf{I}_{L^2} \otimes  \mathrm{vec}_r(\mathbf{I}_L)  \right) \frac{\partial \mathbf{P}}{\partial \mathbf{X}}, \\
-    \frac{\partial (\mathbf{I}_L \otimes \mathbf{M}^\top )}{\partial\mathbf{X}} &= \frac{\partial ( \mathbf{I}_L \otimes \mathbf{M}^\top)}{\partial \mathbf{M}^\top} \frac{\partial \mathbf{M}^\top}{\partial \mathbf{M}} \frac{\partial \mathbf{M}}{\partial \mathbf{X}} =\\
-    &=\left(\mathbf{I}_{L} \otimes \mathbf{K}_{d_V,L} \otimes \mathbf{I}_L \right) \left(\mathrm{vec}_r(\mathbf{I}_L) \otimes  \mathbf{I}_{L d_V} \right) \mathbf{K}_{d_V, L} \frac{\partial \mathbf{M}}{\partial \mathbf{X}}.
-\end{align}
+% \begin{proof}
+% Используя свойство матричного произведения~\ref{prop:matrix_product_derivative}, получаем следующее выражение матрицы Гессе для оператора~\text{LayerNorm}:
+% \begin{align}
+%     \frac{\partial^2\text{LayerNorm}}{\partial\mathbf{X}^2} &= \left( (\mathbf{P}(\mathbf{X})  \otimes  \mathbf{I}_{d_V}) \otimes \mathbf{I}_{Ld_V} \right)\frac{\partial^2 \mathbf{M}}{\partial \mathbf{X}^2} +\\
+%     &\quad+\left( \mathbf{I}_{Ld_V} \otimes  \left(\frac{\partial \mathbf{M}}{\partial \mathbf{X}}\right)^\top \right) \frac{\partial (\mathbf{P}(\mathbf{X}) \otimes \mathbf{I}_{d_V})}{\partial \mathbf{X}} + \\
+%     &\quad+ \left( (\mathbf{I}_L \otimes \mathbf{M}^\top ) \otimes \mathbf{I}_{L d_V}  \right) \frac{\partial^2 \mathbf{P}}{\partial \mathbf{X}^2} +\\
+%     &\quad+\left( \mathbf{I}_{L d_V} \otimes \left(\frac{\partial \mathbf{P}}{\partial \mathbf{X}}\right)^\top \right) \frac{\partial (\mathbf{I}_L \otimes \mathbf{M}^\top )}{\partial\mathbf{X}},
+% \end{align}
+% Отметим, что~$\mathbf{P} \in \mathbb{R}^{L \times L}$, $\mathbf{M} \in \mathbb{R}^{L \times d_V}$, $\frac{\partial \mathbf{M}}{\partial \mathbf{X}} \in \mathbb{R}^{Ld_V \times Ld_V}$, $\frac{\partial \mathbf{P}}{\partial \mathbf{X}} \in \mathbb{R}^{L^2 \times Ld_V}$. Используя свойства~\ref{prop:kronecker_product_derivative} и лемму~\ref{lemma:transposed_matrix_derivative}, получаем следующие выражения первых и вторых производных: 
+% \begin{align}
+%     \frac{\partial^2 \mathbf{M}}{\partial \mathbf{X}^2} &= 0, \\
+%     \frac{\partial (\mathbf{P}(\mathbf{X}) \otimes \mathbf{I}_{d_V} )}{\partial \mathbf{X}} &= \frac{\partial (\mathbf{P} \otimes \mathbf{I}_L)}{\partial \mathbf{P}} \frac{\partial \mathbf{P}}{\partial\mathbf{X}} = \left(\mathbf{I}_L \otimes \mathbf{K}_{L, L} \otimes \mathbf{I}_L \right) \left(\mathbf{I}_{L^2} \otimes  \mathrm{vec}_r(\mathbf{I}_L)  \right) \frac{\partial \mathbf{P}}{\partial \mathbf{X}}, \\
+%     \frac{\partial (\mathbf{I}_L \otimes \mathbf{M}^\top )}{\partial\mathbf{X}} &= \frac{\partial ( \mathbf{I}_L \otimes \mathbf{M}^\top)}{\partial \mathbf{M}^\top} \frac{\partial \mathbf{M}^\top}{\partial \mathbf{M}} \frac{\partial \mathbf{M}}{\partial \mathbf{X}} =\\
+%     &=\left(\mathbf{I}_{L} \otimes \mathbf{K}_{d_V,L} \otimes \mathbf{I}_L \right) \left(\mathrm{vec}_r(\mathbf{I}_L) \otimes  \mathbf{I}_{L d_V} \right) \mathbf{K}_{d_V, L} \frac{\partial \mathbf{M}}{\partial \mathbf{X}}.
+% \end{align}
 
-Перейдем к оценке вторых производных матрицы~$\mathbf{P}.$
-Рассмотрим каждое слагаемое в матрице подробнее.
-Матрица~$\mathbf{D}$ является диагональной матрицей~$\textit{diag}(\sigma(\mathbf{X})),$ причем вектор~$\sigma(\mathbf{X})$ имеет размерность $L\times 1$, тогда матрица~$\mathbf{D} \in \mathbb{R}^{L\times L}$. Следовательно, слагаемое~$\left(-\mathbf{D}^{-1} \otimes \mathbf{D}^{-\top} \right) \in \mathbb{R}^{L^2 \times L^2}$.
-Каждый базисный вектор~$\mathbf{e}_i$ имеет размерность~$L\times1$, а следовательно~$\mathbf{e}_i \otimes \mathbf{e}_i \in \mathbb{R}^{L^2 \times 1},$ и тогда $ \Big(\mathbf{e}_1 \otimes \mathbf{e}_1 \quad \dots  \quad \mathbf{e}_L \otimes \mathbf{e}_L\Big) \in \mathbb{R}^{L^2 \times L}$.
-Ранее было доказано, что~$\mathbf{M}(\mathbf{X}) \in \mathbb{R}^{L \times d_V}$, тогда $M\cdot\mathbf{1}_{d_V} \in \mathbb{R}^{L \times 1}$, и следовательно слагаемое~$\textit{diag}^{-1}(\mathrm{vec}_r^{\circ \frac{1}{2}}(\mathbf{M}^{\circ{2}}\cdot\mathbf{1}_{d_V}))$ имеет размерность $L \times L$.
-Следующие слагаемые~$(\mathbf{I}_L \otimes \mathbf{1}^T_{d_V}) \in \mathbb{R}^{L \times Ld_V}$ и $\textit{diag}(\mathrm{vec}_r (M)) \in \mathbb{R}^{Ld_V \times Ld_V}$.
-Последнее слагаемое~$\frac{\partial \mathbf{M}}{\partial \mathbf{X}}$ было вычислено ранее, его размерность составляет~$Ld_V \times Ld_V$. Итого матрица~$\frac{\partial \mathbf{P}}{\partial \mathbf{X}}$ принадлежит пространству~$\mathbb{R}^{L^2 \times Ld_V}$.
+% Перейдем к оценке вторых производных матрицы~$\mathbf{P}.$
+% Рассмотрим каждое слагаемое в матрице подробнее.
+% Матрица~$\mathbf{D}$ является диагональной матрицей~$\textit{diag}(\sigma(\mathbf{X})),$ причем вектор~$\sigma(\mathbf{X})$ имеет размерность $L\times 1$, тогда матрица~$\mathbf{D} \in \mathbb{R}^{L\times L}$. Следовательно, слагаемое~$\left(-\mathbf{D}^{-1} \otimes \mathbf{D}^{-\top} \right) \in \mathbb{R}^{L^2 \times L^2}$.
+% Каждый базисный вектор~$\mathbf{e}_i$ имеет размерность~$L\times1$, а следовательно~$\mathbf{e}_i \otimes \mathbf{e}_i \in \mathbb{R}^{L^2 \times 1},$ и тогда $ \Big(\mathbf{e}_1 \otimes \mathbf{e}_1 \quad \dots  \quad \mathbf{e}_L \otimes \mathbf{e}_L\Big) \in \mathbb{R}^{L^2 \times L}$.
+% Ранее было доказано, что~$\mathbf{M}(\mathbf{X}) \in \mathbb{R}^{L \times d_V}$, тогда $M\cdot\mathbf{1}_{d_V} \in \mathbb{R}^{L \times 1}$, и следовательно слагаемое~$\textit{diag}^{-1}(\mathrm{vec}_r^{\circ \frac{1}{2}}(\mathbf{M}^{\circ{2}}\cdot\mathbf{1}_{d_V}))$ имеет размерность $L \times L$.
+% Следующие слагаемые~$(\mathbf{I}_L \otimes \mathbf{1}^T_{d_V}) \in \mathbb{R}^{L \times Ld_V}$ и $\textit{diag}(\mathrm{vec}_r (M)) \in \mathbb{R}^{Ld_V \times Ld_V}$.
+% Последнее слагаемое~$\frac{\partial \mathbf{M}}{\partial \mathbf{X}}$ было вычислено ранее, его размерность составляет~$Ld_V \times Ld_V$. Итого матрица~$\frac{\partial \mathbf{P}}{\partial \mathbf{X}}$ принадлежит пространству~$\mathbb{R}^{L^2 \times Ld_V}$.
  
-Для удобства введем обозначение:
-\[
-    \frac{\partial \mathbf{P}}{\partial \mathbf{X}} = \frac{1}{\sqrt{d_V}} \mathbf{A}_1(\mathbf{X})\cdot \mathbf{B}_1(\mathbf{X}),
-\]
-где $\mathbf{A}_1 = \left(-\mathbf{D}^{-1} \otimes \mathbf{D}^{-\top} \right),$ а $\mathbf{B}_1$ все остальное, обе матрицы были вычислены ранее.
-Используя свойство произведения матричнозначных функций~\ref{lemma:matrix_funcs_product_derivative} вторая производная принимает вид:
-\begin{align}
-    \frac{\partial^2 \mathbf{P}}{\partial \mathbf{X}^2} = \frac{1}{\sqrt{d_V}} \frac{\partial \mathbf{A}_1(\mathbf{X})\cdot \mathbf{B}_1(\mathbf{X})}{\partial \mathbf{X}} = \frac{1}{\sqrt{d_V}} \left(\mathbf{A}_1 \otimes  \mathbf{I}_{Ld_V}  \right) \frac{\partial \mathbf{B}_1}{\partial \mathbf{X}} + \left( \mathbf{I}_{L^2} \otimes  \mathbf{B}_1^\top \right) \frac{\partial \mathbf{A}_1}{\partial \mathbf{X}}.
-\end{align}
-Разберем вторую производную по частям. Вычислим~$\frac{\partial \mathbf{A}_1}{\partial \mathbf{X}}$. Используя лемму~\ref{lemma:matrix_funcs_kronecker_product_derivative}, получаем следующее выражение:
-\begin{align}
-    \frac{\partial \mathbf{A}_1}{\partial \mathbf{X}} &= \frac{\partial \left(-\mathbf{D}^{-1} \otimes \mathbf{D}^{-\top} \right)}{\partial \mathbf{X}} =\\
-    &=\left(\mathbf{I}_L \otimes \mathbf{K}_{L, L} \otimes \mathbf{I}_L \right) \Big((\mathbf{I}_{L^2} \otimes \mathrm{vec}_r(\mathbf{\mathbf{D}^{-\top}})) \cdot \frac{\partial -\mathbf{\mathbf{D}^{-1}}}{\partial \mathbf{X}}+ \\
-    &\quad+ (\mathrm{vec}_r(-\mathbf{\mathbf{D}^{-1}}) \otimes \mathbf{I}_{L^2}) \cdot \frac{\partial \mathbf{\mathbf{D}^{-\top}}}{\partial \mathbf{X}} \Big).
-\end{align}
-Далее используя Леммы~\ref{lemma:transposed_matrix_derivative}, \ref{lemma:invert_derivative} получаем выражение на:
-\begin{align}
-    \frac{\partial -\mathbf{\mathbf{D}^{-1}}}{\partial \mathbf{X}} &= \frac{\partial -\mathbf{\mathbf{D}^{-1}}}{\partial \mathbf{D}}\frac{\partial \mathbf{D}}{\partial \mathbf{X}} = \left( \mathbf{D}^{-1} \otimes \mathbf{D}^{-\top}\right) \frac{\partial \mathbf{D}}{\partial \mathbf{X}},\\
-    \frac{\partial \mathbf{\mathbf{D}^{-\top}}}{\partial \mathbf{X}} &= \frac{\partial \mathbf{\mathbf{D}^{-\top}}}{\partial \mathbf{D}^{-1}}\frac{\partial \mathbf{\mathbf{D}^{-1}}}{\partial \mathbf{D}} \frac{\partial \mathbf{\mathbf{D}}}{\partial \mathbf{X}} = \mathbf{K}_{L, L} \left(-\mathbf{D}^{-1} \otimes \mathbf{D}^{-\top} \right) \frac{\partial \mathbf{\mathbf{D}}}{\partial \mathbf{X}},
-\end{align}
-где $\frac{\partial \mathbf{\mathbf{D}}}{\partial \mathbf{X}}$ вычисляется аналогично тому, как в Теореме~\ref{thm:layernorm_derivative}:
-\begin{align}
-    \frac{\partial \mathbf{\mathbf{D}}}{\partial \mathbf{X}} &= \Big(\mathbf{e}_1 \otimes \mathbf{e}_1 \dots   \mathbf{e}_L \otimes \mathbf{e}_L\Big)\cdot\\
-    &\quad\cdot \left(\textit{diag}^{-1}(\mathrm{vec}_r^{\circ \frac{1}{2}}(\mathbf{M}^{\circ{2}}\cdot\mathbf{1}_{d_V}))\cdot (\mathbf{I}_L \otimes \mathbf{1}^T_{d_V})\cdot \textit{diag}(\mathrm{vec}_r (\mathbf{M}))\frac{\partial \mathbf{M}}{\partial \mathbf{X}}\right),
-\end{align}
-заканчивая вывод оценки~$\frac{\partial \mathbf{A}_1}{\partial \mathbf{X}}.$
+% Для удобства введем обозначение:
+% \[
+%     \frac{\partial \mathbf{P}}{\partial \mathbf{X}} = \frac{1}{\sqrt{d_V}} \mathbf{A}_1(\mathbf{X})\cdot \mathbf{B}_1(\mathbf{X}),
+% \]
+% где $\mathbf{A}_1 = \left(-\mathbf{D}^{-1} \otimes \mathbf{D}^{-\top} \right),$ а $\mathbf{B}_1$ все остальное, обе матрицы были вычислены ранее.
+% Используя свойство произведения матричнозначных функций~\ref{lemma:matrix_funcs_product_derivative} вторая производная принимает вид:
+% \begin{align}
+%     \frac{\partial^2 \mathbf{P}}{\partial \mathbf{X}^2} = \frac{1}{\sqrt{d_V}} \frac{\partial \mathbf{A}_1(\mathbf{X})\cdot \mathbf{B}_1(\mathbf{X})}{\partial \mathbf{X}} = \frac{1}{\sqrt{d_V}} \left(\mathbf{A}_1 \otimes  \mathbf{I}_{Ld_V}  \right) \frac{\partial \mathbf{B}_1}{\partial \mathbf{X}} + \left( \mathbf{I}_{L^2} \otimes  \mathbf{B}_1^\top \right) \frac{\partial \mathbf{A}_1}{\partial \mathbf{X}}.
+% \end{align}
+% Разберем вторую производную по частям. Вычислим~$\frac{\partial \mathbf{A}_1}{\partial \mathbf{X}}$. Используя лемму~\ref{lemma:matrix_funcs_kronecker_product_derivative}, получаем следующее выражение:
+% \begin{align}
+%     \frac{\partial \mathbf{A}_1}{\partial \mathbf{X}} &= \frac{\partial \left(-\mathbf{D}^{-1} \otimes \mathbf{D}^{-\top} \right)}{\partial \mathbf{X}} =\\
+%     &=\left(\mathbf{I}_L \otimes \mathbf{K}_{L, L} \otimes \mathbf{I}_L \right) \Big((\mathbf{I}_{L^2} \otimes \mathrm{vec}_r(\mathbf{\mathbf{D}^{-\top}})) \cdot \frac{\partial -\mathbf{\mathbf{D}^{-1}}}{\partial \mathbf{X}}+ \\
+%     &\quad+ (\mathrm{vec}_r(-\mathbf{\mathbf{D}^{-1}}) \otimes \mathbf{I}_{L^2}) \cdot \frac{\partial \mathbf{\mathbf{D}^{-\top}}}{\partial \mathbf{X}} \Big).
+% \end{align}
+% Далее используя Леммы~\ref{lemma:transposed_matrix_derivative}, \ref{lemma:invert_derivative} получаем выражение на:
+% \begin{align}
+%     \frac{\partial -\mathbf{\mathbf{D}^{-1}}}{\partial \mathbf{X}} &= \frac{\partial -\mathbf{\mathbf{D}^{-1}}}{\partial \mathbf{D}}\frac{\partial \mathbf{D}}{\partial \mathbf{X}} = \left( \mathbf{D}^{-1} \otimes \mathbf{D}^{-\top}\right) \frac{\partial \mathbf{D}}{\partial \mathbf{X}},\\
+%     \frac{\partial \mathbf{\mathbf{D}^{-\top}}}{\partial \mathbf{X}} &= \frac{\partial \mathbf{\mathbf{D}^{-\top}}}{\partial \mathbf{D}^{-1}}\frac{\partial \mathbf{\mathbf{D}^{-1}}}{\partial \mathbf{D}} \frac{\partial \mathbf{\mathbf{D}}}{\partial \mathbf{X}} = \mathbf{K}_{L, L} \left(-\mathbf{D}^{-1} \otimes \mathbf{D}^{-\top} \right) \frac{\partial \mathbf{\mathbf{D}}}{\partial \mathbf{X}},
+% \end{align}
+% где $\frac{\partial \mathbf{\mathbf{D}}}{\partial \mathbf{X}}$ вычисляется аналогично тому, как в Теореме~\ref{thm:layernorm_derivative}:
+% \begin{align}
+%     \frac{\partial \mathbf{\mathbf{D}}}{\partial \mathbf{X}} &= \Big(\mathbf{e}_1 \otimes \mathbf{e}_1 \dots   \mathbf{e}_L \otimes \mathbf{e}_L\Big)\cdot\\
+%     &\quad\cdot \left(\textit{diag}^{-1}(\mathrm{vec}_r^{\circ \frac{1}{2}}(\mathbf{M}^{\circ{2}}\cdot\mathbf{1}_{d_V}))\cdot (\mathbf{I}_L \otimes \mathbf{1}^T_{d_V})\cdot \textit{diag}(\mathrm{vec}_r (\mathbf{M}))\frac{\partial \mathbf{M}}{\partial \mathbf{X}}\right),
+% \end{align}
+% заканчивая вывод оценки~$\frac{\partial \mathbf{A}_1}{\partial \mathbf{X}}.$
 
-Перейдем к оценке~$\frac{\partial \mathbf{B}_1}{\partial \mathbf{X}}.$
-Для начала снова представим матрицу~$\mathbf{B}_1$ в виде произведения матриц:
-\begin{align}
-    \mathbf{B}_1 = \mathbf{E} \mathbf{A}_2 \mathbf{B}_2,
-\end{align}
-где введены следующие обозначения матриц:
-\begin{align}
-    \mathbf{A}_2 &= \textit{diag}^{-1}(\mathrm{vec}_r^{\circ \frac{1}{2}}(\mathbf{M}^{\circ{2}}\cdot\mathbf{1}_{d_V}))\\
-    \mathbf{B}_2 &= (\mathbf{I}_L \otimes \mathbf{1}^T_{d_V})\cdot \textit{diag}(\mathrm{vec}_r (\mathbf{M}))\frac{\partial \mathbf{M}}{\partial \mathbf{X}}\\
-    \mathbf{E} &= \Big(\mathbf{e}_1 \otimes \mathbf{e}_1 \quad \dots  \quad \mathbf{e}_L \otimes \mathbf{e}_L\Big).
-\end{align}
-Матрица $\mathbf{E}$ является константной относительно матрицы~$\mathbf{X}$. Используя результат леммы~\ref{lemma:matrix_funcs_product_derivative}, получаем
-\begin{align}
-    \frac{\partial\mathbf{B}_1}{\partial\mathbf{X}} &= \frac{\partial \mathbf{E} \mathbf{A}_2 \mathbf{B}_2}{\partial (\mathbf{A}_2 \mathbf{B}_2)} \frac{\partial \mathbf{A}_2 \mathbf{B}_2}{\partial \mathbf{X}} = \left( \mathbf{E} \otimes \mathbf{I}_{L d_V}\right)\frac{\partial \mathbf{A}_2 \mathbf{B}_2}{\partial \mathbf{X}} \\
-    &= \left( \mathbf{E} \otimes \mathbf{I}_{L d_V}\right) \left( (\mathbf{A}_2\otimes \mathbf{I}_{L d_V} )\frac{\partial \mathbf{B}_2}{\partial \mathbf{X}} + (\mathbf{I}_L \otimes \mathbf{B}_2^\top) \frac{\partial \mathbf{A}_2}{\partial \mathbf{X}}\right).
-\end{align}
+% Перейдем к оценке~$\frac{\partial \mathbf{B}_1}{\partial \mathbf{X}}.$
+% Для начала снова представим матрицу~$\mathbf{B}_1$ в виде произведения матриц:
+% \begin{align}
+%     \mathbf{B}_1 = \mathbf{E} \mathbf{A}_2 \mathbf{B}_2,
+% \end{align}
+% где введены следующие обозначения матриц:
+% \begin{align}
+%     \mathbf{A}_2 &= \textit{diag}^{-1}(\mathrm{vec}_r^{\circ \frac{1}{2}}(\mathbf{M}^{\circ{2}}\cdot\mathbf{1}_{d_V}))\\
+%     \mathbf{B}_2 &= (\mathbf{I}_L \otimes \mathbf{1}^T_{d_V})\cdot \textit{diag}(\mathrm{vec}_r (\mathbf{M}))\frac{\partial \mathbf{M}}{\partial \mathbf{X}}\\
+%     \mathbf{E} &= \Big(\mathbf{e}_1 \otimes \mathbf{e}_1 \quad \dots  \quad \mathbf{e}_L \otimes \mathbf{e}_L\Big).
+% \end{align}
+% Матрица $\mathbf{E}$ является константной относительно матрицы~$\mathbf{X}$. Используя результат леммы~\ref{lemma:matrix_funcs_product_derivative}, получаем
+% \begin{align}
+%     \frac{\partial\mathbf{B}_1}{\partial\mathbf{X}} &= \frac{\partial \mathbf{E} \mathbf{A}_2 \mathbf{B}_2}{\partial (\mathbf{A}_2 \mathbf{B}_2)} \frac{\partial \mathbf{A}_2 \mathbf{B}_2}{\partial \mathbf{X}} = \left( \mathbf{E} \otimes \mathbf{I}_{L d_V}\right)\frac{\partial \mathbf{A}_2 \mathbf{B}_2}{\partial \mathbf{X}} \\
+%     &= \left( \mathbf{E} \otimes \mathbf{I}_{L d_V}\right) \left( (\mathbf{A}_2\otimes \mathbf{I}_{L d_V} )\frac{\partial \mathbf{B}_2}{\partial \mathbf{X}} + (\mathbf{I}_L \otimes \mathbf{B}_2^\top) \frac{\partial \mathbf{A}_2}{\partial \mathbf{X}}\right).
+% \end{align}
 
-Далее осталось оценить матрицы~$\frac{\partial\mathbf{A}_2}{\partial \mathbf{X}}$ и~$\frac{\partial\mathbf{B}_2}{\partial \mathbf{X}}.$
-Для оценки~$\frac{\partial\mathbf{B}_2}{\partial \mathbf{X}}$ разобьем на части:
-\begin{align}
-    \mathbf{B}_2 = \mathbf{J} \mathbf{A}_3 \mathbf{B}_3,
-\end{align}
-где~$\mathbf{J} = (\mathbf{I}_L \otimes \mathbf{1}^T_{d_V})$, $\mathbf{A}_3 = \textit{diag}(\mathrm{vec}_r (\mathbf{M})), \mathbf{B}_3 = \frac{\partial \mathbf{M}}{\partial \mathbf{X}}$. Аналогично, используя Лемму~\ref{lemma:matrix_funcs_product_derivative} получаем:
-\begin{align}
-    \frac{\partial \mathbf{B}_2}{\partial \mathbf{X}} &= \frac{\partial \mathbf{J} \mathbf{A}_3 \mathbf{B}_3}{\partial (\mathbf{A}_3 \mathbf{B}_3)} \frac{\partial \mathbf{A}_3 \mathbf{B}_3}{\partial \mathbf{X}} = \left( \mathbf{J} \otimes \mathbf{I}_{L d_V}\right)\frac{\partial \mathbf{A}_3 \mathbf{B}_3}{\partial \mathbf{X}} \\
-    &= \left( \mathbf{J} \otimes \mathbf{I}_{L d_V}\right) \left((\mathbf{A}_3 \otimes \mathbf{I}_{Ld_V} ) \frac{\partial \mathbf{B}_3}{\partial \mathbf{X}} + ( \mathbf{I}_{Ld_V} \otimes \mathbf{B}_3^\top)\frac{\partial\mathbf{A}_3}{\partial \mathbf{X}}\right),
-\end{align}
-где
-\begin{align}
-    \frac{\partial\mathbf{A}_3}{\partial \mathbf{X}} &= \frac{\partial \textit{diag}(\mathrm{vec}_r(\mathbf{M}))}{\partial \mathbf{X}} = \frac{\partial \textit{diag}(\mathbf{v})}{\partial (\mathbf{v})} \frac{\partial \mathrm{vec}_r(\mathbf{M})}{\partial \mathbf{M}} \frac{\partial \mathbf{M}}{\partial \mathbf{X}},\\
-    \frac{\partial \mathbf{B}_3}{\partial \mathbf{X}} &= \frac{\partial^2 \mathbf{M}}{\partial\mathbf{X}^2} = 0,
-\end{align}
-Используя лемму~\ref{lemma:diag_derivative}, получаем, что~$\frac{\partial \textit{diag}(\mathbf{v})}{\partial (\mathbf{v})} = \Big(\mathbf{e}_1 \otimes \mathbf{e}_1 \quad \dots  \quad \mathbf{e}_L \otimes \mathbf{e}_L\Big)$, где $\mathbf{e}_i \in \mathbb{R}^{Ld_V \times 1}$, а также $\frac{\partial \mathrm{vec}_r(\mathbf{M})}{\partial \mathbf{M}}=\mathbf{I}_{L d_V}$.
+% Далее осталось оценить матрицы~$\frac{\partial\mathbf{A}_2}{\partial \mathbf{X}}$ и~$\frac{\partial\mathbf{B}_2}{\partial \mathbf{X}}.$
+% Для оценки~$\frac{\partial\mathbf{B}_2}{\partial \mathbf{X}}$ разобьем на части:
+% \begin{align}
+%     \mathbf{B}_2 = \mathbf{J} \mathbf{A}_3 \mathbf{B}_3,
+% \end{align}
+% где~$\mathbf{J} = (\mathbf{I}_L \otimes \mathbf{1}^T_{d_V})$, $\mathbf{A}_3 = \textit{diag}(\mathrm{vec}_r (\mathbf{M})), \mathbf{B}_3 = \frac{\partial \mathbf{M}}{\partial \mathbf{X}}$. Аналогично, используя Лемму~\ref{lemma:matrix_funcs_product_derivative} получаем:
+% \begin{align}
+%     \frac{\partial \mathbf{B}_2}{\partial \mathbf{X}} &= \frac{\partial \mathbf{J} \mathbf{A}_3 \mathbf{B}_3}{\partial (\mathbf{A}_3 \mathbf{B}_3)} \frac{\partial \mathbf{A}_3 \mathbf{B}_3}{\partial \mathbf{X}} = \left( \mathbf{J} \otimes \mathbf{I}_{L d_V}\right)\frac{\partial \mathbf{A}_3 \mathbf{B}_3}{\partial \mathbf{X}} \\
+%     &= \left( \mathbf{J} \otimes \mathbf{I}_{L d_V}\right) \left((\mathbf{A}_3 \otimes \mathbf{I}_{Ld_V} ) \frac{\partial \mathbf{B}_3}{\partial \mathbf{X}} + ( \mathbf{I}_{Ld_V} \otimes \mathbf{B}_3^\top)\frac{\partial\mathbf{A}_3}{\partial \mathbf{X}}\right),
+% \end{align}
+% где
+% \begin{align}
+%     \frac{\partial\mathbf{A}_3}{\partial \mathbf{X}} &= \frac{\partial \textit{diag}(\mathrm{vec}_r(\mathbf{M}))}{\partial \mathbf{X}} = \frac{\partial \textit{diag}(\mathbf{v})}{\partial (\mathbf{v})} \frac{\partial \mathrm{vec}_r(\mathbf{M})}{\partial \mathbf{M}} \frac{\partial \mathbf{M}}{\partial \mathbf{X}},\\
+%     \frac{\partial \mathbf{B}_3}{\partial \mathbf{X}} &= \frac{\partial^2 \mathbf{M}}{\partial\mathbf{X}^2} = 0,
+% \end{align}
+% Используя лемму~\ref{lemma:diag_derivative}, получаем, что~$\frac{\partial \textit{diag}(\mathbf{v})}{\partial (\mathbf{v})} = \Big(\mathbf{e}_1 \otimes \mathbf{e}_1 \quad \dots  \quad \mathbf{e}_L \otimes \mathbf{e}_L\Big)$, где $\mathbf{e}_i \in \mathbb{R}^{Ld_V \times 1}$, а также $\frac{\partial \mathrm{vec}_r(\mathbf{M})}{\partial \mathbf{M}}=\mathbf{I}_{L d_V}$.
 
-Собирая все полученные выражения воедино, получаем выражение для~$\frac{\partial^2 \mathbf{P}}{\partial \mathbf{X}^2}$:
-\begin{align}
-    \frac{\partial^2 \mathbf{P}}{\partial \mathbf{X}^2} &= \frac{1}{\sqrt{d_V}} \left(\mathbf{A}_1 \otimes  \mathbf{I}_{Ld_V}  \right) \frac{\partial \mathbf{B}_1}{\partial \mathbf{X}} + \left( \mathbf{I}_{L^2} \otimes  \mathbf{B}_1^\top \right) \frac{\partial \mathbf{A}_1}{\partial \mathbf{X}},
-\end{align}
-где~$\frac{\partial \mathbf{B}_1}{\partial \mathbf{X}},\frac{\partial \mathbf{A}_1}{\partial \mathbf{X}}, \mathbf{B}_1, \mathbf{A}_1$ определены и получены выше.
+% Собирая все полученные выражения воедино, получаем выражение для~$\frac{\partial^2 \mathbf{P}}{\partial \mathbf{X}^2}$:
+% \begin{align}
+%     \frac{\partial^2 \mathbf{P}}{\partial \mathbf{X}^2} &= \frac{1}{\sqrt{d_V}} \left(\mathbf{A}_1 \otimes  \mathbf{I}_{Ld_V}  \right) \frac{\partial \mathbf{B}_1}{\partial \mathbf{X}} + \left( \mathbf{I}_{L^2} \otimes  \mathbf{B}_1^\top \right) \frac{\partial \mathbf{A}_1}{\partial \mathbf{X}},
+% \end{align}
+% где~$\frac{\partial \mathbf{B}_1}{\partial \mathbf{X}},\frac{\partial \mathbf{A}_1}{\partial \mathbf{X}}, \mathbf{B}_1, \mathbf{A}_1$ определены и получены выше.
 
-Итого, все матрицы выражения~\eqref{chapter-2:theorem:layernorm_second_derivative:eqstemant} вычислены, что заканчивает доказательство.
-\end{proof}
+% Итого, все матрицы выражения~\eqref{chapter-2:theorem:layernorm_second_derivative:eqstemant} вычислены, что заканчивает доказательство.
+% \end{proof}
 
 \subsection{Матрица Гессе для нелинейности ReLU}
 
-\begin{theorem}[\emph{Петров-Грабовой-Киселев}, Производные ReLU]\label{theorem:relu_derivative_hessian}
+\begin{theorem}[\emph{Грабовой-Петров-Киселев}, Производные ReLU]\label{theorem:relu_derivative_hessian}
 Пусть задана матрица~$\mathbf{X} \in \mathbb{R}^{m \times n},$ тогда для оператора~$\mathrm{ReLU}$ почти всюду верно следующее выражение:
 \begin{align}
     \frac{\partial \mathrm{ReLU}(\mathbf{X})}{\partial \mathbf{X}} &= \mathrm{diag}\!\big(\mathrm{vec}_r(\mathbf{1}_{\{\mathbf{X}>0\}})\big), \\
@@ -1361,7 +1361,7 @@ M &= 3\cdot\max \Bigg(\frac{2L}{d_V} \| \mathbf{X}\|^2_2, \\
 
 \subsection{Матрица Гессе для трансформера}
 
-\begin{lemma}[\emph{Петров-Грабовой-Киселев}, Оценка нормы для слоя внимания]\label{lemma:attention_phi_from_functional_hessian}
+\begin{lemma}[\emph{Петров-Киселев-Грабовой}, Оценка нормы для слоя внимания]\label{lemma:attention_phi_from_functional_hessian}
 Рассмотрим слой внимания следующего вида:
 \[
     \mathbf{F}(\mathbf{X}) = \mathbf{A}(\mathbf{T})  \mathbf{X}\mathbf{W}_V,
@@ -1433,23 +1433,23 @@ M &= 3\cdot\max \Bigg(\frac{2L}{d_V} \| \mathbf{X}\|^2_2, \\
 Более того, в силу симметрии вторых производных, $\boldsymbol{\Phi}_{KQ}$ равен $\boldsymbol{\Phi}_{QK}$ с переставленными $\mathbf{W}_Q,\mathbf{W}_K$ и корректировкой перестановки с помощью $\mathbf{K}_{\cdot,\cdot}$.
 Аналогичные симметричные соотношения дают $\boldsymbol{\Phi}_{QV}$ и $\boldsymbol{\Phi}_{KV}$ из $\boldsymbol{\Phi}_{VQ}$.
 \end{lemma}
-\begin{proof}  
-По определению обобщенного функционального гессиана в \cite{ormaniec2024attentionhessian},
-\[
-    \mathbf{H}_{\mathrm{f}}(\mathbf{W}_i,\mathbf{W}_j)
-    = \big( \tfrac{\partial \ell}{\partial \mathbf{F}} \otimes \mathbf{I}_{p_i q_i} \big)
-    \frac{\partial^2 \mathbf{F}}{\partial \mathbf{W}_i \partial \mathbf{W}_j}.
-\]
-Для квадратичной функции потерь~$\tfrac{\partial \ell}{\partial \mathbf{F}}=\mathbf{R}_{p_i q_i}$, определенную выше, а следовательно
-\[
-    \mathbf{H}_{\mathrm{f}}(\mathbf{W}_i,\mathbf{W}_j) = \mathbf{R}_{n_i} \boldsymbol{\Phi}_{ij},
-\]
-где $\boldsymbol{\Phi}_{ij} = \tfrac{\partial^2 \mathbf{F}}{\partial \mathbf{W}_i \partial \mathbf{W}_j}$.
+% \begin{proof}  
+% По определению обобщенного функционального гессиана в \cite{ormaniec2024attentionhessian},
+% \[
+%     \mathbf{H}_{\mathrm{f}}(\mathbf{W}_i,\mathbf{W}_j)
+%     = \big( \tfrac{\partial \ell}{\partial \mathbf{F}} \otimes \mathbf{I}_{p_i q_i} \big)
+%     \frac{\partial^2 \mathbf{F}}{\partial \mathbf{W}_i \partial \mathbf{W}_j}.
+% \]
+% Для квадратичной функции потерь~$\tfrac{\partial \ell}{\partial \mathbf{F}}=\mathbf{R}_{p_i q_i}$, определенную выше, а следовательно
+% \[
+%     \mathbf{H}_{\mathrm{f}}(\mathbf{W}_i,\mathbf{W}_j) = \mathbf{R}_{n_i} \boldsymbol{\Phi}_{ij},
+% \]
+% где $\boldsymbol{\Phi}_{ij} = \tfrac{\partial^2 \mathbf{F}}{\partial \mathbf{W}_i \partial \mathbf{W}_j}$.
 
-Явные формы для~$\mathbf{H}_{\mathrm{f}}$ описаны в~\cite[Thm.~3.2]{ormaniec2024attentionhessian}. Используя выражения для~$\mathbf{H}_{\mathrm{f}}$ получаем выражения~$\boldsymbol{\Phi}_{ij}$ просто удаляя ведущей метрицы~$\mathbf{R}_{n_i}$.
-\end{proof}
+% Явные формы для~$\mathbf{H}_{\mathrm{f}}$ описаны в~\cite[Thm.~3.2]{ormaniec2024attentionhessian}. Используя выражения для~$\mathbf{H}_{\mathrm{f}}$ получаем выражения~$\boldsymbol{\Phi}_{ij}$ просто удаляя ведущей метрицы~$\mathbf{R}_{n_i}$.
+% \end{proof}
 
-\begin{lemma}[\emph{Петров-Грабовой-Киселев}, Оценка норм для FFN и LayerNorm]\label{lemma:Y_S_norm_bounds}
+\begin{lemma}[\emph{Петров-Киселев-Грабовой}, Оценка норм для FFN и LayerNorm]\label{lemma:Y_S_norm_bounds}
 Пусть заданы матрицы~$\mathbf{X}\in\mathbb{R}^{L\times d_V}$, $\mathbf{Y}=\mathrm{LayerNorm}(\mathbf{F}(\mathbf{X})+\mathbf{X})\in\mathbb{R}^{L\times d_V}$ и задана сеть
 \[
     \mathrm{FFN}(\mathbf{Y})=\sigma(\mathbf{Y}\mathbf{W}_1)\mathbf{W}_2,\qquad\mathbf{W}_1\in\mathbb{R}^{d_V\times d_{ff}},\quad\mathbf{W}_2\in\mathbb{R}^{d_{ff}\times d_V},
@@ -1468,61 +1468,61 @@ M &= 3\cdot\max \Bigg(\frac{2L}{d_V} \| \mathbf{X}\|^2_2, \\
     \label{eq:S_norm_bound}
 \end{align}
 \end{lemma}
-\begin{proof}
-Оценим~$\|\mathbf{Y}\|_2$. Согласно определению LayerNorm в рамках Теоремы~\ref{thm:layernorm_derivative} получаем:
-\[
-    \mathbf{Y} = \mathbf{P}(\mathbf{S}_0)\mathbf{M}(\mathbf{S}_0), \qquad \mathbf{S}_0:=\mathbf{F}(\mathbf{X})+\mathbf{X},
-\]
-где~$\mathbf{M}(\mathbf{S}_0)=\mathbf{S}_0-\tfrac{1}{d_V}\mathbf{S}_0\mathbf{1}_{d_V}\mathbf{1}_{d_V}^\top$ и~$\mathbf{P}=\mathrm{diag}^{-1}(\sigma)$ с $\sigma=\tfrac{1}{\sqrt{d_V}}(\mathbf{M}^{\circ 2}\mathbf{1})^{\circ 1/2}$, применяемым построчно.
-Для любой строки~$i$ обозначим~$\mathbf{m}_i$ как~$i$-ю строку~$\mathbf{M}$ и~$\sigma_i=\tfrac{1}{\sqrt{d_V}}\|\mathbf{m}_i\|_2$.
-Тогда~$i$-я строка~$\mathbf{Y}$ имеет вид~$\mathbf{y}_i=\mathbf{m}_i/\sigma_i$, а следовательно
-\[
-    \|\mathbf{y}_i\|_2^2 = \frac{\|\mathbf{m}_i\|_2^2}{\sigma_i^2}= \frac{\|\mathbf{m}_i\|_2^2}{(1/d_V)\|\mathbf{m}_i\|_2^2}= d_V.
-\]
-Таким образом, каждая строка~$\mathbf{Y}$ имеет евклидову норму $\sqrt{d_V}$. Получаем:
-\[
-    \|\mathbf{Y}\|_F^2 = \sum_{i=1}^L \|\mathbf{y}_i\|_2^2 = Ld_V,\qquad\text{откуда}\qquad\|\mathbf{Y}\|_F = \sqrt{Ld_V}.
-\]
-Используя из свойства~\ref{prop:matrix_norm_inequalities} неравенство для норм~$\|\mathbf{A}\|_2 \le \|\mathbf{A}\|_F$, получаем~\eqref{eq:Y_norm_bound}.
+% \begin{proof}
+% Оценим~$\|\mathbf{Y}\|_2$. Согласно определению LayerNorm в рамках Теоремы~\ref{thm:layernorm_derivative} получаем:
+% \[
+%     \mathbf{Y} = \mathbf{P}(\mathbf{S}_0)\mathbf{M}(\mathbf{S}_0), \qquad \mathbf{S}_0:=\mathbf{F}(\mathbf{X})+\mathbf{X},
+% \]
+% где~$\mathbf{M}(\mathbf{S}_0)=\mathbf{S}_0-\tfrac{1}{d_V}\mathbf{S}_0\mathbf{1}_{d_V}\mathbf{1}_{d_V}^\top$ и~$\mathbf{P}=\mathrm{diag}^{-1}(\sigma)$ с $\sigma=\tfrac{1}{\sqrt{d_V}}(\mathbf{M}^{\circ 2}\mathbf{1})^{\circ 1/2}$, применяемым построчно.
+% Для любой строки~$i$ обозначим~$\mathbf{m}_i$ как~$i$-ю строку~$\mathbf{M}$ и~$\sigma_i=\tfrac{1}{\sqrt{d_V}}\|\mathbf{m}_i\|_2$.
+% Тогда~$i$-я строка~$\mathbf{Y}$ имеет вид~$\mathbf{y}_i=\mathbf{m}_i/\sigma_i$, а следовательно
+% \[
+%     \|\mathbf{y}_i\|_2^2 = \frac{\|\mathbf{m}_i\|_2^2}{\sigma_i^2}= \frac{\|\mathbf{m}_i\|_2^2}{(1/d_V)\|\mathbf{m}_i\|_2^2}= d_V.
+% \]
+% Таким образом, каждая строка~$\mathbf{Y}$ имеет евклидову норму $\sqrt{d_V}$. Получаем:
+% \[
+%     \|\mathbf{Y}\|_F^2 = \sum_{i=1}^L \|\mathbf{y}_i\|_2^2 = Ld_V,\qquad\text{откуда}\qquad\|\mathbf{Y}\|_F = \sqrt{Ld_V}.
+% \]
+% Используя из свойства~\ref{prop:matrix_norm_inequalities} неравенство для норм~$\|\mathbf{A}\|_2 \le \|\mathbf{A}\|_F$, получаем~\eqref{eq:Y_norm_bound}.
 
-Оценим~$\|\mathrm{FFN}(\mathbf{Y})\|_2$.
-Используя свойство~\ref{prop:matrix_product_norm} получаем следующую оценку:
-\[
-    \|\mathrm{FFN}(\mathbf{Y})\|_2= \|\text{ReLU}(\mathbf{Y}\mathbf{W}_1)\mathbf{W}_2\|_2\le \|\text{ReLU}(\mathbf{Y}\mathbf{W}_1)\|_2 \|\mathbf{W}_2\|_2,
-\]
-далее, используя свойство~\ref{prop:matrix_norm_inequalities}, получаем
-\[
-    \|\text{ReLU}(\mathbf{Y}\mathbf{W}_1)\|_2 \le \|\text{ReLU}(\mathbf{Y}\mathbf{W}_1)\|_F,
-\]
-Согласно определению~\ref{def:matrix_norms}, норма~$\|\cdot\|_F^2$ представляет собой сумму квадратов.
-Поэлементно~$\sigma(\cdot)$ удовлетворяет условию~$0\le \sigma(a)\le |a|$, а следовательно~$\sigma(a)^2 \le a^2$ для каждого элемента~$a \in \mathbb{R}$.
-Поэтому получаем:
-\[
-    \|\sigma(\mathbf{Y}\mathbf{W}_1)\|_F \le \|\mathbf{Y}\mathbf{W}_1\|_F.
-\]
-Используя неравенство~$\|\cdot\|_F \le \sqrt{d}\|\cdot\|_2$ с $d=\operatorname{rank}(\cdot)$ из свойства~\ref{prop:matrix_norm_inequalities} получаем:
-\[
-    \|\mathbf{Y}\mathbf{W}_1\|_F \le \sqrt{\operatorname{rank}(\mathbf{Y}\mathbf{W}_1)}\|\mathbf{Y}\mathbf{W}_1\|_2,
-\]
-так как~$\mathbf{Y}\mathbf{W}_1 \in \mathbb{R}^{L\times d_{ff}}$, $\operatorname{rank}(\mathbf{Y}\mathbf{W}_1)\le \min(L,d_{ff})$. Таким образом получаем используя свойство~\ref{prop:matrix_product_norm}:
-\[
-    \|\mathbf{Y}\mathbf{W}_1\|_F \le \sqrt{\min(L,d_{ff})}\|\mathbf{Y}\mathbf{W}_1\|_2\le \sqrt{\min(L,d_{ff})}\|\mathbf{Y}\|_2 \|\mathbf{W}_1\|_2
-\]
-Собирая все вместе получаем:
-\[
-    \|\mathrm{FFN}(\mathbf{Y})\|_2\le \|\sigma(\mathbf{Y}\mathbf{W}_1)\|_F \|\mathbf{W}_2\|_2\le \sqrt{\min(L,d_{ff})}\|\mathbf{Y}\|_2\|\mathbf{W}_1\|_2\|\mathbf{W}_2\|_2,
-\]
-что заканчивает оценку~\eqref{eq:FFN_norm_bound}.
+% Оценим~$\|\mathrm{FFN}(\mathbf{Y})\|_2$.
+% Используя свойство~\ref{prop:matrix_product_norm} получаем следующую оценку:
+% \[
+%     \|\mathrm{FFN}(\mathbf{Y})\|_2= \|\text{ReLU}(\mathbf{Y}\mathbf{W}_1)\mathbf{W}_2\|_2\le \|\text{ReLU}(\mathbf{Y}\mathbf{W}_1)\|_2 \|\mathbf{W}_2\|_2,
+% \]
+% далее, используя свойство~\ref{prop:matrix_norm_inequalities}, получаем
+% \[
+%     \|\text{ReLU}(\mathbf{Y}\mathbf{W}_1)\|_2 \le \|\text{ReLU}(\mathbf{Y}\mathbf{W}_1)\|_F,
+% \]
+% Согласно определению~\ref{def:matrix_norms}, норма~$\|\cdot\|_F^2$ представляет собой сумму квадратов.
+% Поэлементно~$\sigma(\cdot)$ удовлетворяет условию~$0\le \sigma(a)\le |a|$, а следовательно~$\sigma(a)^2 \le a^2$ для каждого элемента~$a \in \mathbb{R}$.
+% Поэтому получаем:
+% \[
+%     \|\sigma(\mathbf{Y}\mathbf{W}_1)\|_F \le \|\mathbf{Y}\mathbf{W}_1\|_F.
+% \]
+% Используя неравенство~$\|\cdot\|_F \le \sqrt{d}\|\cdot\|_2$ с $d=\operatorname{rank}(\cdot)$ из свойства~\ref{prop:matrix_norm_inequalities} получаем:
+% \[
+%     \|\mathbf{Y}\mathbf{W}_1\|_F \le \sqrt{\operatorname{rank}(\mathbf{Y}\mathbf{W}_1)}\|\mathbf{Y}\mathbf{W}_1\|_2,
+% \]
+% так как~$\mathbf{Y}\mathbf{W}_1 \in \mathbb{R}^{L\times d_{ff}}$, $\operatorname{rank}(\mathbf{Y}\mathbf{W}_1)\le \min(L,d_{ff})$. Таким образом получаем используя свойство~\ref{prop:matrix_product_norm}:
+% \[
+%     \|\mathbf{Y}\mathbf{W}_1\|_F \le \sqrt{\min(L,d_{ff})}\|\mathbf{Y}\mathbf{W}_1\|_2\le \sqrt{\min(L,d_{ff})}\|\mathbf{Y}\|_2 \|\mathbf{W}_1\|_2
+% \]
+% Собирая все вместе получаем:
+% \[
+%     \|\mathrm{FFN}(\mathbf{Y})\|_2\le \|\sigma(\mathbf{Y}\mathbf{W}_1)\|_F \|\mathbf{W}_2\|_2\le \sqrt{\min(L,d_{ff})}\|\mathbf{Y}\|_2\|\mathbf{W}_1\|_2\|\mathbf{W}_2\|_2,
+% \]
+% что заканчивает оценку~\eqref{eq:FFN_norm_bound}.
 
-Оценим~$\|\mathbf{S}\|_2$.
-Используя из свойства~\ref{prop:matrix_sum_norm} неравенство для нормы суммы, получаем:
-\[
-    \|\mathbf{S}\|_2=\|\mathbf{Y}+\mathrm{FFN}(\mathbf{Y})\|_2\le \|\mathbf{Y}\|_2 + \|\mathrm{FFN}(\mathbf{Y})\|_2,
-\]
-откуда подставляя~\eqref{eq:Y_norm_bound} и~\eqref{eq:FFN_norm_bound}, получаем~\eqref{eq:S_norm_bound}.
-\end{proof}
+% Оценим~$\|\mathbf{S}\|_2$.
+% Используя из свойства~\ref{prop:matrix_sum_norm} неравенство для нормы суммы, получаем:
+% \[
+%     \|\mathbf{S}\|_2=\|\mathbf{Y}+\mathrm{FFN}(\mathbf{Y})\|_2\le \|\mathbf{Y}\|_2 + \|\mathrm{FFN}(\mathbf{Y})\|_2,
+% \]
+% откуда подставляя~\eqref{eq:Y_norm_bound} и~\eqref{eq:FFN_norm_bound}, получаем~\eqref{eq:S_norm_bound}.
+% \end{proof}
 
-\begin{lemma}[\emph{Петров-Грабовой-Киселев}, Оценка норм производных LayerNorm]\label{lemma:layernorm_deriv_hessian_norm}
+\begin{lemma}[\emph{Петров-Киселев-Грабовой}, Оценка норм производных LayerNorm]\label{lemma:layernorm_deriv_hessian_norm}
 Пусть заданы матрицы~$\mathbf{X} \in \mathbb{R}^{m \times n}$.
 Производная LayerNorm $\mathbf{J}_{\mathrm{LN}}(\mathbf{X}) = \frac{\partial \text{LayerNorm}(\mathbf{X})}{\partial \mathbf{X}}$ вычисляется в соответствии с Теоремой~\ref{thm:layernorm_derivative}, а ее гессиан $\mathbf{H}_{\mathrm{LN}}(\mathbf{X}) = \frac{\partial^2 \text{LayerNorm}(\mathbf{X})}{\partial \mathbf{X}^2}$ вычисляется как в Теореме \ref{thm:layernorm_second_derivative}.
 
@@ -1538,88 +1538,88 @@ M &= 3\cdot\max \Bigg(\frac{2L}{d_V} \| \mathbf{X}\|^2_2, \\
 \end{align}
 где $\sigma_{\min}$ обозначает $\min \limits_i \|\mathbf{M}_i \|_2$, где $\mathbf{M}(\mathbf{X}) = \mathbf{X}(\mathbf{I}_n - \tfrac{1}{n}\mathbf{1}_n\mathbf{1}_n^\top)$
 \end{lemma}
-\begin{proof}
-Согласно Теореме~\ref{thm:layernorm_derivative}:
-\[
-    \mathbf{J}_{\mathrm{LN}}(\mathbf{X})= (\mathbf{P}\otimes \mathbf{I}_n)\mathbf{G}+ (\mathbf{I}_m\otimes \mathbf{M}^\top)\mathbf{H},
-\]
-где $\mathbf{G}=\mathbf{I}_{mn}-\tfrac{1}{n}(\mathbf{I}_m\otimes \mathbf{1}_{n\times n})$,
-$\mathbf{H}=\tfrac{\partial \mathbf{P}}{\partial \mathbf{X}}$, и $\mathbf{P}=\mathrm{diag}^{-1}(\boldsymbol{\sigma})$.
-Используя cвойства~\ref{prop:kronecker_product_norm}, \ref{prop:matrix_product_norm}, \ref{prop:matrix_sum_norm} получаем:
-\begin{align}
-    \|\mathbf{J}_{\mathrm{LN}}(\mathbf{X})\|_2 &\le \|\mathbf{P}\otimes \mathbf{I}_n\|_2\|\mathbf{G}\|_2 + \|\mathbf{I}_m\otimes \mathbf{M}^\top\|_2\|\mathbf{H}\|_2 =\\
-    &=\|\mathbf{P}\|_2\|\mathbf{G}\|_2 + \|\mathbf{M}\|_2\|\mathbf{H}\|_2.
-\end{align}
-Оценим каждый множитель по отдельности. Множитель~$\|\mathbf{G}\|_2\le 1$, поскольку~$\tfrac{1}{n}\mathbf{1}_{n\times n}$ является проекцией, следовательно~$\|\mathbf{I}_n-\tfrac{1}{n}\mathbf{1}_{n\times n}\|_2\le 1$, и произведение Кронекера сохраняет оценку спектральной нормы согласно свойств~\ref{prop:matrix_product_norm}, \ref{prop:kronecker_product_norm}, а также Леммы~\ref{lemma:1_spectral_norm}. Множитель~$\|\mathbf{P}\|_2 = \|\mathbf{D}^{-1}\|_2 = 1/\sigma_{\min}$, где $\mathbf{D}=\mathrm{diag}(\boldsymbol{\sigma})$. Множитель~$\|\mathbf{M}\|_2 \le \|\mathbf{X}\|_2$, потому что $\mathbf{M}(\mathbf{X}) = \mathbf{X}(\mathbf{I}_n - \tfrac{1}{n}\mathbf{1}_n\mathbf{1}_n^\top)$, и правый множитель является проектором с нормой $\le 1$ согласно свойства~\ref{prop:matrix_product_norm}. Для $\|\mathbf{H}\|_2=\big\|\tfrac{\partial \mathbf{P}}{\partial \mathbf{X}}\big\|_2$, Теорема~\ref{thm:layernorm_derivative} вместе с Леммами~\ref{lemma:invert_derivative}, \ref{lemma:diag_derivative}, \ref{lemma:hadamard_square_derivative}, \ref{lemma:hadamard_root_derivative} и свойствами~\ref{prop:matrix_product_norm}, \ref{prop:kronecker_product_norm} дают оценку:
-\begin{align}
-    \Big\|\frac{\partial \mathbf{P}}{\partial \mathbf{X}}\Big\|_2 &\le \frac{1}{\sqrt{n}}\|\mathbf{D}^{-1}\otimes \mathbf{D}^{-\top}\|_2\Big\|\mathrm{diag}^{-1}\!\big(\mathrm{vec}_r^{\circ 1/2}(\mathbf{M}^{\circ 2}\mathbf{1}_n)\big)\Big\|_2 \cdot\\
-    &\quad\cdot\|\mathbf{I}_m\otimes \mathbf{1}_n^\top\|_2\|\mathrm{diag}(\mathrm{vec}_r(\mathbf{M}))\|_2\Big\|\frac{\partial \mathbf{M}}{\partial \mathbf{X}}\Big\|_2.
-\end{align}
-Используя свойство~\ref{prop:matrix_norm_inequalities} получаем оценки:
-\begin{align}
-    \|\mathbf{D}^{-1}\otimes \mathbf{D}^{-\top}\|_2 &=\|\mathbf{D}^{-1}\|_2^2=\frac{1}{\sigma_{\min}^{2}},\\
-    \big\|\mathrm{diag}^{-1}(\cdot)\big\|_2 &= \frac{1}{\min_i\sqrt{\sum_{v} M_{i,v}^2}} = \frac{1}{\sqrt{n}\sigma_{\min}},\\
-    \|\mathbf{I}_m\otimes \mathbf{1}^\top\|_2 &=\sqrt{n},\\
-    \|\mathrm{diag}(\mathrm{vec}_r(\mathbf{M}))\|_2 &=\|\mathbf{M}\|_{\max}\le \|\mathbf{M}\|_2,\\
-    \big\|\tfrac{\partial \mathbf{M}}{\partial \mathbf{X}}\big\|_2 &\le 1,
-\end{align}
-откуда получаем оценку:
-\[
-    \|\mathbf{H}\|_2 \le \frac{1}{\sqrt{n}\sigma_{\min}^{2}}\cdot \frac{1}{\sqrt{n}\sigma_{\min}}\cdot \sqrt{n}\cdot \|\mathbf{M}\|_2\cdot 1\le \frac{\|\mathbf{X}\|_2}{\sqrt{n}\sigma_{\min}^3}.
-\]
-Собирая все полученные оценки, получаем \eqref{eq:ln_jac_norm_bound}:
-\[
-    \|\mathbf{J}_{\mathrm{LN}}(\mathbf{X})\|_2
-    \le \frac{1}{\sigma_{\min}}\cdot 1 + \|\mathbf{X}\|_2\cdot \frac{\|\mathbf{X}\|_2}{\sqrt{n}\sigma_{\min}^3}
-    = \frac{1}{\sigma_{\min}} + \frac{\|\mathbf{X}\|_2^2}{\sqrt{n}\sigma_{\min}^3}.
-\]
+% \begin{proof}
+% Согласно Теореме~\ref{thm:layernorm_derivative}:
+% \[
+%     \mathbf{J}_{\mathrm{LN}}(\mathbf{X})= (\mathbf{P}\otimes \mathbf{I}_n)\mathbf{G}+ (\mathbf{I}_m\otimes \mathbf{M}^\top)\mathbf{H},
+% \]
+% где $\mathbf{G}=\mathbf{I}_{mn}-\tfrac{1}{n}(\mathbf{I}_m\otimes \mathbf{1}_{n\times n})$,
+% $\mathbf{H}=\tfrac{\partial \mathbf{P}}{\partial \mathbf{X}}$, и $\mathbf{P}=\mathrm{diag}^{-1}(\boldsymbol{\sigma})$.
+% Используя cвойства~\ref{prop:kronecker_product_norm}, \ref{prop:matrix_product_norm}, \ref{prop:matrix_sum_norm} получаем:
+% \begin{align}
+%     \|\mathbf{J}_{\mathrm{LN}}(\mathbf{X})\|_2 &\le \|\mathbf{P}\otimes \mathbf{I}_n\|_2\|\mathbf{G}\|_2 + \|\mathbf{I}_m\otimes \mathbf{M}^\top\|_2\|\mathbf{H}\|_2 =\\
+%     &=\|\mathbf{P}\|_2\|\mathbf{G}\|_2 + \|\mathbf{M}\|_2\|\mathbf{H}\|_2.
+% \end{align}
+% Оценим каждый множитель по отдельности. Множитель~$\|\mathbf{G}\|_2\le 1$, поскольку~$\tfrac{1}{n}\mathbf{1}_{n\times n}$ является проекцией, следовательно~$\|\mathbf{I}_n-\tfrac{1}{n}\mathbf{1}_{n\times n}\|_2\le 1$, и произведение Кронекера сохраняет оценку спектральной нормы согласно свойств~\ref{prop:matrix_product_norm}, \ref{prop:kronecker_product_norm}, а также Леммы~\ref{lemma:1_spectral_norm}. Множитель~$\|\mathbf{P}\|_2 = \|\mathbf{D}^{-1}\|_2 = 1/\sigma_{\min}$, где $\mathbf{D}=\mathrm{diag}(\boldsymbol{\sigma})$. Множитель~$\|\mathbf{M}\|_2 \le \|\mathbf{X}\|_2$, потому что $\mathbf{M}(\mathbf{X}) = \mathbf{X}(\mathbf{I}_n - \tfrac{1}{n}\mathbf{1}_n\mathbf{1}_n^\top)$, и правый множитель является проектором с нормой $\le 1$ согласно свойства~\ref{prop:matrix_product_norm}. Для $\|\mathbf{H}\|_2=\big\|\tfrac{\partial \mathbf{P}}{\partial \mathbf{X}}\big\|_2$, Теорема~\ref{thm:layernorm_derivative} вместе с Леммами~\ref{lemma:invert_derivative}, \ref{lemma:diag_derivative}, \ref{lemma:hadamard_square_derivative}, \ref{lemma:hadamard_root_derivative} и свойствами~\ref{prop:matrix_product_norm}, \ref{prop:kronecker_product_norm} дают оценку:
+% \begin{align}
+%     \Big\|\frac{\partial \mathbf{P}}{\partial \mathbf{X}}\Big\|_2 &\le \frac{1}{\sqrt{n}}\|\mathbf{D}^{-1}\otimes \mathbf{D}^{-\top}\|_2\Big\|\mathrm{diag}^{-1}\!\big(\mathrm{vec}_r^{\circ 1/2}(\mathbf{M}^{\circ 2}\mathbf{1}_n)\big)\Big\|_2 \cdot\\
+%     &\quad\cdot\|\mathbf{I}_m\otimes \mathbf{1}_n^\top\|_2\|\mathrm{diag}(\mathrm{vec}_r(\mathbf{M}))\|_2\Big\|\frac{\partial \mathbf{M}}{\partial \mathbf{X}}\Big\|_2.
+% \end{align}
+% Используя свойство~\ref{prop:matrix_norm_inequalities} получаем оценки:
+% \begin{align}
+%     \|\mathbf{D}^{-1}\otimes \mathbf{D}^{-\top}\|_2 &=\|\mathbf{D}^{-1}\|_2^2=\frac{1}{\sigma_{\min}^{2}},\\
+%     \big\|\mathrm{diag}^{-1}(\cdot)\big\|_2 &= \frac{1}{\min_i\sqrt{\sum_{v} M_{i,v}^2}} = \frac{1}{\sqrt{n}\sigma_{\min}},\\
+%     \|\mathbf{I}_m\otimes \mathbf{1}^\top\|_2 &=\sqrt{n},\\
+%     \|\mathrm{diag}(\mathrm{vec}_r(\mathbf{M}))\|_2 &=\|\mathbf{M}\|_{\max}\le \|\mathbf{M}\|_2,\\
+%     \big\|\tfrac{\partial \mathbf{M}}{\partial \mathbf{X}}\big\|_2 &\le 1,
+% \end{align}
+% откуда получаем оценку:
+% \[
+%     \|\mathbf{H}\|_2 \le \frac{1}{\sqrt{n}\sigma_{\min}^{2}}\cdot \frac{1}{\sqrt{n}\sigma_{\min}}\cdot \sqrt{n}\cdot \|\mathbf{M}\|_2\cdot 1\le \frac{\|\mathbf{X}\|_2}{\sqrt{n}\sigma_{\min}^3}.
+% \]
+% Собирая все полученные оценки, получаем \eqref{eq:ln_jac_norm_bound}:
+% \[
+%     \|\mathbf{J}_{\mathrm{LN}}(\mathbf{X})\|_2
+%     \le \frac{1}{\sigma_{\min}}\cdot 1 + \|\mathbf{X}\|_2\cdot \frac{\|\mathbf{X}\|_2}{\sqrt{n}\sigma_{\min}^3}
+%     = \frac{1}{\sigma_{\min}} + \frac{\|\mathbf{X}\|_2^2}{\sqrt{n}\sigma_{\min}^3}.
+% \]
 
-Из Теоремы~\ref{thm:layernorm_second_derivative}, используя $\tfrac{\partial^2 \mathbf{M}}{\partial \mathbf{X}^2}=0$,
-\[
-    \mathbf{H}_{\mathrm{LN}}(\mathbf{X})=(\mathbf{I}_{mn}\otimes \mathbf{G}^\top)\frac{\partial (\mathbf{P}\otimes \mathbf{I}_n)}{\partial \mathbf{X}}+ \big( (\mathbf{I}_m\otimes \mathbf{M}^\top)\otimes \mathbf{I}_{mn}\big)\frac{\partial^2 \mathbf{P}}{\partial \mathbf{X}^2}+ (\mathbf{I}_{mn}\otimes \mathbf{H}^\top)\frac{\partial (\mathbf{I}_m\otimes \mathbf{M}^\top)}{\partial \mathbf{X}}.
-\]
-Оценим три слагаемых отдельно с помощью свойств~\ref{prop:matrix_product_norm}, \ref{prop:kronecker_product_norm}.
-Первое слагаемое. По Предложению~\ref{prop:kronecker_product_derivative} получаем:
-\[
-    \frac{\partial (\mathbf{P}\otimes \mathbf{I}_n)}{\partial \mathbf{X}}=(\mathbf{I}_m \otimes \mathbf{K}_{n,m} \otimes \mathbf{I}_n)(\mathbf{I}_{m^2} \otimes \mathrm{vec}_r(\mathbf{I}_n))\frac{\partial \mathbf{P}}{\partial \mathbf{X}},
-\]
-а следовательно
-\begin{align}
-    \Big\|(\mathbf{I}_{mn}\otimes \mathbf{G}^\top)\frac{\partial (\mathbf{P}\otimes \mathbf{I}_n)}{\partial \mathbf{X}}\Big\|_2 &\le \|\mathbf{G}\|_2 \|\mathbf{I}_{m^2} \otimes \mathrm{vec}_r(\mathbf{I}_n)\|_2 \Big\|\frac{\partial \mathbf{P}}{\partial \mathbf{X}}\Big\|_2 =\\
-    &=1 \cdot \sqrt{n} \cdot \frac{\|\mathbf{X}\|_2}{\sqrt{n}\sigma_{\min}^3}= \frac{\|\mathbf{X}\|_2}{\sigma_{\min}^3}.
-\end{align}
-Второе слагаемое. Используя $\|\mathbf{I}_m\otimes \mathbf{M}^\top\|_2=\|\mathbf{M}\|_2\le \|\mathbf{X}\|_2$ и оценку для $\big\|\tfrac{\partial^2 \mathbf{P}}{\partial \mathbf{X}^2}\big\|_2$ получаем:
-\[
-    \Big\|\big( (\mathbf{I}_m\otimes \mathbf{M}^\top)\otimes \mathbf{I}_{mn}\big)\frac{\partial^2 \mathbf{P}}{\partial \mathbf{X}^2}\Big\|_2\le \|\mathbf{X}\|_2 \Big\|\frac{\partial^2 \mathbf{P}}{\partial \mathbf{X}^2}\Big\|_2.
-\]
-Оценим~$\big\|\tfrac{\partial^2 \mathbf{P}}{\partial \mathbf{X}^2}\big\|_2$, следуя той же цепочке, что и в доказательстве теоремы~\ref{thm:layernorm_second_derivative}
-запишем~$\tfrac{\partial \mathbf{P}}{\partial \mathbf{X}}=\tfrac{1}{\sqrt{n}}\mathbf{A}_1(\mathbf{X})\mathbf{E}\mathbf{B}_1(\mathbf{X})$ и продифференцируем, используя свойство~\ref{prop:matrix_product_norm} с Леммами~\ref{lemma:invert_derivative}, \ref{lemma:diag_derivative}, \ref{lemma:hadamard_square_derivative}, \ref{lemma:hadamard_root_derivative} и свойствами~\ref{prop:matrix_product_norm}, \ref{prop:kronecker_product_norm}, \ref{prop:matrix_norm_inequalities}. Получаем:
-\[
-    \Big\|\frac{\partial^2 \mathbf{P}}{\partial \mathbf{X}^2}\Big\|_2\le\frac{1}{\sqrt{n}\sigma_{\min}^3}\|\mathbf{X}\|_2+ \frac{3}{n\sigma_{\min}^5}\|\mathbf{X}\|_2^2,
-\]
-а следовательно,
-\[
-    \Big\|\big( (\mathbf{I}_m\otimes \mathbf{M}^\top)\otimes \mathbf{I}_{mn}\big)\frac{\partial^2 \mathbf{P}}{\partial \mathbf{X}^2}\Big\|_2\le \frac{\|\mathbf{X}\|_2^2}{\sqrt{n}\sigma_{\min}^3}+ \frac{3\|\mathbf{X}\|_2^3}{n\sigma_{\min}^5}.
-\]
+% Из Теоремы~\ref{thm:layernorm_second_derivative}, используя $\tfrac{\partial^2 \mathbf{M}}{\partial \mathbf{X}^2}=0$,
+% \[
+%     \mathbf{H}_{\mathrm{LN}}(\mathbf{X})=(\mathbf{I}_{mn}\otimes \mathbf{G}^\top)\frac{\partial (\mathbf{P}\otimes \mathbf{I}_n)}{\partial \mathbf{X}}+ \big( (\mathbf{I}_m\otimes \mathbf{M}^\top)\otimes \mathbf{I}_{mn}\big)\frac{\partial^2 \mathbf{P}}{\partial \mathbf{X}^2}+ (\mathbf{I}_{mn}\otimes \mathbf{H}^\top)\frac{\partial (\mathbf{I}_m\otimes \mathbf{M}^\top)}{\partial \mathbf{X}}.
+% \]
+% Оценим три слагаемых отдельно с помощью свойств~\ref{prop:matrix_product_norm}, \ref{prop:kronecker_product_norm}.
+% Первое слагаемое. По Предложению~\ref{prop:kronecker_product_derivative} получаем:
+% \[
+%     \frac{\partial (\mathbf{P}\otimes \mathbf{I}_n)}{\partial \mathbf{X}}=(\mathbf{I}_m \otimes \mathbf{K}_{n,m} \otimes \mathbf{I}_n)(\mathbf{I}_{m^2} \otimes \mathrm{vec}_r(\mathbf{I}_n))\frac{\partial \mathbf{P}}{\partial \mathbf{X}},
+% \]
+% а следовательно
+% \begin{align}
+%     \Big\|(\mathbf{I}_{mn}\otimes \mathbf{G}^\top)\frac{\partial (\mathbf{P}\otimes \mathbf{I}_n)}{\partial \mathbf{X}}\Big\|_2 &\le \|\mathbf{G}\|_2 \|\mathbf{I}_{m^2} \otimes \mathrm{vec}_r(\mathbf{I}_n)\|_2 \Big\|\frac{\partial \mathbf{P}}{\partial \mathbf{X}}\Big\|_2 =\\
+%     &=1 \cdot \sqrt{n} \cdot \frac{\|\mathbf{X}\|_2}{\sqrt{n}\sigma_{\min}^3}= \frac{\|\mathbf{X}\|_2}{\sigma_{\min}^3}.
+% \end{align}
+% Второе слагаемое. Используя $\|\mathbf{I}_m\otimes \mathbf{M}^\top\|_2=\|\mathbf{M}\|_2\le \|\mathbf{X}\|_2$ и оценку для $\big\|\tfrac{\partial^2 \mathbf{P}}{\partial \mathbf{X}^2}\big\|_2$ получаем:
+% \[
+%     \Big\|\big( (\mathbf{I}_m\otimes \mathbf{M}^\top)\otimes \mathbf{I}_{mn}\big)\frac{\partial^2 \mathbf{P}}{\partial \mathbf{X}^2}\Big\|_2\le \|\mathbf{X}\|_2 \Big\|\frac{\partial^2 \mathbf{P}}{\partial \mathbf{X}^2}\Big\|_2.
+% \]
+% Оценим~$\big\|\tfrac{\partial^2 \mathbf{P}}{\partial \mathbf{X}^2}\big\|_2$, следуя той же цепочке, что и в доказательстве теоремы~\ref{thm:layernorm_second_derivative}
+% запишем~$\tfrac{\partial \mathbf{P}}{\partial \mathbf{X}}=\tfrac{1}{\sqrt{n}}\mathbf{A}_1(\mathbf{X})\mathbf{E}\mathbf{B}_1(\mathbf{X})$ и продифференцируем, используя свойство~\ref{prop:matrix_product_norm} с Леммами~\ref{lemma:invert_derivative}, \ref{lemma:diag_derivative}, \ref{lemma:hadamard_square_derivative}, \ref{lemma:hadamard_root_derivative} и свойствами~\ref{prop:matrix_product_norm}, \ref{prop:kronecker_product_norm}, \ref{prop:matrix_norm_inequalities}. Получаем:
+% \[
+%     \Big\|\frac{\partial^2 \mathbf{P}}{\partial \mathbf{X}^2}\Big\|_2\le\frac{1}{\sqrt{n}\sigma_{\min}^3}\|\mathbf{X}\|_2+ \frac{3}{n\sigma_{\min}^5}\|\mathbf{X}\|_2^2,
+% \]
+% а следовательно,
+% \[
+%     \Big\|\big( (\mathbf{I}_m\otimes \mathbf{M}^\top)\otimes \mathbf{I}_{mn}\big)\frac{\partial^2 \mathbf{P}}{\partial \mathbf{X}^2}\Big\|_2\le \frac{\|\mathbf{X}\|_2^2}{\sqrt{n}\sigma_{\min}^3}+ \frac{3\|\mathbf{X}\|_2^3}{n\sigma_{\min}^5}.
+% \]
 
-Третье слагаемое. По свойству~\ref{prop:kronecker_product_derivative} и Лемме~\ref{lemma:transposed_matrix_derivative} получаем:
-\[
-    \frac{\partial (\mathbf{I}_m\otimes \mathbf{M}^\top)}{\partial \mathbf{X}}=(\mathbf{I}_m \otimes \mathbf{K}_{n,m} \otimes \mathbf{I}_m)(\mathrm{vec}_r(\mathbf{I}_m)\otimes \mathbf{I}_{mn})\frac{\partial \mathbf{M}}{\partial \mathbf{X}},
-\]
-откуда получаем:
-\begin{align}
-    \Big\|(\mathbf{I}_{mn}\otimes \mathbf{H}^\top)\frac{\partial (\mathbf{I}_m\otimes \mathbf{M}^\top)}{\partial \mathbf{X}}\Big\|_2 &\le \|\mathbf{H}\|_2 \|\mathrm{vec}_r(\mathbf{I}_m)\otimes \mathbf{I}_{mn}\|_2 \Big\|\frac{\partial \mathbf{M}}{\partial \mathbf{X}}\Big\|_2 =\\
-    &=\frac{\|\mathbf{X}\|_2}{\sqrt{n}\sigma_{\min}^3}\cdot \sqrt{m}\cdot 1= \frac{\sqrt{m}}{\sqrt{n}}\frac{\|\mathbf{X}\|_2}{\sigma_{\min}^3}.
-\end{align}
+% Третье слагаемое. По свойству~\ref{prop:kronecker_product_derivative} и Лемме~\ref{lemma:transposed_matrix_derivative} получаем:
+% \[
+%     \frac{\partial (\mathbf{I}_m\otimes \mathbf{M}^\top)}{\partial \mathbf{X}}=(\mathbf{I}_m \otimes \mathbf{K}_{n,m} \otimes \mathbf{I}_m)(\mathrm{vec}_r(\mathbf{I}_m)\otimes \mathbf{I}_{mn})\frac{\partial \mathbf{M}}{\partial \mathbf{X}},
+% \]
+% откуда получаем:
+% \begin{align}
+%     \Big\|(\mathbf{I}_{mn}\otimes \mathbf{H}^\top)\frac{\partial (\mathbf{I}_m\otimes \mathbf{M}^\top)}{\partial \mathbf{X}}\Big\|_2 &\le \|\mathbf{H}\|_2 \|\mathrm{vec}_r(\mathbf{I}_m)\otimes \mathbf{I}_{mn}\|_2 \Big\|\frac{\partial \mathbf{M}}{\partial \mathbf{X}}\Big\|_2 =\\
+%     &=\frac{\|\mathbf{X}\|_2}{\sqrt{n}\sigma_{\min}^3}\cdot \sqrt{m}\cdot 1= \frac{\sqrt{m}}{\sqrt{n}}\frac{\|\mathbf{X}\|_2}{\sigma_{\min}^3}.
+% \end{align}
 
-Суммируя все слагаемые с помощью свойства~\ref{prop:matrix_sum_norm}  получаем~\eqref{eq:ln_hess_norm_bound}:
-\begin{align}
-    \|\mathbf{H}_{\mathrm{LN}}(\mathbf{X})\|_2 &\le \frac{\|\mathbf{X}\|_2}{\sigma_{\min}^3} + \Big(\frac{\|\mathbf{X}\|_2^2}{\sqrt{n}\sigma_{\min}^3} + \frac{3\|\mathbf{X}\|_2^3}{n\sigma_{\min}^5}\Big) + \frac{\sqrt{m}}{\sqrt{n}}\frac{\|\mathbf{X}\|_2}{\sigma_{\min}^3} = \\
-    &= \frac{\|\mathbf{X}\|_2}{\sigma_{\min}^3}\Big(1+\sqrt{\tfrac{m}{n}}\Big) + \frac{\|\mathbf{X}\|_2^2}{\sqrt{n}\sigma_{\min}^3} + \frac{3\|\mathbf{X}\|_2^3}{n\sigma_{\min}^5}.
-\end{align}
-\end{proof}
+% Суммируя все слагаемые с помощью свойства~\ref{prop:matrix_sum_norm}  получаем~\eqref{eq:ln_hess_norm_bound}:
+% \begin{align}
+%     \|\mathbf{H}_{\mathrm{LN}}(\mathbf{X})\|_2 &\le \frac{\|\mathbf{X}\|_2}{\sigma_{\min}^3} + \Big(\frac{\|\mathbf{X}\|_2^2}{\sqrt{n}\sigma_{\min}^3} + \frac{3\|\mathbf{X}\|_2^3}{n\sigma_{\min}^5}\Big) + \frac{\sqrt{m}}{\sqrt{n}}\frac{\|\mathbf{X}\|_2}{\sigma_{\min}^3} = \\
+%     &= \frac{\|\mathbf{X}\|_2}{\sigma_{\min}^3}\Big(1+\sqrt{\tfrac{m}{n}}\Big) + \frac{\|\mathbf{X}\|_2^2}{\sqrt{n}\sigma_{\min}^3} + \frac{3\|\mathbf{X}\|_2^3}{n\sigma_{\min}^5}.
+% \end{align}
+% \end{proof}
 
-\begin{theorem}[\emph{Петров-Грабовой-Киселев}, Матрица Якоби трансформера]\label{thm:transformer_derivative}
+\begin{theorem}[\emph{Петров-Киселев-Грабовой}, Матрица Якоби трансформера]\label{thm:transformer_derivative}
 Для модели глубокого обучения архитектуры трансформер~\ref{eq:transformer} матрица Якоби~$\frac{\partial\mathbf{Z}}{\partial \mathbf{W}_i}$ вычисляется в следующем виде:
 \begin{align}
     \frac{\partial\mathbf{Z}}{\partial \mathbf{W}_i} &= \frac{\partial \text{LayerNorm}(\text{FFN}(\mathbf{Y}) + \mathbf{Y})}{\partial (\text{FFN}(\mathbf{Y}) + \mathbf{Y})} \frac{\partial (\text{FFN}(\mathbf{Y}) + \mathbf{Y})}{\partial \mathbf{W}_i},\qquad i \in \{1,2\},
@@ -1641,106 +1641,106 @@ $\mathbf{H}=\tfrac{\partial \mathbf{P}}{\partial \mathbf{X}}$, и $\mathbf{P}=\m
 \end{align}
 причем~$\frac{\partial \mathbf{Y}}{\partial\mathbf{W}_i} = \frac{\partial \text{LayerNorm}(\mathbf{F} (\mathbf{X}) + \mathbf{X})}{\partial (\mathbf{F} (\mathbf{X}) + \mathbf{X})} \frac{\partial \mathbf{F}(\mathbf{X})}{\partial \mathbf{W}_i},$ где $\frac{\partial \mathbf{F}(\mathbf{X})}{\partial \mathbf{W}_i}$ вычисляется при помощи Леммы~A.2 в работе~\cite{noci2022signalpropagationtransformerstheoretical}, а матрица~$\frac{\partial \text{LayerNorm}(\mathbf{F} (\mathbf{X}) + \mathbf{X})}{\partial (\mathbf{F} (\mathbf{X}) + \mathbf{X})}$ вычисляется согласно Теоремы~\ref{thm:layernorm_derivative}.
 \end{theorem}
-\begin{proof}
-В дальнейшем при доказательстве вводим следующие обозначения и предположения~$\mathbf{X} \in R^{L \times d_V}, \mathbf{Y} \in R^{L\times d_V}, \mathbf{W}_1 \in R^{d_V \times d_{ff}}, \text{ReLU}(\mathbf{Y\mathbf{W}_1}) \in R^{L \times d_{ff}}, \mathbf{W}_2 \in R^{d_{ff} \times d_V}.$
-Трансформер блок определен в выражении~\eqref{eq:transformer}, а именно:
-\begin{align}
-    \mathbf{Y} &= \text{LayerNorm}(\mathbf{F}(\mathbf{X}) + \mathbf{X}),\\
-    \mathbf{Z} &= \text{LayerNorm}(\text{FFN}(\mathbf{Y}) + \mathbf{Y}).
-\end{align}
+% \begin{proof}
+% В дальнейшем при доказательстве вводим следующие обозначения и предположения~$\mathbf{X} \in R^{L \times d_V}, \mathbf{Y} \in R^{L\times d_V}, \mathbf{W}_1 \in R^{d_V \times d_{ff}}, \text{ReLU}(\mathbf{Y\mathbf{W}_1}) \in R^{L \times d_{ff}}, \mathbf{W}_2 \in R^{d_{ff} \times d_V}.$
+% Трансформер блок определен в выражении~\eqref{eq:transformer}, а именно:
+% \begin{align}
+%     \mathbf{Y} &= \text{LayerNorm}(\mathbf{F}(\mathbf{X}) + \mathbf{X}),\\
+%     \mathbf{Z} &= \text{LayerNorm}(\text{FFN}(\mathbf{Y}) + \mathbf{Y}).
+% \end{align}
 
-Начнем вычисления матрицы Гессе для полного трансформера с матриц~$\frac{\partial\mathbf{Z}}{\partial \mathbf{W}_i},$ тогда для~$i \in \{1,2\}$ получаем:
-\begin{equation}
-    \frac{\partial\mathbf{Z}}{\partial \mathbf{W}_i} = \frac{\partial \text{LayerNorm}(\text{FFN}(\mathbf{Y}) + \mathbf{Y})}{\partial (\text{FFN}(\mathbf{Y}) + \mathbf{Y})} \frac{\partial (\text{FFN}(\mathbf{Y}) + \mathbf{Y})}{\partial \mathbf{W}_i},
-\end{equation}
-где
-\begin{equation}
-    \frac{\partial (\text{FFN}(\mathbf{Y}) + \mathbf{Y})}{\partial \mathbf{W}_i} = \frac{\partial (\text{FFN}(\mathbf{Y}))}{\partial \mathbf{W}_i} = \frac{\partial \mathbf{I}_L \sigma(\mathbf{Y}\mathbf{W}_1)\mathbf{W}_2 \mathbf{I}_{d_V}}{\partial \mathbf{W}_i},
-\end{equation}
-причем используя свойство~\ref{prop:matrix_product_derivative} об производной произведения матриц получаем:
-\begin{align}
-    \frac{\partial \mathbf{I}_L \sigma(\mathbf{Y}\mathbf{W}_1)\mathbf{W}_2 \mathbf{I}_{d_V}}{\partial \mathbf{W}_2} &= \sigma(\mathbf{Y} \mathbf{W}_1) \otimes \mathbf{I}_{d_V}\\
-    \frac{\partial \mathbf{I}_L \sigma(\mathbf{Y}\mathbf{W}_1)\mathbf{W}_2 \mathbf{I}_{d_V}}{\partial \mathbf{W}_1} &= \frac{\partial \sigma(\mathbf{Y}\mathbf{W}_1) \mathbf{W}_2}{\partial \sigma(\mathbf{Y}\mathbf{W}_1)} \frac{\partial \sigma(\mathbf{Y}\mathbf{W}_1)}{\partial \mathbf{Y}\mathbf{W}_1} \frac{\partial \mathbf{Y}\mathbf{W}_1}{\partial \mathbf{W}_1} =\\
-    &= \left(\mathbf{I}_L \otimes \mathbf{W}_2^\top \right) \frac{\partial \sigma(\mathbf{Y}\mathbf{W}_1)}{\partial \mathbf{Y}\mathbf{W}_1} \left( \mathbf{I}_L \otimes \mathbf{W}_1^\top\right).
-\end{align}
-Используя результаты Теоремы~\ref{theorem:relu_derivative_hessian} для производной оператора ReLU для матрицы~$\frac{\partial \sigma(\mathbf{Y}\mathbf{W}_1)}{\partial \mathbf{Y}\mathbf{W}_1}$ получаем следующее выражение:
-\begin{align}
-    \frac{\partial \mathbf{I}_L \sigma(\mathbf{Y}\mathbf{W}_1)\mathbf{W}_2 \mathbf{I}_{d_V}}{\partial \mathbf{W}_i} = \left(\mathbf{I}_L \otimes \mathbf{W}_2^\top \right) \mathrm{diag}\!\big(\mathrm{vec}_r(\mathbf{1}_{\{\mathbf{X}>0\}})\big) \left( \mathbf{Y} \otimes \mathbf{I}_{d_{ff}}\right).
-\end{align}
-Тогда в общем виде для~$i \in \{1, 2\}$ получаем следующее выражение: 
-\begin{equation}
-    \frac{\partial (\text{FFN}(\mathbf{Y}) + \mathbf{Y})}{\partial \mathbf{W}_i} = \begin{cases}
-        \left(\mathbf{I}_L \otimes \mathbf{W}_2^\top \right) \mathrm{diag}\!\big(\mathrm{vec}_r(\mathbf{1}_{\{\mathbf{X}>0\}})\big) \left( \mathbf{Y} \otimes \mathbf{I}_{d_{ff}}\right), \text{если}~i = 1 \\
-        \sigma(\mathbf{Y} \mathbf{W}_1) \otimes \mathbf{I}_{d_V}, \text{если}~i = 2
-    \end{cases}.
-\end{equation}
-Тогда весь блок тронсформера имеет следующую производную:
-\begin{equation}
-    \frac{\partial\mathbf{Z}}{\partial \mathbf{W}_i} = 
-    \begin{cases}
-        \frac{\partial \text{LayerNorm}(\text{FFN}(\mathbf{Y}) + \mathbf{Y})}{\partial (\text{FFN}(\mathbf{Y}) + \mathbf{Y})}\left(\mathbf{I}_L \otimes \mathbf{W}_2^\top \right) \mathrm{diag}\!\big(\mathrm{vec}_r(\mathbf{1}_{\{\mathbf{X}>0\}})\big) \left( \mathbf{Y} \otimes \mathbf{I}_{d_{ff}}\right), i = 1 \\
-        \frac{\partial \text{LayerNorm}(\text{FFN}(\mathbf{Y}) + \mathbf{Y})}{\partial (\text{FFN}(\mathbf{Y}) + \mathbf{Y})}\sigma(\mathbf{Y} \mathbf{W}_1) \otimes \mathbf{I}_{d_V}, i = 2
-    \end{cases}
-\end{equation}
-причем, согласно Теореме~\ref{thm:layernorm_derivative} об производной LayerNorm получаем следующее выражение в нашем случае:
-\begin{align}
-    &\frac{\partial\text{LayerNorm}(\text{FFN}(\mathbf{Y}) + \mathbf{Y})}{\partial (\text{FFN}(\mathbf{Y}) + \mathbf{Y})} =\\
-    &=( \mathbf{P}(\text{FFN}(\mathbf{Y}) + \mathbf{Y}) \otimes \mathbf{I}_{d_V}) \frac{\partial \mathbf{M}}{\partial (\text{FFN}(\mathbf{Y}) + \mathbf{Y})} +\\
-    &\quad+ (\mathbf{I}_L\otimes \mathbf{M}^\top)\frac{1}{\sqrt{d_V}}\left(-\mathbf{D}^{-1} \otimes \mathbf{D}^{-\top} \right) \Big(\mathbf{e}_1 \otimes \mathbf{e}_1 \quad \dots  \quad \mathbf{e}_L \otimes \mathbf{e}_L\Big) \cdot\\
-    &\qquad\cdot \left(\textit{diag}^{-1}(\mathrm{vec}_r^{\circ \frac{1}{2}}(\mathbf{M}^{\circ{2}}\cdot\mathbf{1}_{d_V}))\cdot (\mathbf{I}_L \otimes \mathbf{1}^T_{d_V})\cdot \textit{diag}(\mathrm{vec}_r (\mathbf{M}))\frac{\partial \mathbf{M}}{\partial (\text{FFN}(\mathbf{Y}) + \mathbf{Y})}\right),
-\end{align}
-где
-\begin{align}
-    \mathbf{M}(\text{FFN}(\mathbf{Y}) + \mathbf{Y}) &= ((\text{FFN}(\mathbf{Y}) + \mathbf{Y}) - \frac{1}{d_V}(\text{FFN}(\mathbf{Y}) + \mathbf{Y}) \mathbf{1}_{d_V \times d_V}),\\
-    \mathbf{P}((\text{FFN}(\mathbf{Y}) + \mathbf{Y})) &= \textit{diag}^{-1}(\sigma(\text{FFN}(\mathbf{Y}) + \mathbf{Y}),\\
-    \frac{\partial \mathbf{M}}{\partial(\text{FFN}(\mathbf{Y}) + \mathbf{Y})} &= (\mathbf{I}_L \otimes \mathbf{I}_{d_V}) - \frac{1}{d_V}(\mathbf{I}_L \otimes \mathbf{1}_{d_V \times d_V}),
-\end{align}
-где~$\sigma$ вычисляется согласно определению оператору LayerNorm.
+% Начнем вычисления матрицы Гессе для полного трансформера с матриц~$\frac{\partial\mathbf{Z}}{\partial \mathbf{W}_i},$ тогда для~$i \in \{1,2\}$ получаем:
+% \begin{equation}
+%     \frac{\partial\mathbf{Z}}{\partial \mathbf{W}_i} = \frac{\partial \text{LayerNorm}(\text{FFN}(\mathbf{Y}) + \mathbf{Y})}{\partial (\text{FFN}(\mathbf{Y}) + \mathbf{Y})} \frac{\partial (\text{FFN}(\mathbf{Y}) + \mathbf{Y})}{\partial \mathbf{W}_i},
+% \end{equation}
+% где
+% \begin{equation}
+%     \frac{\partial (\text{FFN}(\mathbf{Y}) + \mathbf{Y})}{\partial \mathbf{W}_i} = \frac{\partial (\text{FFN}(\mathbf{Y}))}{\partial \mathbf{W}_i} = \frac{\partial \mathbf{I}_L \sigma(\mathbf{Y}\mathbf{W}_1)\mathbf{W}_2 \mathbf{I}_{d_V}}{\partial \mathbf{W}_i},
+% \end{equation}
+% причем используя свойство~\ref{prop:matrix_product_derivative} об производной произведения матриц получаем:
+% \begin{align}
+%     \frac{\partial \mathbf{I}_L \sigma(\mathbf{Y}\mathbf{W}_1)\mathbf{W}_2 \mathbf{I}_{d_V}}{\partial \mathbf{W}_2} &= \sigma(\mathbf{Y} \mathbf{W}_1) \otimes \mathbf{I}_{d_V}\\
+%     \frac{\partial \mathbf{I}_L \sigma(\mathbf{Y}\mathbf{W}_1)\mathbf{W}_2 \mathbf{I}_{d_V}}{\partial \mathbf{W}_1} &= \frac{\partial \sigma(\mathbf{Y}\mathbf{W}_1) \mathbf{W}_2}{\partial \sigma(\mathbf{Y}\mathbf{W}_1)} \frac{\partial \sigma(\mathbf{Y}\mathbf{W}_1)}{\partial \mathbf{Y}\mathbf{W}_1} \frac{\partial \mathbf{Y}\mathbf{W}_1}{\partial \mathbf{W}_1} =\\
+%     &= \left(\mathbf{I}_L \otimes \mathbf{W}_2^\top \right) \frac{\partial \sigma(\mathbf{Y}\mathbf{W}_1)}{\partial \mathbf{Y}\mathbf{W}_1} \left( \mathbf{I}_L \otimes \mathbf{W}_1^\top\right).
+% \end{align}
+% Используя результаты Теоремы~\ref{theorem:relu_derivative_hessian} для производной оператора ReLU для матрицы~$\frac{\partial \sigma(\mathbf{Y}\mathbf{W}_1)}{\partial \mathbf{Y}\mathbf{W}_1}$ получаем следующее выражение:
+% \begin{align}
+%     \frac{\partial \mathbf{I}_L \sigma(\mathbf{Y}\mathbf{W}_1)\mathbf{W}_2 \mathbf{I}_{d_V}}{\partial \mathbf{W}_i} = \left(\mathbf{I}_L \otimes \mathbf{W}_2^\top \right) \mathrm{diag}\!\big(\mathrm{vec}_r(\mathbf{1}_{\{\mathbf{X}>0\}})\big) \left( \mathbf{Y} \otimes \mathbf{I}_{d_{ff}}\right).
+% \end{align}
+% Тогда в общем виде для~$i \in \{1, 2\}$ получаем следующее выражение: 
+% \begin{equation}
+%     \frac{\partial (\text{FFN}(\mathbf{Y}) + \mathbf{Y})}{\partial \mathbf{W}_i} = \begin{cases}
+%         \left(\mathbf{I}_L \otimes \mathbf{W}_2^\top \right) \mathrm{diag}\!\big(\mathrm{vec}_r(\mathbf{1}_{\{\mathbf{X}>0\}})\big) \left( \mathbf{Y} \otimes \mathbf{I}_{d_{ff}}\right), \text{если}~i = 1 \\
+%         \sigma(\mathbf{Y} \mathbf{W}_1) \otimes \mathbf{I}_{d_V}, \text{если}~i = 2
+%     \end{cases}.
+% \end{equation}
+% Тогда весь блок тронсформера имеет следующую производную:
+% \begin{equation}
+%     \frac{\partial\mathbf{Z}}{\partial \mathbf{W}_i} = 
+%     \begin{cases}
+%         \frac{\partial \text{LayerNorm}(\text{FFN}(\mathbf{Y}) + \mathbf{Y})}{\partial (\text{FFN}(\mathbf{Y}) + \mathbf{Y})}\left(\mathbf{I}_L \otimes \mathbf{W}_2^\top \right) \mathrm{diag}\!\big(\mathrm{vec}_r(\mathbf{1}_{\{\mathbf{X}>0\}})\big) \left( \mathbf{Y} \otimes \mathbf{I}_{d_{ff}}\right), i = 1 \\
+%         \frac{\partial \text{LayerNorm}(\text{FFN}(\mathbf{Y}) + \mathbf{Y})}{\partial (\text{FFN}(\mathbf{Y}) + \mathbf{Y})}\sigma(\mathbf{Y} \mathbf{W}_1) \otimes \mathbf{I}_{d_V}, i = 2
+%     \end{cases}
+% \end{equation}
+% причем, согласно Теореме~\ref{thm:layernorm_derivative} об производной LayerNorm получаем следующее выражение в нашем случае:
+% \begin{align}
+%     &\frac{\partial\text{LayerNorm}(\text{FFN}(\mathbf{Y}) + \mathbf{Y})}{\partial (\text{FFN}(\mathbf{Y}) + \mathbf{Y})} =\\
+%     &=( \mathbf{P}(\text{FFN}(\mathbf{Y}) + \mathbf{Y}) \otimes \mathbf{I}_{d_V}) \frac{\partial \mathbf{M}}{\partial (\text{FFN}(\mathbf{Y}) + \mathbf{Y})} +\\
+%     &\quad+ (\mathbf{I}_L\otimes \mathbf{M}^\top)\frac{1}{\sqrt{d_V}}\left(-\mathbf{D}^{-1} \otimes \mathbf{D}^{-\top} \right) \Big(\mathbf{e}_1 \otimes \mathbf{e}_1 \quad \dots  \quad \mathbf{e}_L \otimes \mathbf{e}_L\Big) \cdot\\
+%     &\qquad\cdot \left(\textit{diag}^{-1}(\mathrm{vec}_r^{\circ \frac{1}{2}}(\mathbf{M}^{\circ{2}}\cdot\mathbf{1}_{d_V}))\cdot (\mathbf{I}_L \otimes \mathbf{1}^T_{d_V})\cdot \textit{diag}(\mathrm{vec}_r (\mathbf{M}))\frac{\partial \mathbf{M}}{\partial (\text{FFN}(\mathbf{Y}) + \mathbf{Y})}\right),
+% \end{align}
+% где
+% \begin{align}
+%     \mathbf{M}(\text{FFN}(\mathbf{Y}) + \mathbf{Y}) &= ((\text{FFN}(\mathbf{Y}) + \mathbf{Y}) - \frac{1}{d_V}(\text{FFN}(\mathbf{Y}) + \mathbf{Y}) \mathbf{1}_{d_V \times d_V}),\\
+%     \mathbf{P}((\text{FFN}(\mathbf{Y}) + \mathbf{Y})) &= \textit{diag}^{-1}(\sigma(\text{FFN}(\mathbf{Y}) + \mathbf{Y}),\\
+%     \frac{\partial \mathbf{M}}{\partial(\text{FFN}(\mathbf{Y}) + \mathbf{Y})} &= (\mathbf{I}_L \otimes \mathbf{I}_{d_V}) - \frac{1}{d_V}(\mathbf{I}_L \otimes \mathbf{1}_{d_V \times d_V}),
+% \end{align}
+% где~$\sigma$ вычисляется согласно определению оператору LayerNorm.
 
-Далее, перейдем к вычислению матриц Гессе~$\frac{\partial\mathbf{Z}}{\partial \mathbf{W}_i}$ для~$i \in \{ K, Q, V\},$ где получаем:
-\begin{align}
-    \frac{\partial\mathbf{Z}}{\partial \mathbf{W}_i} = \frac{\partial \text{LayerNorm}(\text{FFN}(\mathbf{Y}) + \mathbf{Y})}{\partial (\text{FFN}(\mathbf{Y}) + \mathbf{Y})} \frac{\partial (\text{FFN}(\mathbf{Y}) + \mathbf{Y})}{\partial \mathbf{Y}} \frac{\partial \mathbf{Y}}{\partial \mathbf{W}_i},
-\end{align}
-где используя свойство~\ref{prop:matrix_product_derivative} и результат Теоремы~\ref{theorem:relu_derivative_hessian} получаем:
-\begin{align}
-    \frac{\partial (\text{FFN}(\mathbf{Y}) + \mathbf{Y})}{\partial \mathbf{Y}} &= \frac{\partial \text{FFN}(\mathbf{Y}) }{\partial \mathbf{Y}} + \frac{\partial \mathbf{Y}}{\partial \mathbf{Y}} =\\
-    &= \frac{\partial \text{FFN}(\mathbf{Y}) }{\partial \mathbf{Y}} + \left( \mathbf{I}_L \otimes \mathbf{I}_{d_V}\right) =\\
-    &=\frac{\partial \sigma(\mathbf{Y} \mathbf{W}_1) \mathbf{W}_2}{\partial \mathbf{Y}} +\left( \mathbf{I}_L \otimes \mathbf{I}_{d_V}\right)=\\ 
-    &= \left( \mathbf{I}_L \otimes \mathbf{W}_2^\top\right) \frac{\partial \sigma (\mathbf{Y} \mathbf{W}_1)}{\partial \mathbf{Y}\mathbf{W}_1} \frac{\partial \mathbf{Y}\mathbf{W}_1}{\partial \mathbf{Y}} + \left( \mathbf{I}_L \otimes \mathbf{I}_{d_V}\right) = \\
-    & = \left( \mathbf{I}_L \otimes \mathbf{W}_2^\top\right) \mathrm{diag}\!\big(\mathrm{vec}_r(\mathbf{1}_{\{\mathbf{X}>0\}})\big) \left( \mathbf{I}_L \otimes \mathbf{W}_1^\top \right) + \left( \mathbf{I}_L \otimes \mathbf{I}_{d_V}\right).
-\end{align}
-Для вычисления матрицы~$\frac{\partial \mathbf{Y}}{\partial \mathbf{W}_i}$ используем результат Леммы~A.2 с работы~\cite{noci2022signalpropagationtransformerstheoretical}:
-\begin{align}
-    \frac{\partial \mathbf{F}}{\partial \mathbf{W}_V} &= \text{softmax}\left(\frac{\mathbf{X}\mathbf{W}_Q\mathbf{W}_{K}^{\top}\mathbf{X}^\top}{\sqrt{d_K}}\right) \mathbf{X} \otimes \mathbf{I}_{d_V}\\
-    \frac{\partial \mathbf{F}}{\partial \mathbf{W}_Q} &= \left(\mathbf{I}_L \otimes \mathbf{W}_{V}^{\top}\mathbf{X}^\top\right) \frac{\partial \mathbf{A}}{\partial \mathbf{M}} \left(\frac{\mathbf{X} \otimes \mathbf{X}\mathbf{W}_K}{\sqrt{d_K}}\right),
-\end{align}
-где
-\begin{equation}
-    \frac{\partial \mathbf{A}}{\partial \mathbf{M}} = \text{blockdiag}\left(\frac{\partial \mathbf{A}_i}{\partial \mathbf{M}_i^\top}\right),
-\end{equation}
-причем данное выражение сильно упрощается используя свойства матрицы~$\mathbf{A}$:
-\begin{align}
-    \frac{\partial \mathbf{A}_i}{\partial \mathbf{M}_i^\top} = \text{diag}(\mathbf{A}_i) - \mathbf{A}_i\mathbf{A}_i^\top,
-\end{align}
-где~$\mathbf{A}_i$ является $i$-й строкой матрицы~$\mathbf{A}$ в формате вектора. Итого в условия равномерного внимания (англ. uniform-attention) данное выражение упрощается до:
-\begin{equation}
-    \frac{\partial \mathbf{A}}{\partial \mathbf{M}} = \frac{1}{n}\mathbf{I}_L \otimes \left(\mathbf{I}_L - \frac{1}{L}\mathbf{1}_{L \times L}\right)
-\end{equation}
-Аналогично, используя Лемму~\ref{lemma:transposed_matrix_derivative} вычисляем производну относительно матрицы~$\mathbf{W}_K$:  
-\begin{align}
-    \frac{\partial \mathbf{F}}{\partial \mathbf{W}_K} &= \left(\mathbf{I}_L \otimes \mathbf{W}_{V}^{\top}\mathbf{X}^\top\right) \frac{\partial \mathbf{A}}{\partial \mathbf{M}} \left(\frac{(\mathbf{X} \mathbf{W}_Q \otimes \mathbf{X})\mathbf{K}_{d_V d_K}}{\sqrt{d_k}}\right).
-\end{align}
-Получаем, что матрица~$\frac{\partial \mathbf{Y}}{\partial\mathbf{W}_i}$ для~$i \in \{ K, Q, V\}$ вычисляется следующим образом:
-\begin{align}
-    \frac{\partial\mathbf{Y}}{\partial\mathbf{W}_i} &= \frac{\partial \text{LayerNorm}(\mathbf{F} (\mathbf{X}) + \mathbf{X})}{\partial \mathbf{W}_i} =\\
-    &=\frac{\partial\text{LayerNorm}(\mathbf{F} (\mathbf{X}) + \mathbf{X})}{\partial (\mathbf{F} (\mathbf{X}) + \mathbf{X})} \frac{\partial \mathbf{F}(\mathbf{X})}{\partial \mathbf{W}_i},
-\end{align}
-где~$\frac{\partial \mathbf{F}(\mathbf{X})}{\partial \mathbf{W}_i}$ вычисляется согласно лемме~A.2 из работы~\cite{noci2022signalpropagationtransformerstheoretical}, а матрица~$\frac{\partial \text{LayerNorm}(\mathbf{F} (\mathbf{X}) + \mathbf{X})}{\partial (\mathbf{F} (\mathbf{X}) + \mathbf{X})}$ вычисляется согласно теореме~\ref{thm:layernorm_derivative}.
-\end{proof}
+% Далее, перейдем к вычислению матриц Гессе~$\frac{\partial\mathbf{Z}}{\partial \mathbf{W}_i}$ для~$i \in \{ K, Q, V\},$ где получаем:
+% \begin{align}
+%     \frac{\partial\mathbf{Z}}{\partial \mathbf{W}_i} = \frac{\partial \text{LayerNorm}(\text{FFN}(\mathbf{Y}) + \mathbf{Y})}{\partial (\text{FFN}(\mathbf{Y}) + \mathbf{Y})} \frac{\partial (\text{FFN}(\mathbf{Y}) + \mathbf{Y})}{\partial \mathbf{Y}} \frac{\partial \mathbf{Y}}{\partial \mathbf{W}_i},
+% \end{align}
+% где используя свойство~\ref{prop:matrix_product_derivative} и результат Теоремы~\ref{theorem:relu_derivative_hessian} получаем:
+% \begin{align}
+%     \frac{\partial (\text{FFN}(\mathbf{Y}) + \mathbf{Y})}{\partial \mathbf{Y}} &= \frac{\partial \text{FFN}(\mathbf{Y}) }{\partial \mathbf{Y}} + \frac{\partial \mathbf{Y}}{\partial \mathbf{Y}} =\\
+%     &= \frac{\partial \text{FFN}(\mathbf{Y}) }{\partial \mathbf{Y}} + \left( \mathbf{I}_L \otimes \mathbf{I}_{d_V}\right) =\\
+%     &=\frac{\partial \sigma(\mathbf{Y} \mathbf{W}_1) \mathbf{W}_2}{\partial \mathbf{Y}} +\left( \mathbf{I}_L \otimes \mathbf{I}_{d_V}\right)=\\ 
+%     &= \left( \mathbf{I}_L \otimes \mathbf{W}_2^\top\right) \frac{\partial \sigma (\mathbf{Y} \mathbf{W}_1)}{\partial \mathbf{Y}\mathbf{W}_1} \frac{\partial \mathbf{Y}\mathbf{W}_1}{\partial \mathbf{Y}} + \left( \mathbf{I}_L \otimes \mathbf{I}_{d_V}\right) = \\
+%     & = \left( \mathbf{I}_L \otimes \mathbf{W}_2^\top\right) \mathrm{diag}\!\big(\mathrm{vec}_r(\mathbf{1}_{\{\mathbf{X}>0\}})\big) \left( \mathbf{I}_L \otimes \mathbf{W}_1^\top \right) + \left( \mathbf{I}_L \otimes \mathbf{I}_{d_V}\right).
+% \end{align}
+% Для вычисления матрицы~$\frac{\partial \mathbf{Y}}{\partial \mathbf{W}_i}$ используем результат Леммы~A.2 с работы~\cite{noci2022signalpropagationtransformerstheoretical}:
+% \begin{align}
+%     \frac{\partial \mathbf{F}}{\partial \mathbf{W}_V} &= \text{softmax}\left(\frac{\mathbf{X}\mathbf{W}_Q\mathbf{W}_{K}^{\top}\mathbf{X}^\top}{\sqrt{d_K}}\right) \mathbf{X} \otimes \mathbf{I}_{d_V}\\
+%     \frac{\partial \mathbf{F}}{\partial \mathbf{W}_Q} &= \left(\mathbf{I}_L \otimes \mathbf{W}_{V}^{\top}\mathbf{X}^\top\right) \frac{\partial \mathbf{A}}{\partial \mathbf{M}} \left(\frac{\mathbf{X} \otimes \mathbf{X}\mathbf{W}_K}{\sqrt{d_K}}\right),
+% \end{align}
+% где
+% \begin{equation}
+%     \frac{\partial \mathbf{A}}{\partial \mathbf{M}} = \text{blockdiag}\left(\frac{\partial \mathbf{A}_i}{\partial \mathbf{M}_i^\top}\right),
+% \end{equation}
+% причем данное выражение сильно упрощается используя свойства матрицы~$\mathbf{A}$:
+% \begin{align}
+%     \frac{\partial \mathbf{A}_i}{\partial \mathbf{M}_i^\top} = \text{diag}(\mathbf{A}_i) - \mathbf{A}_i\mathbf{A}_i^\top,
+% \end{align}
+% где~$\mathbf{A}_i$ является $i$-й строкой матрицы~$\mathbf{A}$ в формате вектора. Итого в условия равномерного внимания (англ. uniform-attention) данное выражение упрощается до:
+% \begin{equation}
+%     \frac{\partial \mathbf{A}}{\partial \mathbf{M}} = \frac{1}{n}\mathbf{I}_L \otimes \left(\mathbf{I}_L - \frac{1}{L}\mathbf{1}_{L \times L}\right)
+% \end{equation}
+% Аналогично, используя Лемму~\ref{lemma:transposed_matrix_derivative} вычисляем производну относительно матрицы~$\mathbf{W}_K$:  
+% \begin{align}
+%     \frac{\partial \mathbf{F}}{\partial \mathbf{W}_K} &= \left(\mathbf{I}_L \otimes \mathbf{W}_{V}^{\top}\mathbf{X}^\top\right) \frac{\partial \mathbf{A}}{\partial \mathbf{M}} \left(\frac{(\mathbf{X} \mathbf{W}_Q \otimes \mathbf{X})\mathbf{K}_{d_V d_K}}{\sqrt{d_k}}\right).
+% \end{align}
+% Получаем, что матрица~$\frac{\partial \mathbf{Y}}{\partial\mathbf{W}_i}$ для~$i \in \{ K, Q, V\}$ вычисляется следующим образом:
+% \begin{align}
+%     \frac{\partial\mathbf{Y}}{\partial\mathbf{W}_i} &= \frac{\partial \text{LayerNorm}(\mathbf{F} (\mathbf{X}) + \mathbf{X})}{\partial \mathbf{W}_i} =\\
+%     &=\frac{\partial\text{LayerNorm}(\mathbf{F} (\mathbf{X}) + \mathbf{X})}{\partial (\mathbf{F} (\mathbf{X}) + \mathbf{X})} \frac{\partial \mathbf{F}(\mathbf{X})}{\partial \mathbf{W}_i},
+% \end{align}
+% где~$\frac{\partial \mathbf{F}(\mathbf{X})}{\partial \mathbf{W}_i}$ вычисляется согласно лемме~A.2 из работы~\cite{noci2022signalpropagationtransformerstheoretical}, а матрица~$\frac{\partial \text{LayerNorm}(\mathbf{F} (\mathbf{X}) + \mathbf{X})}{\partial (\mathbf{F} (\mathbf{X}) + \mathbf{X})}$ вычисляется согласно теореме~\ref{thm:layernorm_derivative}.
+% \end{proof}
 
 В теореме~\ref{thm:transformer_derivative} получен вид матрицы Якоби для полного блока трансформера. Переходим к вычислению матрицы Гессе, который формулируется в теореме~\ref{thm:transformer_hessian}.
 
-\begin{theorem}[\emph{Петров-Грабовой-Киселев}, Матрица Гессе трансформера]\label{thm:transformer_hessian}
+\begin{theorem}[\emph{Петров-Киселев-Грабовой}, Матрица Гессе трансформера]\label{thm:transformer_hessian}
 Пусть заданы матрицы параметров модели трансформера~$\mathbf{X} \in \mathbb{R}^{L \times d_V}$, $\mathbf{Y} \in \mathbb{R}^{L \times d_V}$, $\mathbf{W}_1 \in \mathbb{R}^{d_V \times d_{ff}}$, $\mathbf{W}_2 \in \mathbb{R}^{d_{ff} \times d_V}$, $\mathbf{W}_Q, \mathbf{W}_K \in \mathbb{R}^{d_V \times d_K}$, $\mathbf{W}_V \in \mathbb{R}^{d_V \times d_V},$
 где блок трансформатор описан в виде следующих матричнозначных функций:
 \[
@@ -1813,105 +1813,105 @@ $\mathbf{H}=\tfrac{\partial \mathbf{P}}{\partial \mathbf{X}}$, и $\mathbf{P}=\m
 \]
 так как, во первых единственные нелинейности с потенциально ненулевым вторым дифференциалом является оператор LayerNorm, для которого получены матрицы~$\mathbf{H}_Z,\mathbf{H}_Y$ в рамках Теоремы~\ref{thm:layernorm_second_derivative} и которые являются симметричными по построению и оператор ReLU, для которого матрица Гессе является нулевой согласно Теоремы~\ref{theorem:relu_derivative_hessian}, а во вторых все другие отображения являются линейными, а следовательно согласно Леммы~\ref{lemma:matrix_funcs_product_derivative} и свойства производной произведения Кронекера их частные производные являются коммутативными почти всюду.
 \end{theorem}
-\begin{proof}
-Вычислим производной матрицы Якоби с Теоремы~\ref{thm:transformer_derivative} используя Лемму~\ref{lemma:matrix_funcs_product_derivative} об производной матричного умножения, также свойство производной произведения Кронекера~\ref{prop:kronecker_product_derivative}, также Лемму~\ref{lemma:transposed_matrix_derivative} об производной транспонированной матрицы, Лемму~\ref{lemma:identification_theorem_vec_r} и Теорему~\ref{theorem:relu_derivative_hessian}. Для удобства доказательства разделим его на 4 шага.
+% \begin{proof}
+% Вычислим производной матрицы Якоби с Теоремы~\ref{thm:transformer_derivative} используя Лемму~\ref{lemma:matrix_funcs_product_derivative} об производной матричного умножения, также свойство производной произведения Кронекера~\ref{prop:kronecker_product_derivative}, также Лемму~\ref{lemma:transposed_matrix_derivative} об производной транспонированной матрицы, Лемму~\ref{lemma:identification_theorem_vec_r} и Теорему~\ref{theorem:relu_derivative_hessian}. Для удобства доказательства разделим его на 4 шага.
 
-На 1-м шаге для всех $i \in \{1,2,K,Q,V\}$ получаем:
-\begin{align}
-    \frac{\partial \mathbf{Z}}{\partial \mathbf{W}_i} = \mathbf{J}_Z  \mathbf{B}_i,\qquad\mathbf{J}_Z \in \mathbb{R}^{L d_V \times L d_V},
-\end{align}
-где $\mathbf{B}_i := \frac{\partial \mathbf{S}}{\partial \mathbf{W}_i}$ задается следующим образом:
-\begin{align}
-    \mathbf{B}_1 &= (\mathbf{I}_L \otimes \mathbf{W}_2^\top) \mathbf{D}_\sigma (\mathbf{Y} \otimes \mathbf{I}_{d_{ff}}) \in \mathbb{R}^{L d_V \times n_1}, \\
-    \mathbf{B}_2 &= \sigma(\mathbf{Y}\mathbf{W}_1) \otimes \mathbf{I}_{d_V} \in \mathbb{R}^{L d_V \times n_2},\\
-    \mathbf{B}_k &= \mathbf{J}_{SY} \mathbf{J}_Y \mathbf{G}_k \in \mathbb{R}^{L d_V \times n_k},\qquad k \in \{K,Q,V\},
-\end{align}
-где матрица~$\mathbf{J}_{SY}$ вычисляется следующим образом:
-\begin{align}
-    \mathbf{J}_{SY} = \frac{\partial \mathbf{S}}{\partial \mathbf{Y}} = (\mathbf{I}_L \otimes \mathbf{W}_2^\top)\mathbf{D}_\sigma(\mathbf{I}_L \otimes \mathbf{W}_1^\top) + (\mathbf{I}_L \otimes \mathbf{I}_{d_V}) \in \mathbb{R}^{L d_V \times L d_V},
-\end{align}
-матрица имеет следующую размерность~$\mathbf{J}_Y \in \mathbb{R}^{L d_V \times L d_V},$ а матрица~$\mathbf{G}_k$ описана в Теореме~\ref{thm:transformer_derivative}.
-Используя Лемму~\ref{lemma:matrix_funcs_product_derivative} и Теорему~\ref{thm:layernorm_second_derivative} получаем выражение для блока матрицы Гессе:
-\begin{align}
-     \frac{\partial^2 \mathbf{Z}}{\partial \mathbf{W}_i \partial \mathbf{W}_j} &= \left( \mathbf{J}_Z \otimes \mathbf{I}_{n_i} \right) \boldsymbol{\xi}_{ij}  + \left( \mathbf{I}_{L d_V} \otimes \mathbf{B}_i^\top \right) \mathbf{H}_Z \mathbf{B}_j,\\
-     \boldsymbol{\xi}_{ij} &:= \frac{\partial \mathbf{B}_i}{\partial \mathbf{W}_j} \in \mathbb{R}^{(L d_V \cdot n_i) \times n_j}.
-\end{align}
-
-
-На 2-м шаге вычисляем размерности и вид матриц ~$\mathbf{B}_i.$ Используя результаты Теорем~\ref{thm:transformer_derivative} и~\ref{theorem:relu_derivative_hessian} получаем следующие выражения:
-\begin{align}
-    \mathbf{B}_1 &= (\mathbf{I}_L \otimes \mathbf{W}_2^\top) \mathbf{D}_\sigma (\mathbf{Y} \otimes \mathbf{I}_{d_{ff}}) \in \mathbb{R}^{L d_V \times n_1}, \\
-    \mathbf{B}_2 &= \sigma(\mathbf{Y}\mathbf{W}_1) \otimes \mathbf{I}_{d_V} \in \mathbb{R}^{L d_V \times n_2},
-\end{align}
-где матрица~$\mathbf{D}_\sigma \in \mathbb{R}^{L d_{ff} \times L d_{ff}}$, матрица~$(\mathbf{Y} \otimes \mathbf{I}_{d_{ff}}) \in \mathbb{R}^{L d_{ff} \times d_V d_{ff}}$.
-Тогда для всех матриц~$\mathbf{B}_k,$ где~$k \in \{K,Q,V\}$ получаем:
-\begin{align}
-    \mathbf{B}_k = \mathbf{J}_{SY} \mathbf{J}_Y  \mathbf{G}_k \in \mathbb{R}^{L d_V \times n_k}.
-\end{align}
-
-На 3-м шаге вычисляем вычисляем матрицы~$\boldsymbol{\xi}_{ij}$ для всех пар~$(i, j)$.
-
-Начнем вычисления с пар FFN. Матрица~$\mathbf{B}_1$ не зависит от матрицы~$\mathbf{W}_1$, следовательно,~$\boldsymbol{\xi}_{11} = \mathbf{0}$. Аналогично, матрица~$\mathbf{B}_2$ не зависит от матрицы~$\mathbf{W}_2$, следовательно,~$\boldsymbol{\xi}_{22} = \mathbf{0}$. Вычислим~$\frac{\partial \mathbf{B}_2}{\partial \mathbf{W}_1}$ используя свойство~\ref{prop:kronecker_product_derivative} производной произведения Кронекера для $\frac{\partial (\mathbf{X} \otimes \mathbf{Y})}{\partial \mathbf{X}},$ где $\mathbf{X}=\sigma(\mathbf{Y}\mathbf{W}_1)$ и $\mathbf{Y}=\mathbf{I}_{d_V}$:
-\begin{align}
-    \frac{\partial \mathbf{B}_2}{\partial \mathbf{W}_1}=\left( \mathbf{I}_L \otimes \mathbf{K}_{d_V, d_{ff}} \otimes \mathbf{I}_{d_V} \right)\left( \mathbf{I}_{L d_{ff}} \otimes \mathrm{vec}_r(\mathbf{I}_{d_V}) \right)\frac{\partial \mathrm{vec}_r(\sigma(\mathbf{Y}\mathbf{W}_1))}{\partial \mathbf{W}_1},
-\end{align}
-далее используя то, что $\frac{\partial\mathrm{vec}_r(\sigma(\mathbf{Y}\mathbf{W}_1))}{\partial \mathbf{W}_1} = \mathbf{D}_\sigma(\mathbf{Y} \otimes \mathbf{I}_{d_{ff}})$ получаем оценку на~$\boldsymbol{\xi}_{12}:$
-\begin{align}
-    \boldsymbol{\xi}_{12}= \left( \mathbf{I}_L \otimes \mathbf{K}_{d_V, d_{ff}} \otimes \mathbf{I}_{d_V} \right) \left( \mathbf{I}_{L d_{ff}} \otimes \mathrm{vec}_r(\mathbf{I}_{d_V}) \right)\left( \mathbf{D}_\sigma  (\mathbf{Y} \otimes \mathbf{I}_{d_{ff}}) \right).
-\end{align}
-Вычислим~$\frac{\partial \mathbf{B}_1}{\partial \mathbf{W}_2}$ используя Лемму~\ref{lemma:matrix_funcs_product_derivative}, где в качестве левого множителя выступает~$(\mathbf{I}_L \otimes \mathbf{W}_2^\top)$:
-\begin{align}
-    \frac{\partial\mathbf{B}_1}{\partial \mathbf{W}_2}= \left( \mathbf{I}_{L d_V} \otimes \left( (\mathbf{Y} \otimes \mathbf{I}_{d_{ff}})^\top \mathbf{D}_\sigma^\top \right) \right) \frac{\partial(\mathbf{I}_L \otimes \mathbf{W}_2^\top)}{\partial \mathbf{W}_2},
-\end{align}
-далее используя свойство~\ref{prop:kronecker_product_derivative} об производной произведения Кронекера и Лемму~\ref{lemma:transposed_matrix_derivative} об производной транспонированной матрицы получем:
-\begin{align}
-    \frac{\partial(\mathbf{I}_L \otimes \mathbf{W}_2^\top)}{\partial \mathbf{W}_2}= \left( \mathbf{I}_L \otimes \mathbf{K}_{d_V, L} \otimes \mathbf{I}_{d_{ff}} \right) \left( \mathrm{vec}_r(\mathbf{I}_L) \otimes \mathbf{I}_{d_V d_{ff}} \right) \mathbf{K}_{d_{ff}, d_V}.
-\end{align}
-Далее собирая все полученные матрицы, получаем оценку на~$\boldsymbol{\xi}_{21}:$
-\begin{align}
-    \boldsymbol{\xi}_{21} = \left( \mathbf{I}_{L d_V} \otimes \left( (\mathbf{Y} \otimes \mathbf{I}_{d_{ff}})^\top \mathbf{D}_\sigma^\top \right) \right)\left( \mathbf{I}_L \otimes \mathbf{K}_{d_V, L} \otimes \mathbf{I}_{d_{ff}} \right) \left( \mathrm{vec}_r(\mathbf{I}_L) \otimes \mathbf{I}_{d_V d_{ff}} \right) \mathbf{K}_{d_{ff}, d_V}.
-\end{align}
-
-Переходим к оценке пар FFN с параметрами слоев внимания для всех $k \in \{K, Q, V\}$. Для матрицы~$\mathbf{B}_1 = (\mathbf{I}_L \otimes \mathbf{W}_2^\top) \mathbf{D}_\sigma (\mathbf{Y} \otimes \mathbf{I}_{d_{ff}})$ установим, что почти всюду матрица~$\frac{\partial \mathbf{D}_\sigma}{\partial \mathbf{Y}}=\mathbf{0}$ равна нулю согласно теореме~\ref{theorem:relu_derivative_hessian}. Следовательно, только последний множитель зависит от матрицы~$\mathbf{W}_k$. Используя лемму~\ref{lemma:matrix_funcs_product_derivative}, где первый множитель является константой, а также цепное правило относительно переменной~$\mathbf{Y}$, получаем:
-\begin{align}
-    \frac{\partial(\mathbf{Y} \otimes \mathbf{I}_{d_{ff}})}{\partial \mathbf{W}_k} = \left( \frac{\partial (\mathbf{Y} \otimes \mathbf{I}_{d_{ff}})}{\partial \mathbf{Y}} \right) \frac{\partial\mathbf{Y}}{\partial \mathbf{W}_k},
-\end{align}
-причем согласно свойства~\ref{prop:kronecker_product_derivative} об производной произведения Кронекера с матрицей~$\mathbf{X} = \mathbf{Y}$ и матрицей~$\mathbf{Y}=\mathbf{I}_{d_{ff}}$ получаем:
-\begin{align}
-    \frac{\partial (\mathbf{Y} \otimes \mathbf{I}_{d_{ff}})}{\partial \mathbf{Y}} = \left( \mathbf{I}_L \otimes \mathbf{K}_{d_{ff}, d_V} \otimes \mathbf{I}_{d_{ff}} \right)\left( \mathbf{I}_{L d_V} \otimes \mathrm{vec}_r(\mathbf{I}_{d_{ff}}) \right),
-\end{align}
-а в свою очередь согласно Теоремы~\ref{thm:transformer_derivative} матрица~$\frac{\partial\mathbf{Y}}{\partial \mathbf{W}_k} = \mathbf{J}_Y \mathbf{G}_k.$ Тогда получаем оценку на матрицу~$\boldsymbol{\xi}_{1k}$ следующего вида:
-\begin{align}
-    \boldsymbol{\xi}_{1k} = \left( (\mathbf{I}_L \otimes \mathbf{W}_2^\top) \mathbf{D}_\sigma \otimes \mathbf{I}_{n_k}\right)\left( \mathbf{I}_L \otimes \mathbf{K}_{d_{ff}, d_V} \otimes \mathbf{I}_{d_{ff}} \right)\left( \mathbf{I}_{L d_V} \otimes \mathrm{vec}_r(\mathbf{I}_{d_{ff}}) \right) \left( \mathbf{J}_Y \mathbf{G}_k \right).
-\end{align}
-Перейдем к матрице~$\mathbf{B}_2 = \sigma(\mathbf{Y}\mathbf{W}_1) \otimes \mathbf{I}_{d_V},$ заметим, что только первый множитель произведения Кронекера зависит от матриц~$\mathbf{W}_k,$ а следовательно используя свойство~\ref{prop:kronecker_product_derivative} производной произведения Кронекера и цепное правило получим следующее выражение:
-\[
-    \boldsymbol{\xi}_{2k} = \left( \mathbf{I}_L \otimes \mathbf{K}_{d_V, d_{ff}} \otimes \mathbf{I}_{d_V} \right)\left( \mathbf{I}_{L d_{ff}} \otimes \mathrm{vec}_r(\mathbf{I}_{d_V}) \right)\left( \mathbf{D}_\sigma (\mathbf{I}_L \otimes \mathbf{W}_1^\top)  \mathbf{J}_Y \mathbf{G}_k \right),
-\]
-где использовано свойство~\ref{prop:matrix_product_derivative} для преобразования~$\frac{\partial (\mathbf{Y}\mathbf{W}_1)}{\partial \mathbf{Y}} = \mathbf{I}_L \otimes \mathbf{W}_1^\top,$ а также Теорема~\ref{theorem:relu_derivative_hessian} для выражения $\frac{\partial \sigma(\cdot)}{\partial (\cdot)} = \mathbf{D}_\sigma,$ а также согласно Теореме~\ref{thm:transformer_derivative} матрица~$\frac{\partial\mathbf{Y}}{\partial \mathbf{W}_k} = \mathbf{J}_Y \mathbf{G}_k.$
-
-Перейдем к оценке пар слоев внимания~$(k,\ell)$ with $k,\ell \in \{K,Q,V\}$.
-Рассмотрим матрицу~$\mathbf{B}_k = \mathbf{J}_{SY} \mathbf{J}_Y  \mathbf{G}_k,$ заметим, что почти всюду~$\frac{\partial \mathbf{J}_{SY}}{\partial \mathbf{Y}} = \mathbf{0},$ так как матричнозначная функция~$\mathbf{D}_\sigma$ является кусочно-постоянной, согласно Теоремы~\ref{theorem:relu_derivative_hessian}, а следовательно используя Лемму~\ref{lemma:matrix_funcs_product_derivative} с матрицей~$\mathbf{A}(\cdot)=\mathbf{J}_Y,$ и с матрицей~$\mathbf{B}(\cdot)=\mathbf{G}_k$ получаем:
-\begin{align}
-    \frac{\partial\mathbf{B}_k}{\partial \mathbf{W}_\ell}= (\mathbf{J}_{SY} \otimes \mathbf{I}_{n_k}) \frac{\partial(\mathbf{J}_Y \mathbf{G}_k)}{\partial \mathbf{W}_\ell},
-\end{align}
-далее вычислим матрицу~$\frac{\partial(\mathbf{J}_Y \mathbf{G}_k)}{\partial \mathbf{W}_\ell}$ используя свойство производной матричного произведения:
-\begin{align}
-    \frac{\partial(\mathbf{J}_Y \mathbf{G}_k)}{\partial \mathbf{W}_\ell} = (\mathbf{J}_Y \otimes \mathbf{I}_{n_k}) \boldsymbol{\Phi}_{k\ell}+ \left( \mathbf{I}_{L d_V} \otimes \mathbf{G}_k^\top \right) \frac{\partial\mathbf{J}_Y}{\partial \mathbf{W}_\ell}.
-\end{align}
-В условиях теоремы~\ref{thm:layernorm_second_derivative} легко получить следующее выражение~$\frac{\partial\mathbf{J}_Y}{\partial \mathbf{W}_\ell} = \mathbf{H}_Y \mathbf{G}_\ell$. Следовательно, получаем оценки:
-\begin{align}
-    \boldsymbol{\xi}_{k\ell} = \left( \mathbf{J}_{SY} \otimes \mathbf{I}_{n_k} \right)\left[\left( \mathbf{I}_{L d_V} \otimes \mathbf{G}_k^\top \right) \left( \mathbf{H}_Y \mathbf{G}_\ell \right)+ \left( \mathbf{J}_Y \otimes \mathbf{I}_{n_k} \right) \boldsymbol{\Phi}_{k\ell}\right].
-\end{align}
+% На 1-м шаге для всех $i \in \{1,2,K,Q,V\}$ получаем:
+% \begin{align}
+%     \frac{\partial \mathbf{Z}}{\partial \mathbf{W}_i} = \mathbf{J}_Z  \mathbf{B}_i,\qquad\mathbf{J}_Z \in \mathbb{R}^{L d_V \times L d_V},
+% \end{align}
+% где $\mathbf{B}_i := \frac{\partial \mathbf{S}}{\partial \mathbf{W}_i}$ задается следующим образом:
+% \begin{align}
+%     \mathbf{B}_1 &= (\mathbf{I}_L \otimes \mathbf{W}_2^\top) \mathbf{D}_\sigma (\mathbf{Y} \otimes \mathbf{I}_{d_{ff}}) \in \mathbb{R}^{L d_V \times n_1}, \\
+%     \mathbf{B}_2 &= \sigma(\mathbf{Y}\mathbf{W}_1) \otimes \mathbf{I}_{d_V} \in \mathbb{R}^{L d_V \times n_2},\\
+%     \mathbf{B}_k &= \mathbf{J}_{SY} \mathbf{J}_Y \mathbf{G}_k \in \mathbb{R}^{L d_V \times n_k},\qquad k \in \{K,Q,V\},
+% \end{align}
+% где матрица~$\mathbf{J}_{SY}$ вычисляется следующим образом:
+% \begin{align}
+%     \mathbf{J}_{SY} = \frac{\partial \mathbf{S}}{\partial \mathbf{Y}} = (\mathbf{I}_L \otimes \mathbf{W}_2^\top)\mathbf{D}_\sigma(\mathbf{I}_L \otimes \mathbf{W}_1^\top) + (\mathbf{I}_L \otimes \mathbf{I}_{d_V}) \in \mathbb{R}^{L d_V \times L d_V},
+% \end{align}
+% матрица имеет следующую размерность~$\mathbf{J}_Y \in \mathbb{R}^{L d_V \times L d_V},$ а матрица~$\mathbf{G}_k$ описана в Теореме~\ref{thm:transformer_derivative}.
+% Используя Лемму~\ref{lemma:matrix_funcs_product_derivative} и Теорему~\ref{thm:layernorm_second_derivative} получаем выражение для блока матрицы Гессе:
+% \begin{align}
+%      \frac{\partial^2 \mathbf{Z}}{\partial \mathbf{W}_i \partial \mathbf{W}_j} &= \left( \mathbf{J}_Z \otimes \mathbf{I}_{n_i} \right) \boldsymbol{\xi}_{ij}  + \left( \mathbf{I}_{L d_V} \otimes \mathbf{B}_i^\top \right) \mathbf{H}_Z \mathbf{B}_j,\\
+%      \boldsymbol{\xi}_{ij} &:= \frac{\partial \mathbf{B}_i}{\partial \mathbf{W}_j} \in \mathbb{R}^{(L d_V \cdot n_i) \times n_j}.
+% \end{align}
 
 
-На 4-м шаге проверим симметричность полученных выражений.
-Во-первых, единственные нелинейности с потенциально ненулевым вторым дифференциалом являются оператор LayerNorm, для которого получены матрицы~$\mathbf{H}_Z,\mathbf{H}_Y$ в рамках теоремы~\ref{thm:layernorm_second_derivative} и которые являются симметричными по построению, и оператор ReLU, для которого матрица Гессе является нулевой согласно теореме~\ref{theorem:relu_derivative_hessian}. Во-вторых, все другие отображения являются линейными, следовательно, согласно лемме~\ref{lemma:matrix_funcs_product_derivative} и свойству производной произведения Кронекера их частные производные являются коммутативными почти всюду.
-\end{proof}
+% На 2-м шаге вычисляем размерности и вид матриц ~$\mathbf{B}_i.$ Используя результаты Теорем~\ref{thm:transformer_derivative} и~\ref{theorem:relu_derivative_hessian} получаем следующие выражения:
+% \begin{align}
+%     \mathbf{B}_1 &= (\mathbf{I}_L \otimes \mathbf{W}_2^\top) \mathbf{D}_\sigma (\mathbf{Y} \otimes \mathbf{I}_{d_{ff}}) \in \mathbb{R}^{L d_V \times n_1}, \\
+%     \mathbf{B}_2 &= \sigma(\mathbf{Y}\mathbf{W}_1) \otimes \mathbf{I}_{d_V} \in \mathbb{R}^{L d_V \times n_2},
+% \end{align}
+% где матрица~$\mathbf{D}_\sigma \in \mathbb{R}^{L d_{ff} \times L d_{ff}}$, матрица~$(\mathbf{Y} \otimes \mathbf{I}_{d_{ff}}) \in \mathbb{R}^{L d_{ff} \times d_V d_{ff}}$.
+% Тогда для всех матриц~$\mathbf{B}_k,$ где~$k \in \{K,Q,V\}$ получаем:
+% \begin{align}
+%     \mathbf{B}_k = \mathbf{J}_{SY} \mathbf{J}_Y  \mathbf{G}_k \in \mathbb{R}^{L d_V \times n_k}.
+% \end{align}
+
+% На 3-м шаге вычисляем вычисляем матрицы~$\boldsymbol{\xi}_{ij}$ для всех пар~$(i, j)$.
+
+% Начнем вычисления с пар FFN. Матрица~$\mathbf{B}_1$ не зависит от матрицы~$\mathbf{W}_1$, следовательно,~$\boldsymbol{\xi}_{11} = \mathbf{0}$. Аналогично, матрица~$\mathbf{B}_2$ не зависит от матрицы~$\mathbf{W}_2$, следовательно,~$\boldsymbol{\xi}_{22} = \mathbf{0}$. Вычислим~$\frac{\partial \mathbf{B}_2}{\partial \mathbf{W}_1}$ используя свойство~\ref{prop:kronecker_product_derivative} производной произведения Кронекера для $\frac{\partial (\mathbf{X} \otimes \mathbf{Y})}{\partial \mathbf{X}},$ где $\mathbf{X}=\sigma(\mathbf{Y}\mathbf{W}_1)$ и $\mathbf{Y}=\mathbf{I}_{d_V}$:
+% \begin{align}
+%     \frac{\partial \mathbf{B}_2}{\partial \mathbf{W}_1}=\left( \mathbf{I}_L \otimes \mathbf{K}_{d_V, d_{ff}} \otimes \mathbf{I}_{d_V} \right)\left( \mathbf{I}_{L d_{ff}} \otimes \mathrm{vec}_r(\mathbf{I}_{d_V}) \right)\frac{\partial \mathrm{vec}_r(\sigma(\mathbf{Y}\mathbf{W}_1))}{\partial \mathbf{W}_1},
+% \end{align}
+% далее используя то, что $\frac{\partial\mathrm{vec}_r(\sigma(\mathbf{Y}\mathbf{W}_1))}{\partial \mathbf{W}_1} = \mathbf{D}_\sigma(\mathbf{Y} \otimes \mathbf{I}_{d_{ff}})$ получаем оценку на~$\boldsymbol{\xi}_{12}:$
+% \begin{align}
+%     \boldsymbol{\xi}_{12}= \left( \mathbf{I}_L \otimes \mathbf{K}_{d_V, d_{ff}} \otimes \mathbf{I}_{d_V} \right) \left( \mathbf{I}_{L d_{ff}} \otimes \mathrm{vec}_r(\mathbf{I}_{d_V}) \right)\left( \mathbf{D}_\sigma  (\mathbf{Y} \otimes \mathbf{I}_{d_{ff}}) \right).
+% \end{align}
+% Вычислим~$\frac{\partial \mathbf{B}_1}{\partial \mathbf{W}_2}$ используя Лемму~\ref{lemma:matrix_funcs_product_derivative}, где в качестве левого множителя выступает~$(\mathbf{I}_L \otimes \mathbf{W}_2^\top)$:
+% \begin{align}
+%     \frac{\partial\mathbf{B}_1}{\partial \mathbf{W}_2}= \left( \mathbf{I}_{L d_V} \otimes \left( (\mathbf{Y} \otimes \mathbf{I}_{d_{ff}})^\top \mathbf{D}_\sigma^\top \right) \right) \frac{\partial(\mathbf{I}_L \otimes \mathbf{W}_2^\top)}{\partial \mathbf{W}_2},
+% \end{align}
+% далее используя свойство~\ref{prop:kronecker_product_derivative} об производной произведения Кронекера и Лемму~\ref{lemma:transposed_matrix_derivative} об производной транспонированной матрицы получем:
+% \begin{align}
+%     \frac{\partial(\mathbf{I}_L \otimes \mathbf{W}_2^\top)}{\partial \mathbf{W}_2}= \left( \mathbf{I}_L \otimes \mathbf{K}_{d_V, L} \otimes \mathbf{I}_{d_{ff}} \right) \left( \mathrm{vec}_r(\mathbf{I}_L) \otimes \mathbf{I}_{d_V d_{ff}} \right) \mathbf{K}_{d_{ff}, d_V}.
+% \end{align}
+% Далее собирая все полученные матрицы, получаем оценку на~$\boldsymbol{\xi}_{21}:$
+% \begin{align}
+%     \boldsymbol{\xi}_{21} = \left( \mathbf{I}_{L d_V} \otimes \left( (\mathbf{Y} \otimes \mathbf{I}_{d_{ff}})^\top \mathbf{D}_\sigma^\top \right) \right)\left( \mathbf{I}_L \otimes \mathbf{K}_{d_V, L} \otimes \mathbf{I}_{d_{ff}} \right) \left( \mathrm{vec}_r(\mathbf{I}_L) \otimes \mathbf{I}_{d_V d_{ff}} \right) \mathbf{K}_{d_{ff}, d_V}.
+% \end{align}
+
+% Переходим к оценке пар FFN с параметрами слоев внимания для всех $k \in \{K, Q, V\}$. Для матрицы~$\mathbf{B}_1 = (\mathbf{I}_L \otimes \mathbf{W}_2^\top) \mathbf{D}_\sigma (\mathbf{Y} \otimes \mathbf{I}_{d_{ff}})$ установим, что почти всюду матрица~$\frac{\partial \mathbf{D}_\sigma}{\partial \mathbf{Y}}=\mathbf{0}$ равна нулю согласно теореме~\ref{theorem:relu_derivative_hessian}. Следовательно, только последний множитель зависит от матрицы~$\mathbf{W}_k$. Используя лемму~\ref{lemma:matrix_funcs_product_derivative}, где первый множитель является константой, а также цепное правило относительно переменной~$\mathbf{Y}$, получаем:
+% \begin{align}
+%     \frac{\partial(\mathbf{Y} \otimes \mathbf{I}_{d_{ff}})}{\partial \mathbf{W}_k} = \left( \frac{\partial (\mathbf{Y} \otimes \mathbf{I}_{d_{ff}})}{\partial \mathbf{Y}} \right) \frac{\partial\mathbf{Y}}{\partial \mathbf{W}_k},
+% \end{align}
+% причем согласно свойства~\ref{prop:kronecker_product_derivative} об производной произведения Кронекера с матрицей~$\mathbf{X} = \mathbf{Y}$ и матрицей~$\mathbf{Y}=\mathbf{I}_{d_{ff}}$ получаем:
+% \begin{align}
+%     \frac{\partial (\mathbf{Y} \otimes \mathbf{I}_{d_{ff}})}{\partial \mathbf{Y}} = \left( \mathbf{I}_L \otimes \mathbf{K}_{d_{ff}, d_V} \otimes \mathbf{I}_{d_{ff}} \right)\left( \mathbf{I}_{L d_V} \otimes \mathrm{vec}_r(\mathbf{I}_{d_{ff}}) \right),
+% \end{align}
+% а в свою очередь согласно Теоремы~\ref{thm:transformer_derivative} матрица~$\frac{\partial\mathbf{Y}}{\partial \mathbf{W}_k} = \mathbf{J}_Y \mathbf{G}_k.$ Тогда получаем оценку на матрицу~$\boldsymbol{\xi}_{1k}$ следующего вида:
+% \begin{align}
+%     \boldsymbol{\xi}_{1k} = \left( (\mathbf{I}_L \otimes \mathbf{W}_2^\top) \mathbf{D}_\sigma \otimes \mathbf{I}_{n_k}\right)\left( \mathbf{I}_L \otimes \mathbf{K}_{d_{ff}, d_V} \otimes \mathbf{I}_{d_{ff}} \right)\left( \mathbf{I}_{L d_V} \otimes \mathrm{vec}_r(\mathbf{I}_{d_{ff}}) \right) \left( \mathbf{J}_Y \mathbf{G}_k \right).
+% \end{align}
+% Перейдем к матрице~$\mathbf{B}_2 = \sigma(\mathbf{Y}\mathbf{W}_1) \otimes \mathbf{I}_{d_V},$ заметим, что только первый множитель произведения Кронекера зависит от матриц~$\mathbf{W}_k,$ а следовательно используя свойство~\ref{prop:kronecker_product_derivative} производной произведения Кронекера и цепное правило получим следующее выражение:
+% \[
+%     \boldsymbol{\xi}_{2k} = \left( \mathbf{I}_L \otimes \mathbf{K}_{d_V, d_{ff}} \otimes \mathbf{I}_{d_V} \right)\left( \mathbf{I}_{L d_{ff}} \otimes \mathrm{vec}_r(\mathbf{I}_{d_V}) \right)\left( \mathbf{D}_\sigma (\mathbf{I}_L \otimes \mathbf{W}_1^\top)  \mathbf{J}_Y \mathbf{G}_k \right),
+% \]
+% где использовано свойство~\ref{prop:matrix_product_derivative} для преобразования~$\frac{\partial (\mathbf{Y}\mathbf{W}_1)}{\partial \mathbf{Y}} = \mathbf{I}_L \otimes \mathbf{W}_1^\top,$ а также Теорема~\ref{theorem:relu_derivative_hessian} для выражения $\frac{\partial \sigma(\cdot)}{\partial (\cdot)} = \mathbf{D}_\sigma,$ а также согласно Теореме~\ref{thm:transformer_derivative} матрица~$\frac{\partial\mathbf{Y}}{\partial \mathbf{W}_k} = \mathbf{J}_Y \mathbf{G}_k.$
+
+% Перейдем к оценке пар слоев внимания~$(k,\ell)$ with $k,\ell \in \{K,Q,V\}$.
+% Рассмотрим матрицу~$\mathbf{B}_k = \mathbf{J}_{SY} \mathbf{J}_Y  \mathbf{G}_k,$ заметим, что почти всюду~$\frac{\partial \mathbf{J}_{SY}}{\partial \mathbf{Y}} = \mathbf{0},$ так как матричнозначная функция~$\mathbf{D}_\sigma$ является кусочно-постоянной, согласно Теоремы~\ref{theorem:relu_derivative_hessian}, а следовательно используя Лемму~\ref{lemma:matrix_funcs_product_derivative} с матрицей~$\mathbf{A}(\cdot)=\mathbf{J}_Y,$ и с матрицей~$\mathbf{B}(\cdot)=\mathbf{G}_k$ получаем:
+% \begin{align}
+%     \frac{\partial\mathbf{B}_k}{\partial \mathbf{W}_\ell}= (\mathbf{J}_{SY} \otimes \mathbf{I}_{n_k}) \frac{\partial(\mathbf{J}_Y \mathbf{G}_k)}{\partial \mathbf{W}_\ell},
+% \end{align}
+% далее вычислим матрицу~$\frac{\partial(\mathbf{J}_Y \mathbf{G}_k)}{\partial \mathbf{W}_\ell}$ используя свойство производной матричного произведения:
+% \begin{align}
+%     \frac{\partial(\mathbf{J}_Y \mathbf{G}_k)}{\partial \mathbf{W}_\ell} = (\mathbf{J}_Y \otimes \mathbf{I}_{n_k}) \boldsymbol{\Phi}_{k\ell}+ \left( \mathbf{I}_{L d_V} \otimes \mathbf{G}_k^\top \right) \frac{\partial\mathbf{J}_Y}{\partial \mathbf{W}_\ell}.
+% \end{align}
+% В условиях теоремы~\ref{thm:layernorm_second_derivative} легко получить следующее выражение~$\frac{\partial\mathbf{J}_Y}{\partial \mathbf{W}_\ell} = \mathbf{H}_Y \mathbf{G}_\ell$. Следовательно, получаем оценки:
+% \begin{align}
+%     \boldsymbol{\xi}_{k\ell} = \left( \mathbf{J}_{SY} \otimes \mathbf{I}_{n_k} \right)\left[\left( \mathbf{I}_{L d_V} \otimes \mathbf{G}_k^\top \right) \left( \mathbf{H}_Y \mathbf{G}_\ell \right)+ \left( \mathbf{J}_Y \otimes \mathbf{I}_{n_k} \right) \boldsymbol{\Phi}_{k\ell}\right].
+% \end{align}
+
+
+% На 4-м шаге проверим симметричность полученных выражений.
+% Во-первых, единственные нелинейности с потенциально ненулевым вторым дифференциалом являются оператор LayerNorm, для которого получены матрицы~$\mathbf{H}_Z,\mathbf{H}_Y$ в рамках теоремы~\ref{thm:layernorm_second_derivative} и которые являются симметричными по построению, и оператор ReLU, для которого матрица Гессе является нулевой согласно теореме~\ref{theorem:relu_derivative_hessian}. Во-вторых, все другие отображения являются линейными, следовательно, согласно лемме~\ref{lemma:matrix_funcs_product_derivative} и свойству производной произведения Кронекера их частные производные являются коммутативными почти всюду.
+% \end{proof}
 
 \subsection{Спектральные оценки матрицы Гессе для трансформера}
 
-\begin{theorem}[\emph{Петров-Грабовой-Киселев}, Оценка нормы матрицы Гессе трансформера]\label{thm:transformer_hessian_estimate}
+\begin{theorem}[\emph{Грабовой-Петров-Киселев}, Оценка нормы матрицы Гессе трансформера]\label{thm:transformer_hessian_estimate}
 Пусть матрица Гессе~$\mathbf{H}_{\mathrm{tr}}^{(i,j)}$ описывает матрицу Гессе между~$(i,j)$-м блоком трансформер модели~\eqref{eq:block_hessian_transformer}, где~$i,j\in\{1,2,K,Q,V\}, n_i=\dim(\mathbf{W}_i).$
 Тогда для каждой пары~$(i,j)$ получаем оценку нормы:
 \begin{equation}\label{eq:block_bound_transformer}
@@ -2155,7 +2155,7 @@ $\mathbf{H}=\tfrac{\partial \mathbf{P}}{\partial \mathbf{X}}$, и $\mathbf{P}=\m
 Проведенное в настоящей главе исследование матриц Гессе для нейросетевых моделей глубокого обучения представляет собой систематический теоретический анализ локальных свойств оптимизационного ландшафта параметрических семейств функций.
 Полученные результаты формируют строгий математический аппарат для количественной оценки сложности современных архитектур глубокого обучения и обеспечивают теоретическую основу для применения ландшафтной меры сложности, введенной в главе~\ref{chapter:complexity:models-data}.
 
-Основным методологическим вкладом главы является разработка унифицированного подхода к анализу матриц Гессе на основе матричной факторизации.
+Основным вкладом главы является разработка унифицированного подхода к анализу матриц Гессе на основе матричной факторизации.
 Теорема~\ref{theorem:m-net:hesstruct} устанавливает, что матрица Гессе для широкого класса матричных моделей может быть представлена в факторизованной форме $\mathbf{H}_O(\boldsymbol{\theta}) = \mathbf{Q}^T\mathbf{F}^T\mathbf{A}\mathbf{F}\mathbf{Q}$, что позволяет эффективно анализировать и вычислять гессиан без необходимости явного построения полной матрицы вторых производных.
 Данный подход унифицирует анализ для различных архитектур и создает основу для получения спектральных оценок, сформулированных в теореме~\ref{theorem:m-net:hessnorm}.
 
@@ -2169,10 +2169,8 @@ $\mathbf{H}=\tfrac{\partial \mathbf{P}}{\partial \mathbf{X}}$, и $\mathbf{P}=\m
 Теоремы~\ref{theorem:maxpool} и~\ref{theorem:avgpool} исследуют регуляризирующее влияние операций пулинга на сложность оптимизационного ландшафта, демонстрируя, что применение пулинга снижает норму гессиана и способствует стабилизации процесса обучения.
 
 Наиболее значительным результатом главы является комплексный анализ матриц Гессе для трансформерных архитектур, восполняющий существенный пробел в теоретическом понимании этих моделей.
-Впервые получены явные выражения для матриц Якоби и Гессе ключевых компонентов трансформера.
-Теорема~\ref{thm:layernorm_derivative} устанавливает выражение для матрицы Якоби слоя LayerNorm, а теорема~\ref{thm:layernorm_second_derivative}~--- для матрицы Гессе, что представляет собой нетривиальный результат ввиду сложной нелинейной структуры операции нормализации.
 Теорема~\ref{thm:self_attention_hessian_estimation} определяет оценки нормы гессиана для механизма самовнимания, демонстрируя зависимость от структурных параметров трансформера.
-Теорема~\ref{thm:transformer_hessian_estimate} устанавливает верхние оценки для полной матрицы Гессе трансформера, показывая гетерогенность вклада различных блоков параметров (Queries, Keys, Values, FFN, LayerNorm) в общую кривизну функции потерь.
+Теорема~\ref{thm:transformer_hessian_estimate} устанавливает верхние оценки для полной матрицы Гессе трансформера, показывая гетерогенность вклада различных блоков параметров в общую кривизну функции потерь.
 Эмпирические результаты, представленные в разделе~\ref{chapter:gesian:experiment:fig:norm}, подтверждают теоретические оценки и демонстрируют, что наибольшие значения норм соответствуют блокам Keys и Values, что согласуется с полученными теоретическими предсказаниями.
 
 Теоретическая значимость полученных результатов заключается в установлении прямой связи между спектральными свойствами матриц Гессе и введенной в главе~\ref{chapter:complexity:models-data} ландшафтной мерой сложности моделей.
