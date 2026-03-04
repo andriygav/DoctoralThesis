@@ -71,10 +71,10 @@
 \begin{itemize}
     \justifying
     \item Экспоненциальный рост сложности моделей: от тысяч до сотен миллиардов параметров, с прогнозируемым переходом к триллионам.
-    \item Особую остроту проблема приобретает при разработке больших языковых моделей (LLM), требующих огромных вычислительных, энергетических и финансовых ресурсов.
+    \item Проблема при разработке больших языковых моделей (LLM), требующих огромных вычислительных, энергетических и финансовых ресурсов.
     \item Отсутствие строгой теоретической основы для предсказания поведения моделей при масштабировании делает процесс разработки экономически и энергетически неэффективным.
-    \item Современные исследования преимущественно опираются на эмпирические корреляции, что приводит к необоснованным и противоречивым результатам.
-    \item Классические подходы (VC, PAC, Радемахер) дают слишком консервативные оценки для перепараметризованных нейронных сетей и не учитывают специфику современных архитектур.
+    \item Текущие решения опираются на эмпирические корреляции, что приводит к необоснованным и противоречивым результатам.
+    \item Классические подходы дают слишком консервативные оценки для перепараметризованных нейронных сетей и не учитывают специфику архитектур.
 \end{itemize}
 
 \vspace{0.3cm}
@@ -111,7 +111,7 @@
 \end{itemize}
 
 \vspace{0.3cm}
-\textbf{Ключевой инструмент:} анализ матриц Гессе функции потерь, содержащих информацию о локальной кривизне оптимизационного ландшафта.
+\textit{Ключевой инструмент:} анализ матриц Гессе функции потерь, содержащих информацию о локальной кривизне оптимизационного ландшафта.
 \end{frame}
 %----------------------------------------------------------------------------------------------------------
 \begin{frame}{Научная новизна}
@@ -120,7 +120,7 @@
     \justifying
     \item Введены формальные определения меры сложности выборки $\mu_D(D)$ и меры сложности модели $\mu_f(f)$ в рамках теории мер, установлен критерий обучаемости $\mu_f(f) \le \mu_D(D)$.
     \item Введена ландшафтная мера сложности модели $\mu_f(f|D) = \mathbb{E}\|\mathbf{H}_i - \mathbb{E}\mathbf{H}_i\|$, определяемая через спектральные свойства матриц Гессе.
-    \item Впервые получены строгие теоретические оценки ландшафтной меры на основе спектральных норм матриц Гессе для полносвязных, сверточных и трансформерных архитектур.
+    \item Получены строгие теоретические оценки ландшафтной меры на основе спектральных норм матриц Гессе для полносвязных, сверточных и трансформерных архитектур.
     \item Доказана связь между достаточным объемом выборки и ландшафтной сложностью моделей.
     \item Предложены методы снижения сложности: прореживание на основе ковариации градиентов, мультидоменная дистилляция и анти-дистилляция.
     \item Доказаны теоремы о состоятельности LoRA-адаптеров и снижении сложности Радемахера в многозадачном обучении.
@@ -164,7 +164,7 @@
 \textbf{Статистическая теория сложности (1970–2010)}
 \begin{itemize}
     \justifying
-    \item Вапник, Червоненкис, 1974~--- введение VC-размерности как меры емкости класса; равномерная сходимость частот к вероятностям.
+    \item Вапник, Червоненкис, 1974~--- введение VC-размерности как меры емкости семейства алгоритмов; равномерная сходимость частот к вероятностям.
     \item Valiant, 1984~--- формализация понятия обучаемости; гарантии с заданной точностью и надежностью.
     \item Воронцов, 2010~--- развитие VC-теории; учет структуры данных и локализации алгоритмов для снижения консервативности оценок.
 \end{itemize}
@@ -173,13 +173,13 @@
 \begin{itemize}
     \justifying
     \item Cybenko, 1989~--- однослойная сеть с сигмоидой может аппроксимировать любую непрерывную функцию.
-    \item Hastad, 1987; Bengio, 2007; Cohen, 2015~-- экспоненциальный рост выразительной способности с увеличением числа слоев.
+    \item Hastad, 1987; Bengio, 2007; Cohen, 2015~-- экспоненциальный рост аппроксимирующей способности с увеличением числа слоев.
 \end{itemize}
 
 \textbf{Современные эмпирические подходы (2017–2022)}
 \begin{itemize}
     \justifying
-    \item Sagun, 2017; Keskar, 2016~--- эмпирическое исследование спектра Гессе; связь ``плоских'' минимумов с обобщением.
+    \item Keskar, 2016; Sagun, 2017~--- эмпирическое исследование спектра Гессе; связь ``плоских'' минимумов с обобщением модели.
     \item Kaplan, 2020; Hoffmann, 2022~--- степенные зависимости качества от числа параметров и объема данных; оптимальные соотношения для вычислительных бюджетов.
 \end{itemize}
 
@@ -192,7 +192,7 @@
 \textbf{Статистическая теория сложности}
 \begin{itemize}
     \justifying
-    \item Ориентация на анализ худшего случая $\Rightarrow$ оценки существенно завышены для реальных данных.
+    \item Ориентация на анализ худшего случая завышает оценки для реальных данных.
     \item Не объясняет феномен перепараметризации: модели с высокой VC-раз\-ме\-рно\-стью успешно обобщают данный.
     \item Сложность модели и данных рассматриваются изолированно, без формального критерия соответствия.
 \end{itemize}
@@ -240,20 +240,20 @@
     % Контекст: существующие подходы (левый столбец)
     \node[draw, rectangle, rounded corners, fill=gray!10, text width=2.2cm, text centered, minimum height=0.8cm, font=\footnotesize] (context1) at (0,3.5) {Классические:\\VC, PAC,\\Радемахер};
     \node[draw, rectangle, rounded corners, fill=gray!10, text width=2.2cm, text centered, minimum height=0.8cm, font=\footnotesize] (context2) at (0,1.8) {Современные:\\эмпирический\\анализ Гессе};
-    \node[draw, rectangle, rounded corners, fill=gray!10, text width=2.2cm, text centered, minimum height=0.8cm, font=\footnotesize] (context3) at (0,0.1) {Эмпирические\\scaling laws};
+    \node[draw, rectangle, rounded corners, fill=gray!10, text width=2.2cm, text centered, minimum height=0.8cm, font=\footnotesize] (context3) at (0,0.1) {Эмпирические\\законы масштабирования};
     
     % Проблемы (правый столбец)
-    \node[draw, rectangle, rounded corners, fill=red!10, text width=2.2cm, text centered, minimum height=0.8cm, font=\footnotesize] (problem1) at (9,3.5) {Не учитывают\\перепараметризацию};
+    \node[draw, rectangle, rounded corners, fill=red!10, text width=2.2cm, text centered, minimum height=0.8cm, font=\footnotesize] (problem1) at (9,3.5) {Не учитывают\\пере\-па\-ра\-ме\-три\-за\-цию};
     \node[draw, rectangle, rounded corners, fill=red!10, text width=2.2cm, text centered, minimum height=0.8cm, font=\footnotesize] (problem2) at (9,1.8) {Нет связи\\модели и данных};
     \node[draw, rectangle, rounded corners, fill=red!10, text width=2.2cm, text centered, minimum height=0.8cm, font=\footnotesize] (problem3) at (9,0.1) {Эмпирические,\\нет строгих оценок};
     
     % Вклад диссертации (центральная часть)
     \node[draw, rectangle, rounded corners, fill=blue!30, text width=2.8cm, text centered, minimum height=1.2cm, font=\small] (complexity) at (4.5,3.0) {\textbf{Единый аппарат}\\теории мер};
-    \node[draw, rectangle, rounded corners, fill=green!30, text width=2.4cm, text centered, minimum height=0.9cm, font=\footnotesize, below left=0.9cm and 0.2cm of complexity] (landscape) {\textbf{Ландшафтная}\\мера};
-    \node[draw, rectangle, rounded corners, fill=orange!30, text width=2.4cm, text centered, minimum height=0.9cm, font=\footnotesize, below right=0.9cm and 0.2cm of complexity] (hessian) {\textbf{Оценки}\\матриц Гессе};
+    \node[draw, rectangle, rounded corners, fill=green!30, text width=2.4cm, text centered, minimum height=0.9cm, font=\footnotesize, below left=0.9cm and -1cm of complexity] (landscape) {\textbf{Ландшафтная}\\мера};
+    \node[draw, rectangle, rounded corners, fill=orange!30, text width=2.4cm, text centered, minimum height=0.9cm, font=\footnotesize, below right=0.9cm and -1cm of complexity] (hessian) {\textbf{Оценки}\\матриц Гессе};
     \node[draw, rectangle, rounded corners, fill=red!25, text width=2.4cm, text centered, minimum height=0.9cm, font=\footnotesize, below=0.9cm of landscape] (sample) {\textbf{Достаточный}\\объем выборки};
     \node[draw, rectangle, rounded corners, fill=purple!25, text width=2.4cm, text centered, minimum height=0.9cm, font=\footnotesize, below=0.9cm of hessian] (reduction) {\textbf{Снижение}\\сложности};
-    \node[draw, rectangle, rounded corners, fill=yellow!30, text width=2.4cm, text centered, minimum height=0.9cm, font=\footnotesize, below=0.9cm of sample, xshift=1.2cm] (applications) {\textbf{Практические}\\применения};
+    \node[draw, rectangle, rounded corners, fill=yellow!30, text width=2.4cm, text centered, minimum height=0.9cm, font=\footnotesize, below=0.9cm of sample, xshift=1.8cm] (applications) {\textbf{Практические}\\применения};
     
     % Стрелки от контекста к проблемам
     \draw[->, dashed, gray!50, thin] (context1) -- (problem1);
@@ -321,15 +321,14 @@
 %----------------------------------------------------------------------------------------------------------
 \begin{frame}{Мера сложности модели}
 \justifying
-
 \begin{rusdefinition}
 \justifying
-Для параметрического семейства функций $\mathfrak{F} = \{f_i\}$ вводится отображение
-\[
-\mu_f(f_i) : \mathfrak{F} \to \mathbb{R}_+,
-\]
-называемое \textbf{мерой сложности модели}.
+    Мерой сложности модели~$f$ с параметрического семейства~$\mathfrak{F} = \{f_i\}$ назовем отображение~$\mu_f(f_i)$:
+    \[
+        \mu_f(f_i) : \mathfrak{F} \to \mathbb{R}_+.
+    \]
 \end{rusdefinition}
+
 
 \vspace{0.3cm}
 \textbf{Примеры мер:}
@@ -349,19 +348,19 @@
 
 \begin{rusdefinition}
 \justifying
-Модель $f$ \textbf{обучаема} на выборке $D$, если
-\[
-\mu_f(f) \;\le\; \mu_D(D).
-\]
-Интуиция: сложность модели не должна превышать сложность данных, иначе неизбежно переобучение.
+    Назовем модель $f\in\mathfrak{F}$ обучаемой на выборке $D\in\mathfrak{D},$ если 
+    \[
+        \mu_f(f)\leq \mu_D(D).
+    \]
 \end{rusdefinition}
+
 
 \begin{rustheorem}[\emph{Грабовой}]
 \justifying
-Если модель уже обучаема на исходной выборке $D$, то для добавления новой выборки $D'$ достаточно выполнения условия
-\[
-\mu_f(f) - \mu_D(D) \;\le\; \mu_D(D').
-\]
+    Если для исходной выборки~$D\in\mathfrak{D}$ выполняется условие~$\mu_f(f) \leq \mu_D(D)$, тогда для новой выборки~$D'\in\mathfrak{D}$ необходимое условие дообучаемости модели на объединенной выборке $D \cup D'$ имеет вид:
+    \[
+        \mu_f(f) - \mu_D(D) \leq \mu_D(D').
+    \]
 \end{rustheorem}
 Это означает, что остаточная емкость модели должна покрываться сложностью новых данных.
 
@@ -381,6 +380,7 @@
         \mu_D(D|f) = \inf\{\mu_D(D'): D'\subseteq D,\; \mu_f(f) \le \mu_D(D')\}.
     \]
 \end{rusdefinition}
+
 Это минимальная сложность подвыборки, достаточная для выполнения критерия обучаемости.
 
 \begin{block}{Свойства}
@@ -397,7 +397,7 @@
 
 \begin{rusdefinition}
     \justifying
-    Однородную генеральную совокупность $\Gamma_C$ назовем \textbf{простой}, если все ее объекты имеют одинаковую сложность $C$:
+    Однородную генеральную совокупность~$\Gamma_C$ назовем простой, если она состоит из объектов одинаковой сложности~$C$:
     \[
         \forall \gamma\in\Gamma_C\; \mu_D(\{\gamma\}) = C.
     \]
@@ -418,7 +418,7 @@
 $m^*$~--- минимальное количество объектов для обучения модели $f$.
 \end{frame}
 %----------------------------------------------------------------------------------------------------------
-\begin{frame}{От общей теории к конкретной мере сложности}
+\begin{frame}{От общей теории к ландшафтной мере}
 \justifying
 
 \begin{figure}[h!t]\center
@@ -508,17 +508,17 @@ $m^*$~--- минимальное количество объектов для о
 
 \begin{rusdefinition}
 \justifying
-    \textbf{Ландшафтной мерой} сложности параметрической функции $f$ называется
+    Ландшафтной мерой сложности параметрической функции $f$ называется
     \[
         \mu_f(f|D) = \mathbb{E}_{\mathbf{x}_i\in D}\left\| \mathbf{H}_i(\boldsymbol{\theta}^*) - \mathbb{E}_{\mathbf{x}_i\in D}\mathbf{H}_i(\boldsymbol{\theta}^*) \right\|_2,
     \]
     где $\mathbf{H}_i(\boldsymbol{\theta}^*)$~--- матрица Гессе для $i$-го объекта в точке минимума $\boldsymbol{\theta}^*$.
 \end{rusdefinition}
 
-Ландшафтная мера характеризует \textbf{вариативность} гессианов по объектам выборки:
+Ландшафтная мера характеризует отклонение гессианов по объектам выборки:
 \begin{itemize}
-    \item Малая вариативность~--- объекты одинаково влияют на ландшафт, модель насытилась данными.
-    \item Большая вариативность~--- разные объекты по-разному искривляют ландшафт, данных недостаточно.
+    \item Малое отклонение~--- объекты одинаково влияют на ландшафт, модель насытилась данными.
+    \item Большое отклонение~--- разные объекты по-разному искривляют ландшафт, данных недостаточно.
 \end{itemize}
 
 \begin{block}{Связь с изменением функции потерь}
@@ -556,7 +556,7 @@ $m^*$~--- минимальное количество объектов для о
 Ландшафтная мера сложности полносвязной модели: $\mu_f(f|D) \propto L(hM)^{2L}.$
 \end{ruscorollary}
 
-\textbf{Интерпретация:} сложность ландшафта растет \textbf{экспоненциально} с глубиной $L$ и \textbf{полиномиально} с шириной $h$. Это объясняет, почему глубокие сети требуют больше данных для стабилизации.
+\textbf{Интерпретация:} сложность ландшафта растет \textbf{экспоненциально} с глубиной $L$ и \textbf{полиномиально} с шириной $h$. Это объясняет, почему глубокие сети требуют больше данных для обучения.
 
 \begin{rusremark}
     Для однослойной сети ($L=1$) имеем $\mu_f \propto h^2$~--- квадратичная зависимость от ширины.
@@ -602,7 +602,7 @@ $
 где $l$~--- позиция слоя пулинга.
 \end{rustheorem}
 
-\textbf{Интерпретация:} сложность ландшафта растет \textbf{экспоненциально} с глубиной $L$ и \textbf{полиномиально} с числом каналов, размером ядра и разрешением. Пулинг действует как эффективный регуляризатор, уменьшая ландшафтную меру.
+\textbf{Интерпретация:} сложность ландшафта растет \textbf{экспоненциально} с глубиной $L$ и \textbf{полиномиально} с числом каналов, размером ядра и разрешением. Пулинг действует как регуляризатор, уменьшая ландшафтную меру.
 
 \begin{rusremark}
     Полученные оценки объясняют, почему увеличение числа каналов или глубины требует больше данных, а пулинг облегчает обучение.
@@ -612,7 +612,7 @@ $
 \begin{frame}{Экспериментальная проверка для сверточных сетей}
 \justifying
 
-\textbf{Цель:} исследовать влияние параметров сверточной архитектуры (количество каналов $C$, позиция пулинга) на разность потерь $|\mathcal{L}_{k+1}-\mathcal{L}_k|$ и сопоставить с теоретической асимптотикой $\mu_f(f|D)$.
+\textbf{Цель:} исследовать влияние параметров сверточной архитектуры на разность потерь $|\mathcal{L}_{k+1}-\mathcal{L}_k|$ и сопоставить с теоретической асимптотикой $\mu_f(f|D)$.
 
 \begin{figure}[h!t]\center
     \includegraphics[width=0.45\textwidth]{thesis/figures/chapter-1/matricized-networks/mnist_change_channels}
@@ -690,13 +690,13 @@ $
 \end{equation*}
 где~$\boldsymbol{\theta} = \mathrm{col}(\mathbf{W}^{(L+1)}, \dots, \mathbf{W}^{(1)}).$
 
-\begin{rustheorem}[\emph{Киселев-Грабовой-Мешков}]
+\begin{rustheorem}[\emph{Грабовой-Мешков-Киселев}]
     \justifying
     Пусть функция нейронной сети~$f_{\boldsymbol{\theta}}(\mathbf{x})$ представима в виде суперпозиции линейных операторов, тогда матрица Гессе функции потерь относительно параметров модели представляется в факторизованной форме:
     $\mathbf{H}(\boldsymbol{\theta}) \approx \mathbf{Q}^{T}\mathbf{F}^{T}\mathbf{A}\mathbf{F}\mathbf{Q}$, описывающие G-компоненту матрицы Гессе.
 \end{rustheorem}
 
-\begin{rustheorem}[\emph{Киселев-Грабовой-Мешков}]
+\begin{rustheorem}[\emph{Мешков-Киселев-Грабовой}]
     \justifying
     Пусть функция нейронной сети~$f_{\boldsymbol{\theta}}(\mathbf{x})$ представима в виде суперпозиции линейных операторов.
     Пусть для всех $p$ выполняется: $\left\|\mathbf{Q}^{(p)}\right\| \leqslant q, \left\|\mathbf{T}^{(p)}\right\|^2 \leqslant w_{\mathbf{T}}^2.$
@@ -707,7 +707,7 @@ $
 %----------------------------------------------------------------------------------------------------------
 \begin{frame}{Сверточные модели глубокого обучения}
 \justifying
-\begin{rustheorem}[\emph{Грабовой-Мешков-Киселев}]
+\begin{rustheorem}[\emph{Мешков-Киселев-Грабовой}]
     \justifying
     Пусть задана функция нейронной сети~$f_{\boldsymbol{\theta}}x = C_{\mathbf{W}^{(L+1)}} \circ \sigma \circ \dots \circ \sigma \circ C_{\mathbf{W}^{(1)}},$
     где~$C_{\mathbf{W}^{(i)}}$~--- одномерная свертка с ядром~$\mathbf{W}^{(i)}$. Пусть заданы следующие верхние оценки на параметры:~$C_l \leqslant C, k_i \leqslant k, d_i \leqslant d_1:=d, |\mathbf{W}^{(p)}_{i,j,k}|^2 \leqslant w^2.$
@@ -740,7 +740,8 @@ $
 \end{rustheorem}
 
 \begin{block}{Практический вывод}
-Операции пулинга снижают сложность модели и действуют как \textbf{механизм регуляризации} в глубоких сверточных нейронных сетях.
+\justifying
+Операции пулинга снижают сложность модели и действуют как  регуляризация в глубоких сверточных нейронных сетях.
 \end{block}
 
 \begin{rusremark}
@@ -770,14 +771,12 @@ $
 \end{tabular}
 \end{table}
 
-\begin{block}{Ключевые наблюдения}
 \begin{itemize}
-    \item Экспоненциальный рост с глубиной сети $L$
-    \item Полиномиальный рост с размером слоев
-    \item Пулинг снижает сложность
-    \item Оценки позволяют предсказывать сложность без обучения модели
+    \item Экспоненциальный рост с глубиной сети $L$.
+    \item Полиномиальный рост с размером слоев.
+    \item Пулинг снижает сложность.
+    \item Оценки указывают на сложность без обучения модели.
 \end{itemize}
-\end{block}
 \end{frame}
 %----------------------------------------------------------------------------------------------------------
 \section{Достаточный размер выборки}
@@ -922,7 +921,7 @@ $
 \end{columns}
 
 \begin{itemize}
-    \item Все исследованные методы демонстрируют \textbf{монотонное} поведение.
+    \item Все методы демонстрируют монотонное поведение.
     \item Значения функций с ростом $k$ асимптотически стремятся к константе, что подтверждает корректность определений достаточного объема.
     \item Дисперсия оценок $m^*$ мала, методы устойчивы к выбросам.
     \item Полученные результаты согласуются с теоремами о сходимости предложенных критериев.
@@ -935,8 +934,8 @@ $
     \centering
 
     \begin{enumerate}
-        \item Удаление параметров (pruning) на основе анализа градиентов
         \item Мультидоменная дистилляция знаний
+        \item Удаление параметров на основе анализа градиентов
         \item Анти-дистилляция: наращивание сложности с регуляризацией
         \item Экспериментальная оценка методов
     \end{enumerate}
@@ -961,7 +960,7 @@ $
 \mathbf{x_i} \in \mathbb{X}_{A},
 \mathbf{y_i} \in \mathbb{Y}, \qquad \mathfrak{D}_{B}=\{(\mathbf{x_i},\mathbf{y_i})\}_{i=1}^m, \mathbf {x_i} \in \mathbb{X}_{B}, \mathbf{y_i} \in \mathbb{Y}.
 \]
-Оптимизационная задача для дистилляции:
+Оптимизационная задача для многодоменной дистилляции:
 \begin{align*}
     \mathcal{L}(\mathbf{w,X,Y,f,\varphi}) =&
     -\lambda\sum\limits_{i=1}^{m}\sum\limits_{r=1}^{ R}\mathbb{I}[y_{i}=r]\log{g^{r}(\mathbf{x}_{i},\mathbf{w})} -\\
@@ -1097,9 +1096,10 @@ Anti-Distillation & \textbf{0.86±0.05} & \textbf{0.57±0.03} & 0.67±0.03 \\
 %----------------------------------------------------------------------------------------------------------
 \begin{frame}{Соответствие паспорту специальности 1.2.1}
 \justifying
+\begin{center}
 \begin{tabular}{|p{0.7\textwidth}|c|}
 \hline
-\textbf{Пункт паспорта} & \textbf{Положения} \\
+\textbf{Пункт паспорта} & \textbf{Положение} \\
 \hline
 2. Исследования в области оценки качества и эффективности алгоритмических и программных решений для систем искусственного интеллекта и машинного обучения. Методики сравнения и выбора алгоритмических и программных решений при многих критериях. & 1, 4, 5 \\
 \hline
@@ -1110,6 +1110,7 @@ Anti-Distillation & \textbf{0.86±0.05} & \textbf{0.57±0.03} & 0.67±0.03 \\
 17. Исследования в области многослойных алгоритмических конструкций, в том числе – многослойных нейросетей. & 2, 3 \\
 \hline
 \end{tabular}
+\end{center}
 \end{frame}
 %----------------------------------------------------------------------------------------------------------
 \begin{frame}[allowframebreaks]{Публикации по теме диссертации}
@@ -1117,58 +1118,131 @@ Anti-Distillation & \textbf{0.86±0.05} & \textbf{0.57±0.03} & 0.67±0.03 \\
 {
 \tiny
 \begin{enumerate}
-    \item Грицай Г. М., Грабовой А. В. Интерпретация классификаторов на основе архитектуры трансформер с помощью кластеризации // Доклады Российской академии наук. Математика, информатика, процессы управления.~--- 2025.~--- Т. 527.~--- С. 432–448.
-    \item Дорин Д. Д., Варламова К. Д., Грабовой А. В. Попарное сравнение изображений для обнаружения плагиата // Доклады Российской академии наук. Математика, информатика, процессы управления.~--- 2025.~--- Т. 527.~--- С. 68–83.
-    \item Дорин Д. Д., Грабовой А. В., Стрижов В. В. Улучшение декодирования данных ФМРТ с использованием пространственно-временных характеристик в условиях ограниченного набора данных // Доклады Российской академии наук. Математика, информатика, процессы управления.~--- 2025.~--- Т. 527.~--- С. 11–30.
-    \item Варламова К. Д., Дорин Д. Д., Грабовой А. В. За чертой знакомых доменов: исследование обобщающей способности детекторов машинно сгенерированных изображений // Доклады Российской академии наук. Математика, информатика, процессы управления.~--- 2025.~--- Т. 527.~--- С. 103–116.
-    \item Зверева А. К., Грабовой А. В., Каприелова М. С. Динамическое разделение труда в гибридном ии: стратегии кодировщиков и их воздействие на модуляторы на основе сетей долгой краткосрочной памяти // Доклады Российской академии наук. Математика, информатика, процессы управления.~--- 2025.~--- Т. 527.~--- С. 117–133.
-    \item Kiselev N. S., Grabovoy A. V. Sample size determination: Likelihood bootstrapping // Computational Mathematics and Mathematical Physics.~--- 2025.~--- Vol. 65, no. 2.~--- P. 416–423.
-    \item Kiselev N., Grabovoy A. Sample size determination: posterior distributions proximity // Computational Management Science.~--- 2025.~--- Vol. 22, no. 1.~--- P. 1.
-    \item Zvereva A. K., Kaprielova M., Grabovoy A. Anomlite: Efficient binary and multiclass video anomaly detection // Results in Engineering.~--- 2025.~--- Vol. 25.~--- P. 104162.
-    \item G. Gritsai, A. Voznuyk, I. Khabutdinov, A. Grabovoy. Advacheck at genai detection task 1: Ai detection powered by domain-aware multi-tasking // Proceedings of the 1st Workshop on GenAI Content Detection (GenAIDetect).~--- Abu Dhabi, UAE: International Conference on Computational Linguistics, 2025.~--- P. 236–243.
-    \item Voznyuk A., Gritsai G., Grabovoy A. Advacheck at semeval-2025 task 3: Combining ner and rag to spot hallucinations in llm answers // Proceedings of the 19th International Workshop on Semantic Evaluation (SemEval-2025).~--- Vienna, Austria: Association for Computational Linguistics, 2025.~--- P. 1204–1210.
-    \item Voznyuk A., Gritsai G., Grabovoy A. Team advacheck at pan: multitasking does all the magic // Working Notes of CLEF 2025 - Conference and Labs of the Evaluation Forum.~--- Vol. 4038.~--- CEUR-WS.org, 2025.~--- P. 4007–4014.
-    \item A. Levikin, I. Khabutdinov, A. Grabovoy, K. Vorontsov. The methodology of multi-criteria evaluation of text markup models based on inconsistent expert markup  // Computational Linguistics and Intellectual Technologies: Proceedings of the International Conference “Dialogue 2025”.~--- Moscow: JINR, 2025.
-    \item I. Kopanichuk, A. Chashchin, A. Grabovoy et al. Structure extractor: Multilingual extraction of sections from scientific document // 2025 37th Conference of Open Innovations Association (FRUCT).~--- IEEE, 2025.~--- P. 122–128.
-    \item G. M. Gritsay, A. V. Grabovoy, A. S. Kildyakov, Y. V. Chekhovich Artificially generated text fragments search in academic documents // Doklady Mathematics.~--- 2024.
-    \item Gritsay G., Grabovoy A. Automated text identification on languages of the iberian peninsula: Llm and bert-based models aggregation // Proceedings of the Iberian Languages Evaluation Forum (IberLEF 2024) co-located with the Conference of the Spanish Society for Natural Language Processing (SEPLN 2024).~--- Vol. 3756.~--- CEUR-WS.org, 2024.
-    \item Meshkov V., Kiselev N., Grabovoy A. Convnets landscape convergence: Hessian-based analysis of matricized networks // 2024 Ivannikov Ispras Open Conference (ISPRAS).~--- IEEE, 2024.~--- P. 1–10.
-    \item D. Dorin, N. Kiselev, A. Grabovoy, V. Strijov. Forecasting fmri images from video sequences: linear model analysis // Health Information Science and Systems.~--- 2024.~--- Vol. 12, no. 1.~--- P. 55.
-    \item Chekhovich Y., Grabovoy A., Gritsai G. Generative ai models with their full reveal* // 2024 4th International Conference on Technology Enhanced Learning in Higher Education (TELE).~--- Vol. 1.~--- IEEE, 2024.~--- P. 17–22.
-    \item M. Kaprielova, A. Grabovoy, K. Varlamova et al. Image plagiarism detection pipeline for vast databases // 2024 35th Conference of Open Innovations Association (FRUCT).~--- IEEE, 2024.~--- P. 328–335.
-    \item Gritsai G., Khabutdinov I., Grabovoy A. Multi-head span-based detector for ai-generated fragments in scientific papers // Proceedings of the Fourth Workshop on Scholarly Document Processing (SDP 2024).~--- Bangkok, Thailand: Association for Computational Linguistics, 2024.~--- P. 220–225.
-    \item Asvarov A., Grabovoy A. Neural machine translation system for lezgian, russian and azerbaijani languages // 2024 Ivannikov Ispras Open Conference (ISPRAS).~--- IEEE, 2024.~--- P. 1–7.
-    \item Poimanov D., Mestetsky L., Grabovoy A. N-gram perplexity-based ai-generated text detection // 2024 Ivannikov Ispras Open Conference (ISPRAS).~--- IEEE, 2024.~--- P. 1–8.
-    \item I. A. Khabutdinov, A. V. Chashchin, A. V. Grabovoy et al. Rugector: Rule-based neural network model for russian language grammatical error correction // Programming and Computer Software.~--- 2024.~--- Vol. 50, no. 4.~--- P. 315–321.
-    \item Грицай Г. М., Хабутдинов И. А., Грабовой А. В. Stack more llms: эффективное обнаружение машинно-сгенерированных текстов с помощью аппроксимации значений перплексии // Доклады Российской академии наук. Математика, информатика, процессы управления.~--- 2024.~--- Т. 520, № 2.~--- С. 228–237.
-    \item Boeva G., Gritsay G., Grabovoy A. Team ap-team at pan: Llm adapters for various datasets // Working Notes of the Conference and Labs of the Evaluation Forum (CLEF 2024).~--- Vol. 3740.~--- CEUR-WS.org, 2024.~--- P. 2527–2535.
-    \item A. V. Grabovoy, M. S. Kaprielova, A. S. Kildyakov et al. Text reuse detection in handwritten documents // Doklady Mathematics.~--- 2024.
-    \item Asvarov A., Grabovoy A. The impact of multilinguality and tokenization on statistical machine translation // 2024 35th Conference of Open Innovations Association (FRUCT).~--- IEEE, 2024.~--- P. 149–157.
-    \item Киселев Н. С., Грабовой А. В. Раскрытие Гессиана: ключ к плавной сходимости поверхности функции потерь // Доклады Российской академии наук. Математика, информатика, процессы управления.~--- 2024.~--- Т. 520, № 2.~--- С. 57–70.
-    \item G. Gritsay, A. Grabovoy, A. Kildyakov, Y. Chekhovich. Automated text identification: Multilingual transformer-based models approach // Proceedings of the Iberian Languages Evaluation Forum (IberLEF 2023) co-located with the Conference of the Spanish Society for Natural Language Processing (SEPLN 2023).~--- Vol. 3496.~--- CEUR-WS.org, 2023.
-    \item Varlamova K., Khabutdinov I., Grabovoy A. Automatic spelling correction for russian: Multiple error approach // 2023 Ivannikov Ispras Open Conference (ISPRAS).~--- IEEE, 2023.~--- P. 169–175.
-    \item O. Bakhteev, Y. Chekhovich, A. Grabovoy et al. Cross-language plagiarism detection: A case study of european languages academic works // Academic Integrity: Broadening Practices, Technologies, and the Role of Students.~--- Vol. 4 of Ethics and Integrity in Educational Contexts.~--- New York: Springer International Publishing, 2023.~--- P. 143–161.
-    \item Avetisyan K., Gritsay G., Grabovoy A. Cross-lingual plagiarism detection: Two are better than one // Programming and Computer Software.~--- 2023.~--- Vol. 49, no. 4.~--- P. 346–354.
-    \item D. Shodiev, I. Kopanichuk, A. Chashchin et al. Ensembling models for the generation of queries to an altering search engine using reinforcement learning // 2023 Ivannikov Ispras Open Conference (ISPRAS).~--- IEEE, 2023.~--- P. 144–149.
-    \item I. Potyashin, M. Kaprielova, Y. Chekhovich et al. Hwr200: New open access dataset of handwritten texts images in russian // Proceedings of the International Conference “Dialogue 2023”.~--- 2023.
-    \item Grashchenkov K., Grabovoy A., Khabutdinov I. A method of multilingual summarization for scientific documents // 2022 Ivannikov Ispras Open Conference (ISPRAS).~--- IEEE, 2022.
-    \item K. Petrushina, O. Bakhteev, A. Grabovoy, V. Strijov Anti-distillation: Knowledge transfer from a simple model to the complex one // 2022 Ivannikov Ispras Open Conference (ISPRAS).~--- IEEE, 2022.
-    \item Gritsay G., Grabovoy A., Chekhovich Y. Automatic detection of machine generated texts: Need more tokens // Ivannikov Memorial Workshop Proceedings 2022.~--- 2022.
-    \item A. V. Grabovoy, T. T. Gadaev, A. P. Motrenko, V. V. Strijov. Numerical methods of sufficient sample size estimation for generalised linear models // Lobachevskii Journal of Mathematics.~--- 2022.~--- Vol. 43, no. 9.~--- P. 2453–2462.
-    \item Грабовой А. В., Стрижов В. В. Вероятностная интерпретация задачи дистилляции // Автоматика и телемеханика.~--- 2022.~--- № 1.~--- С. 150–168.
-    \item Базарова А. И., Грабовой А. В., Стрижов В. В. Анализ свойств вероятностных моделей в задачах обучения с экспертом // Автоматика и телемеханика.~--- 2022.~--- № 10.
-    \item Grabovoy A. V., Strijov V. V. Bayesian distillation of deep learning models // Automation and Remote Control.~--- 2021.~--- Vol. 82, no. 11.~--- P. 1846–1856.
-    \item Grabovoy A. V., Strijov V. V. Prior distribution selection for a mixture of experts // Computational Mathematics and Mathematical Physics.~--- 2021.~--- Vol. 61, no. 7.~--- P. 1140–1152.
-    \item Grabovoy A., Bakhteev O., Chekhovich Y. The automatic approach for scientific papers dating // Proceedings of the 2020 Ivannikov Ispras Open Conference.~--- Los Alamitos, CA: IEEE Computer Society Press, 2021.
-    \item Грабовой А. В., Стрижов В. В. Анализ выбора априорного распределения для смеси экспертов // Журнал вычислительной математики и математической физики.~--- 2021.~--- Т. 61, № 7.~--- С. 1149–1161.
-    \item Грабовой А. В., Стрижов В. В. Байесовская дистилляция моделей глубокого обучения // Автоматика и телемеханика.~--- 2021.~--- № 11.~--- С. 16–29.
-    \item Грабовой А. В., Бахтеев О. Ю., Стрижов В. В. Введение отношения порядка на множестве параметров аппроксимирующих моделей // Информатика и ее применения.~--- 2020.~--- Т. 14, № 2.
-    \item Grabovoy A. V., Strijov V. V. Quasi-periodic time series clustering for human activity recognition // Lobachevskii Journal of Mathematics.~--- 2020.~--- Vol. 41, no. 3.~--- P. 333–339.
-    \item Грабовой А. В., Бахтеев О. Ю., Стрижов В. В. Определение релевантности параметров нейросети // Информатика и ее применения.~--- 2019.
+    \item Варламова~К.\;Д., Дорин~Д.\;Д., Грабовой~А.\;В. За чертой знакомых доменов: исследование обобщающей способности детекторов машинно сгенерированных изображений // Доклады Российской академии наук. Математика, информатика, процессы управления. 2025. Т.~527, №~7. С.~103--116. DOI:~10.7868/S2686954325070094.
+    
+    \item Дорин~Д.\;Д., Грабовой~А.\;В., Стрижов~В.\;В. Улучшение декодирования данных ФМРТ с использованием пространственно-временных характеристик в условиях ограниченного набора данных // Доклады Российской академии наук. Математика, информатика, процессы управления. 2025. Т.~527, №~7. С.~11--30. DOI:~10.7868/S2686954325070021.
+    
+    \item Зверева~А.\;К., Грабовой~А.\;В., Каприелова~М.\;С. Динамическое разделение труда в гибридном ии: стратегии кодировщиков и их воздействие на модуляторы на основе сетей долгой краткосрочной памяти // Доклады Российской академии наук. Математика, информатика, процессы управления. 2025. Т.~527, №~7. С.~117--133. DOI:~10.7868/S2686954325070100.
+    
+    \item Грицай~Г.\;М., Грабовой~А.\;В. Интерпретация классификаторов на основе архитектуры трансформер с помощью кластеризации // Доклады Российской академии наук. Математика, информатика, процессы управления. 2025. Т.~527, №~7. С.~432--448. DOI:~10.7868/S2686954325070379.
+    
+    \item Дорин~Д.\;Д., Варламова~К.\;Д., Грабовой~А.\;В. Попарное сравнение изображений для обнаружения плагиата // Доклады Российской академии наук. Математика, информатика, процессы управления. 2025. Т.~527, №~7. С.~68--83. DOI:~10.7868/S2686954325070069.
+    
+    \item Kiselev~N.\;S., Grabovoy~A.\;V. Sample Size Determination: Likelihood Bootstrapping // Computational Mathematics and Mathematical Physics. 2025. Vol.~65, no.~2. pp.~416--423. DOI:~10.1134/s0965542524702002.
+    
+    \item Zvereva~Anna\;K., Kaprielova~Mariam, Grabovoy~Andrey. AnomLite: Efficient binary and multiclass video anomaly detection // Results in Engineering. 2025. Vol.~25. pp.~104162. DOI:~10.1016/j.rineng.2025.104162.
+    
+    \item Kiselev~Nikita, Grabovoy~Andrey. Sample size determination: posterior distributions proximity // Computational Management Science. 2025. Vol.~22, no.~1. pp.~1. DOI:~10.1007/s10287-024-00528-9.
+    
+    \item Gritsai~G.\;M., Khabutdinov~I.\;A., Grabovoy~A.\;V. Stack More LLM’s: Efficient Detection of Machine-Generated Texts via Perplexity Approximation // Doklady Mathematics. 2024. Vol.~110, no.~S1. pp.~S203--S211. DOI:~10.1134/s1064562424602075.
+    
+    \item Kiselev~N.\;S., Grabovoy~A.\;V. Unraveling the Hessian: A Key to Smooth Convergence in Loss Function Landscapes // Doklady Mathematics. 2024. Vol.~110, no.~S1. pp.~S49--S61. DOI:~10.1134/s1064562424601987.
+    
+    \item Dorin~Daniil, Kiselev~Nikita, Grabovoy~Andrey, Strijov~Vadim. Forecasting fMRI images from video sequences: linear model analysis // Health Information Scient and Systems. 2024. Vol.~12, no.~1. pp.~55. DOI:~10.1007/s13755-024-00315-5.
+    
+    \item Khabutdinov~I.\;A., Chashchin~A.\;V., Grabovoy~A.\;V., Kildyakov~A.\;S., Chekhovich~U.\;V. RuGECToR: Rule-Based Neural Network Model for Russian Language Grammatical Error Correction // Programming and Computer Software. 2024. Vol.~50, no.~4. pp.~315--321. DOI:~10.1134/s0361768824700129.
+    
+    \item Grabovoy~A.\;V., Kaprielova~M.\;S., Kildyakov~A.\;S., Potyashin~I.\;O., Seyil~T.\;B., Finogeev~E.\;L., Chekhovich~Yu\;V. Text Reuse Detection in Handwritten Documents // Doklady Mathematics. 2024. DOI:~10.1134/s106456242370120x.
+    
+    \item Gritsay~G.\;M., Grabovoy~A.\;V., Kildyakov~A.\;S., Chekhovich~Yu\;V. Artificially Generated Text Fragments Search in Academic Documents // Doklady Mathematics. 2024. DOI:~10.1134/s1064562423701211.
+    
+    \item Avetisyan~K., Gritsay~G., Grabovoy~A. Cross-Lingual Plagiarism Detection: Two Are Better Than One // Programming and Computer Software. 2023. Vol.~49, no.~4. pp.~346--354. DOI:~10.1134/s0361768823040138.
+    
+    \item Bazarova~A.\;I., Grabovoy~A.\;V., Strijov~V.\;V. Analysis of the Properties of Probabilistic Models in Expert-Augmented Learning Problems // Automation and Remote Control. 2022. Vol.~83, no.~10. pp.~1527--1537. DOI:~10.1134/s00051179220100058.
+    
+    \item Grabovoy~A.\;V., Gadaev~T.\;T., Motrenko~A.\;P., Strijov~V.\;V. Numerical Methods of Sufficient Sample Size Estimation for Generalised Linear Models // Lobachevskii Journal of Mathematics. 2022. Vol.~43, no.~9. pp.~2453--2462. DOI:~10.1134/s1995080222120125.
+    
+    \item Grabovoy~A.\;V., Strijov~V.\;V. Probabilistic Interpretation of the Distillation Problem // Automation and Remote Control. 2022. Vol.~83, no.~1. pp.~123--137. DOI:~10.1134/s000511792201009x.
+    
+    \item Grabovoy~A.\;V., Strijov~V.\;V. Prior Distribution Selection for a Mixture of Experts // Computational Mathematics and Mathematical Physics. 2021. Vol.~61, no.~7. pp.~1140--1152. DOI:~10.1134/s0965542521070071.
+    
+    \item Grabovoy~A.\;V., Strijov~V.\;V. Bayesian Distillation of Deep Learning Models // Automation and Remote Control. 2021. Vol.~82, no.~11. pp.~1846--1856. DOI:~10.1134/s0005117921110023.
+    
+    \item Grabovoy~A.\;V., Strijov~V.\;V. Quasi-Periodic Time Series Clustering for Human Activity Recognition // Lobachevskii Journal of Mathematics. 2020. Vol.~41, no.~3. pp.~333--339. DOI:~10.1134/s1995080220030075.
+    
+    \item Грабовой~А.\;В., Бахтеев~О.\;Ю., Стрижов~В.\;В. Введение отношения порядка на множестве параметров аппроксимирующих моделей // Информатика и ее применения. 2020. Т.~14, №~2. С.~58--65. DOI:~10.14357/19922264200208.
+    
+    \item Грабовой~А.\;В., Бахтеев~О.\;Ю., Стрижов~В.\;В. Определение релевантности параметров нейросети // Информатика и ее применения. 2019. DOI:~10.14357/19922264190209.
+    
+    \item Kopanichuk~I., Chashchin~A., Ochneva~I., Grabovoy~A., Ogaltsov~A., Kildyakov~A., Chekhovich~Y. Structure Extractor: Multilingual Extraction of Sections from Scientific Document // 2025 37th Conference of Open Innovations Association (FRUCT). 2025. Pp.~122--128. DOI:~10.23919/fruct65909.2025.11008070. IEEE.
+    
+    \item Gritsai~G., Voznuyk~A., Khabutdinov~I., Grabovoy~A. Advacheck at GenAI Detection Task 1: AI Detection Powered by Domain-Aware Multi-Tasking // Proceedings of the 1st Workshop on GenAI Content Detection (GenAIDetect). 2025. Pp.~236--243. International Conference on Computational Linguistics, Abu Dhabi, UAE.
+    
+    \item Asvarov~A., Grabovoy~A. Neural Machine Translation System for Lezgian, Russian and Azerbaijani Languages // 2024 Ivannikov Ispras Open Conference (ISPRAS). 2024. Pp.~1--7. DOI:~10.1109/ispras64596.2024.10899143. IEEE.
+    
+    \item Poimanov~D., Mestetsky~L., Grabovoy~A. N-Gram Perplexity-Based AI-Generated Text Detection // 2024 Ivannikov Ispras Open Conference (ISPRAS). 2024. Pp.~1--8. DOI:~10.1109/ispras64596.2024.10899150. IEEE.
+    
+    \item Meshkov~V., Kiselev~N., Grabovoy~A. ConvNets Landscape Convergence: Hessian-Based Analysis of Matricized Networks // 2024 Ivannikov Ispras Open Conference (ISPRAS). 2024. Pp.~1--10. DOI:~10.1109/ispras64596.2024.10899113. IEEE.
+    
+    \item Boeva~G., Gritsay~G., Grabovoy~A. Team ap-team at PAN: LLM Adapters for Various Datasets // Working Notes of the Conference and Labs of the Evaluation Forum (CLEF 2024). 2024. Vol.~3740 (CEUR Workshop Proceedings). Pp.~2527--2535. CEUR-WS.org.
+    
+    \item Gritsay~G., Grabovoy~A. Automated Text Identification on Languages of the Iberian Peninsula: LLM and BERT-based Models Aggregation // Proceedings of the Iberian Languages Evaluation Forum (IberLEF 2024) co-located with the Conference of the Spanish Society for Natural Language Processing (SEPLN 2024). 2024. Vol.~3756 (CEUR Workshop Proceedings). CEUR-WS.org.
+    
+    \item Gritsai~G., Khabutdinov~I., Grabovoy~A. Multi-head Span-based Detector for AI-generated Fragments in Scientific Papers // Proceedings of the Fourth Workshop on Scholarly Document Processing (SDP 2024). 2024. Pp.~220--225. DOI:~10.18653/v1/2024.sdp-1.21. Association for Computational Linguistics, Bangkok, Thailand.
+    
+    \item Asvarov~A., Grabovoy~A. The Impact of Multilinguality and Tokenization on Statistical Machine Translation // 2024 35th Conference of Open Innovations Association (FRUCT). 2024. Pp.~149--157. DOI:~10.23919/fruct61870.2024.10516416. IEEE.
+    
+    \item Gritsay~G., Grabovoy~A., Kildyakov~A., Chekhovich~Y. Automated Text Identification: Multilingual Transformer-based Models Approach // Proceedings of the Iberian Languages Evaluation Forum (IberLEF 2023) co-located with the Conference of the Spanish Society for Natural Language Processing (SEPLN 2023). 2023. Vol.~3496 (CEUR Workshop Proceedings). CEUR-WS.org.
+    
+    \item Petrushina~K., Bakhteev~O., Grabovoy~A., Strijov~V. Anti-Distillation: Knowledge Transfer from a Simple Model to the Complex One // 2022 Ivannikov Ispras Open Conference (ISPRAS). 2022. DOI:~10.1109/ispras57371.2022.10076855. IEEE.
+    
+    \item Gritsay~G., Grabovoy~A., Chekhovich~Y. Automatic Detection of Machine Generated Texts: Need More Tokens // Ivannikov Memorial Workshop Proceedings 2022. 2022. DOI:~10.1109/ivmem57067.2022.9983964.
+    
+    \item Grabovoy~A., Bakhteev~O., Chekhovich~Y. The automatic approach for scientific papers dating // Proceedings of the 2020 Ivannikov Ispras Open Conference. 2021. DOI:~10.1109/ispras53967.2021.00020. IEEE Computer Society Press, Los Alamitos, CA, United States.
+    
+    \item Зверева~А.\;К., Грабовой~А.\;В., Каприелова~М.\;С. Структурно-ориентированная синтетическая аугментация как регуляризатор в задаче распознавания пространственно-временных паттернов // Тезисы докладов 22-й всероссийской конференции с международным участием {\flqq}Математические методы распознавания образов (ММРО-2025){\frqq}, Муром, 22–26 сентября, 2025 г. 2025. С.~18–21. ООО {\dq}МАКС Пресс{\dq}, Москва.
+    
+    \item Грабовой~А.\;В. О сложности моделей и данных в задачах обучения нейросетевых моделей // Тезисы докладов 22-й всероссийской конференции с международным участием {\flqq}Математические методы распознавания образов (ММРО-2025){\frqq}, Муром, 22–26 сентября, 2025 г. 2025. С.~72–73. ООО {\dq}МАКС Пресс{\dq}, Москва.
+    
+    \item Киселев~Н.\;С., Мешков~В.\;С., Грабовой~А.\;В. Достаточный размер обучающей выборки и его связь со сходимостью поверхности функции потерь // Тезисы докладов 22-й всероссийской конференции с международным участием {\flqq}Математические методы распознавания образов (ММРО-2025){\frqq}, Муром, 22–26 сентября, 2025 г. 2025. С.~73–76. ООО {\dq}МАКС Пресс{\dq}, Москва.
+    
+    \item Грицай~Г.\;М., Грабовой~А.\;В. Неявная регуляризация векторного представления текстов в подходе многозадачного обучения // Тезисы докладов 22-й всероссийской конференции с международным участием {\flqq}Математические методы распознавания образов (ММРО-2025){\frqq}, Муром, 22–26 сентября, 2025 г. 2025. С.~78–79. ООО {\dq}МАКС Пресс{\dq}, Москва.
+    
+    \item Дорин~Д.\;Д., Киселев~Н.\;С., Грабовой~А.\;В. Декодирование визуальных стимулов из мультимодальных сигналов мозга // Тезисы докладов 22-й всероссийской конференции с международным участием {\flqq}Математические методы распознавания образов (ММРО-2025){\frqq}, Муром, 22–26 сентября, 2025 г. 2025. С.~124–126. ООО {\dq}МАКС Пресс{\dq}, Москва.
+    
+    \item Степанов~И.\;Д., Филатов~А.\;В., Дорин~Д.\;Д., Игнашин~И.\;Н., Изместьева~У.\;А., Грабовой~А.\;В. Применение синтетических данных, полученных с помощью генеративной нейросети, для повышения качества моделей детекции // Труды 67-й Всероссийской научной конференции МФТИ. 2025. (Прикладная математика и информатика). Физматкнига.
+    
+    \item Мешков~В.\;С., Киселев~Н.\;С., Грабовой~А.\;В. Сходимость ландшафта сверточных нейронных сетей: анализ матричных сетей на основе гесиана // Труды 67-й Всероссийской научной конференции МФТИ. 2025. (Прикладная математика и информатика). Физматкнига.
+    
+    \item Киселев~Н.\;С., Грабовой~А.\;В. Сходимость поверхности функции потерь как признак достаточного размера выборки // Труды 67-й Всероссийской научной конференции МФТИ. 2025. (Прикладная математика и информатика). Физматкнига.
+    
+    \item Дорин~Д.\;Д., Грабовой~А.\;В. Улучшение декодирования фМРТ в условиях ограниченной выборки // Труды 67-й Всероссийской научной конференции МФТИ. 2025. (Прикладная математика и информатика). Физматкнига.
+    
+    \item Грицай~Г.\;М., Грабовой~А.\;В. Выравнивание представлений в подходе многозадачного обучения для детектирования машинно-сгенерированных текстов // Труды 67-й Всероссийской научной конференции МФТИ. 2025. (Прикладная математика и информатика). Физматкнига.
+    
+    \item Киселев~Н., Грабовой~А. Определение достаточного размера выборки по апостериорному распределению параметров модели // Труды 66-й Всероссийской научной конференции МФТИ, 1–6 апреля 2024 г. 2024. С.~141. ISBN~978-5-89155-414-6. (Прикладная математика и информатика). Физматкнига.
+    
+    \item Дорин~Д., Киселев~Н., Грабовой~А. Пространственно-временные методы анализа временных рядов // Труды 66-й Всероссийской научной конференции МФТИ, 1–6 апреля 2024 г. 2024. С.~127. ISBN~978-5-89155-414-6. (Прикладная математика и информатика). Физматкнига.
+    
+    \item Грицай~Г., Грабовой~А. Многозадачное обучение для распознавания машинно-сгенерированных текстов // Труды 65-й Всероссийской научной конференции МФТИ в честь 115-летия Л.Д.Ландау, 3–8 апреля 2023 г. Прикладная математика и информатика. 2023. С.~117–119. ISBN~978-5-89155-391-0. Физматкнига, Москва.
+    
+    \item Грабовой~А.\;В., Хабутдинов~И. Анализ работы BERT-подобных моделей в задачах классификации грамматических ошибок на русском языке // Труды 65-й Всероссийской научной конференции МФТИ в честь 115-летия Л.Д.Ландау, 3–8 апреля 2023 г. Прикладная математика и информатика. 2023. С.~117. ISBN~978-5-89155-391-0. Физматкнига, Москва.
+    
+    \item Баязитов~К.\;М., Грабовой~А.\;В., Стрижов~В.\;В. Дистилляция моделей глубокого обучения на многодоменных выборках // Интеллектуализация обработки информации: Тезисы докладов 14-й Международной конференции. 2022. С.~98–99. ISBN~978-5-907366-77-0. Российская академия наук, Москва.
+    
+    \item Грабовой~А.\;В., Стрижов~В.\;В. Байесовское выравнивание структур нейросетевых моделей // Труды 64-й Всероссийской научной конференции МФТИ 22-25 ноября 2021. Прикладная математика и информатика. 2021. С.~148–149. ISBN~978-5-7417-0788-3. МФТИ, Москва.
+    
+    \item Грабовой~А.\;В., Стрижов~В.\;В. Априорное распределение параметров в задачах выбора моделей глубокого обучения // {\flqq}Математические методы распознавания образов{\frqq} (ММРО-2021): Тезисы докладов 20-й Всероссийской конференции с международным участием. 2021. С.~142–143. ISBN~978-5-907366-47-3. Российская академия наук, Москва.
+    
+    \item Грабовой~А.\;В., Стрижов~В.\;В. Вероятностный подход к задаче привилегированного обучения и дистилляции // Труды 63-й Всероссийской научной конференции МФТИ. 23-29 ноября 2020 года. Прикладные математика и информатика. 2020. С.~197–198. ISBN~978-5-7417-0757-9. МФТИ, М.
+    
+    \item Грабовой~А.\;В., Стрижов~В.\;В. Задача обучения с экспертом для построение интерпретируемых моделей машинного обучения // Тезисы докладов 13-й Международной конференции {\dq}Интеллектуализация обработки информации{\dq}. 2020. С.~16–17. ISBN~978-5-907366-16-9. РАН, Москва.
+    
+    \item Стрижов~В.\;В., Адуенко~А.\;А., Бахтеев~О.\;Ю., Исаченко~Р.\;В., Грабовой~А.\;В. Выбор моделей и ансамблей // Тезисы докладов 13-й Международной конференции {\dq}Интеллектуализация обработки информации{\dq}. 2020. С.~16–17. ISBN~978-5-907366-16-9. РАН, Москва.
+    
+    \item Грабовой~А.\;В., Стрижов~В.\;В. Анализ априорных распределений в задаче смеси экспертов // Труды 62-й Всероссийской научной конференции МФТИ. 2019. (Прикладные математика и информатика). ISBN~978-5-7417-0726-5. МФТИ, М.
+    
+    \item Гадаев~Т.\;Т., Грабовой~А.\;В., Мотренко~А.\;П., Стрижов~В.\;В. Численные методы оценки оптимального объема выборки для логистической и линейной регрессии // Тезисы докладов 19-й Всероссийской конференции с международным участием. 2019. С.~40–41. ISBN~978-5-907036-76-5. (Математические методы распознавания образов). Российская академия наук, Москва.
+    
+    \item Грабовой~А.\;В., Бахтеев~О.\;Ю., Стрижов~В.\;В. Введение отношения порядка на множестве параметров нейронной сети // Тезисы докладов 19-й Всероссийской конференции с международным участием. 2019. С.~38–39. ISBN~978-5-907036-76-5. (Математические методы распознавания образов). Российская академия наук, Москва.
+    
+    \item Грабовой~А.\;В., Бахтеев~О.\;Ю., Стрижов~В.\;В. Прореживание нейросетевых моделей методом Белсли // Труды 61-й всероссийской научной конференции МФТИ. 2018. С.~114–115. ISBN~978-5-7417-0689-3. (Прикладная математика и информатика). МФТИ, Москва.
+    
+    \item Грабовой~А.\;В., Бахтеев~О.\;Ю., Стрижов~В.\;В. Определение релевантности параметров нейросети методом белсли // Тезисы докладов 12-й Международной конференции {\flqq}Интеллектуализация обработки информации (ИОИ-2018){\frqq}, Москва, Россия – Гаэта, Италия. 2018. С.~36–37. DOI:~10.30826/idp201813. ISBN~978-5-94588-236-2. (Интеллектуализация обработки информации). TORUS PRESS.
 \end{enumerate}
 }
-По теме диссертации опубликовано 56 научных работ, из
-которых 17 статей в научно-технических журналах, входящих в перечень ВАК, 32~--- в изданиях, входящих в международные наукометрические базы Scopus и Web of Science. В трудах российских и международных конференций опубликовано 39 работ. Также на основе работ автора зарегистрировано 13 программ для ЭВМ.
+По теме диссертации опубликовано 61 научная работа, из
+которых 23 статей в научно-технических журналах, входящих в перечень ВАК, 32~--- в изданиях, входящих в международные наукометрические базы Scopus и Web of Science. В трудах российских и международных конференций опубликовано 39 работ. Также на основе работ автора зарегистрировано 13 программ для ЭВМ.
 \end{frame}
 %----------------------------------------------------------------------------------------------------------
 \begin{frame}{Основные результаты, выносимые на защиту}
@@ -1176,15 +1250,11 @@ Anti-Distillation & \textbf{0.86±0.05} & \textbf{0.57±0.03} & 0.67±0.03 \\
 \small
 \begin{enumerate}
     \justifying
-    \item Разработан единый формальный аппарат для оценки сложности моделей и данных на основе теории мер и анализа ландшафта оптимизационной задачи.
-    \item Введены формальные определения меры сложности выборки и меры сложности модели, установлен критерий обучаемости модели на выборке.
-    \item Введена ландшафтная мера сложности модели, определяемая через спектральные свойства матриц Гессе функции потерь.
-    \item Теоретически доказана связь ландшафтной меры со сложностью выборки.
-    \item Получены теоретические оценки ландшафтных мер на основе спектральных норм матриц Гессе для основных архитектур глубокого обучения: полносвязных, сверточных и трансформерных сетей.
-    \item Доказаны теоремы о зависимости ландшафтных мер от глубины сети, размеров слоев и других структурных параметров архитектур.
+    \item Разработан единый формальный аппарат для оценки сложности моделей и данных на основе теории мер и анализа ландшафта оптимизационной задачи. Введены формальные определения меры сложности выборки и меры сложности модели, установлен критерий обучаемости модели на выборке.
+    \item Введена ландшафтная мера сложности модели, определяемая через спектральные свойства матриц Гессе функции потерь. Теоретически доказана связь ландшафтной меры со сложностью выборки.
+    \item Получены теоретические оценки ландшафтных мер на основе спектральных норм матриц Гессе для основных архитектур глубокого обучения: полносвязных, сверточных и трансформерных сетей. Доказаны теоремы о зависимости ландшафтных мер от глубины сети, размеров слоев и других структурных параметров архитектур.
     \item Доказана сходимость методов оценки достаточного объема выборок из простой генеральной совокупности.
-    \item Разработаны методы мультидоменной дистилляции и анти-дистилляции для передачи знаний между моделями различной сложности и между различными доменами данных.
-    \item Для многозадачного обучения доказаны теоремы о статистической состоятельности низкоранговых адаптеров и снижении эмпирической сложности.
+    \item Разработаны методы мультидоменной дистилляции и анти-дистилляции для передачи знаний между моделями различной сложности и между различными доменами данных. Для многозадачного обучения доказаны теоремы о статистической состоятельности низкоранговых адаптеров и снижении эмпирической сложности.
 \end{enumerate}
 \end{frame}
 %----------------------------------------------------------------------------------------------------------
