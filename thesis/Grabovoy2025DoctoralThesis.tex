@@ -9,7 +9,6 @@
 \usepackage{svg}
 
 \usepackage[all]{xy}
-% colors
 \usepackage{xcolor}
 \definecolor{darkgreen}{rgb}{0.0, 0.2, 0.13}
 \definecolor{darkcyan}{rgb}{0.0, 0.55, 0.55}
@@ -23,7 +22,6 @@
 
 \newcommand{\paragraph}[1]{\noindent\textbf{#1}\quad}
 
-%https://tex.stackexchange.com/questions/163451/total-number-of-citations
 \usepackage{totcount}
 \newtotcounter{citnum} %From the package documentation
 \def\oldbibitem{} \let\oldbibitem=\bibitem
@@ -48,7 +46,6 @@
 \renewcommand{\contentsdesc}{Стр.}
 \renewcommand{\chaptername}{Глава}
 
-%%% Библиография %%%
 \makeatletter
 \bibliographystyle{utf8gost71u}     % Оформляем библиографию по ГОСТ 7.1 (ГОСТ Р 7.0.11-2011, 5.6.7)
 \makeatother
@@ -56,7 +53,6 @@
 \usepackage{silence}
 \WarningFilter*{latex}{Text page \thepage\space contains only floats}
 
-% Нужные мне пакеты
 \usepackage[hidelinks]{hyperref}
 \usepackage{booktabs}
 \usepackage{diagbox}
@@ -81,16 +77,15 @@
 \newtheorem{assumption}{Предположение}
 \newtheorem{property}{Свойство}
 \newtheorem{corollary}{Следствие}
+\newtheorem{proposition}[theorem]{Предложение}
 \newtheorem{remark}{Замечание}
 \newtheorem{hypothesis}{Гипотеза}
 
-% \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage[ruled,vlined]{algorithm2e}
 \SetKwInOut{KwIn}{Input}
 \SetKwInOut{KwOut}{Output}
 \SetKwFor{ForEach}{for each}{do}{end}
-
 
 \usepackage{comment}
 \usepackage{rotating}
@@ -99,53 +94,41 @@
 
 \begin{document}
 
-% Титульный лист
 \input{dis_title}
-% Нумерация должна начинаться со второй страницы
 \setcounter{page}{2}
 
-% Оглавление
 \newpage
 \tableofcontents
 
-% Введение
 \newpage{}
 \chapter*{Введение}
 \addcontentsline{toc}{section}{Введение}
 \input{dis_intro}
 
-% Нулевая глава
 \clearpage
-\chapter{Теория обучаемости моделей машинного обучения}\label{chapter:curent-learnability-theory}
+\chapter{Теория обучаемости}\label{chapter:curent-learnability-theory}
 \input{chapter-0}
 
-% Первая глава
 \clearpage
 \chapter{Сложность моделей и данных}\label{chapter:complexity}
 \input{chapter-1}
 
-% Вторая глава
 \clearpage
-\chapter{Матрицы Гессе нейросетевых моделей глубокого обучения}\label{chapter:gesian}
+\chapter{Матрицы Гессе параметрических моделей}\label{chapter:gesian}
 \input{chapter-2}
 
-% Третья глава
 \clearpage
-\chapter{Достаточный объем выборки моделей}\label{chapter:samplesize}
+\chapter{Достаточный объем выборки}\label{chapter:samplesize}
 \input{chapter-3}
 
-% Четвертая глава
 \clearpage
-\chapter{Методы снижения сложности моделей глубокого обучения}\label{chapter:pruning}
+\chapter{Методы снижения сложности моделей}\label{chapter:pruning}
 \input{chapter-4}
 
-% Шестая глава
 \clearpage
-\chapter{Применение теоретических оценок в прикладных задачах}\label{chapter:other-aplication}
+\chapter{Прикладные задачи}\label{chapter:other-aplication}
 \input{chapter-5}
 
-
-% Выводы
 \clearpage
 \chapter*{Заключение}
 \addcontentsline{toc}{section}{Заключение}
@@ -157,11 +140,11 @@
 \input{dis_external}
 
 \clearpage
-\chapter*{Дополнительные Леммы и утверждения}
-\addcontentsline{toc}{section}{Дополнительные Леммы и утверждения}
+\chapter*{Дополнительные леммы и утверждения}
+\addcontentsline{toc}{section}{Дополнительные леммы и утверждения}
 \input{dis_extralemmas}
 
-\clearpage 
+\clearpage
 \addcontentsline{toc}{section}{Список иллюстраций}
 \listoffigures
 

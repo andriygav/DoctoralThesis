@@ -1,7 +1,7 @@
 \begin{lemma}[Производная умножения матричнозначных функций]\label{lemma:matrix_funcs_product_derivative}
     Пусть заданы~$\mathbf{A}(\mathbf{X}) \in \mathbb{R}^{p \times r}$ и~$\mathbf{B}(\mathbf{X}) \in \mathbb{R}^{r \times q}$ матричнозначные функции переменной~$\mathbf{X}$, тогда справедливо равенство
     \begin{equation}
-        \frac{\partial\mathbf{A}(\mathbf{X})\mathbf{B}(\mathbf{X})}{\partial \mathbf{X}} = \left(\mathbf{A} \otimes \mathbf{I}_q 
+        \frac{\partial\mathbf{A}(\mathbf{X})\mathbf{B}(\mathbf{X})}{\partial \mathbf{X}} = \left(\mathbf{A} \otimes \mathbf{I}_q
      \right) \frac{\partial\mathbf{B}}{\partial\mathbf{X}} + \left( \mathbf{I}_p \otimes \mathbf{B}^\top\right) \frac{\partial\mathbf{A}}{\partial\mathbf{X}}
     \end{equation}
 \end{lemma}
@@ -71,7 +71,7 @@
 \begin{lemma}[Производная обратной матрицы]\label{lemma:invert_derivative}
     Пусть задана обратимая квадратная матрица~$\mathbf{D} \in \mathbb{R}^{n \times n}$ такая, что $\det(\mathbf{D}) \neq 0$, тогда справедливо равенство:
     \begin{equation}
-        \frac{\partial \mathbf{D}^{-1}}{\partial \mathbf{D}} 
+        \frac{\partial \mathbf{D}^{-1}}{\partial \mathbf{D}}
         = -\mathbf{D}^{-1} \otimes \mathbf{D}^{-\top}.
     \end{equation}
 \end{lemma}
@@ -80,7 +80,7 @@
     \begin{equation}
         d(\mathbf{D}^{-1}) = -\mathbf{D}^{-1} (d\mathbf{D}) \mathbf{D}^{-1}.
     \end{equation}
-    Используя оператор~$\mathrm{vec}_r$ и свойство~\ref{prop:vec_r_matrix_product}, получим 
+    Используя оператор~$\mathrm{vec}_r$ и свойство~\ref{prop:vec_r_matrix_product}, получим
     \begin{equation}
         \mathrm{vec}_r(-\mathbf{D}^{-1} (d\mathbf{D}) \mathbf{D}^{-1}) = (-\mathbf{D}^{-1} \otimes \mathbf{D}^{-\top}) \mathrm{vec}_r(d\mathbf{D}),
     \end{equation}
@@ -123,11 +123,10 @@
         \frac{\partial \mathbf{A}^\top}{\partial \mathbf{A}} = \mathbf{K}_{n, m},
     \end{equation}
     где матрица~$\mathbf{K}_{n, m}$ является коммутационной матрицей (англ. commutation matrix) описанной в определении~\ref{def:commutation_matrix}.
-\end{lemma} 
+\end{lemma}
 \begin{proof}
     Объединяя аналогичное утверждение из~\cite{magnus1988matrix} для постолбцовой векторизации с правилом соединения столбцов и строк~\ref{prop:vec_relation} и \ref{def:commutation_matrix}, получим утверждение леммы.
 \end{proof}
-
 
 \begin{lemma}[Производная произведения Кронекера матричнозначных функций]\label{lemma:matrix_funcs_kronecker_product_derivative}
     Пусть заданы матричнозначные функции~$\mathbf{A}(\mathbf{X}) \in \mathbb{R}^{n \times q}$ и~$\mathbf{B}(\mathbf{X}) \in \mathbb{R}^{p \times r}$ переменной~$\mathbf{X} \in \mathbb{R}^{m \times s}$, тогда справедливо равенство
