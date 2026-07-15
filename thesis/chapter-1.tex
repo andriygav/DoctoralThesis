@@ -1019,9 +1019,20 @@ $\|\mathbf{H}_i\|_2=\|\mathbf{x}_i\|_2^2$.
 
 \begin{corollary}[Один скрытый слой, FC ReLU]\label{ch1lc:cor:shallow}
 Рассмотрим один скрытый слой ширины $h$: $\mathbb{R}^{n}\to\mathbb{R}^{h}\to\mathbb{R}$ с ReLU и матрицами весов без смещений, удовлетворяющими тем же спектральным ограничениям, что и в лемме~\ref{ch1lc:lem:hess-mse}.
-В обозначениях следствия~\ref{ch1lc:cor:muf} это случай $L=2$, поэтому~\eqref{ch1lc:eq:muf-scale} дает верхнюю оценку $\mu_f(f\mid D)=O((hM)^{4})$, в отличие от более глубоких сетей, где множитель $(hM)^{2L}$ быстрее растет по~$L$.
-Отдельно, если в опорной точке $\boldsymbol{\theta}^\star$ пообъектные остатки равномерно малы,
-$\bigl|f_{\boldsymbol{\theta}^\star}(\mathbf{x}_i)-y_i\bigr|\le\varepsilon_y$ для всех~$i$, то учитывающая остатки часть теоремы~\ref{ch1lc:thm:landscape-mse} и точное тождество~\eqref{ch1lc:eq:interp-hessian} дают оценку~\eqref{ch1lc:eq:muf-interp-general} для $\mu_f(f\mid D)$; при покоординатных ограничениях это уточняет оценку худшего случая $O(h^4)$.
+В обозначениях следствия~\ref{ch1lc:cor:muf} это случай $L=2$, поэтому~\eqref{ch1lc:eq:muf-scale} дает оценку худшего случая
+\begin{equation}\label{ch1lc:eq:muf-shallow-worst}
+  \mu_f(f\mid D)=O\!\bigl((hM)^{4}\bigr).
+\end{equation}
+Если в опорной точке $\boldsymbol{\theta}^\star$ пообъектные остатки равномерно малы,
+$\bigl|f_{\boldsymbol{\theta}^\star}(\mathbf{x}_i)-y_i\bigr|\le\varepsilon_y$ для всех~$i$, и $|w_{ij}|\le M$, то учитывающая остатки часть теоремы~\ref{ch1lc:thm:landscape-mse} и~\eqref{ch1lc:eq:muf-interp-general} дают
+\[
+  \mu_f(f\mid D)
+  \le
+  2hM^{2}\max_{1\le i\le m}\bigl(\|\mathbf{x}_i\|_{1}^{2}+\|\mathbf{x}_i\|_{2}^{2}\bigr)
+  +
+  2\varepsilon_y M_{\nabla^2 f}.
+\]
+При $\|\mathbf{x}_i\|_{2}^{2}=\Theta(n)$ и $\|\mathbf{x}_i\|_{1}=\Theta(n)$ это $O(hM^{2}n^{2}+\varepsilon_y M_{\nabla^2 f})$; если $\varepsilon_y$ мало и $n\asymp h$, ведущий член имеет порядок $O(M^{2}h^{3})$, что мягче оценки худшего случая~$O(h^{4})$.
 \end{corollary}
 
 \noindent
@@ -1178,7 +1189,9 @@ $\mu_f(f\mid D)=O(hM^2n^2 + \varepsilon_y M_{\nabla^2 f})$; при малом $\
 \midrule
 $\mu_f(f\mid D)$ &
 $O(n)$&
-$O((hM)^4)$ в худшем случае и $O(hM^2n^2+\varepsilon_y M_{\nabla^2 f})$ при учете остатков \\
+$O((hM)^4)$ в худшем случае;
+$O(hM^2n^2+\varepsilon_y M_{\nabla^2 f})$ при малых остатках;
+при $n\asymp h$ и малом~$\varepsilon_y$ --- $O(M^2h^3)$ \\
 \addlinespace[0.35em]
 $\hat{\mathfrak{R}}_m$ &
 $O(W\sqrt{n/m})$ &
