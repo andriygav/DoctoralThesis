@@ -334,7 +334,7 @@
 \begin{itemize}
     \item Число параметров модели.
     \item Норма вектора весов $\|\mathbf{w}\|$.
-    \item Эффективная емкость, оцениваемая через след гессиана.
+    \item Эффективная емкость, оцениваемая через след матрицы Гессе.
     \item В дальнейшем будет введена \textit{ландшафтная мера} $\mu_f(f|D)$, учитывающая данные.
 \end{itemize}
 
@@ -514,7 +514,7 @@ $m^*$~--- минимальное количество объектов для о
     где $\mathbf{H}_i(\boldsymbol{\theta}^*)$~--- матрица Гессе для $i$-го объекта в точке минимума $\boldsymbol{\theta}^*$.
 \end{rusdefinition}
 
-Ландшафтная мера характеризует отклонение гессианов по объектам выборки:
+Ландшафтная мера характеризует отклонение матриц Гессе по объектам выборки:
 \begin{itemize}
     \item Малое отклонение~--- объекты одинаково влияют на ландшафт, модель насытилась данными.
     \item Большое отклонение~--- разные объекты по-разному искривляют ландшафт, данных недостаточно.
@@ -709,16 +709,16 @@ $
 \begin{rustheorem}[\emph{Мешков-Киселев-Грабовой}]
     \justifying
     Пусть задана функция нейронной сети~$f_{\boldsymbol{\theta}}x = C_{\mathbf{W}^{(L+1)}} \circ \sigma \circ \dots \circ \sigma \circ C_{\mathbf{W}^{(1)}},$
-    где~$C_{\mathbf{W}^{(i)}}$~--- одномерная свертка с ядром~$\mathbf{W}^{(i)}$. Пусть заданы следующие верхние оценки на параметры:~$C_l \leqslant C, k_i \leqslant k, d_i \leqslant d_1:=d, |\mathbf{W}^{(p)}_{i,j,k}|^2 \leqslant w^2.$
-    Тогда норма матрицы Гессе имеет следующую верхнюю оценку: $\left\|\mathbf{H}\right\| \leqslant \sqrt{2}\left\|x\right\|^2d^2(L+1)(C^2w^2kd)^L.$
+    где~$C_{\mathbf{W}^{(i)}}$~--- одномерная свертка с ядром~$\mathbf{W}^{(i)}$. Пусть заданы следующие верхние оценки на параметры:~$C_l \leqslant C, k_i \leqslant k_{\mathrm{ker}}, d_i \leqslant d_1:=d, |\mathbf{W}^{(p)}_{i,j,k}|^2 \leqslant w^2.$
+    Тогда норма матрицы Гессе имеет следующую верхнюю оценку: $\left\|\mathbf{H}\right\| \leqslant \sqrt{2}\left\|x\right\|^2d^2(L+1)(C^2w^2k_{\mathrm{ker}}d)^L.$
 \end{rustheorem}
 
 \begin{rustheorem}[\emph{Мешков-Киселев-Грабовой}]
     \justifying
     Пусть задана функция нейронной сети~$f_{\boldsymbol{\theta}}\mathbf{x} = C_{\mathbf{W}^{(L+1)}} \circ \dots \circ C_{\mathbf{W}^{(1)}},$
     где $C_{\mathbf{W}^{(l)}}$~--- двумерная свертка с ядром $\mathbf{W}^{(i)}$.
-    Пусть заданы следующие верхние оценки на параметры:~$C_l \leqslant C, k_i \leqslant k, m_i \leqslant m_1:=m, n_i \leqslant n_1:=n, |\mathbf{W}^{(p)}_{i,j,k}|^2 \leqslant w^2.$
-    Тогда норма матрицы Гессе имеет следующую верхнюю оценку:~$\left\|\mathbf{H}_{O}\right\| \leqslant \sqrt{2}\left\|\mathbf{x}\right\|^2C^4k^4m^2n^2(L+1)(C^2k^2w^2mn)^{L}.$
+    Пусть заданы следующие верхние оценки на параметры:~$C_l \leqslant C, k_i \leqslant k_{\mathrm{ker}}, m_i \leqslant m_1:=m, n_i \leqslant n_1:=n, |\mathbf{W}^{(p)}_{i,j,k}|^2 \leqslant w^2.$
+    Тогда норма матрицы Гессе имеет следующую верхнюю оценку:~$\left\|\mathbf{H}_{O}\right\| \leqslant \sqrt{2}\left\|\mathbf{x}\right\|^2C^4k_{\mathrm{ker}}^4m^2n^2(L+1)(C^2k_{\mathrm{ker}}^2w^2mn)^{L}.$
 \end{rustheorem}
 
 \begin{rusremark}
@@ -761,9 +761,9 @@ $
 \hline
 Полносвязная сеть & $L(hM)^{2L}$ \\
 \hline
-1D свертка & $L(C^2w^2kd)^L$ \\
+1D свертка & $L(C^2w^2k_{\mathrm{ker}}d)^L$ \\
 \hline
-2D свертка & $L(C^2k^2w^2mn)^L$ \\
+2D свертка & $L(C^2k_{\mathrm{ker}}^2w^2mn)^L$ \\
 \hline
 С пулингом & $L \cdot \left(\frac{1}{k_{\mathrm{pool}}^2}\right)^{L-l+2} \cdot (\text{базовая оценка})$ \\
 \hline

@@ -17,14 +17,14 @@
 Эта симметричность обеспечивает вещественность всех собственных значений и ортогональность соответствующих собственных векторов, что существенно для спектрального анализа.
 
 В оптимизации на матрице Гессе основаны методы второго порядка, в частности метод Ньютона, использующий~$\mathbf{H}^{-1}$ для учёта локальной кривизны; при этом прямое обращение плотной матрицы Гессе вычислительно дорого, что мотивирует квазиньютоновские и приближенные схемы.
-В теоретическом анализе собственные значения гессиана в стационарной точке описывают геометрию ландшафта: локальную кривизну по направлениям, наличие седловых точек и устойчивость найденного решения.
+В теоретическом анализе собственные значения матрицы Гессе в стационарной точке описывают геометрию ландшафта: локальную кривизну по направлениям, наличие седловых точек и устойчивость найденного решения.
 
 Во-первых, малые собственные значения соответствуют направлениям с незначительной кривизной~--- так называемым ``плоским'' регионам, где параметры могут варьироваться без существенного роста ошибки. Эти направления часто ассоциируются с параметрами, оказывающими незначительное влияние на выход модели, или с симметриями в архитектуре сети. В противоположность этому, большие собственные значения указывают на ``острые'' минимумы с выраженной кривизной. В литературе плоские минимумы часто связывают с лучшей обобщающей способностью за счет меньшей чувствительности к малым возмущениям данных и параметров; понятие остроты минимума остается предметом активных исследований.
 
 Во-вторых, след матрицы Гессе, равный сумме ее собственных значений, является интегральной характеристикой общей кривизны функции потерь. Детальный анализ спектрального состава матрицы Гессе, в частности оценка кратности собственных значений вблизи нуля, позволяет количественно оценить эффективную размерность пространства параметров, влияющих на выход модели, и идентифицировать структурную избыточность в архитектуре нейронной сети. Кроме того, распределение собственных значений матрицы Гессе тесно связано с устойчивостью модели к шуму, способностью к интерполяции данных и обобщающей способностью на тестовых выборках.
 
 Таким образом, матрица Гессе служит одновременно инструментом оптимизации второго порядка и средством анализа локальной геометрии модели.
-Для сетей с миллионами и миллиардами параметров хранение и обращение плотной матрицы~$n \times n$ непрактично, поэтому необходимы аппроксимации гессиана и аналитические оценки его спектральных характеристик.
+Для сетей с миллионами и миллиардами параметров хранение и обращение плотной матрицы~$n \times n$ непрактично, поэтому необходимы аппроксимации матрицы Гессе и аналитические оценки её спектральных характеристик.
 К числу таких подходов относятся случайное проектирование, разложения Кронекера, диагональные и блочно-диагональные аппроксимации, а также методы теории случайных матриц.
 
 \section{Полносвязные сети}
@@ -61,7 +61,7 @@
 \]
 где $\nabla_{\boldsymbol{\theta}} \mathbf{z}_i \in \mathbb{R}^{P \times K}$ представляет собой матрицу Якоби функции нейронной сети по параметрам, а $\dfrac{\partial^2 \ell(\mathbf{z}_i, \mathbf{y}_i)}{\partial \mathbf{z}_{i}^2}$~--- матрицу Гессе функции потерь относительно выходных логитов для $i$-го наблюдения. Первое слагаемое (G-компонента) отражает влияние кривизны функции потерь, в то время как второе слагаемое (H-компонента)~--- кривизну самой нейронной сети.
 
-Эмпирические исследования \cite{pmlr-v97-ghorbani19b,sagun2018empiricalanalysishessianoverparametrized,papyan2019spectrumdeepnethessiansscale} демонстрируют, что спектральное распределение матрицы Гессе характеризуется наличием основной массы собственных значений, сосредоточенной вблизи нуля, и выбросов, распределенных в области ненулевых значений. Это бимодальное распределение собственных значений является характерной чертой гессиинов глубоких нейронных сетей и отражает фундаментальные свойства параметрического пространства таких моделей. Вследствие данной спектральной структуры, для практического анализа наиболее релевантной является G-компонента, что обосновывает использование следующей аппроксимации:
+Эмпирические исследования \cite{pmlr-v97-ghorbani19b,sagun2018empiricalanalysishessianoverparametrized,papyan2019spectrumdeepnethessiansscale} демонстрируют, что спектральное распределение матрицы Гессе характеризуется наличием основной массы собственных значений, сосредоточенной вблизи нуля, и выбросов, распределенных в области ненулевых значений. Это бимодальное распределение собственных значений является характерной чертой матриц Гессе глубоких нейронных сетей и отражает фундаментальные свойства параметрического пространства таких моделей. Вследствие данной спектральной структуры, для практического анализа наиболее релевантной является G-компонента, что обосновывает использование следующей аппроксимации:
 \[
     \mathbf{H}_{i}(\boldsymbol{\theta}) \approx \nabla_{\boldsymbol{\theta}} \mathbf{z}_i \dfrac{\partial^2 \ell(\mathbf{z}_i, \mathbf{y}_i)}{\partial \mathbf{z}_{i}^2} \nabla_{\boldsymbol{\theta}} \mathbf{z}_i^{\text{T}}.
 \]
@@ -69,7 +69,7 @@
 Дополнительное обоснование этой аппроксимации дает теория нейронного касательного ядра~(NTK) \cite{NEURIPS2018_5a4be1fa,Lee_2020}, в которой логиты $\mathbf{z}$ локально линеаризуются по параметрам $\boldsymbol{\theta}$; тогда $\nabla^2_{\boldsymbol{\theta}} z_{ik}$ обращается в ноль и H-компонента исчезает.
 
 На основе работ \cite{wu2022dissecting}, предлагающих аналитическую аппроксимацию G-компоненты для полносвязных нейронных сетей, принимается следующая параметризация: $\mathbf{H}_{i}(\boldsymbol{\theta}) \approx \mathbf{F}_i^{\text{T}} \mathbf{A}_i \mathbf{F}_i$.
-Эта факторизация позволяет эффективно вычислять приближения гессиана без явного построения полной матрицы, используя разложения в матрицы меньшей размерности.
+Эта факторизация позволяет эффективно вычислять приближения матрицы Гессе без явного построения полной матрицы, используя разложения в матрицы меньшей размерности.
 Введем систему обозначений:
 
 \begin{itemize}
@@ -98,7 +98,7 @@
     \]
     где $\otimes$ обозначает произведение Кронекера. Эта блочная структура естественным образом отражает слоистую архитектуру сети и позволяет эффективное вычисление.
     
-    \item Гессиан функции потерь относительно логитов, имеющий структуру ковариационной матрицы \cite{singla2019understanding}:
+    \item Матрица Гессе функции потерь относительно логитов, имеющий структуру ковариационной матрицы \cite{singla2019understanding}:
     \[
         \mathbf{A} = \nabla^2_\mathbf{z} \ell(\mathbf{z}, \mathbf{y}) = \mathrm{diag}(\mathbf{p}) - \mathbf{p} \mathbf{p}^{\text{T}}.
     \]
@@ -135,7 +135,7 @@
 Данная оценка соответствует эмпирическому представлению о том, что кривизна функции потерь пропорциональна квадрату нормы весов и квадрату нормы входных данных.
 \end{remark}
 
-Теорема~\ref{theorem:hess-kiselev-lemma} указывает на зависимость спектральной нормы матрицы Гессе от размера скрытого слоя~$h$. Полученная оценка демонстрирует, что норма гессиана растет экспоненциально как по глубине сети~$L$, так и по размеру скрытого слоя $h$, причем степень экспоненты определяется произведением $hM$. Это подчеркивает влияние ширины и глубины сети на сложность оптимизационного ландшафта.
+Теорема~\ref{theorem:hess-kiselev-lemma} указывает на зависимость спектральной нормы матрицы Гессе от размера скрытого слоя~$h$. Полученная оценка демонстрирует, что норма матрицы Гессе растет экспоненциально как по глубине сети~$L$, так и по размеру скрытого слоя $h$, причем степень экспоненты определяется произведением $hM$. Это подчеркивает влияние ширины и глубины сети на сложность оптимизационного ландшафта.
 
 Экспоненциальный характер зависимости объясняет известную эмпирическую оценку о том, что глубокие и широкие сети обладают значительно более сложной геометрией функции потерь, что создает дополнительные сложности для методов оптимизации. Полученный результат также подчеркивает важность контроля норм параметров на протяжении всего процесса обучения для обеспечения устойчивости алгоритмов оптимизации.
 
@@ -233,7 +233,7 @@
 Эта блочная матрица содержит в себе всю информацию о том, как изменения параметров в различных слоях влияют на выход сети.
 Каждый блок этой матрицы соответствует определенному слою и содержит информацию как о линейных преобразованиях от этого слоя к выходу ($\mathbf{G}^{(k)^T}$), так и о преобразовании входа до этого слоя ($\mathbf{R}^{(k-1)}\mathbf{x}$).
 
-В случае использования функции потерь кросс-энтропии (CE) для задач классификации, гессиан функции потерь относительно логитов имеет структуру:
+В случае использования функции потерь кросс-энтропии (CE) для задач классификации, матрица Гессе функции потерь относительно логитов имеет структуру:
 \[
     \mathbf{A} := \nabla^2_{\mathbf{z}} \ell = \mathrm{diag}(\mathbf{p}) - \mathbf{p}\mathbf{p}^T,
 \]
@@ -290,7 +290,7 @@
     \frac{\partial\mathbf{z}}{\partial\mathbf{W}^{(p)}} = (\mathbf{G}^{(p)} \otimes \mathbf{I}_1)(\mathbf{I} \otimes \mathbf{x}^{(p-1)^T})\mathbf{Q}^{(p)} = (\mathbf{G}^{(p)} \otimes \mathbf{x}^{(p-1)^T})\mathbf{Q}^{(p)}.
 \]
 
-Используя результаты работ по анализу гессиана в нейронных сетях \cite{singh2023hessianperspectivenatureconvolutional}, получаем выражение для блоков матрицы Гессе:
+Используя результаты работ по анализу матрицы Гессе в нейронных сетях \cite{singh2023hessianperspectivenatureconvolutional}, получаем выражение для блоков матрицы Гессе:
 \begin{align}
     \mathbf{H}_O^{(kl)} &= J(\boldsymbol{\theta})^T \mathbf{A} J(\boldsymbol{\theta}) = \\
     &= \mathbf{Q}^{(k)^T}(\mathbf{G}^{(k)^T} \otimes \mathbf{R}^{(k-1)}\mathbf{x})A(\mathbf{G}^{(l)} \otimes \mathbf{x}^T\mathbf{R}^{(l-1)^T})\mathbf{Q}^{(l)}.
@@ -302,9 +302,9 @@
 \]
 \end{proof}
 
-Теорема~\ref{theorem:m-net:hesstruct} устанавливает результат о структуре гессиана в матричных моделях глубокого обучения. Предложенная факторизация позволяет эффективно анализировать и вычислять гессиан без необходимости явного построения полной матрицы вторых производных, что существенно для моделей с большим числом параметров.
+Теорема~\ref{theorem:m-net:hesstruct} устанавливает результат о структуре матрицы Гессе в матричных моделях глубокого обучения. Предложенная факторизация позволяет эффективно анализировать и вычислять матрица Гессе без необходимости явного построения полной матрицы вторых производных, что существенно для моделей с большим числом параметров.
 
-Структура $\mathbf{H}_O = \mathbf{Q}^\mathbf{T}\mathbf{F}\mathbf{A}\mathbf{F}^\mathbf{T}\mathbf{Q}$ подчеркивает, что гессиан может быть представлен как преобразование "внутреннего" гессиана $\mathbf{A}$ с помощью матриц $\mathbf{F}$ и $\mathbf{Q}$, которые отражают (англ. capture) архитектурные свойства сети и параметризацию слоев соответственно.
+Структура $\mathbf{H}_O = \mathbf{Q}^\mathbf{T}\mathbf{F}\mathbf{A}\mathbf{F}^\mathbf{T}\mathbf{Q}$ подчеркивает, что матрица Гессе может быть представлен как преобразование "внутреннего" матрицы Гессе $\mathbf{A}$ с помощью матриц $\mathbf{F}$ и $\mathbf{Q}$, которые отражают (англ. capture) архитектурные свойства сети и параметризацию слоев соответственно.
 
 \subsection{Оценки спектральных норм для матричных сетей}
 
@@ -335,14 +335,14 @@
 
 Одномерная сверточная сеть имеет вид~$f_{\boldsymbol{\theta}}(\mathbf{x}) = \mathbf{T}^{(L+1)} * (\sigma(\dots (\sigma(\mathbf{T}^{(1)} * \mathbf{x}))\dots)$, где операция $*$ означает свертку.
 
-Пусть~$C_p$ обозначает количество каналов после~$p$-го слоя, а~$d_p$ - размер последовательности. Здесь~$\mathbf{x}^{(p)} \in \mathbb{R}^{C_p \times d_p}$, $\mathbf{T}^{(p)}$~--- одномерный сверточный слой с ядром~$\mathbf{W}^{(p)} \in \mathbb{R}^{C_{p-1} \times C_{p} \times k_{p}}$. 
+Пусть~$C_p$ обозначает количество каналов после~$p$-го слоя, а~$d_p$ - размер последовательности. Здесь~$\mathbf{x}^{(p)} \in \mathbb{R}^{C_p \times d_p}$, $\mathbf{T}^{(p)}$~--- одномерный сверточный слой с ядром~$\mathbf{W}^{(p)} \in \mathbb{R}^{C_{p-1} \times C_{p} \times (k_{\mathrm{ker}})_p}$. 
 Для упрощения дальнейших обозначений заменим $\mathbf{x}^{(p)}$ на~$vec(\mathbf{x}^{(p)}) \in \mathbb{R}^{(C_pd_p)}$. 
 Получили:
 \[
     \mathbf{z}^{(p+1)} = \mathbf{T}^{(p+1)}\mathbf{x}^{(p)}.
 \]
 
-Теорема~\ref{thm:1Dconv} доказывает верхнюю оценку нормы гессиана для глубокой одномерной сверточной сети. Особенностью полученной оценки является мультипликативная зависимость от глубины сети~$L$ и полиномиально-экспоненциальная зависимость от параметров модели~--- числа каналов $C$, размера ядра $k$ и длины последовательности $d$.
+Теорема~\ref{thm:1Dconv} доказывает верхнюю оценку нормы матрицы Гессе для глубокой одномерной сверточной сети. Особенностью полученной оценки является мультипликативная зависимость от глубины сети~$L$ и полиномиально-экспоненциальная зависимость от параметров модели~--- числа каналов $C$, размера ядра $k_{\mathrm{ker}}$ и длины последовательности $d$.
 
 \begin{theorem}[Оценка нормы матрицы Гессе для 1D-сверточных сетей]\label{thm:1Dconv}
     Пусть задана сеть вида:
@@ -352,13 +352,13 @@
     где~$C_{\mathbf{W}^{(i)}}$~--- одномерная свертка с ядром~$\mathbf{W}^{(i)}$, без дополнения (англ. padding) и с единичным шагом (англ. stride). Пусть заданы следующие верхние оценки на параметры:
     \begin{align}
         C_l &\leqslant C,\\
-        k_i &\leqslant k,\\
+        k_i &\leqslant k_{\mathrm{ker}},\\
         d_i &\leqslant d_1:=d,\\
         |\mathbf{W}^{(p)}_{i,j,k}|^2 &\leqslant w^2.
     \end{align}
     Тогда норма матрицы Гессе имеет следующую верхнюю оценку:
     \[
-        \left\|\mathbf{H}_{O}\right\| \leqslant \sqrt{2}\left\|x\right\|^2d^2(L+1)(C^2w^2kd)^L.
+        \left\|\mathbf{H}_{O}\right\| \leqslant \sqrt{2}\left\|x\right\|^2d^2(L+1)(C^2w^2k_{\mathrm{ker}}d)^L.
     \]
 \end{theorem}
 Доказательство теоремы приведено в работе~\cite{grabovoi2024convnets743111032}.
@@ -366,15 +366,15 @@
 Переходим к рассмотрению двумерных сверточных сетей.
 Аналогично, для простоты сохраним обозначение~$\mathbf{T}^{(p)}$ для слоев сверточной сети.
 Пусть задан~$\mathbf{x} \in \mathbb{R}^{m \times n \times C}$~--- входное изображение, имеющее размеры~$(m, n)$ и~$C$ каналов.
-Обозначим~$\mathbf{x}^{(l)} \in \mathbb{R}^{m_i \times n_i \times C_i}$~--- вход~$(l+1)$-го слоя, а матрицей~$\mathbf{W}^{(l)} \in \mathbb{R}^{C_{l-1} \times C_l \times k^1_l \times k^2_l}$~--- свертку с размерами~$(k^1_l, k^2_l)$, входным и выходным количеством каналов~$C_{l-1}$ и~$C_l$ соответственно.
+Обозначим~$\mathbf{x}^{(l)} \in \mathbb{R}^{m_i \times n_i \times C_i}$~--- вход~$(l+1)$-го слоя, а матрицей~$\mathbf{W}^{(l)} \in \mathbb{R}^{C_{l-1} \times C_l \times (k_{\mathrm{ker}}^1)_l \times (k_{\mathrm{ker}}^2)_l}$~--- свертку с размерами~$((k_{\mathrm{ker}}^1)_l, (k_{\mathrm{ker}}^2)_l)$, входным и выходным количеством каналов~$C_{l-1}$ и~$C_l$ соответственно.
 
 Аналогично тому как было сделано для 1D-свертки, используем~$vec(\mathbf{x}) \in \mathbb{R}^{m_in_iC_i}$ вместо $\mathbf{x} \in \mathbb{R}^{m_i \times n_i \times C_i}$.
 Исследуется операция свертки над входным тензором. В случае векторизованного входа используется структура Теплица, аналогичная представленной в работе~\cite{toep_2dconv}, при этом применяется конкретная матрица~$\mathbf{T}^{(p)}$, строка которой состоит из элементов~$\mathbf{W}^{(p)}_{*, c_2, *, *}$~для $c_2$-го канала.
 То есть каждая строка матрицы~$\mathbf{T}^{(p)}$ реализует ``применение'' ядра к определенной позиции и определенному каналу.
 Обозначим матрицей~$\mathbf{T}^{(p)}_i$ матрицу, которая соответствует~$c_2 = c_2(i)$-му каналу~$\mathbf{W}$.
 
-Далее теорема~\ref{thm:2Dconv} устанавливает оценку нормы гессиана для глубоких двумерных сверточных сетей.
-Особенностью полученной оценки является экспоненциальная зависимость от глубины сети~$L$ и полиномиальная зависимость от основных параметров архитектуры: числа каналов~$C$, размера ядра~$k$ и пространственных размеров $m \times n$.
+Далее теорема~\ref{thm:2Dconv} устанавливает оценку нормы матрицы Гессе для глубоких двумерных сверточных сетей.
+Особенностью полученной оценки является экспоненциальная зависимость от глубины сети~$L$ и полиномиальная зависимость от основных параметров архитектуры: числа каналов~$C$, размера ядра~$k_{\mathrm{ker}}$ и пространственных размеров $m \times n$.
 
 \begin{theorem}[Оценка нормы матрицы Гессе для 2D-сверточных сетей]\label{thm:2Dconv}
     Пусть задана сеть вида
@@ -384,16 +384,16 @@
     где $C_{\mathbf{W}^{(l)}}$~--- двумерная свертка с ядром $\mathbf{W}^{(i)}$, без дополнения (англ. padding) и с единичным шагом (англ. stride). Пусть заданы следующие верхние оценки на параметры:
     \begin{align}
         C_l &\leqslant C,\\
-        k_i &\leqslant k,\\
+        k_i &\leqslant k_{\mathrm{ker}},\\
         m_i &\leqslant m_1:=m, \\
         n_i &\leqslant n_1:=n,\\
         |\mathbf{W}^{(p)}_{i,j,k}|^2 &\leqslant w^2.
     \end{align}
     Тогда норма матрицы Гессе имеет следующую верхнюю оценку:
     \[
-        \left\|\mathbf{H}_{O}\right\| \leqslant \sqrt{2}\left\|\mathbf{x}\right\|^2q^2(L+1)(C^2k^2w^2mn)^{L},
+        \left\|\mathbf{H}_{O}\right\| \leqslant \sqrt{2}\left\|\mathbf{x}\right\|^2q^2(L+1)(C^2k_{\mathrm{ker}}^2w^2mn)^{L},
     \] 
-    где~$q^2 = C^2k^2mn$.
+    где~$q^2 = C^2k_{\mathrm{ker}}^2mn$.
 \end{theorem}
 Доказательство теоремы приведено в работе~\cite{grabovoi2024convnets743111032}.
 
@@ -413,17 +413,17 @@
     содержащий слой MaxPool2D в позиции~$\boldsymbol{\Lambda}^{(l)}$ с ядром~$k_{\mathrm{pool}} \times k_{\mathrm{pool}}$ вместо активации ReLU.
     Тогда имеет следующую верхнюю оценку нормы матрицы Гессе:
     \[
-        \left\|\mathbf{H}_O\right\| \leqslant \sqrt{2}\left\|\mathbf{x}\right\|^2q^2\big(\frac{1}{k_{\mathrm{pool}}^2}\big)^{L-l+2}(L+1)(k^2C^2w^2mn)^{L},
+        \left\|\mathbf{H}_O\right\| \leqslant \sqrt{2}\left\|\mathbf{x}\right\|^2q^2\big(\frac{1}{k_{\mathrm{pool}}^2}\big)^{L-l+2}(L+1)(k_{\mathrm{ker}}^2C^2w^2mn)^{L},
     \]
-    где~$q^2 = mnC^2k^2$.
+    где~$q^2 = mnC^2k_{\mathrm{ker}}^2$.
 \end{theorem}
 Доказательство теоремы приведено в работе~\cite{grabovoi2024convnets743111032}.
 
 \begin{remark}
-    Как и в предыдущих случаях, норма гессиана растет экспоненциально с глубиной сети~$L$, что согласуется с предыдущими оценками, но появление множителя $\left(\frac{1}{k_{\mathrm{pool}}^2}\right)^{L-l+2}$ указывает на снижающий эффект операции пулинга на сложность оптимизации.
+    Как и в предыдущих случаях, норма матрицы Гессе растет экспоненциально с глубиной сети~$L$, что согласуется с предыдущими оценками, но появление множителя $\left(\frac{1}{k_{\mathrm{pool}}^2}\right)^{L-l+2}$ указывает на снижающий эффект операции пулинга на сложность оптимизации.
     Этот фактор отражает уменьшение размерности признакового описания после операции пулинга, что приводит к сокращению эффективной размерности параметрического пространства.
     Видно, что степень $L-l+2$ показывает, что влияние пулинга распространяется на все последующие слои.
-    Чем раньше расположен слой пулинга, тем сильнее его редуцирующее воздействие на норму гессиана.
+    Чем раньше расположен слой пулинга, тем сильнее его редуцирующее воздействие на норму матрицы Гессе.
     Следовательно получаем, что операция пулинга частично компенсирует экспоненциальный рост сложности с увеличением глубины сети, однако этот эффект зависит от размера ядра пулинга~$k_{\mathrm{pool}}$.
 \end{remark}
 
@@ -437,19 +437,19 @@
     содержащая слой AvgPool2D в позиции~$\boldsymbol{\Lambda}^{(l)}$ вместо активации ReLU с ядром размера~$k_{\mathrm{pool}} \times k_{\mathrm{pool}}$.
     Тогда оценка нормы матрицы Гессе имеет следующую верхнюю оценку:
     \[
-        \left\|\mathbf{H}_O\right\| \leqslant \sqrt{2}\left\|\mathbf{x}\right\|^2q^2\big(\frac{1}{k_{\mathrm{pool}}^2}\big)^{L-l+2}(L+1)(k^2C^2w^2mn)^{L},
+        \left\|\mathbf{H}_O\right\| \leqslant \sqrt{2}\left\|\mathbf{x}\right\|^2q^2\big(\frac{1}{k_{\mathrm{pool}}^2}\big)^{L-l+2}(L+1)(k_{\mathrm{ker}}^2C^2w^2mn)^{L},
     \]
-где $q^2 = mnC^2k^2$.
+где $q^2 = mnC^2k_{\mathrm{ker}}^2$.
 \end{theorem}
 Доказательство теоремы приведено в работе~\cite{grabovoi2024convnets743111032}.
 
 \begin{remark}
-    Полученная оценка в рамках Теоремы~\ref{theorem:avgpool} демонстрирует, что операция усредняющего пулинга оказывает аналогичное макс-пулингу влияние на сложность оптимизационного ландшафта, уменьшая норму гессиана за счет множителя $\left(\frac{1}{k_{\mathrm{pool}}^2}\right)^{L-l+2}$.
+    Полученная оценка в рамках Теоремы~\ref{theorem:avgpool} демонстрирует, что операция усредняющего пулинга оказывает аналогичное макс-пулингу влияние на сложность оптимизационного ландшафта, уменьшая норму матрицы Гессе за счет множителя $\left(\frac{1}{k_{\mathrm{pool}}^2}\right)^{L-l+2}$.
     Это подтверждает гипотезу о том, что операции пулинга любого типа способствуют снижению сложности модели и могут рассматриваться как эффективный механизм регуляризации в глубоких сверточных нейронных сетях.
 \end{remark}
 
 Теорема~\ref{theorem:fc-head} устанавливает оценку нормы матрицы Гессе для гибридной архитектуры, сочетающей сверточные слои и полносвязный слой.
-Полученная оценка указывает на мультипликативный вклад обеих частей сети, причем сверточная часть вносит множитель~$(k^2C^2w^2mn)^L$, а полносвязная~--- $(h^2\tilde{w}^2)^P$.
+Полученная оценка указывает на мультипликативный вклад обеих частей сети, причем сверточная часть вносит множитель~$(k_{\mathrm{ker}}^2C^2w^2mn)^L$, а полносвязная~--- $(h^2\tilde{w}^2)^P$.
 
 \begin{theorem}[Оценка нормы матрицы Гессе для полносвязных выходных слоев]\label{theorem:fc-head}
 Пусть задана сеть с~$P$ полносвязными слоями следующего вида:
@@ -461,8 +461,8 @@
 Пусть~$\left\|\mathbf{T}^{(L+1+i)}_{ij}\right\| \leqslant \tilde{w}$ и $h_p \leqslant h$.
 Тогда в условиях и обозначениях теоремы~\ref{thm:2Dconv} справедливо неравенство:
 \begin{align}
-    \left\|\mathbf{H}_{O}\right\| &\leqslant \sqrt{2}\left\|\mathbf{x}\right\|^2q^2(h^2\tilde{w}^2)^P(k^2C^2w^2mn)^L\times \\
-    &\quad\times \big(L + 1 + P\frac{h^2\tilde{w}^2}{k^2C^2w^2mn}\big).
+    \left\|\mathbf{H}_{O}\right\| &\leqslant \sqrt{2}\left\|\mathbf{x}\right\|^2q^2(h^2\tilde{w}^2)^P(k_{\mathrm{ker}}^2C^2w^2mn)^L\times \\
+    &\quad\times \big(L + 1 + P\frac{h^2\tilde{w}^2}{k_{\mathrm{ker}}^2C^2w^2mn}\big).
 \end{align}
 \end{theorem}
 Доказательство теоремы приведено в работе~\cite{grabovoi2024convnets743111032}.
@@ -473,9 +473,9 @@
 
 Пусть $f_{\mathbf{w}}(\cdot)$ обозначает нейронную сеть, в данном случае слой самовнимания (англ. self-attention) или полный блок трансформера (англ. transformer), с параметрами $\mathbf{w} \in \Omega$.
 При наличии дважды дифференцируемых потерь $l(\cdot, \cdot)$ потери на выборку равны $l_i(\mathbf{w}) := l(f_{\mathbf{w}}(\mathbf{x}_i), \mathbf{y}_i)$.
-Эмпирические потери для выборок $L = k$ равны $\mathcal{L}_k(\mathbf{w}) = \frac{1}{k} \sum_{i=1}^k l_i(\mathbf{w})$, с гессианом $\mathbf{H}^{(k)}(\mathbf{w}) = \frac{1}{k} \sum_{i=1}^k \nabla^2_{\mathbf{w}} l_i(\mathbf{w})$.
+Эмпирические потери для выборок размера $k$ равны $\mathcal{L}_k(\mathbf{w}) = \frac{1}{k} \sum_{i=1}^k l_i(\mathbf{w})$, с матрицей Гессе $\mathbf{H}^{(k)}(\mathbf{w}) = \frac{1}{k} \sum_{i=1}^k \nabla^2_{\mathbf{w}} l_i(\mathbf{w})$.
 
-Пусть заданы входные вектора эмбедингов (англ. embeddings) $\mathbf{X} \in \mathbb{R}^{L \times d_V}$.
+Пусть заданы входные вектора эмбедингов (англ. embeddings) $\mathbf{X} \in \mathbb{R}^{N \times d_V}$.
 Выход слоя одной головы (англ. single-head) слоя самовнимания задается в виде: 
 \begin{equation} \label{eq:self_attention}
     \mathbf{F}(\mathbf{X}) = \mathbf{A}(\mathbf{X}) \mathbf{X} \mathbf{W}_V,
@@ -501,7 +501,7 @@
 
 Для оценки матрицы Гессе рассматривается среднеквадратичная функция ошибки:
 \[
-    l(\cdot, \textbf{Target}) = \frac{1}{L d_V} \|\cdot - \textbf{Target}\|_F^2.
+    l(\cdot, \textbf{Target}) = \frac{1}{N d_V} \|\cdot - \textbf{Target}\|_F^2.
 \]
 В дальнейшем для доказательств используется разложение Гаусса-Ньютона матрицы Гессе $\mathcal{L}_k \circ f_{\mathbf{w}}$:
 \begin{equation}\label{eq:gauss_decomposition}
@@ -533,62 +533,62 @@
 \]
 где
 \begin{align}
-M &= 3\cdot\max \Bigg(\frac{2L}{d_V} \| \mathbf{X}\|^2_2, \\
-    &\frac{8}{L^3 d_V d_K} \| \mathbf{W}_K\|_2^2 \| \mathbf{W}_V\|^2_2 \| \mathbf{X}\|^6_2 + \\
-    &\quad+\frac{12}{d_V d_K} \sqrt{\min(L, d_V)} (L \|\mathbf{X}\|_2 \|\mathbf{W}_V \|_2 + \|\textbf{Target}\|_2) \| \mathbf{W}_V \|_2 \| \mathbf{W}_K\|^2_2 \| \mathbf{X}\|^5_2, \\
-    &\frac{4}{L d_V \sqrt{d_K}} \| \mathbf{W}_V\|_2 \| \mathbf{W}_K \|_2 \| \mathbf{X}\|^4_2 +\\
-    &\quad+\frac{4\sqrt{\min(L, d_V)}}{L^2\sqrt{d_K}} (L \|\mathbf{X}\|_2 \|\mathbf{W}_V \|_2 + \|\textbf{Target}\|_2) \|\mathbf{W}_K\|_2 \|\mathbf{X}\|^3_2,\\
-    &\frac{8}{L^3 d_V d_K} \|\mathbf{W}_K\|_2 \|\mathbf{W}_Q\|_2 \| \mathbf{W}_V\|^2_2 \|\mathbf{X} \|^6_2 + \\
-    &\quad+\frac{4\sqrt{\min(L, d_V)} (L \|\mathbf{X}\|_2 \|\mathbf{W}_V \|_2 + \|\textbf{Target}\|_2)}{L d_V \sqrt{d_K}} \|\mathbf{W}_V\|_2 \cdot\\
-    &\quad\quad\cdot\Big(3L \|\mathbf{W}_K\|_2 \|\mathbf{W}_Q\|_2 \| \mathbf{X}\|^5_2 + \frac{d_V}{L} \|\mathbf{X}\|^3_2\Big)\Bigg).
+M &= 3\cdot\max \Bigg(\frac{2N}{d_V} \| \mathbf{X}\|^2_2, \\
+    &\frac{8}{N^3 d_V d_K} \| \mathbf{W}_K\|_2^2 \| \mathbf{W}_V\|^2_2 \| \mathbf{X}\|^6_2 + \\
+    &\quad+\frac{12}{d_V d_K} \sqrt{\min(N, d_V)} (N \|\mathbf{X}\|_2 \|\mathbf{W}_V \|_2 + \|\textbf{Target}\|_2) \| \mathbf{W}_V \|_2 \| \mathbf{W}_K\|^2_2 \| \mathbf{X}\|^5_2, \\
+    &\frac{4}{N d_V \sqrt{d_K}} \| \mathbf{W}_V\|_2 \| \mathbf{W}_K \|_2 \| \mathbf{X}\|^4_2 +\\
+    &\quad+\frac{4\sqrt{\min(N, d_V)}}{N^2\sqrt{d_K}} (N \|\mathbf{X}\|_2 \|\mathbf{W}_V \|_2 + \|\textbf{Target}\|_2) \|\mathbf{W}_K\|_2 \|\mathbf{X}\|^3_2,\\
+    &\frac{8}{N^3 d_V d_K} \|\mathbf{W}_K\|_2 \|\mathbf{W}_Q\|_2 \| \mathbf{W}_V\|^2_2 \|\mathbf{X} \|^6_2 + \\
+    &\quad+\frac{4\sqrt{\min(N, d_V)} (N \|\mathbf{X}\|_2 \|\mathbf{W}_V \|_2 + \|\textbf{Target}\|_2)}{N d_V \sqrt{d_K}} \|\mathbf{W}_V\|_2 \cdot\\
+    &\quad\quad\cdot\Big(3N \|\mathbf{W}_K\|_2 \|\mathbf{W}_Q\|_2 \| \mathbf{X}\|^5_2 + \frac{d_V}{N} \|\mathbf{X}\|^3_2\Big)\Bigg).
 \end{align}
 \end{theorem}
 \begin{proof}
 
 Используя результаты Леммы A.3 из работы \cite{noci2022signalpropagationtransformerstheoretical}, а также свойство~\ref{prop:matrix_product_norm} и свойство~\ref{prop:kronecker_product_norm} получаем:
 \begin{align}
-    \| \frac{\partial\mathbf{A}}{\partial\mathbf{T}}\|_2 = \frac{1}{L} \| \mathbf{I}_L\|_2 \| \mathbf{I}_L - \frac{1}{L}\mathbf{1}_{L \times L}\|_2 \leq \frac{1}{L}
+    \| \frac{\partial\mathbf{A}}{\partial\mathbf{T}}\|_2 = \frac{1}{N} \| \mathbf{I}_{N}\|_2 \| \mathbf{I}_{N} - \frac{1}{N}\mathbf{1}_{N \times N}\|_2 \leq \frac{1}{N}
 \end{align}
-Данное неравенство верно в силу того, что $\frac{1}{L}\mathbf{1}_{L \times L}$ является матрицей проекции, поэтому $\mathbf{I}_L - \frac{1}{L}\mathbf{1}_{L \times L}$ также матрица проекции и следовательно норма $\| \mathbf{I}_L - \frac{1}{L}\mathbf{1}_{L \times L}\|_2 \leq 1$.
+Данное неравенство верно в силу того, что $\frac{1}{N}\mathbf{1}_{N \times N}$ является матрицей проекции, поэтому $\mathbf{I}_{N} - \frac{1}{N}\mathbf{1}_{N \times N}$ также матрица проекции и следовательно норма $\| \mathbf{I}_{N} - \frac{1}{N}\mathbf{1}_{N \times N}\|_2 \leq 1$.
 
 Далее для аппроксимации нормы матрицы $\mathbf{Z}_1$ используем те же свойства~\ref{prop:matrix_product_norm} и \ref{prop:kronecker_product_norm}:
 \begin{align}\label{chapter-2:theorem:proof_Znorm}
-    \|\mathbf{Z}_1\|_2 &\leq \| \mathbf{I}_L \otimes \mathbf{X}^{\top}\|_2 \left\| \frac{\partial \mathbf{A}}{\partial \mathbf{T}}\right\|_2 \| \mathbf{X} \otimes \mathbf{X}\|_2 \leq\\
-    & \leq \| \mathbf{X}\|_2 \frac{1}{L} \|\mathbf{X}\|^2_2 = \frac{1}{L} \|\mathbf{X}\|^3_2
+    \|\mathbf{Z}_1\|_2 &\leq \| \mathbf{I}_{N} \otimes \mathbf{X}^{\top}\|_2 \left\| \frac{\partial \mathbf{A}}{\partial \mathbf{T}}\right\|_2 \| \mathbf{X} \otimes \mathbf{X}\|_2 \leq\\
+    & \leq \| \mathbf{X}\|_2 \frac{1}{N} \|\mathbf{X}\|^2_2 = \frac{1}{N} \|\mathbf{X}\|^3_2
 \end{align}
 где дополнительно было использовано свойство \ref{prop:transposed_matrix_norm}: $\| \mathbf{X}\|_2 = \| \mathbf{X}^\top\|_2$.
 
 Оценим норму матрицы $\| \mathbf{A}\|_2$, которая является матрицей, где каждая строка является результатом применения функции~$\text{softmax}$. Следовательно, каждый элемент матрицы~$\mathbf{A}_{i,j} \leq 1$.
-Далее используя свойства \ref{prop:matrix_norm_inequalities} получаем $ \|\mathbf{A}\|_{\max} \leq \|\mathbf{A}\|_2 \leq \sqrt{LL} \|\mathbf{A}\|_{\max} = L\| \mathbf{A}\|_{max} \leq L$.
+Далее используя свойства \ref{prop:matrix_norm_inequalities} получаем $ \|\mathbf{A}\|_{\max} \leq \|\mathbf{A}\|_2 \leq \sqrt{NN} \|\mathbf{A}\|_{\max} = N\| \mathbf{A}\|_{max} \leq N$.
 Также получаем, что:
 \[
-    \|\mathbf{M}_1\|_2 = \|\mathbf{A}\mathbf{X}\|_2 \leq L \|\mathbf{X}\|_2.
+    \|\mathbf{M}_1\|_2 = \|\mathbf{A}\mathbf{X}\|_2 \leq N \|\mathbf{X}\|_2.
 \]
 
 Итого, легко получаем outer-product матрицы Гессе $\|\mathbf{H}_o (\mathbf{W}_i, \mathbf{W}_j) \|_2$  для разных матриц.
 В случае матрицы~$\mathbf{W}_V$ и матрицы~$\mathbf{W}_V$:
 \begin{align}
-    \| \mathbf{H}_o(\mathbf{W}_V, \mathbf{W}_V)\|_2 &\leq \frac{2}{L d_V} \| \mathbf{M}_1\|^2_2 1 \leq \frac{2}{L d_V}\| \mathbf{A}\|^2_2 \| \mathbf{X}\|^2_2 \leq\\
-    & \leq \frac{2}{L d_V} L^2 \| \mathbf{X}\|^2_2 = \frac{2L}{d_V}\| \mathbf{X}\|^2_2.
+    \| \mathbf{H}_o(\mathbf{W}_V, \mathbf{W}_V)\|_2 &\leq \frac{2}{N d_V} \| \mathbf{M}_1\|^2_2 1 \leq \frac{2}{N d_V}\| \mathbf{A}\|^2_2 \| \mathbf{X}\|^2_2 \leq\\
+    & \leq \frac{2}{N d_V} N^2 \| \mathbf{X}\|^2_2 = \frac{2N}{d_V}\| \mathbf{X}\|^2_2.
 \end{align}
 Для матриц~$\mathbf{W}_Q$ и~$\mathbf{W}_Q$ получаем:
 \begin{align}
-    \| \mathbf{H}_o(\mathbf{W}_Q, \mathbf{W}_Q)\|_2 &\leq \| \frac{2}{L d_V d_K} (\mathbf{I}_{d_V} \otimes \mathbf{W}^\top_K) \mathbf{Z}^\top_1 (\mathbf{I}_{L} \otimes \mathbf{W}_V\mathbf{W}^\top_V)\ \mathbf{Z}_1 (\mathbf{I}_{d_V} \otimes \mathbf{W}_K)\|_2 \leq\\
-    &\leq \frac{2}{L d_V d_K} \| \mathbf{W}_K\|_2^2 \|\mathbf{Z}_1 \|^2_2 \| \mathbf{W}_V\|^2_2 \leq\\
-    &\leq \frac{2}{L d_V d_K}\| \mathbf{W}_K\|_2^2\| \mathbf{W}_V\|^2_2 \frac{1}{L^2} \| \mathbf{X}\|^6_2 =\\
-    &= \frac{2}{L^3 d_V d_K} \| \mathbf{W}_K\|_2^2\| \mathbf{W}_V\|^2_2 \mathbf{X}\|^6_2.
+    \| \mathbf{H}_o(\mathbf{W}_Q, \mathbf{W}_Q)\|_2 &\leq \| \frac{2}{N d_V d_K} (\mathbf{I}_{d_V} \otimes \mathbf{W}^\top_K) \mathbf{Z}^\top_1 (\mathbf{I}_{N} \otimes \mathbf{W}_V\mathbf{W}^\top_V)\ \mathbf{Z}_1 (\mathbf{I}_{d_V} \otimes \mathbf{W}_K)\|_2 \leq\\
+    &\leq \frac{2}{N d_V d_K} \| \mathbf{W}_K\|_2^2 \|\mathbf{Z}_1 \|^2_2 \| \mathbf{W}_V\|^2_2 \leq\\
+    &\leq \frac{2}{N d_V d_K}\| \mathbf{W}_K\|_2^2\| \mathbf{W}_V\|^2_2 \frac{1}{N^2} \| \mathbf{X}\|^6_2 =\\
+    &= \frac{2}{N^3 d_V d_K} \| \mathbf{W}_K\|_2^2\| \mathbf{W}_V\|^2_2 \mathbf{X}\|^6_2.
 \end{align}
 Между матрицей~$\mathbf{W}_V$ и матрицей~$\mathbf{W}_Q$:
 \begin{align}
-    \| \mathbf{H}_o(\mathbf{W}_V, \mathbf{W}_Q)\|_2 &\leq \frac{2}{L d_V \sqrt{d_K}} \|\mathbf{M}_1^\top \otimes \mathbf{W}_V^\top \|_2 \| \mathbf{Z}_1\|_2 \| \mathbf{I}_{d_V} \otimes \mathbf{W}_K \|_2 \leq\\
-    &\leq \frac{2}{L d_V \sqrt{d_K}} L \| \mathbf{X}\|_2 \| \mathbf{W}_V\|_2 \frac{1}{L} \| \mathbf{X}\|^3_2 \| \mathbf{W}_K \|_2 =\\
-    &= \frac{2}{L d_V \sqrt{d_K}} \| \mathbf{W}_V\|_2 \| \mathbf{W}_K \|_2 \| \mathbf{X}\|^4_2
+    \| \mathbf{H}_o(\mathbf{W}_V, \mathbf{W}_Q)\|_2 &\leq \frac{2}{N d_V \sqrt{d_K}} \|\mathbf{M}_1^\top \otimes \mathbf{W}_V^\top \|_2 \| \mathbf{Z}_1\|_2 \| \mathbf{I}_{d_V} \otimes \mathbf{W}_K \|_2 \leq\\
+    &\leq \frac{2}{N d_V \sqrt{d_K}} N \| \mathbf{X}\|_2 \| \mathbf{W}_V\|_2 \frac{1}{N} \| \mathbf{X}\|^3_2 \| \mathbf{W}_K \|_2 =\\
+    &= \frac{2}{N d_V \sqrt{d_K}} \| \mathbf{W}_V\|_2 \| \mathbf{W}_K \|_2 \| \mathbf{X}\|^4_2
 \end{align}
 Между матрицей~$\mathbf{W}_Q$ и матрицей~$\mathbf{W}_K$:
 \begin{align}
     &\left\|\mathbf{H}_o(\mathbf{W}_Q, \mathbf{W}_K)\right\|_2 \leq \\
-    &\leq \frac{2}{L d_V d_K} \big\|(\mathbf{I}_{d_V} \otimes \mathbf{W}^\top_K) \mathbf{Z}_1^\top(\mathbf{I}_L \otimes \mathbf{W}_V \mathbf{W}^\top_V)\mathbf{Z}_1 (\mathbf{W}_Q \otimes \mathbf{I}_{d_V}) \mathbf{K}{d_K, d_V}\big\|_2 \leq \\
-    &\leq \frac{2}{L^3 d_V d_K} \big\|\mathbf{W}_K\|_2 \|\mathbf{W}_Q\|_2 \| \mathbf{W}_V\|_2^2 \|\mathbf{X} \big\|^6_2.
+    &\leq \frac{2}{N d_V d_K} \big\|(\mathbf{I}_{d_V} \otimes \mathbf{W}^\top_K) \mathbf{Z}_1^\top(\mathbf{I}_{N} \otimes \mathbf{W}_V \mathbf{W}^\top_V)\mathbf{Z}_1 (\mathbf{W}_Q \otimes \mathbf{I}_{d_V}) \mathbf{K}{d_K, d_V}\big\|_2 \leq \\
+    &\leq \frac{2}{N^3 d_V d_K} \big\|\mathbf{W}_K\|_2 \|\mathbf{W}_Q\|_2 \| \mathbf{W}_V\|_2^2 \|\mathbf{X} \big\|^6_2.
 \end{align}
 Для всех оценок использовались свойства~\ref{prop:matrix_product_norm}, \ref{prop:kronecker_product_norm}, а также свойства $\|\mathbf{K}_{d_V d_K} \|_2=1$, потому что $\mathbf{K}_{m,n}$ является коммутативной матрицей, описанной в определении~\ref{def:commutation_matrix}. 
 
@@ -603,7 +603,7 @@ M &= 3\cdot\max \Bigg(\frac{2L}{d_V} \| \mathbf{X}\|^2_2, \\
 \begin{align}
     \| \mathbf{R}_m\| &\leq \sqrt{\mathrm{rank}(\mathbf{F}(\mathbf{X}) - \textbf{Target})} \|\mathbf{F}(\mathbf{X}) - \textbf{Target}\|_2 \leq\\
     &\leq\sqrt{\mathrm{rank}(\mathbf{F}(\mathbf{X}) - \textbf{Target})} (\| \mathbf{A} \|_2 \|\mathbf{X}\|_2 \|\mathbf{W}_V \|_2 + \|\textbf{Target}\|_2) \leq\\
-    &\leq \sqrt{\mathrm{rank}(\mathbf{F}(\mathbf{X}) - \textbf{Target})} (L \|\mathbf{X}\|_2 \|\mathbf{W}_V \|_2 + \|\textbf{Target}\|_2)
+    &\leq \sqrt{\mathrm{rank}(\mathbf{F}(\mathbf{X}) - \textbf{Target})} (N \|\mathbf{X}\|_2 \|\mathbf{W}_V \|_2 + \|\textbf{Target}\|_2)
 \end{align}
 где для получения оценок были использованы свойства матриц \ref{prop:matrix_product_norm} и \ref{prop:matrix_sum_norm}. В свою очередь норма матрицы перемешивания (англ. shuffling matrix) оценивается следующим образом:
 \begin{align}
@@ -613,11 +613,11 @@ M &= 3\cdot\max \Bigg(\frac{2L}{d_V} \| \mathbf{X}\|^2_2, \\
 
 Для верхней оценки нормы матрицы $\| \frac{\partial^2 \mathbf{A}}{\partial \mathbf{T}^2} \|_2$ воспользуемся Леммой C1 с работы \cite{ormaniec2024attentionhessian}, где указано, что:
 \begin{equation}\label{chapter-2:theorem:proof_partialA}
-    \frac{\partial^2 \mathbf{A}_{i,j}}{\partial \mathbf{T}_{i,:} \partial \mathbf{T}_{i,:}} = \mathbf{A}_{i,j} \left(2\mathbf{A}_{i,:}\mathbf{A}_{i,:}^{\top} + \mathbf{E}_{j,j}^{L,L} - \text{diag}(\mathbf{A}_{i,:}) - \mathbf{e}_j \mathbf{A}_{i,:}^{\top} - \mathbf{A}_{i,:}\mathbf{e}_j^{\top}\right) \in \mathbb{R}^{L \times L},
+    \frac{\partial^2 \mathbf{A}_{i,j}}{\partial \mathbf{T}_{i,:} \partial \mathbf{T}_{i,:}} = \mathbf{A}_{i,j} \left(2\mathbf{A}_{i,:}\mathbf{A}_{i,:}^{\top} + \mathbf{E}_{j,j}^{N,N} - \text{diag}(\mathbf{A}_{i,:}) - \mathbf{e}_j \mathbf{A}_{i,:}^{\top} - \mathbf{A}_{i,:}\mathbf{e}_j^{\top}\right) \in \mathbb{R}^{N \times N},
 \end{equation}
 где 
 \[
-    \mathbf{E}_{j,j}^{L, L} = \mathbf{e}_j \mathbf{e}_j^{\top} \in \mathbb{R}^{L \times L},
+    \mathbf{E}_{j,j}^{N, N} = \mathbf{e}_j \mathbf{e}_j^{\top} \in \mathbb{R}^{N \times N},
 \]
 поэтому он содержит только один ненулевой элемент, который равен 1 в позиции $(j, j)$.
 Кроме того, вторая производная softmax имеет блочно-диагональную структуру. Используя свойство~\ref{prop:block_matrix_norm} нормы блочно-диагональной матрицы, получаем:
@@ -657,7 +657,7 @@ M &= 3\cdot\max \Bigg(\frac{2L}{d_V} \| \mathbf{X}\|^2_2, \\
 
 Возвращаясь к выражению~\eqref{chapter-2:theorem:proof_Znorm} получаем оценку матрицы $\| \mathbf{Z}_2 \|_2$:
 \begin{align}
-    \| \mathbf{Z}_2 \|_2 &= \| \left(\mathbf{I}_L \otimes \mathbf{X}^\top \otimes \mathbf{X}^\top \otimes \mathbf{X}^\top\right) \left(\partial^2\mathbf{A}/\partial\mathbf{T}^2\right) \left(\mathbf{X} \otimes \mathbf{X}\right) \|_2 \leq \\
+    \| \mathbf{Z}_2 \|_2 &= \| \left(\mathbf{I}_{N} \otimes \mathbf{X}^\top \otimes \mathbf{X}^\top \otimes \mathbf{X}^\top\right) \left(\partial^2\mathbf{A}/\partial\mathbf{T}^2\right) \left(\mathbf{X} \otimes \mathbf{X}\right) \|_2 \leq \\
     &\leq \| \mathbf{X}\|^5_2 \left\| \frac{\partial^2\mathbf{A}}{\partial\mathbf{T}^2} \right\|_2 \leq 6 \| \mathbf{X}\|^5_2
 \end{align}
 Оцениваем часть~$\mathbf{H}_\mathrm{f}.$ Для нормы между матрицами~$\mathbf{W}_V$ и~$\mathbf{W}_V$:
@@ -666,33 +666,33 @@ M &= 3\cdot\max \Bigg(\frac{2L}{d_V} \| \mathbf{X}\|^2_2, \\
 \end{align}
 Для нормы между матрицами~$\mathbf{W}_Q$ и~$\mathbf{W}_Q$:
 \begin{align}
-    \|\mathbf{H}_\mathrm{f}(\mathbf{W}_Q, \mathbf{W}_Q)\|_2 &= \frac{2}{Ld_V d_K} \|\mathbf{R}_{d_V d_K} \left(\mathbf{I}_L \otimes \mathbf{W}_V^\top \otimes \mathbf{I}_{d_V} \otimes \mathbf{W}_K^\top\right) \mathbf{Z}_2 \left(\mathbf{I}_{d_V} \otimes \mathbf{W}_K\right)\|_2, \\
-    &\leq \frac{2}{Ld_V d_K} \| \mathbf{R}_{d_V d_K} \|_2 \| \mathbf{W}_V \|_2 \| \mathbf{W}_K\|_2 \|\mathbf{Z}_2 \|_2 \| \mathbf{W}_K\|_2 \\
-    &\leq 6\frac{2}{Ld_V d_K}\sqrt{\mathrm{rank}(\mathbf{F}(\mathbf{X}) - \textbf{Target})} \Big(L \|\mathbf{X}\|_2 \|\mathbf{W}_V \|_2 +\\
+    \|\mathbf{H}_\mathrm{f}(\mathbf{W}_Q, \mathbf{W}_Q)\|_2 &= \frac{2}{N d_V d_K} \|\mathbf{R}_{d_V d_K} \left(\mathbf{I}_{N} \otimes \mathbf{W}_V^\top \otimes \mathbf{I}_{d_V} \otimes \mathbf{W}_K^\top\right) \mathbf{Z}_2 \left(\mathbf{I}_{d_V} \otimes \mathbf{W}_K\right)\|_2, \\
+    &\leq \frac{2}{N d_V d_K} \| \mathbf{R}_{d_V d_K} \|_2 \| \mathbf{W}_V \|_2 \| \mathbf{W}_K\|_2 \|\mathbf{Z}_2 \|_2 \| \mathbf{W}_K\|_2 \\
+    &\leq 6\frac{2}{N d_V d_K}\sqrt{\mathrm{rank}(\mathbf{F}(\mathbf{X}) - \textbf{Target})} \Big(N \|\mathbf{X}\|_2 \|\mathbf{W}_V \|_2 +\\
     &\quad +\|\textbf{Target}\|_2\Big)\| \mathbf{W}_V \|_2 \| \mathbf{W}_K\|^2_2\| \mathbf{X}\|^5_2 =\\
-    &= \frac{12}{d_V d_K}\sqrt{\mathrm{rank}(\mathbf{F}(\mathbf{X}) - \textbf{Target})} \Big(L \|\mathbf{X}\|_2 \|\mathbf{W}_V \|_2 + \\
+    &= \frac{12}{d_V d_K}\sqrt{\mathrm{rank}(\mathbf{F}(\mathbf{X}) - \textbf{Target})} \Big(N \|\mathbf{X}\|_2 \|\mathbf{W}_V \|_2 + \\
     &\quad+\|\textbf{Target}\|_2\Big)\| \mathbf{W}_V \|_2 \| \mathbf{W}_K\|^2_2\| \mathbf{X}\|^5_2
 \end{align}
 Для нормы между матрицами~$\mathbf{W}_V$ и~$\mathbf{W}_Q$:
 \begin{align}
-    \|\mathbf{H}_\mathrm{f}(\mathbf{W}_V, \mathbf{W}_Q)\|_2 &= \frac{2}{Ld_V\sqrt{d_K}} \|\mathbf{R}_{d_V^2} \left(\mathbf{I}_L \otimes \mathbf{S}\right) \mathbf{Z}_1 \left(\mathbf{I}_{d_V} \otimes \mathbf{W}_K\right)\|_2 \leq \\
-    &\leq \frac{2}{Ld_V\sqrt{d_K}} \| \mathbf{R}_{d_V^2}\|_2 \| \mathbf{S} \|_2 \|\mathbf{Z}_1 \|_2 \| \mathbf{W}_K\|_2 \leq\\
-    &\leq \frac{2}{Ld_V\sqrt{d_K}} \sqrt{\mathrm{rank}(\mathbf{F}(\mathbf{X}) - \textbf{Target})} \Big(L \|\mathbf{X}\|_2 \|\mathbf{W}_V \|_2 +\\
-    &\quad +\|\textbf{Target}\|_2\Big) \sqrt{d_V} \frac{1}{L} \|\mathbf{X}\|^3_2\|\mathbf{W}_K\|_2 = \\
-    &= \frac{2\sqrt{\mathrm{rank}(\mathbf{F}(\mathbf{X}) - \textbf{Target})}}{L^2\sqrt{d_Vd_K}}\Big(L \|\mathbf{X}\|_2 \|\mathbf{W}_V \|_2 + \\
+    \|\mathbf{H}_\mathrm{f}(\mathbf{W}_V, \mathbf{W}_Q)\|_2 &= \frac{2}{N d_V\sqrt{d_K}} \|\mathbf{R}_{d_V^2} \left(\mathbf{I}_{N} \otimes \mathbf{S}\right) \mathbf{Z}_1 \left(\mathbf{I}_{d_V} \otimes \mathbf{W}_K\right)\|_2 \leq \\
+    &\leq \frac{2}{N d_V\sqrt{d_K}} \| \mathbf{R}_{d_V^2}\|_2 \| \mathbf{S} \|_2 \|\mathbf{Z}_1 \|_2 \| \mathbf{W}_K\|_2 \leq\\
+    &\leq \frac{2}{N d_V\sqrt{d_K}} \sqrt{\mathrm{rank}(\mathbf{F}(\mathbf{X}) - \textbf{Target})} \Big(N \|\mathbf{X}\|_2 \|\mathbf{W}_V \|_2 +\\
+    &\quad +\|\textbf{Target}\|_2\Big) \sqrt{d_V} \frac{1}{N} \|\mathbf{X}\|^3_2\|\mathbf{W}_K\|_2 = \\
+    &= \frac{2\sqrt{\mathrm{rank}(\mathbf{F}(\mathbf{X}) - \textbf{Target})}}{N^2\sqrt{d_Vd_K}}\Big(N \|\mathbf{X}\|_2 \|\mathbf{W}_V \|_2 + \\
     &\quad+\|\textbf{Target}\|_2\Big)\|\mathbf{W}_K\|_2 \|\mathbf{X}\|^3_2
 \end{align}
 Для нормы между матрицами~$\mathbf{W}_Q$ и~$\mathbf{W}_K$:
 \begin{align}
     &\|\mathbf{H}_\mathrm{f}(\mathbf{W}_Q, \mathbf{W}_K)\| \leq \\
-    &\leq\frac{2}{Ld_V d_K}\| \mathbf{R}_{d_V d_K} \left(\mathbf{I}_L \otimes \mathbf{W}_V^\top \otimes \mathbf{I}_{d_V} \otimes \mathbf{W}_K^\top\right) \mathbf{Z}_2 \left(\mathbf{W}_Q \otimes \mathbf{I}_{d_V}\right) \mathbf{K}_{d_K, d_V}\|_2 + \\
-    &\quad + \frac{2}{Ld_V\sqrt{d_K}} \|\mathbf{R}_{d_V} \left(\mathbf{I}_L \otimes \mathbf{W}_V^\top \otimes \mathbf{I}_{d_V}\right) \left(\mathbf{Z}_1 \otimes \mathbf{I}_{d_V}\right) \mathbf{S} \otimes \mathbf{I}_{d_K}\|_2 \leq\\
-    &\leq  \frac{2}{Ld_V d_K}\sqrt{\mathrm{rank}(\mathbf{F}(\mathbf{X}) - \textbf{Target})} \Big(L \|\mathbf{X}\|_2 \|\mathbf{W}_V \|_2 +\\
+    &\leq\frac{2}{N d_V d_K}\| \mathbf{R}_{d_V d_K} \left(\mathbf{I}_{N} \otimes \mathbf{W}_V^\top \otimes \mathbf{I}_{d_V} \otimes \mathbf{W}_K^\top\right) \mathbf{Z}_2 \left(\mathbf{W}_Q \otimes \mathbf{I}_{d_V}\right) \mathbf{K}_{d_K, d_V}\|_2 + \\
+    &\quad + \frac{2}{N d_V\sqrt{d_K}} \|\mathbf{R}_{d_V} \left(\mathbf{I}_{N} \otimes \mathbf{W}_V^\top \otimes \mathbf{I}_{d_V}\right) \left(\mathbf{Z}_1 \otimes \mathbf{I}_{d_V}\right) \mathbf{S} \otimes \mathbf{I}_{d_K}\|_2 \leq\\
+    &\leq  \frac{2}{N d_V d_K}\sqrt{\mathrm{rank}(\mathbf{F}(\mathbf{X}) - \textbf{Target})} \Big(N \|\mathbf{X}\|_2 \|\mathbf{W}_V \|_2 +\\
     &\quad + \|\textbf{Target}\|_2\Big) \|\mathbf{W}_V\|_2 \|\mathbf{W}_K\|_2 \|\mathbf{W}_Q\|_26 \| \mathbf{X}\|^5_2 + \\
-    &\quad+\frac{2}{Ld_V\sqrt{d_K}}\sqrt{\mathrm{rank}(\mathbf{F}(\mathbf{X}) - \textbf{Target})} \Big(L \|\mathbf{X}\|_2 \|\mathbf{W}_V \|_2 + \\
-    &\quad +\|\textbf{Target}\|_2\Big) \|\mathbf{W}_V \|_2 \frac{1}{L} \|\mathbf{X}\|^3_2 \sqrt{d_V} =\\
-    &=\frac{2\sqrt{\mathrm{rank}(\mathbf{F}(\mathbf{X}) - \textbf{Target})} (L \|\mathbf{X}\|_2 \|\mathbf{W}_V \|_2 + \|\textbf{Target}\|_2)}{Ld_V\sqrt{d_Vd_K}} \|\mathbf{W}_V\|_2 \cdot \\
-    & \quad \cdot \Big(3L\|\mathbf{W}_K\|_2 \|\mathbf{W}_Q\|_2 \| \mathbf{X}\|^5_2 + \frac{d_V}{L} \|\mathbf{X}\|^3_2\Big).
+    &\quad+\frac{2}{N d_V\sqrt{d_K}}\sqrt{\mathrm{rank}(\mathbf{F}(\mathbf{X}) - \textbf{Target})} \Big(N \|\mathbf{X}\|_2 \|\mathbf{W}_V \|_2 + \\
+    &\quad +\|\textbf{Target}\|_2\Big) \|\mathbf{W}_V \|_2 \frac{1}{N} \|\mathbf{X}\|^3_2 \sqrt{d_V} =\\
+    &=\frac{2\sqrt{\mathrm{rank}(\mathbf{F}(\mathbf{X}) - \textbf{Target})} (N \|\mathbf{X}\|_2 \|\mathbf{W}_V \|_2 + \|\textbf{Target}\|_2)}{N d_V\sqrt{d_Vd_K}} \|\mathbf{W}_V\|_2 \cdot \\
+    & \quad \cdot \Big(3N\|\mathbf{W}_K\|_2 \|\mathbf{W}_Q\|_2 \| \mathbf{X}\|^5_2 + \frac{d_V}{N} \|\mathbf{X}\|^3_2\Big).
 \end{align}
 
 Собирая все оценки вместе, используя матричное свойство \ref{prop:matrix_norm_inequalities} для всех блоков $\{K, Q, V\}$:
@@ -702,18 +702,18 @@ M &= 3\cdot\max \Bigg(\frac{2L}{d_V} \| \mathbf{X}\|^2_2, \\
 Подставляя оценки получаем следующую оценку на матрицу Гессе:
 \begin{align}
     &\| \mathbf{H} (\mathbf{W}_i, \mathbf{W}_j)\|_2 \leq\\
-    & \leq 3 \max \Bigg(\frac{2L}{d_V} \| \mathbf{X}\|^2_2, \\
-    &\frac{2}{L^3 d_V d_K} \| \mathbf{W}_K\|_2^2 \| \mathbf{W}_V\|^2_2 \| \mathbf{X}\|^6_2 +\\
-    &\quad+ \frac{12}{d_V d_K} \sqrt{\mathrm{rank}(\mathbf{F}(\mathbf{X}) - \textbf{Target})} \Big(L \|\mathbf{X}\|_2 \|\mathbf{W}_V \|_2 +\\
+    & \leq 3 \max \Bigg(\frac{2N}{d_V} \| \mathbf{X}\|^2_2, \\
+    &\frac{2}{N^3 d_V d_K} \| \mathbf{W}_K\|_2^2 \| \mathbf{W}_V\|^2_2 \| \mathbf{X}\|^6_2 +\\
+    &\quad+ \frac{12}{d_V d_K} \sqrt{\mathrm{rank}(\mathbf{F}(\mathbf{X}) - \textbf{Target})} \Big(N \|\mathbf{X}\|_2 \|\mathbf{W}_V \|_2 +\\
     &\qquad+\|\textbf{Target}\|_2\Big) \| \mathbf{W}_V \|_2 \| \mathbf{W}_K\|^2_2 \| \mathbf{X}\|^5_2, \\
-    &\frac{2}{L d_V \sqrt{d_K}} \| \mathbf{W}_V\|_2 \| \mathbf{W}_K \|_2 \| \mathbf{X}\|^4_2 +\\
-    &\quad+\frac{2\sqrt{\mathrm{rank}(\mathbf{F}(\mathbf{X}) - \textbf{Target})}}{L^2\sqrt{d_V d_K}} (L \|\mathbf{X}\|_2 \|\mathbf{W}_V \|_2 + \|\textbf{Target}\|_2) \|\mathbf{W}_K\|_2 \|\mathbf{X}\|^3_2,\\
-    &\frac{2}{L^3 d_V d_K} \|\mathbf{W}_K\|_2 \|\mathbf{W}_Q\|_2 \| \mathbf{W}_V\|^2_2 \|\mathbf{X} \|^6_2 + \\
-    &\quad+\frac{2\sqrt{\mathrm{rank}(\mathbf{F}(\mathbf{X}) - \textbf{Target})} \Big(L \|\mathbf{X}\|_2 \|\mathbf{W}_V \|_2 + \|\textbf{Target}\|_2\Big)}{L d_V \sqrt{d_V d_K}} \cdot\\
-    &\qquad\cdot\|\mathbf{W}_V\|_2 \Big(3L \|\mathbf{W}_K\|_2 \|\mathbf{W}_Q\|_2 \| \mathbf{X}\|^5_2 + \frac{d_V}{L} \|\mathbf{X}\|^3_2\Big)\Bigg).
+    &\frac{2}{N d_V \sqrt{d_K}} \| \mathbf{W}_V\|_2 \| \mathbf{W}_K \|_2 \| \mathbf{X}\|^4_2 +\\
+    &\quad+\frac{2\sqrt{\mathrm{rank}(\mathbf{F}(\mathbf{X}) - \textbf{Target})}}{N^2\sqrt{d_V d_K}} (N \|\mathbf{X}\|_2 \|\mathbf{W}_V \|_2 + \|\textbf{Target}\|_2) \|\mathbf{W}_K\|_2 \|\mathbf{X}\|^3_2,\\
+    &\frac{2}{N^3 d_V d_K} \|\mathbf{W}_K\|_2 \|\mathbf{W}_Q\|_2 \| \mathbf{W}_V\|^2_2 \|\mathbf{X} \|^6_2 + \\
+    &\quad+\frac{2\sqrt{\mathrm{rank}(\mathbf{F}(\mathbf{X}) - \textbf{Target})} \Big(N \|\mathbf{X}\|_2 \|\mathbf{W}_V \|_2 + \|\textbf{Target}\|_2\Big)}{N d_V \sqrt{d_V d_K}} \cdot\\
+    &\qquad\cdot\|\mathbf{W}_V\|_2 \Big(3N \|\mathbf{W}_K\|_2 \|\mathbf{W}_Q\|_2 \| \mathbf{X}\|^5_2 + \frac{d_V}{N} \|\mathbf{X}\|^3_2\Big)\Bigg).
 \end{align}
 
-Полученное выражение почти полностью соответствует выражению~$M$, где для полного соответствия требуется воспользоваться неравенством~$\mathrm{rank}(\mathbf{F}(\mathbf{X}) - \textbf{Target}) \le \min(L, d_V)$. 
+Полученное выражение почти полностью соответствует выражению~$M$, где для полного соответствия требуется воспользоваться неравенством~$\mathrm{rank}(\mathbf{F}(\mathbf{X}) - \textbf{Target}) \le \min(N, d_V)$. 
 \end{proof}
 
 Теорема~\ref{thm:self_attention_hessian_estimation} устанавливает верхнюю оценку нормы матрицы Гессе для одного слоя самовнимания. Полученная оценка демонстрирует сложную зависимость от размерностей модели, норм весовых матриц и нормы входных данных $\|\mathbf{X}\|_2$. Особенностью оценки является наличие слагаемых, пропорциональных различным степеням $\|\mathbf{X}\|_2$, что отражает нелинейный характер преобразований в слое самовнимания.
@@ -728,7 +728,7 @@ M &= 3\cdot\max \Bigg(\frac{2L}{d_V} \| \mathbf{X}\|^2_2, \\
     \text{FFN}(\mathbf{Y}) = \sigma(\mathbf{Y} \mathbf{W}_1 + \mathbf{b}_1) \mathbf{W}_2 + \mathbf{b}_2,
 \]
 с матрицами параметров $\mathbf{W}_1 \in \mathbb{R}^{d_V \times d_{\text{ff}}}$, $\mathbf{W}_2 \in \mathbb{R}^{d_{\text{ff}} \times d_V}$, векторами~$\mathbf{b}_1 \in \mathbb{R}^{d_{\text{ff}}}$, $\mathbf{b}_2 \in \mathbb{R}^{d_V}$, а также функцией активации~$\sigma$.
-Функция $\text{LayerNorm}(\mathbf{X})$ определяется для входной матрицы~$\mathbf{X} \in \mathbb{R}^{L \times d_V}$ следующим образом:
+Функция $\text{LayerNorm}(\mathbf{X})$ определяется для входной матрицы~$\mathbf{X} \in \mathbb{R}^{N \times d_V}$ следующим образом:
 \begin{align}
     \text{LayerNorm}(\mathbf{X})_{i,j} = \mathbf{\gamma}_j \cdot \frac{\mathbf{X}_{i,j} - \mu_i}{\sqrt{\sigma_i^2}} + \mathbf{\beta}_j,
 \end{align}
@@ -747,7 +747,7 @@ M &= 3\cdot\max \Bigg(\frac{2L}{d_V} \| \mathbf{X}\|^2_2, \\
 
 Для начала вычислим для функции~$\mathrm{LayerNorm}$ матрицу Якоби относительно параметров модели, для этого докажем теорему~\ref{thm:layernorm_derivative}.
 \begin{theorem}[Производная LayerNorm]\label{thm:layernorm_derivative}
-    Пусть задана матрица $\mathbf{X} \in \mathbb{R}^{L \times d_V}$. Определим функцию~$\mathbf{M}(\mathbf{X})$ следующим образом:
+    Пусть задана матрица $\mathbf{X} \in \mathbb{R}^{N \times d_V}$. Определим функцию~$\mathbf{M}(\mathbf{X})$ следующим образом:
     \begin{align}
         \mathbf{M}(\mathbf{X}) &= \mathbf{X} - \tfrac{1}{d_V}\mathbf{X}\mathbf{1}_{d_V}\mathbf{1}_{d_V}^\top, \\
         \sigma(\mathbf{X}) &= \tfrac{1}{\sqrt{d_V}}\big(\mathbf{M}(\mathbf{X})^{\circ 2}\mathbf{1}_{d_V}\big)^{\circ 1/2},\\
@@ -759,14 +759,14 @@ M &= 3\cdot\max \Bigg(\frac{2L}{d_V} \| \mathbf{X}\|^2_2, \\
     \]
     матрица Якоби относительно переменной~$\mathbf{X}$ определяется следующим образом:
     \begin{align}
-        \frac{\partial \text{LayerNorm}(\mathbf{X})}{\partial \mathbf{X}} &= (\mathbf{P}(\mathbf{X}) \otimes \mathbf{I}_{d_V}) \left(\mathbf{I}_{Ld_V} - \tfrac{1}{d_V}(\mathbf{I}_L \otimes \mathbf{1}_{d_V \times d_V})\right)+\\
-    &\quad+\left(\mathbf{I}_L \otimes \mathbf{M}(\mathbf{X})^\top\right)\frac{\partial\mathbf{P}(\mathbf{X})}{\partial\mathbf{X}},
+        \frac{\partial \text{LayerNorm}(\mathbf{X})}{\partial \mathbf{X}} &= (\mathbf{P}(\mathbf{X}) \otimes \mathbf{I}_{d_V}) \left(\mathbf{I}_{N d_V} - \tfrac{1}{d_V}(\mathbf{I}_{N} \otimes \mathbf{1}_{d_V \times d_V})\right)+\\
+    &\quad+\left(\mathbf{I}_{N} \otimes \mathbf{M}(\mathbf{X})^\top\right)\frac{\partial\mathbf{P}(\mathbf{X})}{\partial\mathbf{X}},
     \end{align}
     где
     \begin{align}
     \frac{\partial \mathbf{P}}{\partial \mathbf{X}}&=\frac{1}{\sqrt{d_V}}\Big( -\mathbf{D}^{-1} \otimes \mathbf{D}^{-\top} \Big)\cdot\\
-    &\quad\cdot\big( \mathbf{e}_1 \otimes \mathbf{e}_1, \dots, \mathbf{e}_L \otimes \mathbf{e}_L \big)\cdot\\
-    &\quad\cdot\Big(\mathrm{diag}^{-1}\!\big(\mathrm{vec}_r^{1/2}(\mathbf{M}^{\circ 2}\mathbf{1}_{d_V})\big)(\mathbf{I}_L \otimes \mathbf{1}_{d_V}^\top)\mathrm{diag}\left(\mathrm{vec}_r(\mathbf{M})\right)\frac{\partial \mathbf{M}}{\partial \mathbf{X}}\Big),
+    &\quad\cdot\big( \mathbf{e}_1 \otimes \mathbf{e}_1, \dots, \mathbf{e}_N \otimes \mathbf{e}_N \big)\cdot\\
+    &\quad\cdot\Big(\mathrm{diag}^{-1}\!\big(\mathrm{vec}_r^{1/2}(\mathbf{M}^{\circ 2}\mathbf{1}_{d_V})\big)(\mathbf{I}_{N} \otimes \mathbf{1}_{d_V}^\top)\mathrm{diag}\left(\mathrm{vec}_r(\mathbf{M})\right)\frac{\partial \mathbf{M}}{\partial \mathbf{X}}\Big),
     \end{align}
     где $\mathbf{D} = \mathrm{diag}(\sigma(\mathbf{X})).$
 \end{theorem}
@@ -780,20 +780,20 @@ M &= 3\cdot\max \Bigg(\frac{2L}{d_V} \| \mathbf{X}\|^2_2, \\
     \]
     с матрицей Якоби, полученной в теореме~\ref{thm:layernorm_derivative}:
     \[
-        \frac{\partial \text{LayerNorm}}{\partial \mathbf{X}} = (\mathbf{P} \otimes \mathbf{I}_{d_V}) \mathbf{G} + (\mathbf{I}_L \otimes \mathbf{M}^\top) \mathbf{H},
+        \frac{\partial \text{LayerNorm}}{\partial \mathbf{X}} = (\mathbf{P} \otimes \mathbf{I}_{d_V}) \mathbf{G} + (\mathbf{I}_{N} \otimes \mathbf{M}^\top) \mathbf{H},
     \]
     где дополнительно введены обозначения константы:
     \[
-        \mathbf{G} = \left(\mathbf{I}_{Ld_V} - \tfrac{1}{d_V}(\mathbf{I}_L \otimes \mathbf{1}_{d_V \times d_V})\right),
+        \mathbf{G} = \left(\mathbf{I}_{N d_V} - \tfrac{1}{d_V}(\mathbf{I}_{N} \otimes \mathbf{1}_{d_V \times d_V})\right),
     \] а также оператор, аналогичный оператору в теореме~\ref{thm:layernorm_derivative}:
     \[
         \mathbf{H} = \frac{\partial \mathbf{P}}{\partial \mathbf{X}}.
     \]
     Тогда для функции~$\text{LayerNorm}$ матрица Гессе относительно параметров~$\mathbf{X}$ имеет вид:
     \begin{align}\label{chapter-2:theorem:layernorm_second_derivative:eqstemant}
-        \frac{\partial^2 \text{LayerNorm}}{\partial \mathbf{X}^2} &= \left( (\mathbf{P}(\mathbf{X}) \otimes \mathbf{I}_{d_V}) \otimes \mathbf{I}_{L d_V} \right)\frac{\partial^2 \mathbf{M}}{\partial \mathbf{X}^2} +\\
-        &\quad+\left( \mathbf{I}_{L d_V} \otimes \mathbf{G}^\top \right) \frac{\partial (\mathbf{P}(\mathbf{X}) \otimes \mathbf{I}_{d_V})}{\partial \mathbf{X}} + \\
-        &\quad+ \left( (\mathbf{I}_L \otimes \mathbf{M}^\top ) \otimes \mathbf{I}_{L d_V} \right) \frac{\partial^2 \mathbf{P}}{\partial \mathbf{X}^2} + \left( \mathbf{I}_{L d_V} \otimes \mathbf{H}^\top \right) \frac{\partial (\mathbf{I}_L \otimes \mathbf{M}^\top )}{\partial\mathbf{X}}.
+        \frac{\partial^2 \text{LayerNorm}}{\partial \mathbf{X}^2} &= \left( (\mathbf{P}(\mathbf{X}) \otimes \mathbf{I}_{d_V}) \otimes \mathbf{I}_{N d_V} \right)\frac{\partial^2 \mathbf{M}}{\partial \mathbf{X}^2} +\\
+        &\quad+\left( \mathbf{I}_{N d_V} \otimes \mathbf{G}^\top \right) \frac{\partial (\mathbf{P}(\mathbf{X}) \otimes \mathbf{I}_{d_V})}{\partial \mathbf{X}} + \\
+        &\quad+ \left( (\mathbf{I}_{N} \otimes \mathbf{M}^\top ) \otimes \mathbf{I}_{N d_V} \right) \frac{\partial^2 \mathbf{P}}{\partial \mathbf{X}^2} + \left( \mathbf{I}_{N d_V} \otimes \mathbf{H}^\top \right) \frac{\partial (\mathbf{I}_{N} \otimes \mathbf{M}^\top )}{\partial\mathbf{X}}.
     \end{align}
     Все матрицы в данном выражении явно вычислимы и задаются формулами, которые указаны ниже в доказательстве.
 \end{theorem}
@@ -860,27 +860,27 @@ M &= 3\cdot\max \Bigg(\frac{2L}{d_V} \| \mathbf{X}\|^2_2, \\
     \qquad
     \mathbf{T} = \frac{1}{\sqrt{d_K}} \mathbf{X}\mathbf{W}_Q \mathbf{W}_K^\top \mathbf{X}^\top,
 \]
-где $\mathbf{X} \in \mathbb{R}^{L \times d_V}$, $\mathbf{W}_Q,\mathbf{W}_K \in \mathbb{R}^{d_V \times d_K}$, $\mathbf{W}_V \in \mathbb{R}^{d_V \times d_V}$.
+где $\mathbf{X} \in \mathbb{R}^{N \times d_V}$, $\mathbf{W}_Q,\mathbf{W}_K \in \mathbb{R}^{d_V \times d_K}$, $\mathbf{W}_V \in \mathbb{R}^{d_V \times d_V}$.
 Матрица внимания $\mathbf{A}(\cdot)$ применяет построчный softmax.
 Используем построчную векторизацию~$\mathrm{vec}_r(\cdot)$ и матрицы перестановки~$\mathbf{K}_{m,n}$ из определения~\ref{def:commutation_matrix}.
 
-Определим блоки обобщенного функционального гессиана, используя результаты~\cite{ormaniec2024attentionhessian} в наших обозначениях $\mathrm{vec}_r$ как
+Определим блоки обобщенной функциональной матрицы Гессе, используя результаты~\cite{ormaniec2024attentionhessian} в наших обозначениях $\mathrm{vec}_r$ как
 \[
     \mathbf{H}_{\mathrm{f}}(\mathbf{W}_i,\mathbf{W}_j)
     = \big( \tfrac{\partial \ell}{\partial \mathbf{F}} \otimes \mathbf{I}_{p_i q_i} \big)  \frac{\partial^2 \mathbf{F}}{\partial \mathbf{W}_i \partial \mathbf{W}_j},
 \]
-где $p_i q_i$~--- размер матрицы~$\mathbf{W}_i$, а $\tfrac{\partial \ell}{\partial \mathbf{F}} \in \mathbb{R}^{L \times d_V}$~--- градиент функции потерь.
+где $p_i q_i$~--- размер матрицы~$\mathbf{W}_i$, а $\tfrac{\partial \ell}{\partial \mathbf{F}} \in \mathbb{R}^{N \times d_V}$~--- градиент функции потерь.
 
 Для квадратичной функции потерь~$\ell(\mathbf{F})=\tfrac{1}{2}\|\mathbf{F}-\mathbf{Target}\|_F^2$ имеем~$\tfrac{\partial \ell}{\partial \mathbf{F}}=\mathbf{F}-\mathbf{Target}$ и матрицу построчного свертывания
 \[
-    \mathbf{R}_m := \mathrm{vec}_r\big(\mathbf{F}(\mathbf{X}) - \mathbf{Target}\big)^\top \otimes \mathbf{I}_m \in \mathbb{R}^{m \times (m \cdot L d_V)}.
+    \mathbf{R}_m := \mathrm{vec}_r\big(\mathbf{F}(\mathbf{X}) - \mathbf{Target}\big)^\top \otimes \mathbf{I}_m \in \mathbb{R}^{m \times (m \cdot N d_V)}.
 \]
-Тогда для~$i \in \{V,Q,K\}$ с $n_i:=p_i q_i$ блоки функционального гессиана могут быть факторизованы как
+Тогда для~$i \in \{V,Q,K\}$ с $n_i:=p_i q_i$ блоки функциональной матрицы Гессе могут быть факторизованы как
 \[
     \mathbf{H}_{\mathrm{f}}(\mathbf{W}_i,\mathbf{W}_j) = \mathbf{R}_{n_i} \boldsymbol{\Phi}_{ij},
     \qquad
     \boldsymbol{\Phi}_{ij} := \frac{\partial^2 \mathbf{F}}{\partial \mathbf{W}_i \partial \mathbf{W}_j}
-    \in \mathbb{R}^{(L d_V \cdot n_i) \times n_j}.
+    \in \mathbb{R}^{(N d_V \cdot n_i) \times n_j}.
 \]
 В частности, блоки кривизны модели~$\boldsymbol{\Phi}_{ij}$ получаются из соответствующих выражений в~\cite[Теорема.~3.2]{ormaniec2024attentionhessian} удалением левого свертывания $\mathbf{R}_{n_i}$.
 
@@ -891,35 +891,35 @@ M &= 3\cdot\max \Bigg(\frac{2L}{d_V} \| \mathbf{X}\|^2_2, \\
 \]
 и операторы производных softmax
 \begin{align}
-    \mathbf{Z}_1 &:= (\mathbf{I}_L \otimes \mathbf{X}^\top)(\partial\mathbf{A}/\partial\mathbf{T})(\mathbf{X} \otimes \mathbf{X}) \in \mathbb{R}^{Ld_V \times d_V^2}, \\
-    \mathbf{Z}_2 &:= \big(\mathbf{I}_L \otimes \mathbf{X}^\top \otimes \mathbf{X}^\top \otimes \mathbf{X}^\top\big)
+    \mathbf{Z}_1 &:= (\mathbf{I}_{N} \otimes \mathbf{X}^\top)(\partial\mathbf{A}/\partial\mathbf{T})(\mathbf{X} \otimes \mathbf{X}) \in \mathbb{R}^{N d_V \times d_V^2}, \\
+    \mathbf{Z}_2 &:= \big(\mathbf{I}_{N} \otimes \mathbf{X}^\top \otimes \mathbf{X}^\top \otimes \mathbf{X}^\top\big)
     \frac{\partial^2 \mathbf{A}}{\partial \mathbf{T}^2}
     (\mathbf{X} \otimes \mathbf{X})
-    \in \mathbb{R}^{L d_V^3 \times d_V^2},
+    \in \mathbb{R}^{N d_V^3 \times d_V^2},
 \end{align}
 где~$\tfrac{\partial^2 \mathbf{A}}{\partial \mathbf{T}^2}$ обозначает тензор вторых производных softmax, согласованный с $\mathrm{vec}_r$ и произведениями Кронекера, как указано выше, а $\mathbf{Z}_1$ — линейный оператор первой производной softmax, используемый в~\cite{ormaniec2024attentionhessian}.
 
 Тогда вторые производные внимания имеют вид:
 \begin{align}
-    \boldsymbol{\Phi}_{VV} &= \mathbf{0}_{(L d_V \cdot d_V^2) \times d_V^2}, \\
-    \boldsymbol{\Phi}_{QQ} &= \frac{2}{L d_V d_K}
-    \big(\mathbf{I}_L \otimes \mathbf{W}_V^\top \otimes \mathbf{I}_{d_V} \otimes \mathbf{W}_K^\top\big)
+    \boldsymbol{\Phi}_{VV} &= \mathbf{0}_{(N d_V \cdot d_V^2) \times d_V^2}, \\
+    \boldsymbol{\Phi}_{QQ} &= \frac{2}{N d_V d_K}
+    \big(\mathbf{I}_{N} \otimes \mathbf{W}_V^\top \otimes \mathbf{I}_{d_V} \otimes \mathbf{W}_K^\top\big)
     \mathbf{Z}_2
     \big(\mathbf{I}_{d_V} \otimes \mathbf{W}_K\big)
-    \in \mathbb{R}^{(L d_V \cdot d_V d_K) \times d_V d_K}, \\
-    \boldsymbol{\Phi}_{VQ} &= \frac{2}{L d_V \sqrt{d_K}}
-    \big(\mathbf{I}_L \otimes \mathbf{S}\big)
+    \in \mathbb{R}^{(N d_V \cdot d_V d_K) \times d_V d_K}, \\
+    \boldsymbol{\Phi}_{VQ} &= \frac{2}{N d_V \sqrt{d_K}}
+    \big(\mathbf{I}_{N} \otimes \mathbf{S}\big)
     \mathbf{Z}_1
     \big(\mathbf{I}_{d_V} \otimes \mathbf{W}_K\big)
-    \in \mathbb{R}^{(L d_V \cdot d_V^2) \times d_V d_K}, \\
+    \in \mathbb{R}^{(N d_V \cdot d_V^2) \times d_V d_K}, \\
     \boldsymbol{\Phi}_{QK}
-    &= \frac{2}{L d_V d_K}
-    \big(\mathbf{I}_L \otimes \mathbf{W}_V^\top \otimes \mathbf{I}_{d_V} \otimes \mathbf{W}_K^\top\big)
+    &= \frac{2}{N d_V d_K}
+    \big(\mathbf{I}_{N} \otimes \mathbf{W}_V^\top \otimes \mathbf{I}_{d_V} \otimes \mathbf{W}_K^\top\big)
     \mathbf{Z}_2
     \big(\mathbf{W}_Q \otimes \mathbf{I}_{d_V}\big) \mathbf{K}_{d_K, d_V} \\
-    &\qquad + \frac{2}{L d_V \sqrt{d_K}}
+    &\qquad + \frac{2}{N d_V \sqrt{d_K}}
     \big(\mathbf{I}_{d_V} \otimes \mathbf{W}_V^\top \otimes \mathbf{I}_{d_V}\big)
-    \big(\mathbf{Z}_1 \otimes \mathbf{I}_{d_V}\big) \mathbf{S} \otimes \mathbf{I}_{d_K} \in \mathbb{R}^{(L d_V \cdot d_V d_K) \times d_V d_K}.
+    \big(\mathbf{Z}_1 \otimes \mathbf{I}_{d_V}\big) \mathbf{S} \otimes \mathbf{I}_{d_K} \in \mathbb{R}^{(N d_V \cdot d_V d_K) \times d_V d_K}.
 \end{align}
 
 Более того, в силу симметрии вторых производных, $\boldsymbol{\Phi}_{KQ}$ равен $\boldsymbol{\Phi}_{QK}$ с переставленными $\mathbf{W}_Q,\mathbf{W}_K$ и корректировкой перестановки с помощью $\mathbf{K}_{\cdot,\cdot}$.
@@ -928,21 +928,21 @@ M &= 3\cdot\max \Bigg(\frac{2L}{d_V} \| \mathbf{X}\|^2_2, \\
 Доказательство леммы приведено в работе~\cite{petrov2025curvaturegap}.
 
 \begin{lemma}[Оценка норм для FFN и LayerNorm]\label{lemma:Y_S_norm_bounds}
-Пусть заданы матрицы~$\mathbf{X}\in\mathbb{R}^{L\times d_V}$, $\mathbf{Y}=\mathrm{LayerNorm}(\mathbf{F}(\mathbf{X})+\mathbf{X})\in\mathbb{R}^{L\times d_V}$ и задана сеть
+Пусть заданы матрицы~$\mathbf{X}\in\mathbb{R}^{N\times d_V}$, $\mathbf{Y}=\mathrm{LayerNorm}(\mathbf{F}(\mathbf{X})+\mathbf{X})\in\mathbb{R}^{N\times d_V}$ и задана сеть
 \[
     \mathrm{FFN}(\mathbf{Y})=\sigma(\mathbf{Y}\mathbf{W}_1)\mathbf{W}_2,\qquad\mathbf{W}_1\in\mathbb{R}^{d_V\times d_{ff}},\quad\mathbf{W}_2\in\mathbb{R}^{d_{ff}\times d_V},
 \]
-пусть также задана~$\mathbf{S}=\mathbf{Y}+\mathrm{FFN}(\mathbf{Y})\in\mathbb{R}^{L\times d_V}$.
+пусть также задана~$\mathbf{S}=\mathbf{Y}+\mathrm{FFN}(\mathbf{Y})\in\mathbb{R}^{N\times d_V}$.
 Тогда выполняются следующие оценки спектральных норм:
 \begin{align}
-    \|\mathbf{Y}\|_2 &\le \|\mathbf{Y}\|_F = \sqrt{Ld_V}, 
+    \|\mathbf{Y}\|_2 &\le \|\mathbf{Y}\|_F = \sqrt{N d_V}, 
     \label{eq:Y_norm_bound}
     \\
-    \|\mathrm{FFN}(\mathbf{Y})\|_2 &\le \sqrt{\min(L,d_{ff})} \|\mathbf{Y}\|_2\|\mathbf{W}_1\|_2\|\mathbf{W}_2\|_2,
+    \|\mathrm{FFN}(\mathbf{Y})\|_2 &\le \sqrt{\min(N,d_{ff})} \|\mathbf{Y}\|_2\|\mathbf{W}_1\|_2\|\mathbf{W}_2\|_2,
     \label{eq:FFN_norm_bound}
     \\
     \|\mathbf{S}\|_2 \le \|\mathbf{Y}\|_2 + \|\mathrm{FFN}(\mathbf{Y})\|_2 
-    &\le \sqrt{Ld_V}\Big(1+\sqrt{\min(L,d_{ff})}\|\mathbf{W}_1\|_2\|\mathbf{W}_2\|_2\Big).
+    &\le \sqrt{N d_V}\Big(1+\sqrt{\min(N,d_{ff})}\|\mathbf{W}_1\|_2\|\mathbf{W}_2\|_2\Big).
     \label{eq:S_norm_bound}
 \end{align}
 \end{lemma}
@@ -950,7 +950,7 @@ M &= 3\cdot\max \Bigg(\frac{2L}{d_V} \| \mathbf{X}\|^2_2, \\
 
 \begin{lemma}[Оценка норм производных LayerNorm]\label{lemma:layernorm_deriv_hessian_norm}
 Пусть заданы матрицы~$\mathbf{X} \in \mathbb{R}^{m \times n}$.
-Производная LayerNorm $\mathbf{J}_{\mathrm{LN}}(\mathbf{X}) = \frac{\partial \text{LayerNorm}(\mathbf{X})}{\partial \mathbf{X}}$ вычисляется в соответствии с Теоремой~\ref{thm:layernorm_derivative}, а ее гессиан $\mathbf{H}_{\mathrm{LN}}(\mathbf{X}) = \frac{\partial^2 \text{LayerNorm}(\mathbf{X})}{\partial \mathbf{X}^2}$ вычисляется как в Теореме \ref{thm:layernorm_second_derivative}.
+Производная LayerNorm $\mathbf{J}_{\mathrm{LN}}(\mathbf{X}) = \frac{\partial \text{LayerNorm}(\mathbf{X})}{\partial \mathbf{X}}$ вычисляется в соответствии с Теоремой~\ref{thm:layernorm_derivative}, а ее матрица Гессе $\mathbf{H}_{\mathrm{LN}}(\mathbf{X}) = \frac{\partial^2 \text{LayerNorm}(\mathbf{X})}{\partial \mathbf{X}^2}$ вычисляется как в Теореме \ref{thm:layernorm_second_derivative}.
 
 Тогда выполняются следующие оценки:
 \begin{align}
@@ -974,7 +974,7 @@ M &= 3\cdot\max \Bigg(\frac{2L}{d_V} \| \mathbf{X}\|^2_2, \\
 где
 \begin{equation}
     \frac{\partial (\text{FFN}(\mathbf{Y}) + \mathbf{Y})}{\partial \mathbf{W}_i} = \begin{cases}
-        \left(\mathbf{I}_L \otimes \mathbf{W}_2^\top \right) \mathrm{diag}\!\big(\mathrm{vec}_r(\mathbf{1}_{\{\mathbf{Y}\mathbf{W}_1>\mathbf{0}\}})\big) \left( \mathbf{Y} \otimes \mathbf{I}_{d_{ff}}\right), & \text{при } i = 1 \\
+        \left(\mathbf{I}_{N} \otimes \mathbf{W}_2^\top \right) \mathrm{diag}\!\big(\mathrm{vec}_r(\mathbf{1}_{\{\mathbf{Y}\mathbf{W}_1>\mathbf{0}\}})\big) \left( \mathbf{Y} \otimes \mathbf{I}_{d_{ff}}\right), & \text{при } i = 1 \\
         \sigma(\mathbf{Y} \mathbf{W}_1) \otimes \mathbf{I}_{d_V}, & \text{при } i = 2
     \end{cases},
 \end{equation}
@@ -984,81 +984,81 @@ M &= 3\cdot\max \Bigg(\frac{2L}{d_V} \| \mathbf{X}\|^2_2, \\
 \end{align}
 где
 \begin{align}
-    \frac{\partial (\text{FFN}(\mathbf{Y}) + \mathbf{Y})}{\partial \mathbf{Y}} &= \left( \mathbf{I}_L \otimes \mathbf{W}_2^\top\right) \mathrm{diag}\!\big(\mathrm{vec}_r(\mathbf{1}_{\{\mathbf{Y}\mathbf{W}_1>\mathbf{0}\}})\big) \left( \mathbf{I}_L \otimes \mathbf{W}_1^\top \right) + \left( \mathbf{I}_L \otimes \mathbf{I}_{d_V}\right),
+    \frac{\partial (\text{FFN}(\mathbf{Y}) + \mathbf{Y})}{\partial \mathbf{Y}} &= \left( \mathbf{I}_{N} \otimes \mathbf{W}_2^\top\right) \mathrm{diag}\!\big(\mathrm{vec}_r(\mathbf{1}_{\{\mathbf{Y}\mathbf{W}_1>\mathbf{0}\}})\big) \left( \mathbf{I}_{N} \otimes \mathbf{W}_1^\top \right) + \left( \mathbf{I}_{N} \otimes \mathbf{I}_{d_V}\right),
 \end{align}
 Здесь и далее для ReLU формулы понимаются на дополнении к аффинному множеству нулей соответствующих пред активаций; это не меняет вид спектральных мажорант при оценке норм матриц, используемых в главе.
 причем~$\frac{\partial \mathbf{Y}}{\partial\mathbf{W}_i} = \frac{\partial \text{LayerNorm}(\mathbf{F} (\mathbf{X}) + \mathbf{X})}{\partial (\mathbf{F} (\mathbf{X}) + \mathbf{X})} \frac{\partial \mathbf{F}(\mathbf{X})}{\partial \mathbf{W}_i},$ где $\frac{\partial \mathbf{F}(\mathbf{X})}{\partial \mathbf{W}_i}$ вычисляется при помощи Леммы~A.2 в работе~\cite{noci2022signalpropagationtransformerstheoretical}, а матрица~$\frac{\partial \text{LayerNorm}(\mathbf{F} (\mathbf{X}) + \mathbf{X})}{\partial (\mathbf{F} (\mathbf{X}) + \mathbf{X})}$ вычисляется согласно Теоремы~\ref{thm:layernorm_derivative}.
 \end{theorem}
 Доказательство теоремы приведено в работе~\cite{petrov2025curvaturegap}.
 
-В теореме~\ref{thm:transformer_derivative} получен вид матрицы Якоби для полного блока трансформера. Переходим к вычислению матрицы Гессе, который формулируется в теореме~\ref{thm:transformer_hessian}.
+В теореме~\ref{thm:transformer_derivative} получен вид матрицы Якоби для полного блока трансформера. Переходим к вычислению матрицы Гессе, которая формулируется в теореме~\ref{thm:transformer_hessian}.
 
 \begin{theorem}[Матрица Гессе трансформера]\label{thm:transformer_hessian}
-Пусть заданы матрицы параметров модели трансформера~$\mathbf{X} \in \mathbb{R}^{L \times d_V}$, $\mathbf{Y} \in \mathbb{R}^{L \times d_V}$, $\mathbf{W}_1 \in \mathbb{R}^{d_V \times d_{ff}}$, $\mathbf{W}_2 \in \mathbb{R}^{d_{ff} \times d_V}$, $\mathbf{W}_Q, \mathbf{W}_K \in \mathbb{R}^{d_V \times d_K}$, $\mathbf{W}_V \in \mathbb{R}^{d_V \times d_V},$
+Пусть заданы матрицы параметров модели трансформера~$\mathbf{X} \in \mathbb{R}^{N \times d_V}$, $\mathbf{Y} \in \mathbb{R}^{N \times d_V}$, $\mathbf{W}_1 \in \mathbb{R}^{d_V \times d_{ff}}$, $\mathbf{W}_2 \in \mathbb{R}^{d_{ff} \times d_V}$, $\mathbf{W}_Q, \mathbf{W}_K \in \mathbb{R}^{d_V \times d_K}$, $\mathbf{W}_V \in \mathbb{R}^{d_V \times d_V},$
 где блок трансформатор описан в виде следующих матричнозначных функций:
 \[
-    \mathbf{S}(\mathbf{Y},\mathbf{W}_1,\mathbf{W}_2) = \sigma(\mathbf{Y}\mathbf{W}_1)\mathbf{W}_2 + \mathbf{Y} \in \mathbb{R}^{L \times d_V}, \qquad\mathbf{Z} = \mathrm{LayerNorm}(\mathbf{S}) \in \mathbb{R}^{L \times d_V},
+    \mathbf{S}(\mathbf{Y},\mathbf{W}_1,\mathbf{W}_2) = \sigma(\mathbf{Y}\mathbf{W}_1)\mathbf{W}_2 + \mathbf{Y} \in \mathbb{R}^{N \times d_V}, \qquad\mathbf{Z} = \mathrm{LayerNorm}(\mathbf{S}) \in \mathbb{R}^{N \times d_V},
 \]
 для которых в условиях теорем~\ref{thm:layernorm_derivative} и \ref{thm:layernorm_second_derivative} вычислимые матрицы Якоби и Гессе вида:
 \[
-    \mathbf{J}_Z := \frac{\partial\mathrm{LayerNorm}(\mathbf{S})}{\partial \mathbf{S}} \in \mathbb{R}^{L d_V \times L d_V}, \quad\mathbf{H}_Z := \frac{\partial^2\mathrm{LayerNorm}(\mathbf{S})}{\partial \mathbf{S}^2} \in \mathbb{R}^{(L d_V)^2 \times L d_V}.
+    \mathbf{J}_Z := \frac{\partial\mathrm{LayerNorm}(\mathbf{S})}{\partial \mathbf{S}} \in \mathbb{R}^{N d_V \times N d_V}, \quad\mathbf{H}_Z := \frac{\partial^2\mathrm{LayerNorm}(\mathbf{S})}{\partial \mathbf{S}^2} \in \mathbb{R}^{(N d_V)^2 \times N d_V}.
 \]
 Также в условиях теорем~\ref{thm:layernorm_derivative}, \ref{thm:layernorm_second_derivative} и \ref{theorem:relu_derivative_hessian} введем следующее:
 \begin{align}
-    \mathbf{D}_\sigma := \mathrm{diag}\big(\mathrm{vec}_r(\mathbf{1}_{\{\mathbf{Y}\mathbf{W}_1>0\}})\big) \in \mathbb{R}^{L d_{ff} \times L d_{ff}},\\
-    \mathbf{J}_{SY} := \frac{\partial \mathbf{S}}{\partial \mathbf{Y}} = (\mathbf{I}_L \otimes \mathbf{W}_2^\top)\mathbf{D}_\sigma (\mathbf{I}_L \otimes \mathbf{W}_1^\top) + (\mathbf{I}_L \otimes \mathbf{I}_{d_V}) \in \mathbb{R}^{L d_V \times L d_V},
+    \mathbf{D}_\sigma := \mathrm{diag}\big(\mathrm{vec}_r(\mathbf{1}_{\{\mathbf{Y}\mathbf{W}_1>0\}})\big) \in \mathbb{R}^{N d_{ff} \times N d_{ff}},\\
+    \mathbf{J}_{SY} := \frac{\partial \mathbf{S}}{\partial \mathbf{Y}} = (\mathbf{I}_{N} \otimes \mathbf{W}_2^\top)\mathbf{D}_\sigma (\mathbf{I}_{N} \otimes \mathbf{W}_1^\top) + (\mathbf{I}_{N} \otimes \mathbf{I}_{d_V}) \in \mathbb{R}^{N d_V \times N d_V},
 \end{align}
 где для матрицы~$\mathbf{Y} = \mathrm{LayerNorm}(\mathbf{F}(\mathbf{X}) + \mathbf{X})$ в условиях теорем~\ref{thm:layernorm_derivative}, \ref{thm:layernorm_second_derivative} определено:
 \begin{align}
-    \mathbf{J}_Y &:= \frac{\partial \mathrm{LayerNorm}(\mathbf{F}(\mathbf{X})+\mathbf{X})}{\partial (\mathbf{F}(\mathbf{X})+\mathbf{X})} \in \mathbb{R}^{L d_V \times L d_V}, \\
-    \mathbf{H}_Y &:= \frac{\partial^2 \mathrm{LayerNorm}(\mathbf{F}(\mathbf{X})+\mathbf{X})}{\partial (\mathbf{F}(\mathbf{X})+\mathbf{X})^2} \in \mathbb{R}^{(L d_V)^2 \times L d_V},
+    \mathbf{J}_Y &:= \frac{\partial \mathrm{LayerNorm}(\mathbf{F}(\mathbf{X})+\mathbf{X})}{\partial (\mathbf{F}(\mathbf{X})+\mathbf{X})} \in \mathbb{R}^{N d_V \times N d_V}, \\
+    \mathbf{H}_Y &:= \frac{\partial^2 \mathrm{LayerNorm}(\mathbf{F}(\mathbf{X})+\mathbf{X})}{\partial (\mathbf{F}(\mathbf{X})+\mathbf{X})^2} \in \mathbb{R}^{(N d_V)^2 \times N d_V},
 \end{align}
 где для удобства введем следующие обозначения:~ $n_1 = d_V d_{ff}, n_2 = d_{ff} d_V, n_Q = n_K = d_V d_K, n_V = d_V^2.$
 Пусть матрицы Якоби вычислимы в условиях теоремы~\ref{thm:transformer_derivative} в следующем виде:
 \begin{align}
-     \mathbf{G}_V &:= \frac{\partial \mathbf{F}}{\partial \mathbf{W}_V} \in \mathbb{R}^{L d_V \times n_V},\\
-     \mathbf{G}_Q &:= \frac{\partial \mathbf{F}}{\partial \mathbf{W}_Q} \in \mathbb{R}^{L d_V \times n_Q},\\
-     \mathbf{G}_K &:= \frac{\partial \mathbf{F}}{\partial \mathbf{W}_K} \in \mathbb{R}^{L d_V \times n_K},\\
-     \mathbf{B}_1 &:= \frac{\partial \mathbf{S}}{\partial \mathbf{W}_1} = (\mathbf{I}_L \otimes \mathbf{W}_2^\top) \mathbf{D}_\sigma (\mathbf{Y} \otimes \mathbf{I}_{d_{ff}}) \in \mathbb{R}^{L d_V \times n_1},\\
-     \mathbf{B}_2 &:= \frac{\partial \mathbf{S}}{\partial \mathbf{W}_2} = \sigma(\mathbf{Y}\mathbf{W}_1) \otimes \mathbf{I}_{d_V} \in \mathbb{R}^{L d_V \times n_2},\\
-     \mathbf{B}_k &:= \frac{\partial \mathbf{S}}{\partial \mathbf{W}_k} = \mathbf{J}_{SY} \mathbf{J}_Y \mathbf{G}_k \in \mathbb{R}^{L d_V \times n_k}, \quad k \in \{K,Q,V\}.
+     \mathbf{G}_V &:= \frac{\partial \mathbf{F}}{\partial \mathbf{W}_V} \in \mathbb{R}^{N d_V \times n_V},\\
+     \mathbf{G}_Q &:= \frac{\partial \mathbf{F}}{\partial \mathbf{W}_Q} \in \mathbb{R}^{N d_V \times n_Q},\\
+     \mathbf{G}_K &:= \frac{\partial \mathbf{F}}{\partial \mathbf{W}_K} \in \mathbb{R}^{N d_V \times n_K},\\
+     \mathbf{B}_1 &:= \frac{\partial \mathbf{S}}{\partial \mathbf{W}_1} = (\mathbf{I}_{N} \otimes \mathbf{W}_2^\top) \mathbf{D}_\sigma (\mathbf{Y} \otimes \mathbf{I}_{d_{ff}}) \in \mathbb{R}^{N d_V \times n_1},\\
+     \mathbf{B}_2 &:= \frac{\partial \mathbf{S}}{\partial \mathbf{W}_2} = \sigma(\mathbf{Y}\mathbf{W}_1) \otimes \mathbf{I}_{d_V} \in \mathbb{R}^{N d_V \times n_2},\\
+     \mathbf{B}_k &:= \frac{\partial \mathbf{S}}{\partial \mathbf{W}_k} = \mathbf{J}_{SY} \mathbf{J}_Y \mathbf{G}_k \in \mathbb{R}^{N d_V \times n_k}, \quad k \in \{K,Q,V\}.
 \end{align}
 
 Тогда матрицы Гессе трансформера~$\mathbf{Z}$ по параметрам модели~$(\mathbf{W}_i,\mathbf{W}_j)$ задается в виде:
 \begin{equation}\label{eq:block_hessian_transformer}
     \mathbf{H}_{\mathrm{tr}}^{(i,j)} := \frac{\partial^2 \mathbf{Z}}{\partial \mathbf{W}_i \partial \mathbf{W}_j}
     = \left( \mathbf{J}_Z \otimes \mathbf{I}_{n_i} \right) \boldsymbol{\xi}_{ij}
-      + \left( \mathbf{I}_{L d_V} \otimes \mathbf{B}_i^\top \right) \mathbf{H}_Z \mathbf{B}_j,
+      + \left( \mathbf{I}_{N d_V} \otimes \mathbf{B}_i^\top \right) \mathbf{H}_Z \mathbf{B}_j,
 \end{equation}
-где размерность матрицы Гессе~$\mathbf{H}_{\mathrm{tr}}^{(i,j)} \in \mathbb{R}^{(L d_V \cdot n_i) \times n_j},$ также введены дополнительные матрицы для удобства:
+где размерность матрицы Гессе~$\mathbf{H}_{\mathrm{tr}}^{(i,j)} \in \mathbb{R}^{(N d_V \cdot n_i) \times n_j},$ также введены дополнительные матрицы для удобства:
 \[
-    \boldsymbol{\xi}_{ij} := \frac{\partial}{\partial \mathbf{W}_j} \left( \frac{\partial \mathbf{S}}{\partial \mathbf{W}_i} \right) \in \mathbb{R}^{(L d_V \cdot n_i) \times n_j}.
+    \boldsymbol{\xi}_{ij} := \frac{\partial}{\partial \mathbf{W}_j} \left( \frac{\partial \mathbf{S}}{\partial \mathbf{W}_i} \right) \in \mathbb{R}^{(N d_V \cdot n_i) \times n_j}.
 \]
 Матрицы $\boldsymbol{\xi}_{ij}$ вычисляются для всех пар~$(i,j)$ почти всюду.
 
 Для пар FFN:
 \begin{align}
-    \boldsymbol{\xi}_{11} &= \mathbf{0}_{(L d_V \cdot n_1) \times n_1}, \\
-    \boldsymbol{\xi}_{22} &= \mathbf{0}_{(L d_V \cdot n_2) \times n_2}, \\
-    \boldsymbol{\xi}_{12} &= \left( \mathbf{I}_L \otimes \mathbf{K}_{d_V, d_{ff}} \otimes \mathbf{I}_{d_V} \right) \left( \mathbf{I}_{L d_{ff}} \otimes \mathrm{vec}_r(\mathbf{I}_{d_V}) \right)\left( \mathbf{D}_\sigma  (\mathbf{Y} \otimes \mathbf{I}_{d_{ff}}) \right),\\
-    \boldsymbol{\xi}_{21} &= \left( \mathbf{I}_{L d_V} \otimes \left( (\mathbf{Y} \otimes \mathbf{I}_{d_{ff}})^\top \mathbf{D}_\sigma^\top \right) \right)\left( \mathbf{I}_L \otimes \mathbf{K}_{d_V, L} \otimes \mathbf{I}_{d_{ff}} \right) \left( \mathrm{vec}_r(\mathbf{I}_L) \otimes \mathbf{I}_{d_V d_{ff}} \right) \mathbf{K}_{d_{ff}, d_V},
+    \boldsymbol{\xi}_{11} &= \mathbf{0}_{(N d_V \cdot n_1) \times n_1}, \\
+    \boldsymbol{\xi}_{22} &= \mathbf{0}_{(N d_V \cdot n_2) \times n_2}, \\
+    \boldsymbol{\xi}_{12} &= \left( \mathbf{I}_{N} \otimes \mathbf{K}_{d_V, d_{ff}} \otimes \mathbf{I}_{d_V} \right) \left( \mathbf{I}_{N d_{ff}} \otimes \mathrm{vec}_r(\mathbf{I}_{d_V}) \right)\left( \mathbf{D}_\sigma  (\mathbf{Y} \otimes \mathbf{I}_{d_{ff}}) \right),\\
+    \boldsymbol{\xi}_{21} &= \left( \mathbf{I}_{N d_V} \otimes \left( (\mathbf{Y} \otimes \mathbf{I}_{d_{ff}})^\top \mathbf{D}_\sigma^\top \right) \right)\left( \mathbf{I}_{N} \otimes \mathbf{K}_{d_V, N} \otimes \mathbf{I}_{d_{ff}} \right) \left( \mathrm{vec}_r(\mathbf{I}_{N}) \otimes \mathbf{I}_{d_V d_{ff}} \right) \mathbf{K}_{d_{ff}, d_V},
 \end{align}
-где матрицы~$\boldsymbol{\xi}_{12},\boldsymbol{\xi}_{21}$ имеют размерности $(L d_V \cdot n_1) \times n_2$ и $(L d_V \cdot n_2) \times n_1$ соответственно.
+где матрицы~$\boldsymbol{\xi}_{12},\boldsymbol{\xi}_{21}$ имеют размерности $(N d_V \cdot n_1) \times n_2$ и $(N d_V \cdot n_2) \times n_1$ соответственно.
 
 Для пар FFN с параметрами слоев внимания для всех~$k \in \{K,Q,V\}$:
 \begin{align}
-    \boldsymbol{\xi}_{1k} &= \left( (\mathbf{I}_L \otimes \mathbf{W}_2^\top) \mathbf{D}_\sigma \otimes \mathbf{I}_{n_k}\right)\left( \mathbf{I}_L \otimes \mathbf{K}_{d_{ff}, d_V} \otimes \mathbf{I}_{d_{ff}} \right)\left( \mathbf{I}_{L d_V} \otimes \mathrm{vec}_r(\mathbf{I}_{d_{ff}}) \right) \left( \mathbf{J}_Y \mathbf{G}_k \right),\\
-    \boldsymbol{\xi}_{2k} &= \left( \mathbf{I}_L \otimes \mathbf{K}_{d_V, d_{ff}} \otimes \mathbf{I}_{d_V} \right)\left( \mathbf{I}_{L d_{ff}} \otimes \mathrm{vec}_r(\mathbf{I}_{d_V}) \right)\left( \mathbf{D}_\sigma (\mathbf{I}_L \otimes \mathbf{W}_1^\top)  \mathbf{J}_Y \mathbf{G}_k \right),
+    \boldsymbol{\xi}_{1k} &= \left( (\mathbf{I}_{N} \otimes \mathbf{W}_2^\top) \mathbf{D}_\sigma \otimes \mathbf{I}_{n_k}\right)\left( \mathbf{I}_{N} \otimes \mathbf{K}_{d_{ff}, d_V} \otimes \mathbf{I}_{d_{ff}} \right)\left( \mathbf{I}_{N d_V} \otimes \mathrm{vec}_r(\mathbf{I}_{d_{ff}}) \right) \left( \mathbf{J}_Y \mathbf{G}_k \right),\\
+    \boldsymbol{\xi}_{2k} &= \left( \mathbf{I}_{N} \otimes \mathbf{K}_{d_V, d_{ff}} \otimes \mathbf{I}_{d_V} \right)\left( \mathbf{I}_{N d_{ff}} \otimes \mathrm{vec}_r(\mathbf{I}_{d_V}) \right)\left( \mathbf{D}_\sigma (\mathbf{I}_{N} \otimes \mathbf{W}_1^\top)  \mathbf{J}_Y \mathbf{G}_k \right),
 \end{align}
-где размерности матрицы~$\boldsymbol{\xi}_{1k} \in \mathbb{R}^{(L d_V \cdot n_1) \times n_k}$ и матрицы~$\boldsymbol{\xi}_{2k} \in \mathbb{R}^{(L d_V \cdot n_2) \times n_k}$.
+где размерности матрицы~$\boldsymbol{\xi}_{1k} \in \mathbb{R}^{(N d_V \cdot n_1) \times n_k}$ и матрицы~$\boldsymbol{\xi}_{2k} \in \mathbb{R}^{(N d_V \cdot n_2) \times n_k}$.
 
 Для пар слоев внимания~$k,\ell \in \{K,Q,V\}$:
 \begin{align}
     \boldsymbol{\xi}_{k\ell} 
     = \left( \mathbf{J}_{SY} \otimes \mathbf{I}_{n_k} \right)
-    \left[\left( \mathbf{I}_{L d_V} \otimes \mathbf{G}_k^\top \right) \left( \mathbf{H}_Y \mathbf{G}_\ell \right)+ \left( \mathbf{J}_Y \otimes \mathbf{I}_{n_k} \right) \boldsymbol{\Phi}_{k\ell}\right],
+    \left[\left( \mathbf{I}_{N d_V} \otimes \mathbf{G}_k^\top \right) \left( \mathbf{H}_Y \mathbf{G}_\ell \right)+ \left( \mathbf{J}_Y \otimes \mathbf{I}_{n_k} \right) \boldsymbol{\Phi}_{k\ell}\right],
 \end{align}
-где~$\boldsymbol{\Phi}_{k\ell} := \frac{\partial \mathbf{G}_k}{\partial \mathbf{W}_\ell} \in \mathbb{R}^{(L d_V \cdot n_k) \times n_\ell}$ является второй производной слоя внимания~$\mathbf{F}$ по ее параметрам, которые вычислены в рамках Леммы~\ref{lemma:attention_phi_from_functional_hessian}. Все матрицы имеют следующие размерности~$\boldsymbol{\xi}_{k\ell} \in \mathbb{R}^{(L d_V \cdot n_k) \times n_\ell}$.
+где~$\boldsymbol{\Phi}_{k\ell} := \frac{\partial \mathbf{G}_k}{\partial \mathbf{W}_\ell} \in \mathbb{R}^{(N d_V \cdot n_k) \times n_\ell}$ является второй производной слоя внимания~$\mathbf{F}$ по ее параметрам, которые вычислены в рамках Леммы~\ref{lemma:attention_phi_from_functional_hessian}. Все матрицы имеют следующие размерности~$\boldsymbol{\xi}_{k\ell} \in \mathbb{R}^{(N d_V \cdot n_k) \times n_\ell}$.
 
 Также матрица Гессе удовлетворяет следующим свойствам почти везде:
 \[
@@ -1082,7 +1082,7 @@ M &= 3\cdot\max \Bigg(\frac{2L}{d_V} \| \mathbf{X}\|^2_2, \\
 Тогда
 \begin{equation}\label{eq:full_bound_transformer}
     \|\mathbf{H}_{\mathrm{tr}}\|_2 \le
-    \sqrt{m_b n_b} \max \limits_{i,j} \left(\frac{2}{L d_V}\|\frac{\partial \mathbf{Z}}{\partial \mathbf{W}_i}\|_2 \|\frac{\partial \mathbf{Z}}{\partial \mathbf{W}_j}\|_2 + \|\mathbf{R}^{\text{tr}}_m\|_2 \|\mathbf{H}_{\text{tr}}^{(i,j)}\|_2 \right).
+    \sqrt{m_b n_b} \max \limits_{i,j} \left(\frac{2}{N d_V}\|\frac{\partial \mathbf{Z}}{\partial \mathbf{W}_i}\|_2 \|\frac{\partial \mathbf{Z}}{\partial \mathbf{W}_j}\|_2 + \|\mathbf{R}^{\text{tr}}_m\|_2 \|\mathbf{H}_{\text{tr}}^{(i,j)}\|_2 \right).
 \end{equation}
 \end{theorem}
 Доказательство теоремы приведено в работе~\cite{petrov2025curvaturegap}.
@@ -1093,22 +1093,22 @@ M &= 3\cdot\max \Bigg(\frac{2L}{d_V} \| \mathbf{X}\|^2_2, \\
 
 Эксперимент проводится для архитектуры трансформера, для которой в разделе~\ref{chapter:gesian:transformer} получены оценки норм матриц Гессе по компонентам.
 
-Эксперименты проводятся на архитектуре Vision Transformer (ViT) с параметрами, указанными в таблице~\ref{chapter:gesian:experiment:table:vit}. В экспериментах используется один блок трансформера, который обучается на наборе данных MNIST~\cite{deng2012mnist}. Выбор MNIST позволяет сосредоточиться на структуре гессиана, не усложняя постановку свойствами данных.
+Эксперименты проводятся на архитектуре Vision Transformer (ViT) с параметрами, указанными в таблице~\ref{chapter:gesian:experiment:table:vit}. В экспериментах используется один блок трансформера, который обучается на наборе данных MNIST~\cite{deng2012mnist}. Выбор MNIST позволяет сосредоточиться на структуре матрицы Гессе, не усложняя постановку свойствами данных.
 
-Вычисление матриц Гессе осуществляется с использованием пакета \texttt{curvlinops}, который обеспечивает эффективное вычисление линейного оператора гессиана без явного построения полной матрицы вторых производных. Данный подход позволяет анализировать гессианы для моделей с большим количеством параметров, что было бы непрактично при прямом вычислении.
+Вычисление матриц Гессе осуществляется с использованием пакета \texttt{curvlinops}, который обеспечивает эффективное вычисление линейного оператора матрицы Гессе без явного построения полной матрицы вторых производных. Данный подход позволяет анализировать матрицы Гессе для моделей с большим количеством параметров, что было бы непрактично при прямом вычислении.
 
 Экспериментальная процедура включает следующие этапы:
 \begin{enumerate}
     \item Инициализация модели с заданными гиперпараметрами.
     \item Вычисление матрицы Гессе на одном батче из обучающего загрузчика данных (128 примеров).
-    \item Визуализация структуры гессиана для инициализированной модели.
+    \item Визуализация структуры матрицы Гессе для инициализированной модели.
     \item Обучение модели в течение нескольких эпох до достижения точности на валидационном наборе данных более 50\%.
     \item Вычисление и визуализация матрицы Гессе для обученной модели.
-    \item Детальный анализ отдельных блоков гессиана, соответствующих различным компонентам трансформера.
+    \item Детальный анализ отдельных блоков матрицы Гессе, соответствующих различным компонентам трансформера.
     \item Вычисление спектральных норм блоков параметров и соответствующих блоков матрицы Гессе.
 \end{enumerate}
 
-Визуализация гессиана в логарифмическом масштабе (рис.~\ref{chapter:gesian:experiment:fig:hessian_entries}) демонстрирует неоднородность в величинах элементов матрицы для инициализированной модели. Наблюдается блочная структура гессиана, соответствующая различным компонентам трансформера: механизму самовнимания, блоку полносвязной сети (FFN) и слоям нормализации (LayerNorm).
+Визуализация матрицы Гессе в логарифмическом масштабе (рис.~\ref{chapter:gesian:experiment:fig:hessian_entries}) демонстрирует неоднородность в величинах элементов матрицы для инициализированной модели. Наблюдается блочная структура матрицы Гессе, соответствующая различным компонентам трансформера: механизму самовнимания, блоку полносвязной сети (FFN) и слоям нормализации (LayerNorm).
 
 \begin{table}[h!t]
     \centering
@@ -1132,7 +1132,7 @@ M &= 3\cdot\max \Bigg(\frac{2L}{d_V} \| \mathbf{X}\|^2_2, \\
 \begin{figure}[h!t]
     \centering
     \includegraphics[width=0.72\linewidth]{thesis/figures/chapter-2/transformer/hessian_entries_trained}
-    \caption{Визуализация элементов матрицы Гессе для обученной модели трансформера (один блок, набор данных MNIST, точность на валидации >50\%) в логарифмическом масштабе. После обучения все блоки гессиана приобретают большие значения, при этом блок {Values}-{Values} демонстрирует максимальные величины, что подтверждает гетерогенность вклада различных параметров в кривизну функции потерь.}
+    \caption{Визуализация элементов матрицы Гессе для обученной модели трансформера (один блок, набор данных MNIST, точность на валидации >50\%) в логарифмическом масштабе. После обучения все блоки матрицы Гессе приобретают большие значения, при этом блок {Values}-{Values} демонстрирует максимальные величины, что подтверждает гетерогенность вклада различных параметров в кривизну функции потерь.}
     \label{chapter:gesian:experiment:fig:hessian_entries_trained}
 \end{figure}
 
@@ -1161,7 +1161,7 @@ M &= 3\cdot\max \Bigg(\frac{2L}{d_V} \| \mathbf{X}\|^2_2, \\
 \begin{figure}[h!t]
     \centering
     \includegraphics[width=\linewidth]{thesis/figures/chapter-2/transformer/hessian_entries_values.pdf}
-    \caption{Визуализация элементов блока матрицы Гессе, соответствующего параметрам Values трансформера (один блок, набор данных MNIST). Блок демонстрирует наибольшие значения элементов среди всех блоков гессиана, что согласуется с теоретическими оценками и подтверждает доминирующий вклад параметров Values в общую кривизну функции потерь.}
+    \caption{Визуализация элементов блока матрицы Гессе, соответствующего параметрам Values трансформера (один блок, набор данных MNIST). Блок демонстрирует наибольшие значения элементов среди всех блоков матрицы Гессе, что согласуется с теоретическими оценками и подтверждает доминирующий вклад параметров Values в общую кривизну функции потерь.}
     \label{chapter:gesian:experiment:fig:hessian_entries_values}
 \end{figure}
 
@@ -1179,9 +1179,9 @@ M &= 3\cdot\max \Bigg(\frac{2L}{d_V} \| \mathbf{X}\|^2_2, \\
     \label{chapter:gesian:experiment:fig:hessian_entries_feedforward}
 \end{figure}
 
-После обучения модели в течение нескольких эпох до достижения точности на валидационном наборе данных более 50\% элементы матрицы Гессе снова визуализируются (рис.~\ref{chapter:gesian:experiment:fig:hessian_entries_trained}). Наблюдается существенное изменение структуры гессиана: каждый из блоков приобретает большую величину по сравнению с инициализированной моделью, что отражает накопление кривизны функции потерь в процессе обучения. Блок {Values}-{Values} демонстрирует наибольшие значения среди всех блоков гессиана, что согласуется с теоретическими предсказаниями теоремы~\ref{thm:transformer_hessian_estimate}.
+После обучения модели в течение нескольких эпох до достижения точности на валидационном наборе данных более 50\% элементы матрицы Гессе снова визуализируются (рис.~\ref{chapter:gesian:experiment:fig:hessian_entries_trained}). Наблюдается существенное изменение структуры матрицы Гессе: каждый из блоков приобретает большую величину по сравнению с инициализированной моделью, что отражает накопление кривизны функции потерь в процессе обучения. Блок {Values}-{Values} демонстрирует наибольшие значения среди всех блоков матрицы Гессе, что согласуется с теоретическими предсказаниями теоремы~\ref{thm:transformer_hessian_estimate}.
 
-Для детального анализа структуры гессиана рассматриваются отдельные блоки, соответствующие различным компонентам трансформера (рис.~\ref{chapter:gesian:experiment:fig:hessian_entries_queries},~\ref{chapter:gesian:experiment:fig:hessian_entries_keys},~\ref{chapter:gesian:experiment:fig:hessian_entries_values},~\ref{chapter:gesian:experiment:fig:hessian_entries_layernorm},~\ref{chapter:gesian:experiment:fig:hessian_entries_feedforward}).
+Для детального анализа структуры матрицы Гессе рассматриваются отдельные блоки, соответствующие различным компонентам трансформера (рис.~\ref{chapter:gesian:experiment:fig:hessian_entries_queries},~\ref{chapter:gesian:experiment:fig:hessian_entries_keys},~\ref{chapter:gesian:experiment:fig:hessian_entries_values},~\ref{chapter:gesian:experiment:fig:hessian_entries_layernorm},~\ref{chapter:gesian:experiment:fig:hessian_entries_feedforward}).
 
 Блок, соответствующий параметрам Queries (рис.~\ref{chapter:gesian:experiment:fig:hessian_entries_queries}), демонстрирует структурированное распределение элементов, отражающее взаимосвязи между параметрами механизма самовнимания. Блок Keys (рис.~\ref{chapter:gesian:experiment:fig:hessian_entries_keys}) показывает значительные значения элементов, подтверждая важную роль параметров Keys в формировании кривизны функции потерь.
 
@@ -1195,7 +1195,7 @@ M &= 3\cdot\max \Bigg(\frac{2L}{d_V} \| \mathbf{X}\|^2_2, \\
 
 Гетерогенность вклада различных блоков параметров в общую кривизну функции потерь, установленная теоретически, подтверждается эмпирически. При анализе методов регуляризации и оптимизации трансформеров различия между компонентами архитектуры следует учитывать явно.
 
-Отметим ограничения проведенных экспериментов. Во-первых, использована сравнительно простая задача~(MNIST) и небольшая модель~(один блок трансформера), что не исчерпывает режимы более сложных данных и крупных моделей. Во-вторых, вычисления выполняются на одном батче, и поведение гессиана на всей выборке может отличаться. В-третьих, количественное сравнение с теоретическими мажорантами ограничено отсутствием точных численных констант в оценках.
+Отметим ограничения проведенных экспериментов. Во-первых, использована сравнительно простая задача~(MNIST) и небольшая модель~(один блок трансформера), что не исчерпывает режимы более сложных данных и крупных моделей. Во-вторых, вычисления выполняются на одном батче, и поведение матрицы Гессе на всей выборке может отличаться. В-третьих, количественное сравнение с теоретическими мажорантами ограничено отсутствием точных численных констант в оценках.
 
 Качественное согласие теории и эксперимента подтверждает полученные оценки. Гетерогенность вкладов блоков параметров показывает, что при анализе оптимизации и регуляризации трансформеров необходимо учитывать различия между компонентами архитектуры.
 
@@ -1204,22 +1204,22 @@ M &= 3\cdot\max \Bigg(\frac{2L}{d_V} \| \mathbf{X}\|^2_2, \\
 Эти оценки дают вычислимую основу для ландшафтной меры сложности, введенной в главе~\ref{chapter:complexity:models-data}.
 
 Центральным элементом изложения является унифицированный анализ матриц Гессе на основе матричной факторизации.
-Теорема~\ref{theorem:m-net:hesstruct} устанавливает, что матрица Гессе для широкого класса матричных моделей может быть представлена в факторизованной форме $\mathbf{H}_O(\boldsymbol{\theta}) = \mathbf{Q}^T\mathbf{F}^T\mathbf{A}\mathbf{F}\mathbf{Q}$, что позволяет эффективно анализировать и вычислять гессиан без необходимости явного построения полной матрицы вторых производных.
+Теорема~\ref{theorem:m-net:hesstruct} устанавливает, что матрица Гессе для широкого класса матричных моделей может быть представлена в факторизованной форме $\mathbf{H}_O(\boldsymbol{\theta}) = \mathbf{Q}^T\mathbf{F}^T\mathbf{A}\mathbf{F}\mathbf{Q}$, что позволяет эффективно анализировать и вычислять матрица Гессе без необходимости явного построения полной матрицы вторых производных.
 Этот подход охватывает несколько архитектур и служит основой спектральных оценок теоремы~\ref{theorem:m-net:hessnorm}.
 
 Для полносвязных нейронных сетей установлены точные верхние оценки спектральной нормы матрицы Гессе.
-Теорема~\ref{theorem:hess-kiselev-theorem} демонстрирует, что норма гессиана ограничена выражением $\|\mathbf{H}_i(\boldsymbol{\theta})\|_2 \leqslant L\sqrt{2}M_{\mathbf{x}}^2M_{\mathbf{W}}^{2L} + \sqrt{2}\frac{M_{\mathbf{W}}^2(M_{\mathbf{W}}^{2L}-1)}{M_{\mathbf{W}}^2-1}$, что устанавливает экспоненциальную зависимость от глубины сети $L$ и полиномиальную зависимость от ширины слоев.
+Теорема~\ref{theorem:hess-kiselev-theorem} демонстрирует, что норма матрицы Гессе ограничена выражением $\|\mathbf{H}_i(\boldsymbol{\theta})\|_2 \leqslant L\sqrt{2}M_{\mathbf{x}}^2M_{\mathbf{W}}^{2L} + \sqrt{2}\frac{M_{\mathbf{W}}^2(M_{\mathbf{W}}^{2L}-1)}{M_{\mathbf{W}}^2-1}$, что устанавливает экспоненциальную зависимость от глубины сети $L$ и полиномиальную зависимость от ширины слоев.
 Теорема~\ref{theorem:hess-kiselev-lemma} уточняет данную оценку, показывая асимптотическую пропорциональность $\|\mathbf{H}_i(\boldsymbol{\theta})\|_2 \propto L(hM)^{2L}$, где $h$~--- размер скрытого слоя, а $M$~--- константа, ограничивающая параметры.
 
-Для сверточных нейронных сетей получены явные оценки нормы гессиана через структурные параметры архитектуры.
-Теорема~\ref{thm:1Dconv} устанавливает оценку для одномерных сверточных сетей: $\|\mathbf{H}_O\| \leqslant \sqrt{2}\|\mathbf{x}\|^2d^2(L+1)(C^2w^2kd)^L$, демонстрируя мультипликативную зависимость от глубины и полиномиально-экспоненциальную зависимость от числа каналов $C$, размера ядра $k$ и длины последовательности $d$.
-Теорема~\ref{thm:2Dconv} определяет аналогичную оценку для двумерных сверточных сетей: $\|\mathbf{H}_O\| \leqslant \sqrt{2}\|\mathbf{x}\|^2q^2(L+1)(C^2k^2w^2mn)^L$, где зависимость от пространственных размеров $m \times n$ является квадратичной.
-Теоремы~\ref{theorem:maxpool} и~\ref{theorem:avgpool} описывают влияние операций пулинга на норму гессиана: введение пулинга уменьшает соответствующую мажоранту.
+Для сверточных нейронных сетей получены явные оценки нормы матрицы Гессе через структурные параметры архитектуры.
+Теорема~\ref{thm:1Dconv} устанавливает оценку для одномерных сверточных сетей: $\|\mathbf{H}_O\| \leqslant \sqrt{2}\|\mathbf{x}\|^2d^2(L+1)(C^2w^2k_{\mathrm{ker}}d)^L$, демонстрируя мультипликативную зависимость от глубины и полиномиально-экспоненциальную зависимость от числа каналов $C$, размера ядра $k_{\mathrm{ker}}$ и длины последовательности $d$.
+Теорема~\ref{thm:2Dconv} определяет аналогичную оценку для двумерных сверточных сетей: $\|\mathbf{H}_O\| \leqslant \sqrt{2}\|\mathbf{x}\|^2q^2(L+1)(C^2k_{\mathrm{ker}}^2w^2mn)^L$, где зависимость от пространственных размеров $m \times n$ является квадратичной.
+Теоремы~\ref{theorem:maxpool} и~\ref{theorem:avgpool} описывают влияние операций пулинга на норму матрицы Гессе: введение пулинга уменьшает соответствующую мажоранту.
 
-Для трансформерных архитектур получены оценки нормы гессиана по компонентам, включая механизм самовнимания~(теорема~\ref{thm:self_attention_hessian_estimation}).
+Для трансформерных архитектур получены оценки нормы матрицы Гессе по компонентам, включая механизм самовнимания~(теорема~\ref{thm:self_attention_hessian_estimation}).
 Численные результаты~(рис.~\ref{chapter:gesian:experiment:fig:norm}) согласуются с этими оценками: наибольшие значения норм наблюдаются у блоков Keys и Values.
 
-Полученные спектральные оценки связывают свойства матриц Гессе с ландшафтной мерой сложности из главы~\ref{chapter:complexity:models-data} и заменяют прямое вычисление плотного гессиана для крупных моделей вычислимыми мажорантами.
+Полученные спектральные оценки связывают свойства матриц Гессе с ландшафтной мерой сложности из главы~\ref{chapter:complexity:models-data} и заменяют прямое вычисление плотного матрицы Гессе для крупных моделей вычислимыми мажорантами.
 Они применимы для сравнения архитектур и анализа зависимости кривизны от глубины, ширины и иных структурных параметров.
 
 Ограничения связаны с детерминистическим характером оценок, предположениями об ограниченности параметров и данных, а также возможностью ужесточения мажорант за счет разреженности и стохастических эффектов обучения.

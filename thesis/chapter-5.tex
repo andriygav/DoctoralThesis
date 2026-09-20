@@ -287,7 +287,7 @@ $f_{w,h}(x)=h^\top \phi(x;w)$ с $\|h\|_2 \le B_{\mathrm{head}}$.
 Предположим:
 \begin{enumerate}
 \item Ограничение на признаки: для всех $x,w$
-$\|\phi(x;w)\|_2 \le L\,\|w\|_2\,\|x\|_2$.
+$\|\phi(x;w)\|_2 \le B_{\mathrm{Lip}}\,\|w\|_2\,\|x\|_2$.
 \item Энкодер STL удовлетворяет $\|w_{\mathrm{enc}}\|\le B_{\mathrm{enc}}$,
 общий энкодер MTL удовлетворяет $\|w_{\mathrm{shared}}\|\le B_{\mathrm{shared}}$.
 \item Многозадачное масштабирование: $B_{\mathrm{shared}} \le B_{\mathrm{enc}}/\sqrt{T}$.
@@ -297,7 +297,7 @@ $\|\phi(x;w)\|_2 \le L\,\|w\|_2\,\|x\|_2$.
 Пусть $\mathcal{F}_{\mathrm{STL}}^{(t)}$ совпадает с семейством $\mathcal{F}(B_{\mathrm{enc}})$, а $\mathcal{F}_{\mathrm{MTL}}^{(t)}$~--- с семейством $\mathcal{F}(B_{\mathrm{shared}})$, где класс $\mathcal{F}(B)$ задается в доказательстве.
 Введем функцию
 \begin{equation}\label{eq:mtl-rc-upper-bound-template}
-U_n(B) := \frac{B_{\mathrm{head}}\,L\,R\,B}{\sqrt{n}}.
+U_n(B) := \frac{B_{\mathrm{head}}\,B_{\mathrm{Lip}}\,R\,B}{\sqrt{n}}.
 \end{equation}
 Тогда
 \begin{equation}\label{eq:mtl-vs-stl-rc}
@@ -360,11 +360,11 @@ $\|x_i\|_2 \le R$.
       \Big(\sum_{i=1}^n \|\phi(x_i;w)\|_2^2\Big)^{1/2}.
 \]
 
-Используя ограничение на признаки $\|\phi(x;w)\|_2 \le L\,\|w\|_2\,\|x\|_2$ и $\|x_i\|_2 \le R$, получаем
+Используя ограничение на признаки $\|\phi(x;w)\|_2 \le B_{\mathrm{Lip}}\,\|w\|_2\,\|x\|_2$ и $\|x_i\|_2 \le R$, получаем
 \[
     \widehat{\mathfrak R}_n(\mathcal{F}(B);S_t)
     \le
-    \frac{B_{\mathrm{head}}\,L\,R\,B}{\sqrt{n}}
+    \frac{B_{\mathrm{head}}\,B_{\mathrm{Lip}}\,R\,B}{\sqrt{n}}
     = U_n(B).
 \]
 Подставляя $B=B_{\mathrm{shared}}$ и $B=B_{\mathrm{enc}}$ и пользуясь предположением $B_{\mathrm{shared}}\le B_{\mathrm{enc}}/\sqrt{T}$, получаем~\eqref{eq:mtl-vs-stl-rc}.
@@ -762,7 +762,7 @@ LoRA обеспечивает ускорение в 12.6\%, что указыв�
     \KwIn{Модель $f_t(x) = w_t^\top \phi(x; w_{\text{shared}})$, с ограничениями~$B_{\text{shared}}, B_{\text{head}}, R$}
     \KwOut{Модель удовлетворяющая условиям теоремы~\ref{thm:per-task-rc-fair-scaling}.}
     \ForEach{linear layer $W$ in encoder $\phi(\cdot; w_{\text{shared}})$}{
-        $W \leftarrow \text{SpectralNorm}(W)$ \tcp*{$\|\phi(x;w)\|_2 \leq L\|w\|\|x\|_2$}
+        $W \leftarrow \text{SpectralNorm}(W)$ \tcp*{$\|\phi(x;w)\|_2 \leq B_{\mathrm{Lip}}\|w\|\|x\|_2$}
     }
     \ForEach{input sequence $x = [x_1 \dots x_m]$}{
         $\widetilde{x}_i \leftarrow x_i / \max(1, \|x_i\|_2) \quad \forall i$
