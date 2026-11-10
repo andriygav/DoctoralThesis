@@ -1,15 +1,15 @@
-В главе~\ref{chapter:complexity} был разработан единый теоретический аппарат для формализации соотношения между сложностью модели и сложностью данных. Ключевым результатом этой главы является введение формальных определений меры сложности выборки $\mu_D(D)$ и меры сложности модели $\mu_f(f)$, а также установление критерия обучаемости модели на выборке: $\mu_f(f) \leq \mu_D(D)$.
+В главе~\ref{chapter:complexity} разработан единый теоретический аппарат для формализации соотношения между сложностью модели и сложностью данных. Ключевым результатом этой главы является введение формальных определений меры сложности выборки $\mu_D(D)$ и меры сложности модели $\mu_f(f)$, а также установление критерия согласованности модели на выборке: $\mu_f(f) \leq \mu_D(D)$.
 
-В разделе~\ref{chapter:complexity:sample-size} главы~\ref{chapter:complexity} было показано, что частным случаем условной меры сложности данных $\mu_D(D|f)$ является достаточный размер выборки $m^*$~--- минимальный объем данных из выборки $D$, необходимый для обучения модели $f$. Для простой генеральной совокупности $\Gamma_C$, состоящей из объектов одинаковой сложности $C$, мера сложности выборки принимает вид $\mu_D(D) = C \cdot |D|$, что устанавливает прямую связь между размером выборки и ее сложностью.
-Как отмечено в замечании~\ref{chapter:complex:remark-simple-population}, именно этот равновесный учёт данных (обычно при~$C=1$) соответствует постановкам, в которых достаточный объем оценивается только по числу объектов.
+В разделе~\ref{chapter:complexity:sample-size} главы~\ref{chapter:complexity} было показано, что частным случаем условной меры сложности данных $\mu_D(D\mid f)$ является достаточный размер выборки $m^*$~--- минимальный объем данных из выборки $D$, необходимый для обучения модели $f$. Для простой генеральной совокупности $\Gamma_C$, состоящей из объектов одинаковой сложности $C$, мера сложности выборки принимает вид $\mu_D(D) = C \cdot |D|$, что устанавливает прямую связь между размером выборки и ее сложностью.
+Как отмечено в замечании~\ref{chapter:complex:remark-simple-population}, именно такая мера сложности выборки соответствует постановкам, в которых достаточный объем оценивается только по числу объектов.
 
-В разделе~\ref{chapter:complexity:loss} главы~\ref{chapter:complexity} была введена ландшафтная мера сложности модели $\mu_f(f|D)$, определяемая через спектральные свойства матриц Гессе функции потерь. Установлено, что анализ сходимости ландшафта оптимизационной задачи при увеличении объема выборки сводится к анализу спектральной нормы матрицы Гессе, что позволяет количественно оценить влияние добавления новых объектов данных на локальную геометрию функции потерь в окрестности оптимума.
+В разделе~\ref{chapter:complexity:loss} главы~\ref{chapter:complexity} была введена ландшафтная мера сложности модели $\mu_f(f\mid D)$, определяемая через спектральные свойства матриц Гессе функции потерь. Установлено, что анализ сходимости ландшафта оптимизационной задачи при увеличении объема выборки сводится к анализу спектральной нормы матрицы Гессе, что позволяет количественно оценить влияние добавления новых объектов данных на локальную геометрию функции потерь в окрестности оптимума.
 
-В главе~\ref{chapter:gesian} были получены конкретные оценки спектральных норм матриц Гессе для различных архитектур нейронных сетей. Теорема~\ref{theorem:hess-kiselev-theorem} устанавливает оценку для полносвязных сетей: $\|\mathbf{H}_i(\boldsymbol{\theta})\|_2 \propto L(hM)^{2L}$, теоремы~\ref{thm:1Dconv} и~\ref{thm:2Dconv}~--- для сверточных сетей, а теорема~\ref{thm:transformer_hessian_estimate}~--- для трансформерных моделей. Эти оценки дают вычислимую основу ландшафтной меры сложности модели $\mu_f(f|D)$ в формализме главы~\ref{chapter:complexity}.
+В главе~\ref{chapter:gesian} были получены конкретные оценки спектральных норм матриц Гессе для различных архитектур нейронных сетей. Теорема~\ref{theorem:hess-kiselev-theorem} устанавливает оценку для полносвязных сетей: $\|\mathbf{H}_i(\boldsymbol{\theta})\|_2 \propto L(hM)^{2L}$, теоремы~\ref{thm:1Dconv} и~\ref{thm:2Dconv}~--- для сверточных сетей, а теорема~\ref{thm:transformer_hessian_estimate}~--- для трансформерных моделей. Эти оценки дают вычислимую основу ландшафтной меры сложности модели $\mu_f(f\mid D)$ в формализме главы~\ref{chapter:complexity}.
 
-Однако теоретические результаты предыдущих глав не задают явной процедуры вычисления численного значения~$m^*$ по конечной выборке; к тому же для глубоких моделей прямая оценка ландшафтной меры через матрицы Гессе остается вычислительно дорогой.
+Однако теоретические результаты предыдущих глав не задают явной процедуры вычисления численного значения~$m^*$ по конечной выборке. К тому же для глубоких моделей прямая оценка ландшафтной меры через матрицы Гессе остается вычислительно дорогой.
 
-В настоящей главе рассматриваются методы определения достаточного размера выборки~--- от обобщенных линейных моделей до постановок, пригодных для более сложных параметрических моделей. Методы опираются на наблюдаемые характеристики обучения (статистики критериев, стабильность правдоподобия, близость апостериоров) и используются для оценки необходимого объема данных при планировании эксперимента.
+В настоящей главе рассматриваются методы определения достаточного размера выборки~--- от обобщенных линейных моделей до постановок, пригодных для более сложных параметрических моделей. Методы опираются на наблюдаемые характеристики обучения, включая статистики критериев, стабильность правдоподобия и близость апостериорных распределений, и используются для оценки необходимого объема данных при планировании эксперимента.
 
 Выбор конкретного метода зависит от постановки задачи: от формулировки гипотезы и статистики критерия в классических схемах до критериев стабилизации при росте объема выборки.
 
@@ -437,7 +437,7 @@
 
 Определение~\ref{sufficient-variance} формализует идею о том, что при достаточном размере выборки дисперсия функции правдоподобия по различным реализациям подвыборок должна быть мала, что указывает на стабильность оценки параметров.
 
-С другой стороны, при наличии достаточного количества объектов естественно ожидать, что при добавлении еще одного объекта к рассмотрению результирующая оценка параметра изменится незначительно; на основе данного свойства получаем определение~\ref{sufficient-difference}.
+С другой стороны, при наличии достаточного количества объектов естественно ожидать, что при добавлении еще одного объекта к рассмотрению результирующая оценка параметра изменится незначительно. На основе данного свойства получаем определение~\ref{sufficient-difference}.
 
 \begin{definition}[M-достаточный размер выборки]\label{sufficient-difference}
     Пусть задано некоторое~$\varepsilon > 0$.
@@ -479,6 +479,32 @@
 
     Тогда в модели линейной регрессии определение M-достаточного размера выборки корректно.
 \end{corollary}
+
+Определение M-достаточного размера выборки основано на разности $\bigl|\mathbb{E}L_{k+1}-\mathbb{E}L_k\bigr|$: оно требует изменения математического ожидания функции правдоподобия между соседними размерами выборки. При этом само определение оперирует разностью средних и не связывает ее с отклонением каждого из средних от общей точки. Следующая лемма вводит такую точку $L(\mathbf{w})$ и последовательность $\delta_k$ и выражает M-критерий через нее, показывая, что M-критерий проверяет сходимость средних, а не дисперсию.
+
+Введем отклонение среднего математического ожидания функции правдоподобия от фиксированной точки $L(\mathbf{w})$: пусть для всех $k$ выполнено $\bigl|\mathbb{E}_{\hat{\mathbf{w}}_k}L(\mathfrak{D}_m,\hat{\mathbf{w}}_k)-L(\mathbf{w})\bigr|\le\delta_k$ с последовательностью $\delta_k\ge 0$. Тогда M-критерий оценивается через отклонение средних, а не через дисперсию.
+
+\begin{lemma}[Связь M-достаточности с отклонением средних]\label{ch3:lem:m-vs-mean}
+При указанном условии для всех $k$ справедливо
+\begin{equation}\label{ch3:eq:m-vs-mean}
+  M(k)=\bigl|\mathbb{E}_{\hat{\mathbf{w}}_{k+1}}L(\mathfrak{D}_m,\hat{\mathbf{w}}_{k+1})-\mathbb{E}_{\hat{\mathbf{w}}_{k}}L(\mathfrak{D}_m,\hat{\mathbf{w}}_{k})\bigr|
+  \le\delta_{k+1}+\delta_k .
+\end{equation}
+Если $\delta_k\to 0$, то $M(k)\to 0$. Если $\delta_k\le\varepsilon/2$ для всех $k\ge m^*$, то $M(k)\le\varepsilon$.
+\end{lemma}
+
+\begin{proof}
+По неравенству треугольника и определению $\delta_k$:
+\[
+  \bigl|\mathbb{E}_{\hat{\mathbf{w}}_{k+1}}L-\mathbb{E}_{\hat{\mathbf{w}}_{k}}L\bigr|
+  \le\bigl|\mathbb{E}_{\hat{\mathbf{w}}_{k+1}}L-L(\mathbf{w})\bigr|+\bigl|\mathbb{E}_{\hat{\mathbf{w}}_{k}}L-L(\mathbf{w})\bigr|
+  \le\delta_{k+1}+\delta_k .
+\]
+Остальные утверждения следуют непосредственно. \end{proof}
+
+\begin{remark}[Дисперсия не входит в оценку M]\label{ch3:rem:m-vs-variance}
+Дисперсия $D(k)=\mathbb{D}_{\hat{\mathbf{w}}_k}L(\mathfrak{D}_m,\hat{\mathbf{w}}_k)$ измеряет разброс вокруг среднего $\mathbb{E}_{\hat{\mathbf{w}}_k}L$, тогда как смещение $\bigl|\mathbb{E}_{\hat{\mathbf{w}}_k}L-L(\mathbf{w})\bigr|$~--- отклонение самого среднего. Момент $L(\mathbf{w})$ равен $\mathbb{E}\bigl[(L(\mathfrak{D}_m,\hat{\mathbf{w}}_k)-L(\mathbf{w}))^2\bigr]=D(k)+\bigl(\mathbb{E}_{\hat{\mathbf{w}}_k}L-L(\mathbf{w})\bigr)^2$, поэтому смещение может быть велико при малой дисперсии, и оценка $\bigl|\mathbb{E}_{\hat{\mathbf{w}}_k}L-L(\mathbf{w})\bigr|\le\sqrt{D(k)}$ из дисперсии не следует. Тем самым M-критерий опирается на сходимость средних $\delta_k\to 0$, а не на дисперсию. При точном равенстве средних $\delta_k=0$ лемма~\ref{ch3:lem:m-vs-mean} вырождается в тождество $M(k)=0$.
+\end{remark}
 
 По условию, задана только одна выборка, а следовательно, в эксперименте невозможно вычислить математическое ожидание и дисперсию, указанные в определениях~\ref{sufficient-variance} и~\ref{sufficient-difference}.
 При численной реализации этих определений величины $\mathbb{D}$ и $\mathbb{E}$ трактуются относительно бутстрэп-распределения: из заданной выборки~$\mathfrak{D}_m$ генерируется некоторое число~$B$ подвыборок размера~$k$ с возвращением.
@@ -563,6 +589,49 @@
 
 Теорема~\ref{chapter:samplesize:theorem-kiselev-posterior-similiarity-s-score} устанавливает согласованность определения S-достаточного размера выборки при более слабых условиях, чем теорема~\ref{chapter:samplesize:theorem-kiselev-posterior-similiarity}. В отличие от KL-дивергенции, для сходимости s-score к единице требуется только сходимость математических ожиданий апостериорных распределений, что делает данный критерий менее консервативным.
 
+В определении S-достаточного размера выборки участвует величина s-score.
+Она содержит интеграл перекрытия двух плотностей и максимизацию по сдвигу $\mathbf{b}$.
+Для произвольных распределений эту величину аналитически вычислить, как правило, нельзя.
+Поэтому S-достаточность проверяется численно.
+Для нормальных апостериорных распределений s-score и KL-дивергенция выражаются аналитически.
+Ниже приводятся эти выражения.
+Они позволяют переписать S-достаточность как условие на расстояние Махаланобиса между векторами средних.
+Тогда критерий проверяется непосредственно по моментам апостериорного распределения, а не через вычисление интеграла.
+
+\begin{proposition}[Точные формулы s-score и KL-дивергенции для нормальных апостериорных распределений]\label{ch3:prop:normal-closed}
+Пусть $p_k=\mathcal{N}(\mathbf{w}\mid\mathbf{m}_k,\mathbf{\Sigma}_k)$ и $p_{k+1}=\mathcal{N}(\mathbf{w}\mid\mathbf{m}_{k+1},\mathbf{\Sigma}_{k+1})$. Тогда
+\begin{align}
+  \mathrm{s-score}(p_k,p_{k+1})
+  &=\exp\left(-\tfrac12(\mathbf{m}_k-\mathbf{m}_{k+1})^{\top}
+      (\mathbf{\Sigma}_k+\mathbf{\Sigma}_{k+1})^{-1}(\mathbf{m}_k-\mathbf{m}_{k+1})\right), \label{ch3:eq:sscore}\\
+  D_{\mathrm{KL}}(p_k\|p_{k+1})
+  &=\tfrac12\Bigl(\operatorname{tr}\bigl(\mathbf{\Sigma}_{k+1}^{-1}\mathbf{\Sigma}_k\bigr)-d
+      +\ln\frac{\det\mathbf{\Sigma}_{k+1}}{\det\mathbf{\Sigma}_k}\Bigr)
+      +\tfrac12(\mathbf{m}_k-\mathbf{m}_{k+1})^{\top}\mathbf{\Sigma}_{k+1}^{-1}(\mathbf{m}_k-\mathbf{m}_{k+1}). \label{ch3:eq:kl}
+\end{align}
+\end{proposition}
+
+\begin{proof}
+Формула~\eqref{ch3:eq:sscore} следует из интеграла произведения гауссовских плотностей и максимизации знаменателя по сдвигу $\mathbf{b}$. Выражение~\eqref{ch3:eq:kl} есть стандартная формула KL-дивергенции для гауссовских распределений.
+Доказательство формул приведено в работе~\cite{grabovoi2025sample727559461}. \end{proof}
+
+\begin{lemma}[Условие сходимости s-score при концентрации апостериорного распределения]\label{ch3:lem:sscore-concentration}
+Пусть $p_k=\mathcal{N}(\mathbf{w}\mid\mathbf{m}_k,\mathbf{\Sigma}_k)$ и $p_{k+1}=\mathcal{N}(\mathbf{w}\mid\mathbf{m}_{k+1},\mathbf{\Sigma}_{k+1})$. Тогда $\mathrm{s-score}(p_k,p_{k+1})\to 1$ при $k\to\infty$ тогда и только тогда, когда
+\begin{equation}\label{ch3:eq:sscore-cond}
+  (\mathbf{m}_k-\mathbf{m}_{k+1})^{\top}(\mathbf{\Sigma}_k+\mathbf{\Sigma}_{k+1})^{-1}(\mathbf{m}_k-\mathbf{m}_{k+1})\to 0 .
+\end{equation}
+В частности, из сходимости средних $\|\mathbf{m}_k-\mathbf{m}_{k+1}\|_2\to 0$ сходимость $\mathrm{s-score}\to 1$ следует лишь при дополнительном условии $\|\mathbf{m}_k-\mathbf{m}_{k+1}\|_2^2=o\bigl(\lambda_{\min}(\mathbf{\Sigma}_k+\mathbf{\Sigma}_{k+1})\bigr)$.
+\end{lemma}
+\begin{proof}
+По формуле~\eqref{ch3:eq:sscore} имеем $\mathrm{s-score}(p_k,p_{k+1})=\exp\bigl(-\tfrac12 Q_k\bigr)$, где $Q_k=(\mathbf{m}_k-\mathbf{m}_{k+1})^{\top}(\mathbf{\Sigma}_k+\mathbf{\Sigma}_{k+1})^{-1}(\mathbf{m}_k-\mathbf{m}_{k+1})$. Показатель экспоненты непрерывен, поэтому $\mathrm{s-score}\to 1$ равносильно $Q_k\to 0$, что и есть~\eqref{ch3:eq:sscore-cond}. Для квадратичной формы справедлива двусторонняя оценка
+\[
+  \frac{\|\mathbf{m}_k-\mathbf{m}_{k+1}\|_2^2}{\lambda_{\max}(\mathbf{\Sigma}_k+\mathbf{\Sigma}_{k+1})}
+  \le Q_k
+  \le \frac{\|\mathbf{m}_k-\mathbf{m}_{k+1}\|_2^2}{\lambda_{\min}(\mathbf{\Sigma}_k+\mathbf{\Sigma}_{k+1})}.
+\]
+Следовательно, верхняя граница стремится к нулю при $\|\mathbf{m}_k-\mathbf{m}_{k+1}\|_2^2=o\bigl(\lambda_{\min}(\mathbf{\Sigma}_k+\mathbf{\Sigma}_{k+1})\bigr)$, что гарантирует $Q_k\to0$. При концентрации $\mathbf{\Sigma}_k\to\mathbf{0}$ множитель $(\mathbf{\Sigma}_k+\mathbf{\Sigma}_{k+1})^{-1}$ растет, поэтому сходимость средних сама по себе не обеспечивает $Q_k\to0$. Этому и соответствует указанное дополнительное условие. \end{proof}
+Утверждение~\ref{ch3:lem:sscore-concentration} уточняет гипотезу теоремы~\ref{chapter:samplesize:theorem-kiselev-posterior-similiarity-s-score}: сходимости одних средних недостаточно, условие корректно лишь при дополнительном ограничении на скорость концентрации апостериорного распределения.
+
 Пусть в модели линейной регрессии задано нормальное априорное распределение параметров. В силу свойства сопряженности априорного распределения и правдоподобия, апостериорное распределение также будет нормальным.
 Таким образом, приходим к одному из простейших примеров модели, для которой справедливы приведенные выше теоремы.
 Фактически, для линейной регрессии могут быть сформулированы более простые утверждения.
@@ -571,190 +640,93 @@
     Пусть множества значений признаков и целевой переменной ограничены, то есть существует константа~$M\in \mathbb{R}$ такая, что~$\|\mathbf{x}\|_2\leqslant M$ и~$|y|\leqslant M$ для всех объектов выборки.
     Если~$\lambda_{\min}\left(\mathbf{X}^{\top}_k \mathbf{X}_k \right) = \omega(\sqrt{k})$ при~$k\to \infty$, то в модели линейной регрессии с нормальным априорным распределением параметров~$\|\mathbf{m}_{k+1} - \mathbf{m}_k\|_2\to 0$ и~$\|\mathbf{\Sigma}_{k+1} - \mathbf{\Sigma}_k\|_{F}\to 0$ при~$k\to \infty$.
 \end{theorem}
+Доказательство теоремы приведено в работе~\cite{grabovoi2025sample727559461}.
+
+Теорема~\ref{chapter:samplesize:theorem-kiselev-posterior-similiarity-linear-regression} устанавливает сходимость моментов апостериорного распределения параметров в модели линейной регрессии при сравнительно слабых предположениях. Доказательство приведено в работе~\cite{grabovoi2025sample727559461}. В настоящей работе результат используется в форме утверждения.
+
+Первое предположение касается ограниченности области значений признаков и целевой переменной. Это условие выполняется в практических приложениях и служит для целей теоретического анализа.
+
+Второе условие опирается на поведение минимального собственного значения выборочной ковариационной матрицы признаков. Его выполнение подтверждается численно в вычислительном эксперименте.
+
+Оценки достаточного размера выборки в настоящей главе выражались через апостериорные распределения и имели вид условий на сходимость моментов.
+Но явной числовой связи между $m^*$ и сложностью модели они не давали.
+Ниже эта связь устанавливается количественно.
+Величина $m^*$ выражается через ландшафтную меру сложности модели $\mu_f(f\mid D)$ и условную сложность выборки $\mu_D(D\mid f)$ из главы~\ref{chapter:complexity}.
+Достаточный размер $m^*$ определен в настоящей главе как минимальный объем данных, необходимый для согласования модели с выборкой.
+Двусторонняя оценка важна тем, что она не только ограничивает $m^*$ сверху.
+При дополнительной регулярности ландшафта она показывает, что $m^*$ не может быть существенно меньше.
+Следовательно, порядок $m^*$ определяется ландшафтной мерой, а не просто мажорируется ею.
+Такой двусторонней оценки в остальных разделах главы нет.
+
+\begin{theorem}[Оценка достаточного размера выборки]\label{ch3:thm:two-sided-mstar}
+Пусть выполнены условия главы~\ref{chapter:complexity}, ограничения~\eqref{ch1lc:thm:increment-bound}~(1)--(3) и предположение~\ref{ch1lc:ass:local-min} с константой $\varepsilon_g\ge 0$. Обозначим $\bar\mu_f=\max_i\|\mathbf{H}_i(\boldsymbol{\theta}^*)-\bar{\mathbf{H}}\|_2$ и $A_1:=2M_\ell+\bar\mu_f R^2+L_3 R^3$. Тогда для любого $k\ge 1$
+\begin{equation}\label{ch3:eq:mstar-incr}
+  \bigl|\mathcal{L}_{k+1}(\boldsymbol{\theta})-\mathcal{L}_k(\boldsymbol{\theta})\bigr|
+  \le\frac{A_1}{k+1}+2\varepsilon_gR,
+\end{equation}
+и при $2\varepsilon_gR<\varepsilon$ выполнено
+\begin{equation}\label{ch3:eq:mstar-upper}
+  m^*\le\frac{A_1}{\varepsilon-2\varepsilon_gR}.
+\end{equation}
+Если дополнительно $\varepsilon_g=0$ и существуют единичный вектор $\mathbf{v}$, $\|\mathbf{v}\|_2=1$, и число $c>0$ такие, что для всех $k$ выполнено $\bigl|\mathbf{v}^{\top}\bigl(\mathbf{H}_{k+1}(\boldsymbol{\theta}^*)-\mathbf{H}^{(k)}(\boldsymbol{\theta}^*)\bigr)\mathbf{v}\bigr|\ge c\,\bar\mu_f$ и $c\,\bar\mu_f>2L_3R$, то
+\begin{equation}\label{ch3:eq:mstar-lower}
+  m^*\ge\frac{\tfrac12 R^2\bigl(c\,\bar\mu_f-2L_3R\bigr)-2M_\ell}{\varepsilon}-1 .
+\end{equation}
+При $2\varepsilon_gR\ll\varepsilon$, $c\,\bar\mu_f\asymp\bar\mu_f$, $\bar\mu_f R^2\gg M_\ell$ и $L_3R=O(\bar\mu_f)$ получаем $m^*=\Theta\bigl((M_\ell+\bar\mu_f R^2)/\varepsilon\bigr)$.
+\end{theorem}
+
 \begin{proof}
-Рассмотрим линейную регрессионную модель с нормальным априорным распределением параметров:~$p(\mathbf{w})=\mathcal{N}\left(\mathbf{w}|\mathbf{0}, \alpha^{-1}\mathbf{I}\right)$.
-Данное априорное распределение является сопряженным для нормального правдоподобия, что существенно упрощает анализ.
-Нормальное правдоподобие задается в виде:
-\[
-    p(\mathbf{y} | \mathbf{X}, \mathbf{w}) = \mathcal{N}\left(\mathbf{y} |\mathbf{X}\mathbf{w}, \sigma^2\mathbf{I}\right) =\left( 2\pi\sigma^2\right)^{-m/2} \exp\left( -\frac{1}{2\sigma^2} \|\mathbf{y} - \mathbf{X}\mathbf{w}\|_2^2\right).
-\]
+Неравенство~\eqref{ch3:eq:mstar-incr} есть теорема~\ref{ch1lc:thm:increment-bound}.
+Условие $\bigl|\mathcal{L}_{k+1}-\mathcal{L}_k\bigr|\le\varepsilon$ для всех $k\ge m^*$ выполнено, как только $A_1/(k+1)+2\varepsilon_gR\le\varepsilon$, то есть при $k+1\ge A_1/(\varepsilon-2\varepsilon_gR)$.
+Поскольку левая часть~\eqref{ch3:eq:mstar-incr} убывает по $k$, получаем~\eqref{ch3:eq:mstar-upper}.
 
-Благодаря свойству сопряженности нормального априорного распределения и нормального правдоподобия, апостериорное распределение также является нормальным:
+Для нижней оценки положим $\boldsymbol{\delta}=R\mathbf{v}$. Поскольку $\varepsilon_g=0$, линейный член в разложении Тейлора исчезает, и из обратного неравенства треугольника:
 \[
-    p(\mathbf{w} | \mathbf{X}, \mathbf{y}) = \mathcal{N}\left(\mathbf{w} | \mathbf{m}, \mathbf{\Sigma} \right),
+  \bigl|\mathcal{L}_{k+1}(\boldsymbol{\theta})-\mathcal{L}_k(\boldsymbol{\theta})\bigr|
+  \ge\tfrac12 R^2\bigl|\mathbf{v}^{\top}\bigl(\mathbf{H}^{(k+1)}(\boldsymbol{\xi}_1)-\mathbf{H}^{(k)}(\boldsymbol{\xi}_2)\bigr)\mathbf{v}\bigr|-2M_\ell .
 \]
-где параметры распределения имеют аналитическое выражение:
-\begin{align}
-    \mathbf{\Sigma} &= \left( \alpha \mathbf{I} + \frac{1}{\sigma^2} \mathbf{X}^{\top} \mathbf{X} \right)^{-1}, \\
-    \mathbf{m} &= \frac{1}{\sigma^2} \mathbf{\Sigma} \mathbf{X}^{\top} \mathbf{y} = \left( \mathbf{X}^{\top} \mathbf{X} + \alpha \sigma^2 \mathbf{I} \right)^{-1} \mathbf{X}^{\top} \mathbf{y}.
-\end{align}
+Квадратичная форма оценивается снизу:
+\[
+  \bigl|\mathbf{v}^{\top}\bigl(\mathbf{H}^{(k+1)}(\boldsymbol{\xi}_1)-\mathbf{H}^{(k)}(\boldsymbol{\xi}_2)\bigr)\mathbf{v}\bigr|
+  \ge c\,\bar\mu_f-2L_3R>0 ,
+\]
+что следует из условия на $\mathbf{v}$ и липшицевости гессиана.
+Деля на $k+1$ и обозначая числитель $K:=\tfrac12 R^2(c\,\bar\mu_f-2L_3R)-2M_\ell>0$, при $k=m^*$ получаем $K/(m^*+1)\le\varepsilon$, откуда $m^*+1\ge K/\varepsilon$.
+Значит, выполняется~\eqref{ch3:eq:mstar-lower}.
+Условие $L_3R=O(\bar\mu_f)$ гарантирует, что член $L_3R^3$ в $A_1$ не превосходит порядка $\bar\mu_f R^2$.
+Тогда и в~\eqref{ch3:eq:mstar-upper}, и в~\eqref{ch3:eq:mstar-lower} доминирует слагаемое $\bar\mu_f R^2$.
+При $2\varepsilon_gR\ll\varepsilon$ знаменатель $\varepsilon-2\varepsilon_gR=\varepsilon(1+o(1))$, поэтому асимптотика совпадает с~\eqref{ch3:eq:mstar-upper}.
+Это дает $m^*=\Theta\bigl((M_\ell+\bar\mu_f R^2)/\varepsilon\bigr)$. \end{proof}
 
-Перейдем к анализу сходимости ковариационных матриц.
-Рассмотрим подвыборки размера~$k$ и~$k+1$, полученные из исходных данных. Нас интересует поведение разности~$\|\mathbf{\Sigma}_{k+1} - \mathbf{\Sigma}_k\|_2$ при~$k \to \infty$.
-Введем обозначение~$\mathbf{A}_k = \frac{1}{\sigma^2}\mathbf{X}_k^{\top}\mathbf{X}_k$ для нормированной матрицы ковариации признаков. Тогда разность обратных матриц можно преобразовать, используя матричное тождество:
-\begin{align}
-    \| \mathbf{\Sigma}_{k+1} - \mathbf{\Sigma}_k \|_2 &= \left\| \left( \alpha \mathbf{I} + \mathbf{A}_{k+1} \right)^{-1} - \left( \alpha \mathbf{I} + \mathbf{A}_k \right)^{-1} \right\|_2.
-\end{align}
-Применяя матричное тождество для разности обратных матриц, получаем:
-\begin{align}
-    \left( \alpha \mathbf{I} + \mathbf{A}_{k+1} \right)^{-1} - \left( \alpha \mathbf{I} + \mathbf{A}_k \right)^{-1} =
-    \left( \alpha \mathbf{I} + \mathbf{A}_{k+1} \right)^{-1} \left( \mathbf{A}_k - \mathbf{A}_{k+1} \right) \left( \alpha \mathbf{I} + \mathbf{A}_k \right)^{-1}.
-\end{align}
-Используя субмультипликативное свойство спектральной нормы, оцениваем:
-\begin{align}
-    \| \mathbf{\Sigma}_{k+1} - \mathbf{\Sigma}_k \|_2 &\leqslant \left\| \left( \alpha \mathbf{I} + \mathbf{A}_{k+1} \right)^{-1} \right\|_2 \left\| \left( \alpha \mathbf{I} + \mathbf{A}_k \right)^{-1} \right\|_2 \left\| \mathbf{A}_{k+1} - \mathbf{A}_k \right\|_2.
-\end{align}
-Проанализируем каждый из множителей в полученной оценке.
-Спектральная норма обратной матрицы выражается через минимальное собственное значение исходной матрицы:
-\[
-    \left\| \left( \alpha \mathbf{I} + \mathbf{A} \right)^{-1} \right\|_2 = \frac{1}{\lambda_{\min}(\alpha \mathbf{I} + \mathbf{A})}.
-\]
-Поскольку~$\alpha > 0$ и матрица~$\mathbf{A}$ положительно полуопределена, имеем~$\lambda_{\min}(\alpha \mathbf{I} + \mathbf{A}) \geq \alpha + \lambda_{\min}(\mathbf{A})$.
-Однако для получения точной асимптотики используем более слабую оценку:
-\[
-\left\| \left( \alpha \mathbf{I} + \mathbf{A} \right)^{-1} \right\|_2 \leq \frac{1}{\lambda_{\min}(\mathbf{A})}.
-\]
-Объединяя полученные оценки, получаем цепочку неравенств:
-\begin{align}
-    \| \mathbf{\Sigma}_{k+1} - \mathbf{\Sigma}_k \|_2 &\leqslant \frac{1}{\lambda_{\min}\left( \mathbf{A}_{k+1} \right)} \frac{1}{\lambda_{\min}\left( \mathbf{A}_k \right)} \left\| \mathbf{A}_{k+1} - \mathbf{A}_k \right\|_2 = \\
-    &= \sigma^2  \frac{1}{\lambda_{\min}\left( \mathbf{X}_{k+1}^{\top} \mathbf{X}_{k+1} \right)} \frac{1}{\lambda_{\min}\left( \mathbf{X}_k^{\top} \mathbf{X}_k \right)} \left\| \mathbf{X}_{k+1}^{\top} \mathbf{X}_{k+1} - \mathbf{X}_k^{\top} \mathbf{X}_k \right\|_2.
-\end{align}
-Поскольку выборка~$\mathfrak{D}_{k+1}$ получается из~$\mathfrak{D}_k$ добавлением одного наблюдения, имеем:
-\begin{align}
-    \left\| \mathbf{X}_{k+1}^{\top} \mathbf{X}_{k+1} - \mathbf{X}_k^{\top} \mathbf{X}_k \right\|_2 &= \left\| \sum\limits_{i=1}^{k+1} \mathbf{x}_i \mathbf{x}_i^{\top} - \sum\limits_{i=1}^{k} \mathbf{x}_i \mathbf{x}_i^{\top} \right\|_2 = \left\| \mathbf{x}_{k+1} \mathbf{x}_{k+1}^{\top} \right\|_2.
-\end{align}
-Матрица~$\mathbf{x}_{k+1} \mathbf{x}_{k+1}^{\top}$ является матрицей ранга 1, и ее спектральная норма равна квадрату евклидовой нормы вектора~$\mathbf{x}_{k+1}$:
-\[
-    \left\| \mathbf{x}_{k+1} \mathbf{x}_{k+1}^{\top} \right\|_2 = \lambda_{\max}\left( \mathbf{x}_{k+1} \mathbf{x}_{k+1}^{\top} \right) = \| \mathbf{x}_{k+1}\|_2^2.
-\]
-Из условия ограниченности признаков следует~$\| \mathbf{x}_{k+1}\|_2^2 \leqslant M^2$. Таким образом:
-\[
-    \left\| \mathbf{X}_{k+1}^{\top} \mathbf{X}_{k+1} - \mathbf{X}_k^{\top} \mathbf{X}_k \right\|_2 \leqslant M^2.
-\]
+\begin{corollary}[Асимптотическая оценка достаточного размера выборки через ландшафтную меру сложности модели]\label{ch3:cor:mstar-landscape}
+Пусть выполнены условия теоремы~\ref{ch3:thm:two-sided-mstar} и, дополнительно, $\bar\mu_f\asymp\mu_f(f\mid D)$, где $\mu_f(f\mid D)=\mathbb{E}_{i}\big\|\mathbf{H}_i(\boldsymbol{\theta}^*)-\mathbb{E}_{j}\mathbf{H}_j(\boldsymbol{\theta}^*)\big\|_2$ --- ландшафтная мера сложности модели из главы~\ref{chapter:complexity}. Тогда при $2\varepsilon_gR\ll\varepsilon$, $\bar\mu_f R^2\gg M_\ell$ и $L_3R=O(\bar\mu_f)$
+\begin{equation}\label{ch3:eq:mstar-landscape}
+  m^*=\Theta\!\left(\frac{M_\ell+\mu_f(f\mid D)\,R^2}{\varepsilon}\right).
+\end{equation}
+\end{corollary}
+\begin{proof}
+Ландшафтная мера есть среднее разброса пообъектных матриц Гессе, $\mu_f(f\mid D)=\mathbb{E}_{i}\big\|\mathbf{H}_i(\boldsymbol{\theta}^*)-\bar{\mathbf{H}}\big\|_2$, а $\bar\mu_f=\max_{i}\big\|\mathbf{H}_i(\boldsymbol{\theta}^*)-\bar{\mathbf{H}}\big\|_2$. Поэтому $\mu_f(f\mid D)\le\bar\mu_f$, и по условию $\bar\mu_f\asymp\mu_f(f\mid D)$ эти величины имеют одинаковый порядок. Значит, в теореме~\ref{ch3:thm:two-sided-mstar} при совпадении порядков доминирующее слагаемое заменяется с $\bar\mu_f R^2$ на $\mu_f(f\mid D)\,R^2$, что дает~\eqref{ch3:eq:mstar-landscape}. \end{proof}
 
-Теперь рассмотрим условие на минимальное собственное значение.
-Из предположения~$\lambda_{\min}\left(\mathbf{X}_k^{\top}\mathbf{X}_k \right) = \omega(\sqrt{k})$ следует, что:
-\[
-    \frac{1}{\lambda_{\min}\left(\mathbf{X}_k^{\top}\mathbf{X}_k \right)} = o\left(\frac{1}{\sqrt{k}}\right).
-\]
-Комбинируя полученные оценки, приходим к:
-\[
-    \|\mathbf{\Sigma}_{k+1} - \mathbf{\Sigma}_k\|_2 \leqslant \sigma^2 M^2 \cdot o\left(\frac{1}{\sqrt{k}}\right) \cdot o\left(\frac{1}{\sqrt{k}}\right) = o\left(\frac{1}{k}\right).
-\]
-Для перехода к норме Фробениуса воспользуемся неравенством~$\| \mathbf{A} \|_F \leqslant \sqrt{n} \| \mathbf{A} \|_2$, где~$n$~--- размерность пространства параметров:
-\[
-    \|\mathbf{\Sigma}_{k+1} - \mathbf{\Sigma}_k \|_F \leqslant \sqrt{n} \|\mathbf{\Sigma}_{k+1} - \mathbf{\Sigma}_k\|_2 = \sqrt{n} \cdot o\left(\frac{1}{k}\right) = o\left(\frac{1}{k}\right).
-\]
-Теперь перейдем к анализу сходимости математических ожиданий.
-Требуется оценить:
-\[
-    \| \mathbf{m}_{k+1} - \mathbf{m}_k \|_2 = \left\| \left( \mathbf{X}_{k+1}^{\top} \mathbf{X}_{k+1} + \alpha \sigma^2 \mathbf{I} \right)^{-1} \mathbf{X}_{k+1}^{\top} \mathbf{y}_{k+1} - \left( \mathbf{X}_k^{\top} \mathbf{X}_k + \alpha \sigma^2 \mathbf{I} \right)^{-1} \mathbf{X}_k^{\top} \mathbf{y}_k \right\|_2.
-\]
-Представим расширенную матрицу признаков и вектор ответов через предыдущие значения:
-\begin{align}
-    \mathbf{X}_{k+1} &= \begin{bmatrix} \mathbf{X}_k \\ \mathbf{x}_{k+1}^{\top} \end{bmatrix}, &
-    \mathbf{y}_{k+1} &= \begin{bmatrix} \mathbf{y}_k \\ y_{k+1} \end{bmatrix}.
-\end{align}
-Тогда матричные произведения принимают вид:
-\begin{align}
-    \mathbf{X}_{k+1}^{\top} \mathbf{X}_{k+1} &= \mathbf{X}_k^{\top} \mathbf{X}_k + \mathbf{x}_{k+1} \mathbf{x}_{k+1}^{\top}, \\
-    \mathbf{X}_{k+1}^{\top} \mathbf{y}_{k+1} &= \mathbf{X}_k^{\top} \mathbf{y}_k + \mathbf{x}_{k+1} y_{k+1}.
-\end{align}
-Подставляя эти выражения, получаем:
-\begin{align}
-    \| \mathbf{m}_{k+1} - \mathbf{m}_k \|_2 &= \Bigg\| \left( \mathbf{X}_k^{\top} \mathbf{X}_k + \alpha \sigma^2 \mathbf{I} + \mathbf{x}_{k+1} \mathbf{x}_{k+1}^{\top} \right)^{-1} \left( \mathbf{X}_k^{\top} \mathbf{y}_k + \mathbf{x}_{k+1} y_{k+1} \right) \\
-    &\quad - \left( \mathbf{X}_k^{\top} \mathbf{X}_k + \alpha \sigma^2 \mathbf{I} \right)^{-1} \mathbf{X}_k^{\top} \mathbf{y}_k \Bigg\|_2.
-\end{align}
-Для упрощения первого слагаемого применим лемму о матричном обращении:
-\begin{align}
-    &\left(\mathbf{X}_k^{\top} \mathbf{X}_k + \alpha\sigma^2 \mathbf{I} + \mathbf{x}_{k+1}\mathbf{x}_{k+1}^{\top}\right)^{-1} = \\
-    &\quad = \left(\mathbf{X}_k^{\top} \mathbf{X}_k + \alpha\sigma^2 \mathbf{I}\right)^{-1} - \frac{\left(\mathbf{X}_k^{\top} \mathbf{X}_k + \alpha\sigma^2 \mathbf{I}\right)^{-1} \mathbf{x}_{k+1} \mathbf{x}_{k+1}^{\top} \left(\mathbf{X}_k^{\top} \mathbf{X}_k + \alpha\sigma^2 \mathbf{I}\right)^{-1}}{1 + \mathbf{x}_{k+1}^{\top} \left(\mathbf{X}_k^{\top} \mathbf{X}_k + \alpha\sigma^2 \mathbf{I}\right)^{-1} \mathbf{x}_{k+1}}.
-\end{align}
-После алгебраических преобразований получаем:
-\begin{align}
-    &\| \mathbf{m}_{k+1} - \mathbf{m}_k \|_2 = \\
-    &\quad = \Bigg\| \left[ \left( \mathbf{I} + \left( \mathbf{X}_k^{\top} \mathbf{X}_k + \alpha \sigma^2 \mathbf{I} \right)^{-1} \mathbf{x}_{k+1} \mathbf{x}_{k+1}^{\top} \right)^{-1} - \mathbf{I} \right] \left( \mathbf{X}_k^{\top} \mathbf{X}_k + \alpha \sigma^2 \mathbf{I} \right)^{-1} \mathbf{X}_k^{\top} \mathbf{y}_k \\
-    &\qquad + \left( \mathbf{X}_{k+1}^{\top} \mathbf{X}_{k+1} + \alpha \sigma^2 \mathbf{I} \right)^{-1} \mathbf{x}_{k+1} y_{k+1} \Bigg\|_2.
-\end{align}
-Применяя неравенство треугольника и свойства норм, оцениваем каждый член отдельно:
-\begin{align}
-    &\| \mathbf{m}_{k+1} - \mathbf{m}_k \|_2 \leqslant \\
-    &\leqslant \left\| \left( \mathbf{I} + \left( \mathbf{X}_k^{\top} \mathbf{X}_k + \alpha \sigma^2 \mathbf{I} \right)^{-1} \mathbf{x}_{k+1} \mathbf{x}_{k+1}^{\top} \right)^{-1} - \mathbf{I} \right\|_2 \left\| \left( \mathbf{X}_k^{\top} \mathbf{X}_k + \alpha \sigma^2 \mathbf{I} \right)^{-1} \right\|_2 \left\| \mathbf{X}_k^{\top} \mathbf{y}_k \right\|_2 \\
-    &\quad + \left\| \left( \mathbf{X}_{k+1}^{\top} \mathbf{X}_{k+1} + \alpha \sigma^2 \mathbf{I} \right)^{-1} \right\|_2 \left\| \mathbf{x}_{k+1} y_{k+1} \right\|_2.
-\end{align}
+\begin{remark}[Связь с условной сложностью выборки]\label{ch3:rem:mstar-conditional}
+При $\mu_D(D)=C\lvert D\rvert$ условная сложность выборки равна $\mu_D(D\mid f)=C\,m^*$. Тогда из~\eqref{ch3:eq:mstar-upper}--\eqref{ch3:eq:mstar-lower} при выполнении условий совпадения порядков получаем $\mu_D(D\mid f)=\Theta\bigl(C(M_\ell+\bar\mu_f R^2)/\varepsilon\bigr)$, и условная сложность выборки выражается через ландшафтную меру явно.
+\end{remark}
 
-Проанализируем первый множитель в первом слагаемом.
-Используя матричное тождество, получаем:
-\begin{align}
-    &\left\| \left( \mathbf{I} + \left( \mathbf{X}_k^{\top} \mathbf{X}_k + \alpha \sigma^2 \mathbf{I} \right)^{-1} \mathbf{x}_{k+1} \mathbf{x}_{k+1}^{\top} \right)^{-1} - \mathbf{I} \right\|_2 = \\
-    &\quad = \left\| - \left( \mathbf{I} + \left( \mathbf{X}_k^{\top} \mathbf{X}_k + \alpha \sigma^2 \mathbf{I} \right)^{-1} \mathbf{x}_{k+1} \mathbf{x}_{k+1}^{\top} \right)^{-1} \left( \mathbf{X}_k^{\top} \mathbf{X}_k + \alpha \sigma^2 \mathbf{I} \right)^{-1} \mathbf{x}_{k+1} \mathbf{x}_{k+1}^{\top} \right\|_2.
-\end{align}
-Применяя субмультипликативность нормы и учитывая, что спектральная норма произведения матриц не превышает произведения их норм, получаем оценку:
-\begin{align}
-    &\left\| \left( \mathbf{I} + \left( \mathbf{X}_k^{\top} \mathbf{X}_k + \alpha \sigma^2 \mathbf{I} \right)^{-1} \mathbf{x}_{k+1} \mathbf{x}_{k+1}^{\top} \right)^{-1} - \mathbf{I} \right\|_2 \leqslant \\
-    &\quad \leqslant \left\| \left( \mathbf{I} + \left( \mathbf{X}_k^{\top} \mathbf{X}_k + \alpha \sigma^2 \mathbf{I} \right)^{-1} \mathbf{x}_{k+1} \mathbf{x}_{k+1}^{\top} \right)^{-1} \right\|_2 \left\| \left( \mathbf{X}_k^{\top} \mathbf{X}_k + \alpha \sigma^2 \mathbf{I} \right)^{-1} \right\|_2 \left\| \mathbf{x}_{k+1} \mathbf{x}_{k+1}^{\top} \right\|_2.
-\end{align}
+\begin{remark}[Границы применимости оценки]\label{ch3:rem:mstar-scope}
+Условия теоремы~\ref{ch3:thm:two-sided-mstar} имеют разный статус.
+Верхняя граница~\eqref{ch3:eq:mstar-upper} опирается лишь на конечность $M_\ell$, $L_3$ и $\bar\mu_f$ и на ограничение стационарности $2\varepsilon_gR<\varepsilon$, которое допускает ненулевой градиент в~$\boldsymbol{\theta}^*$.
+При $2\varepsilon_gR\ll\varepsilon$ порядок оценки сохраняется.
+Условие $\mu_D(D)=C\lvert D\rvert$ не используется в границах~\eqref{ch3:eq:mstar-upper}--\eqref{ch3:eq:mstar-lower} и задействовано лишь в замечании~\ref{ch3:rem:mstar-conditional} для перехода к условной сложности выборки $\mu_D(D\mid f)$.
 
-Оценим каждый из этих множителей.
-Для первого множителя используем тот факт, что матрица~$\left( \mathbf{X}_k^{\top} \mathbf{X}_k + \alpha \sigma^2 \mathbf{I} \right)^{-1} \mathbf{x}_{k+1} \mathbf{x}_{k+1}^{\top}$ имеет единичный ранг, и ее максимальное собственное значение равно:
-\[
-    \lambda_{\max}\left( \left( \mathbf{X}_k^{\top} \mathbf{X}_k + \alpha \sigma^2 \mathbf{I} \right)^{-1} \mathbf{x}_{k+1} \mathbf{x}_{k+1}^{\top} \right) = \mathbf{x}_{k+1}^{\top} \left( \mathbf{X}_k^{\top} \mathbf{X}_k + \alpha \sigma^2 \mathbf{I} \right)^{-1} \mathbf{x}_{k+1}.
-\]
-Тогда спектральная норма обратной матрицы оценивается как:
-\[
-    \left\| \left( \mathbf{I} + \left( \mathbf{X}_k^{\top} \mathbf{X}_k + \alpha \sigma^2 \mathbf{I} \right)^{-1} \mathbf{x}_{k+1} \mathbf{x}_{k+1}^{\top} \right)^{-1} \right\|_2 \leqslant 1.
-\]
-Второй множитель оценивается через минимальное собственное значение:
-\[
-    \left\| \left( \mathbf{X}_k^{\top} \mathbf{X}_k + \alpha \sigma^2 \mathbf{I} \right)^{-1} \right\|_2 \leqslant \frac{1}{\lambda_{\min}\left( \mathbf{X}_k^{\top} \mathbf{X}_k \right)}.
-\]
-Третий множитель, как уже было установлено, равен~$\| \mathbf{x}_{k+1}\|_2^2 \leqslant M^2$.
-Таким образом, получаем оценку для первого множителя:
-\[
-    \left\| \left( \mathbf{I} + \left( \mathbf{X}_k^{\top} \mathbf{X}_k + \alpha \sigma^2 \mathbf{I} \right)^{-1} \mathbf{x}_{k+1} \mathbf{x}_{k+1}^{\top} \right)^{-1} - \mathbf{I} \right\|_2 \leqslant \frac{M^2}{\lambda_{\min}\left( \mathbf{X}_k^{\top} \mathbf{X}_k \right)}.
-\]
-
-Теперь оценим второй множитель первого слагаемого вместе с третьим множителем:
-\[
-    \left\| \left( \mathbf{X}_k^{\top} \mathbf{X}_k + \alpha \sigma^2 \mathbf{I} \right)^{-1} \right\|_2 \left\| \mathbf{X}_k^{\top} \mathbf{y}_k \right\|_2 \leqslant \frac{\left\| \mathbf{X}_k^{\top} \mathbf{y}_k \right\|_2}{\lambda_{\min}\left( \mathbf{X}_k^{\top} \mathbf{X}_k \right)}.
-\]
-Норма~$\left\| \mathbf{X}_k^{\top} \mathbf{y}_k \right\|_2$ оценивается с использованием условия ограниченности:
-\[
-    \left\| \mathbf{X}_k^{\top} \mathbf{y}_k \right\|_2 = \left\| \sum\limits_{i=1}^{k} \mathbf{x}_i y_i \right\|_2 \leqslant \sum\limits_{i=1}^{k} \left\| \mathbf{x}_i y_i \right\|_2 \leqslant k M^2.
-\]
-Следовательно:
-\[
-    \left\| \left( \mathbf{X}_k^{\top} \mathbf{X}_k + \alpha \sigma^2 \mathbf{I} \right)^{-1} \right\|_2 \left\| \mathbf{X}_k^{\top} \mathbf{y}_k \right\|_2 \leqslant \frac{k M^2}{\lambda_{\min}\left( \mathbf{X}_k^{\top} \mathbf{X}_k \right)}.
-\]
-Теперь рассмотрим второе слагаемое:
-\[
-    \left\| \left( \mathbf{X}_{k+1}^{\top} \mathbf{X}_{k+1} + \alpha \sigma^2 \mathbf{I} \right)^{-1} \right\|_2 \left\| \mathbf{x}_{k+1} y_{k+1} \right\|_2 \leqslant \frac{M^2}{\lambda_{\min}\left( \mathbf{X}_{k+1}^{\top} \mathbf{X}_{k+1} \right)}.
-\]
-
-Комбинируя все полученные оценки, приходим к итоговой оценке:
-\begin{align}
-    \| \mathbf{m}_{k+1} - \mathbf{m}_k \|_2 &\leqslant \frac{M^2}{\lambda_{\min}\left( \mathbf{X}_k^{\top} \mathbf{X}_k \right)} \cdot \frac{k M^2}{\lambda_{\min}\left( \mathbf{X}_k^{\top} \mathbf{X}_k \right)} + \frac{M^2}{\lambda_{\min}\left( \mathbf{X}_{k+1}^{\top} \mathbf{X}_{k+1} \right)} \\
-    &= \frac{k M^4}{\lambda_{\min}^2\left( \mathbf{X}_k^{\top} \mathbf{X}_k \right)} + \frac{M^2}{\lambda_{\min}\left( \mathbf{X}_{k+1}^{\top} \mathbf{X}_{k+1} \right)}.
-\end{align}
-
-Из условия~$\lambda_{\min}\left(\mathbf{X}_k^{\top}\mathbf{X}_k \right) = \omega(\sqrt{k})$ следует:
-\begin{align}
-    \frac{1}{\lambda_{\min}\left(\mathbf{X}_k^{\top}\mathbf{X}_k \right)} &= o\left(\frac{1}{\sqrt{k}}\right), \\
-    \frac{1}{\lambda_{\min}^2\left(\mathbf{X}_k^{\top}\mathbf{X}_k \right)} &= o\left(\frac{1}{k}\right).
-\end{align}
-Поэтому первое слагаемое оценивается как~$k \cdot o\left(\frac{1}{k}\right) = o(1)$, а второе слагаемое как~$o\left(\frac{1}{\sqrt{k}}\right) = o(1)$. Таким образом:
-\[
-    \| \mathbf{m}_{k+1} - \mathbf{m}_k \|_2 = o(1) \quad \text{при} \quad k \to \infty.
-\]
-
-Это завершает доказательство сходимости как ковариационных матриц, так и математических ожиданий апостериорного распределения параметров.
-\end{proof}
-
-Теорема~\ref{chapter:samplesize:theorem-kiselev-posterior-similiarity-linear-regression} является центральной в настоящем разделе: при сравнительно слабых предположениях из нее следует сходимость моментов апостериорного распределения параметров.
-Первое предположение в теореме~\ref{chapter:samplesize:theorem-kiselev-posterior-similiarity-linear-regression} касается ограничения на область значений признаков и целевой переменной.
-Это условие обычно выполняется в практических приложениях, поэтому оно служит в первую очередь для целей теоретического анализа.
-Второе условие теоремы~\ref{chapter:samplesize:theorem-kiselev-posterior-similiarity-linear-regression} существенно, поскольку оно опирается на поведение минимального собственного значения выборочной ковариационной матрицы признаков.
-Строгие теоретические гарантии для данной сходимости в настоящей работе не приводятся; выполнение условия подтверждается численно.
+Содержательным является условие нижней оценки о существовании направления $\mathbf{v}$ с ненулевым разбросом приростной кривизны.
+Оно требует, чтобы добавление объекта не обнуляло разброс пообъектных матриц Гессе вдоль $\mathbf{v}$.
+Оно нарушается, когда новые объекты почти повторяют старые, а также при сильной однородности данных и при $L_3R$, сопоставимом с $\bar\mu_f$.
+Пример, где все условия проверяются явно, служит линейный класс.
+Для $f(\mathbf{x})=\mathbf{w}^{\top}\mathbf{x}$ пообъектный гессиан пропорционален $\mathbf{x}_i\mathbf{x}_i^{\top}$.
+Разброс вокруг среднего определяется ковариацией входов.
+Условие на $\mathbf{v}$ выполняется, когда ковариация входов вдоль $\mathbf{v}$ имеет ненулевой разброс.
+Для стандартизованных признаков это условие выполняется.
+Для глубоких сетей оно является предположением и не гарантировано.
+\end{remark}
 
 \section{Вычислительные эксперименты}
 
@@ -1044,7 +1016,7 @@ Utility function 						& -- & -- 	& 0.005& -- & --\\
 Их описательная статистика представлена в Таблице~\ref{chapter:samplesize:experiment:table:descr}.
 К данным применяются 9 различных базовых методов оценки размера выборки: Тест множителей Лагранжа, Тест отношения правдоподобий, Тест Вальда, Кросс-валидация, Бутстрэп, Критерий средней апостериорной дисперсии (APVC), Критерий среднего покрытия (ACC), Критерий средней длины (ALC) и Функция полезности.
 
-Далее в экспериментах достаточность определяется в терминах относительного изменения, а именно, размер выборки достаточным, если функция~$KL(k)$ имеет относительное отклонение от своего значения на всей выборке не более чем~$\varepsilon$.
+Далее в экспериментах достаточность определяется через относительное изменение, а именно, размер выборки достаточным, если функция~$KL(k)$ имеет относительное отклонение от своего значения на всей выборке не более чем~$\varepsilon$.
 Аналогично с функцией~$S(k)$, зафиксировав~$\varepsilon=0.05$ получаем результирующие размеры выборок.
 
 Результаты в Таблице~\ref{chapter:samplesize:experiment:table:results} указывают на то, что критерий на основе расхождения Кульбака-Лейблера является более консервативным и требует большего размера выборки, в то время как критерий S-достаточности предполагает, что минимального размера выборки может быть достаточно.
@@ -1069,10 +1041,10 @@ KL-достаточный размер выборки, как правило, т
 
 Основные теоретические результаты главы относятся к двум классам критериев, основанных на стабилизации процесса обучения.
 
-Первый класс использует функцию правдоподобия при изменении объема данных: D-достаточность~(дисперсия правдоподобия на бутстрэп-подвыборках) и M-достаточность~(разность средних значений правдоподобия при добавлении объекта). Теорема~\ref{chapter:samplesize:theorem-kiselev-likelihood-bootstraping} устанавливает сходимость критерия M-достаточности для линейной регрессии при сходимости моментов оценок параметров; следствие~\ref{chapter:samplesize:corollary-kiselev-likelihood-bootstraping} описывает условия сходимости к истинным параметрам и информационной матрице Фишера.
+Первый класс использует функцию правдоподобия при изменении объема данных: D-достаточность~(дисперсия правдоподобия на бутстрэп-подвыборках) и M-достаточность~(разность средних значений правдоподобия при добавлении объекта). Теорема~\ref{chapter:samplesize:theorem-kiselev-likelihood-bootstraping} устанавливает сходимость критерия M-достаточности для линейной регрессии при сходимости моментов оценок параметров. Следствие~\ref{chapter:samplesize:corollary-kiselev-likelihood-bootstraping} описывает условия сходимости к истинным параметрам и информационной матрице Фишера.
 
-Второй класс использует близость апостериорных распределений на подвыборках, отличающихся одним объектом: KL-достаточность и S-достаточность~(s-score). Теорема~\ref{chapter:samplesize:theorem-kiselev-posterior-similiarity-linear-regression} для линейной регрессии с нормальным априорным распределением задает достаточные условия сходимости моментов апостериора при росте~$\lambda_{\min}(\mathbf{X}_k^\top \mathbf{X}_k)$ как~$\omega(\sqrt{k})$.
+Второй класс использует близость апостериорных распределений на подвыборках, отличающихся одним объектом: KL-достаточность и S-достаточность~(s-score). Теорема~\ref{chapter:samplesize:theorem-kiselev-posterior-similiarity-linear-regression} для линейной регрессии с нормальным априорным распределением задает достаточные условия сходимости моментов апостериорного распределения при росте~$\lambda_{\min}(\mathbf{X}_k^\top \mathbf{X}_k)$ как~$\omega(\sqrt{k})$.
 
-Численные эксперименты на синтетических данных и наборах Liver Disorders, Boston Housing, Diabetes, Forest Fires, Servo согласуются с теорией: $D(k)$, $M(k)$ и $KL(k)$ убывают к нулю, $S(k)$ стремится к единице. В сравнении с классическими методами KL-критерий обычно консервативнее, а S-достаточность чаще указывает на меньшие объемы; это связано с различной чувствительностью мер близости распределений.
+Численные эксперименты на синтетических данных и наборах Liver Disorders, Boston Housing, Diabetes, Forest Fires, Servo согласуются с теорией: $D(k)$, $M(k)$ и $KL(k)$ убывают к нулю, $S(k)$ стремится к единице. В сравнении с классическими методами KL-критерий обычно консервативнее, а S-достаточность чаще указывает на меньшие объемы. Это связано с различной чувствительностью мер близости распределений.
 
-В экспериментах для критериев по правдоподобию использовались относительные отклонения порядка~$0{,}05$--$0{,}1$ и бутстрэп с~$B=1000$; для S-достаточности~--- порог~$\varepsilon=0{,}05$. Перенос обоснования на нейронные сети, отказ от нормальности апостериора и согласование критериев с ландшафтной мерой сложности остаются направлениями дальнейшего анализа.
+В экспериментах для критериев по правдоподобию использовались относительные отклонения порядка~$0{,}05$--$0{,}1$ и бутстрэп с~$B=1000$. Для S-достаточности~--- порог~$\varepsilon=0{,}05$. Перенос обоснования на нейронные сети, отказ от нормальности апостериорного распределения и согласование критериев с ландшафтной мерой сложности остаются направлениями дальнейшего анализа.
