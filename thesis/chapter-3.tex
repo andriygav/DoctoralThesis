@@ -699,7 +699,7 @@
 Это дает $m^*=\Theta\bigl((M_\ell+\bar\mu_f R^2)/\varepsilon\bigr)$. \end{proof}
 
 \begin{corollary}[Асимптотическая оценка достаточного размера выборки через ландшафтную меру сложности модели]\label{ch3:cor:mstar-landscape}
-Пусть выполнены условия теоремы~\ref{ch3:thm:two-sided-mstar} и, дополнительно, $\bar\mu_f\asymp\mu_f(f\mid D)$, где $\mu_f(f\mid D)=\mathbb{E}_{i}\big\|\mathbf{H}_i(\boldsymbol{\theta}^*)-\mathbb{E}_{j}\mathbf{H}_j(\boldsymbol{\theta}^*)\big\|_2$ --- ландшафтная мера сложности модели из главы~\ref{chapter:complexity}. Тогда при $2\varepsilon_gR\ll\varepsilon$, $\bar\mu_f R^2\gg M_\ell$ и $L_3R=O(\bar\mu_f)$
+Пусть выполнены условия теоремы~\ref{ch3:thm:two-sided-mstar} и, дополнительно, $\bar\mu_f\asymp\mu_f(f\mid D)$, где $\mu_f(f\mid D)=\mathbb{E}_{i}\big\|\mathbf{H}_i(\boldsymbol{\theta}^*)-\mathbb{E}_{j}\mathbf{H}_j(\boldsymbol{\theta}^*)\big\|_2$ --- ландшафтная мера сложности модели из главы~\ref{chapter:complexity}, а $\bar\mu_f=\max_i\|\mathbf{H}_i(\boldsymbol{\theta}^*)-\bar{\mathbf{H}}\|_2$. Условие $\bar\mu_f\asymp\mu_f(f\mid D)$ означает, что разброс пообъектных матриц Гессе вокруг среднего не имеет выбросов и тяжелых хвостов (носитель распределения норм матриц Гессе ограничен), то есть максимум по выборке имеет тот же порядок, что и математическое ожидание. Тогда при $2\varepsilon_gR\ll\varepsilon$, $\bar\mu_f R^2\gg M_\ell$ и $L_3R=O(\bar\mu_f)$
 \begin{equation}\label{ch3:eq:mstar-landscape}
   m^*=\Theta\!\left(\frac{M_\ell+\mu_f(f\mid D)\,R^2}{\varepsilon}\right).
 \end{equation}
