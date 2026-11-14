@@ -184,6 +184,9 @@ LoRA может быть применена здесь путем замены $
 \end{enumerate}
 Тогда $\widehat{\Theta}_n \xrightarrow{P} \Theta^\star$ при $n\to\infty$.
 \end{theorem}
+\begin{remark}
+Здесь $\Theta$ --- матрица обновления $\Delta W$, а не пара $(A,B)$: в силу $\Delta W=AB=(AC)(C^{-1}B)$ минимум по $(A,B)$ не единствен. Состоятельность понимается для произведения $AB$.
+\end{remark}
 \begin{proof}
 По закону больших чисел для каждого фиксированного $\Theta\in K$ имеем $\mathscr{L}_n(\Theta)\xrightarrow{P}L(\Theta)$.
 Из компактности $K$, непрерывности по $\Theta$ и конечности интегральных $L^1$-ограничений следует равномерная сходимость $\sup_{\Theta\in K}\bigl|\mathscr{L}_n(\Theta)-L(\Theta)\bigr|\xrightarrow{P}0$. Достаточные условия приведены, например, в~\cite{vapnik1974StatTheory}.

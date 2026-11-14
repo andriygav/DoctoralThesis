@@ -128,6 +128,10 @@
 Доказательство теоремы приведено в работе~\cite{grabovoi2024unraveling748584228}.
 
 \begin{remark}
+Оценка записана в предположении $\| \mathbf{W}^{(p)} \|_2 = M_{\mathbf{W}}\neq 1$ (иначе знаменатель $M_{\mathbf{W}}^2-1$ обращается в ноль). При $M_{\mathbf{W}}=1$ выражение $\dfrac{M_{\mathbf{W}}^2 (M_{\mathbf{W}}^{2L} - 1)}{M_{\mathbf{W}}^2 - 1}$ понимается как предел и равно $L$.
+\end{remark}
+
+\begin{remark}
 В теореме~\ref{theorem:hess-kiselev-theorem} получена оценка на матрицу Гессе для однослойной сети~$L=1$ вида:
 \[
     \left\| \mathbf{H}_i(\boldsymbol{\theta}) \right\|_2 \leqslant \sqrt{2} M_{\mathbf{W}}^{2} \left( M_{\mathbf{x}}^2 + 1 \right).
@@ -347,7 +351,7 @@
 \begin{theorem}[Оценка нормы матрицы Гессе для 1D-сверточных сетей]\label{thm:1Dconv}
     Пусть задана сеть вида:
     \[
-        f_{\boldsymbol{\theta}}x = C_{\mathbf{W}^{(L+1)}} \circ \sigma \circ \dots \circ \sigma \circ C_{\mathbf{W}^{(1)}},
+        f_{\boldsymbol{\theta}}(x) = C_{\mathbf{W}^{(L+1)}} \circ \sigma \circ \dots \circ \sigma \circ C_{\mathbf{W}^{(1)}},
     \]
     где~$C_{\mathbf{W}^{(i)}}$~--- одномерная свертка с ядром~$\mathbf{W}^{(i)}$, без дополнения (англ. padding) и с единичным шагом (англ. stride). Пусть заданы следующие верхние оценки на параметры:
     \begin{align}

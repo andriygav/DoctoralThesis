@@ -186,7 +186,7 @@
 \end{rustheorem}
 Разложение полной ошибки обученной модели~$f_D$:
 \[
-    R(f_D)\le R(f^*)+\underbrace{\bigl(R(f^*)-\inf_{f\in\mathcal{F}}R(f)\bigr)}_{\text{ошибка аппроксимации}}+\underbrace{\bigl(R(f_D)-\inf_{f\in\mathcal{F}}R(f)\bigr)^{+}}_{\text{ошибка оценивания}},
+    R(f_D)\le R(f^*)+\underbrace{\bigl(\inf_{f\in\mathcal{F}}R(f)-R(f^*)\bigr)}_{\text{ошибка аппроксимации}}+\underbrace{\bigl(R(f_D)-\inf_{f\in\mathcal{F}}R(f)\bigr)^{+}}_{\text{ошибка оценивания}},
 \]
 где $f^*$ --- функция (возможно, вне класса $\mathcal{F}$), реализующая минимум истинного риска.
 
@@ -324,9 +324,9 @@
 \begin{rusdefinition}
     Пусть $\mathbf{H}_i(\boldsymbol{\theta}) = \nabla^2_{\boldsymbol{\theta}} \ell(f_{\boldsymbol{\theta}}(\mathbf{x}_i),\mathbf{y}_i)$. Ландшафтная мера сложности задается выражением
     \[
-        \mu_f(f\mid D) = \mathbb{E}_{\mathbf{x}_i\in D}\left\| \mathbf{H}_{i}(\boldsymbol{\theta}^*) - \mathbb{E}_{\mathbf{x}_i\in D}\mathbf{H}_{i}(\boldsymbol{\theta}^*) \right\|_2,
+        \mu_f(f\mid D) = \mathbb{E}_{i}\left\| \mathbf{H}_{i}(\boldsymbol{\theta}^*) - \mathbb{E}_{j}\mathbf{H}_{j}(\boldsymbol{\theta}^*) \right\|_2,
     \]
-    где $\mathbb{E}_{\mathbf{x}_i\in D}$ означает математическое ожидание по равномерно выбранному индексу из $D$ при фиксированной точке $\boldsymbol{\theta}^*$.
+    где $\mathbb{E}_{i}$ означает математическое ожидание по равномерно выбранному индексу из $D$ при фиксированной точке $\boldsymbol{\theta}^*$.
 \end{rusdefinition}
 \begin{rusremark}
     $\mu_f$ велика, когда пообъектные матрицы Гессе существенно расходятся в операторной норме относительно своего среднего по $D$. Разность $\mathbf{H}^{(k+1)}-\mathbf{H}^{(k)}$ задает скорость сходимости ландшафта.
@@ -349,10 +349,10 @@
     &\quad+\frac{\|\boldsymbol{\theta}-\boldsymbol{\theta}^*\|_2^2}{k+1}\Bigl\|\mathbf{H}_{k+1}(\boldsymbol{\theta}^*)-\frac{1}{k}\sum_{i=1}^{k}\mathbf{H}_i(\boldsymbol{\theta}^*)\Bigr\|_2
     +2\varepsilon_g\|\boldsymbol{\theta}-\boldsymbol{\theta}^*\|_2.
 \end{align*}
-Мажорируя $\bigl\|\mathbf{H}_{k+1}-k^{-1}\sum_{i=1}^{k}\mathbf{H}_{i}\bigr\|_2\le 2\mu_f(f\mid D)$, получаем:
+Мажорируя $\bigl\|\mathbf{H}_{k+1}-k^{-1}\sum_{i=1}^{k}\mathbf{H}_{i}\bigr\|_2\le 2\bar\mu_f$, где $\bar\mu_f:=\max_i\bigl\|\mathbf{H}_{i}(\boldsymbol{\theta}^*)-\bar{\mathbf{H}}\bigr\|_2$ (в ожидании $\bar\mu_f\asymp\mu_f(f\mid D)$), получаем:
 \[
     \bigl|\mathcal{L}_{k+1}(\boldsymbol{\theta})-\mathcal{L}_k(\boldsymbol{\theta})\bigr|
-    \le \frac{M_{\ell}}{k+1}+\frac{\mu_f(f\mid D)}{k+1}\bigl\|\boldsymbol{\theta}-\boldsymbol{\theta}^*\bigr\|_2^2.
+    \le \frac{M_{\ell}}{k+1}+\frac{\bar\mu_f}{k+1}\bigl\|\boldsymbol{\theta}-\boldsymbol{\theta}^*\bigr\|_2^2.
 \]
 \begin{columns}[T]
 \begin{column}{0.36\textwidth}
@@ -407,7 +407,7 @@
     \[
         k^\star=k^\star(\bar\mu_f,M_\ell,L_3,R,\varepsilon,\varepsilon_g),
     \]
-    причем $k^\star$ растет с~$\bar\mu_f$, $M_\ell$, $L_3$ и~$R^2/\varepsilon$. При $\varepsilon_g\to\varepsilon/2R$ знаменатель $\varepsilon-2\varepsilon_gR\to0$ и~$k^\star\to\infty$.
+    причем $k^\star$ растет с~$\bar\mu_f$, $M_\ell$, $L_3$ и~$R^2/\varepsilon$ при $\varepsilon_g=0$; при $\varepsilon_g>0$ зависимость от~$R$ и~$\varepsilon$ дробно-линейная. При $\varepsilon_g\to\varepsilon/2R$ знаменатель $\varepsilon-2\varepsilon_gR\to0$ и~$k^\star\to\infty$.
 \end{ruscorollary}
 \begin{rusremark}
     В ожидании по выборке допустима замена $\bar\mu_f\to\mu_f(f\mid D)$, поскольку $\mathbb{E}\|\mathbf{H}_{k+1}-\bar{\mathbf{H}}\|_2=\mu_f(f\mid D)$ и $\|\bar{\mathbf{H}}-\mathbf{H}^{(k)}\|_2=O(1/\sqrt{k})$. При $\varepsilon_g>0$ правая часть содержит постоянное слагаемое $2\varepsilon_gR$, поэтому $\limsup_{k\to\infty}|\mathcal{L}_{k+1}-\mathcal{L}_k|\le 2\varepsilon_gR$.
@@ -422,10 +422,10 @@
 \small
 Ландшафтная мера $\mu_f(f\mid D)$ --- частный случай общей меры сложности модели.
 \begin{rusdefinition}
-    Мерой сложности модели~$f$ назовем отображение~$\mu_f(f_i):\mathfrak{F}\to\mathbb{R}_+$.
+    Мерой сложности модели~$f$ назовем отображение~$\mu_f:\mathfrak{F}\to\mathbb{R}_+$.
 \end{rusdefinition}
 \begin{rusremark}
-    Множество моделей~$\mathfrak{F}$ кольцом не является, поэтому $\mu_f$ --- характеристика. Пример: $\mu_f(f)=|\boldsymbol{\theta}|$, $\boldsymbol{\theta}\in\mathbb{R}^{P}$.
+    Множество моделей~$\mathfrak{F}$ кольцом не является, поэтому $\mu_f$ --- характеристика. Пример: $\mu_f(f)=\|\boldsymbol{\theta}\|_2$, $\boldsymbol{\theta}\in\mathbb{R}^{P}$.
 \end{rusremark}
 \begin{rusdefinition}
     Мерой сложности выборки назовем отображение~$\mu_D:\mathfrak{D}_\Gamma\to\mathbb{R}_+$ такое, что для любых $D_i,D_j$:
@@ -526,7 +526,7 @@
     \]
 \end{rustheorem}
 \begin{rusremark}
-    Оценка является частным случаем теоремы о факторизации $\mathbf{H}_O=\mathbf{Q}^{\top}\mathbf{F}^{\top}\mathbf{A}\mathbf{F}\mathbf{Q}$ для полносвязной параметризации и дает экспоненциальную зависимость от глубины $L$.
+    Оценка записана в предположении $\|\mathbf{W}^{(p)}\|_2=M_{\mathbf{W}}\neq1$ (иначе знаменатель $M_{\mathbf{W}}^2-1$ обращается в ноль); при $M_{\mathbf{W}}=1$ второе слагаемое понимается как предел и равно $L$. Оценка является частным случаем теоремы о факторизации $\mathbf{H}_O=\mathbf{Q}^{\top}\mathbf{F}^{\top}\mathbf{A}\mathbf{F}\mathbf{Q}$ для полносвязной параметризации и дает экспоненциальную зависимость от глубины $L$.
 \end{rusremark}
 \key{Норма Гессе для полносвязной сети растет экспоненциально с глубиной.}
 \end{frame}
@@ -535,7 +535,7 @@
 \justifying
 \small
 \begin{rustheorem}[Киселев, Мешков, Грабовой]
-    Пусть задана сеть вида $f_{\boldsymbol{\theta}}x = C_{\mathbf{W}^{(L+1)}} \circ \sigma \circ \dots \circ \sigma \circ C_{\mathbf{W}^{(1)}}$, где $C_{\mathbf{W}^{(i)}}$ --- одномерная свертка без дополнения и с единичным шагом. Пусть заданы оценки $C_l\le C$, $k_i\le k_{\mathrm{ker}}$, $d_i\le d$, $|\mathbf{W}^{(p)}_{i,j,k}|^2\le w^2$. Тогда
+    Пусть задана сеть вида $f_{\boldsymbol{\theta}}(x) = C_{\mathbf{W}^{(L+1)}} \circ \sigma \circ \dots \circ \sigma \circ C_{\mathbf{W}^{(1)}}(x)$, где $C_{\mathbf{W}^{(i)}}$ --- одномерная свертка без дополнения и с единичным шагом. Пусть заданы оценки $C_l\le C$, $k_i\le k_{\mathrm{ker}}$, $d_i\le d$, $|\mathbf{W}^{(p)}_{i,j,k}|^2\le w^2$. Тогда
     \[
         \left\|\mathbf{H}_{O}\right\| \leqslant \sqrt{2}\left\|x\right\|^2d^2(L+1)(C^2w^2k_{\mathrm{ker}}d)^L.
     \]
@@ -763,10 +763,14 @@
 \begin{rustheorem}[Грабовой]
     Пусть выполняются условия: (1) $p(\mathbf{u}|\mathfrak{D})=\mathcal{N}(\mathbf{m},\boldsymbol{\Sigma})$, (2) $T=L$, (3) $n_t^{(\mathrm{tr})}\ge n_t^{(\mathrm{st})}$. Пусть преобразование $\boldsymbol{\phi}(t,\mathbf{u})$ удаляет один нейрон из $t$-го слоя модели учителя, а $\boldsymbol{\upsilon}=\boldsymbol{\phi}(t,\mathbf{u})$ --- вектор оставшихся параметров. Тогда распределение параметров после такого преобразования также является нормальным: $p(\boldsymbol{\upsilon}|\mathfrak{D})=\mathcal{N}(\boldsymbol{\mu}_{\boldsymbol{\upsilon}},\boldsymbol{\Xi}_{\boldsymbol{\upsilon},\boldsymbol{\upsilon}})$.
 \end{rustheorem}
-Параметры условного нормального распределения:
+Параметры условного нормального распределения (полный вектор и подвектор, соответствующий~$\boldsymbol{\upsilon}$):
 \[
-    \boldsymbol{\mu}_{\boldsymbol{\upsilon}}=\mathbf{m}_{\bar{\nu}_1}+\boldsymbol{\Sigma}_{\bar{\nu}_1,\nu_1}\boldsymbol{\Sigma}_{\nu_1,\nu_1}^{-1}\bigl(\mathbf{0}-\mathbf{m}_{\nu_1}\bigr),\qquad
-    \boldsymbol{\Xi}_{\boldsymbol{\upsilon},\boldsymbol{\upsilon}}=\boldsymbol{\Sigma}_{\bar{\nu}_1,\bar{\nu}_1}-\boldsymbol{\Sigma}_{\bar{\nu}_1,\nu_1}\boldsymbol{\Sigma}_{\nu_1,\nu_1}^{-1}\boldsymbol{\Sigma}_{\nu_1,\bar{\nu}_1},
+    \boldsymbol{\mu}=\mathbf{m}_{\bar{\nu}_1}+\boldsymbol{\Sigma}_{\bar{\nu}_1,\nu_1}\boldsymbol{\Sigma}_{\nu_1,\nu_1}^{-1}\bigl(\mathbf{0}-\mathbf{m}_{\nu_1}\bigr),\qquad
+    \boldsymbol{\Xi}=\boldsymbol{\Sigma}_{\bar{\nu}_1,\bar{\nu}_1}-\boldsymbol{\Sigma}_{\bar{\nu}_1,\nu_1}\boldsymbol{\Sigma}_{\nu_1,\nu_1}^{-1}\boldsymbol{\Sigma}_{\nu_1,\bar{\nu}_1},
+\]
+\[
+    \boldsymbol{\mu}_{\boldsymbol{\upsilon}}=[\boldsymbol{\mu}]_{\boldsymbol{\upsilon}},\qquad
+    \boldsymbol{\Xi}_{\boldsymbol{\upsilon},\boldsymbol{\upsilon}}=[\boldsymbol{\Xi}]_{\boldsymbol{\upsilon},\boldsymbol{\upsilon}},
 \]
 где $\bar{\nu}_1=\bigl[\boldsymbol{\upsilon}^{\top},\nu_2^{\top}\bigr]^{\top}$, $\nu_1$ --- удаляемый нейрон.
 \begin{rustheorem}[Грабовой]
@@ -822,7 +826,7 @@
 Процедура прореживания. Обозначим~$\mathcal{I}_{\mathbf{w}_{t_0}}$ вектор индексов, порядок которого задан при помощи ковариационной матрицы~$\mathbf{C}_{t_0}$.
 \[
     \alpha_i(\zeta)=\begin{cases}
-        1,&\text{если }\mathcal{I}_{\mathbf{w}_{t_0}}[j]\le\zeta,\\
+        1,&\text{если }\mathcal{I}_{\mathbf{w}_{t_0}}[i]\le\zeta,\\
         0,&\text{иначе},
     \end{cases}\qquad
     \mathbf{w}_t=\mathbf{w}_{t-1}+\bm{\alpha}(\zeta)\cdot\Delta\mathbf{w}\bigl(\mathbf{g}_{S,t},\mathbf{w}_{t-1},\mathbf{w}_{t-2},\ldots\bigr),
@@ -886,6 +890,9 @@ LoRA ограничивает $\Delta W$ условием низкого ран�
     \end{enumerate}
     Тогда $\widehat{\Theta}_n \xrightarrow{P} \Theta^\star$ при $n\to\infty$.
 \end{rustheorem}
+\begin{rusremark}
+    Здесь $\Theta$ --- матрица обновления $\Delta W$, а не пара $(A,B)$: в силу $\Delta W=AB=(AC)(C^{-1}B)$ минимум по $(A,B)$ не единствен. Состоятельность понимается для произведения $AB$.
+\end{rusremark}
 \key{При низкоранговой параметризации оценка остается статистически состоятельной.}
 \end{frame}
 %----------------------------------------------------------------------------------------------------------
@@ -1122,8 +1129,8 @@ MAGE --- качественный набор ($\mathrm{KL}_{\mathrm{shuffle}}=0.
     \item Скорость изменения эмпирического риска ограничена $A_1/(k+1)+2\varepsilon_gR$.
     \item Ковариация градиентов равна гаусс-ньютоновской компоненте Гессе; полный гессиан есть ее сумма с остатком.
     \item Ландшафтная мера сложности полносвязной сети $\mu_f(f\mid D)\propto L(hM)^{2L}$: экспоненциально по глубине, полиномиально по ширине.
-    \item Ландшафтная мера сложности 1D-сверточной сети $\mu_f(f\mid D)\propto L(C^2M^2k_{\mathrm{ker}}d)^{L}$: линейно по длине последовательности.
-    \item Ландшафтная мера сложности 2D-сверточной сети $\mu_f(f\mid D)\propto C^2k_{\mathrm{ker}}^2L(C^2k_{\mathrm{ker}}^2M^2mn)^{L}$: квадратично по размеру изображения.
+    \item Ландшафтная мера сложности 1D-сверточной сети $\mu_f(f\mid D)\propto L(C^2M^2k_{\mathrm{ker}}d)^{L}$: полиномиально степени $L$ по длине последовательности.
+    \item Ландшафтная мера сложности 2D-сверточной сети $\mu_f(f\mid D)\propto C^2k_{\mathrm{ker}}^2L(C^2k_{\mathrm{ker}}^2M^2mn)^{L}$: полиномиально степени $L$ по площади изображения.
     \item Ландшафтная мера сложности монотонна по глубине и уменьшается при макс- и усредняющем пулинге.
     \item Достаточный размер выборки~$m^*$ ограничен с двух сторон через меру разброса Гессе и ландшафтную меру сложности.
     \item Достаточный размер выборки $m^*=\Theta\bigl((M_\ell+\mu_f(f\mid D)R^2)/\varepsilon\bigr)$: пропорционален мере сложности, обратно пропорционален точности.
