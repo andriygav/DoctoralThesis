@@ -359,7 +359,7 @@
 \begin{rusremark}
     При $\|\boldsymbol{\theta}-\boldsymbol{\theta}^*\|_2\le R$ и требовании $\bigl|\mathcal{L}_{k+1}-\mathcal{L}_k\bigr|\le\varepsilon$ получаем
     \[
-        k+1 \ge \frac{M_{\ell}+\mu_f(f\mid D)R^2}{\varepsilon}.
+        k+1 \ge \frac{M_{\ell}+\bar\mu_f\,R^2}{\varepsilon}.
     \]
 \end{rusremark}
 \end{column}
@@ -526,7 +526,7 @@
     \]
 \end{rustheorem}
 \begin{rusremark}
-    Оценка записана в предположении $\|\mathbf{W}^{(p)}\|_2=M_{\mathbf{W}}\neq1$ (иначе знаменатель $M_{\mathbf{W}}^2-1$ обращается в ноль); при $M_{\mathbf{W}}=1$ второе слагаемое понимается как предел и равно $L$. Оценка является частным случаем теоремы о факторизации $\mathbf{H}_O=\mathbf{Q}^{\top}\mathbf{F}^{\top}\mathbf{A}\mathbf{F}\mathbf{Q}$ для полносвязной параметризации и дает экспоненциальную зависимость от глубины $L$.
+    Оценка записана в предположении $\|\mathbf{W}^{(p)}\|_2=M_{\mathbf{W}}\neq1$ (иначе знаменатель $M_{\mathbf{W}}^2-1$ обращается в ноль); при $M_{\mathbf{W}}=1$ второе слагаемое понимается как предел и равно $\sqrt{2}L$. Оценка является частным случаем теоремы о факторизации $\mathbf{H}_O=\mathbf{Q}^{\top}\mathbf{F}^{\top}\mathbf{A}\mathbf{F}\mathbf{Q}$ для полносвязной параметризации и дает экспоненциальную зависимость от глубины $L$.
 \end{rusremark}
 \key{Норма Гессе для полносвязной сети растет экспоненциально с глубиной.}
 \end{frame}
