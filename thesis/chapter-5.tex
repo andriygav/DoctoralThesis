@@ -403,7 +403,7 @@ $\|x_i\|_2 \le R$.
 \begin{corollary}[Многозадачность уменьшает достаточный размер выборки]\label{thm:mtl-mstar-scaling}
 Пусть выполнены условия теоремы~\ref{thm:per-task-rc-fair-scaling}, в частности $B_{\mathrm{shared}}\le B_{\mathrm{enc}}/\sqrt{T}$, и пусть, дополнительно, справедливы следующие предположения.
 \begin{enumerate}[1)]
-\item \textbf{(С2) Мост.} Существует $c>0$ такое, что из $U_n(B)\le\mu_D(D)/c$ следует $\mu_f(f)\le\mu_D(D)$, где $\mu_f$~--- ландшафтная мера. Это дополнительная гипотеза, а не следствие. Без нее ниже доказуем только пункт~1.
+\item \textbf{(С2) Мост.} Существует $c>0$ такое, что из $U_n(B)\le\mu_D(D)/c$ следует $\mu_f(f)\le\mu_D(D)$, где $\mu_f$~--- ландшафтная мера.
 \item \textbf{(С3)} $U_n(B)=\Theta(B/\sqrt{n})$ при фиксированном $B$.
 \item \textbf{(С4)} $U_n$ однородна по $B$ степени $1$ при фиксированном $n$: $U_n(\lambda B)=\lambda U_n(B)$ для $\lambda>0$.
 \end{enumerate}
@@ -418,7 +418,6 @@ $\|x_i\|_2 \le R$.
   m^*(B_{\mathrm{shared}})\le\frac{m^*(B_{\mathrm{enc}})}{T} .
 \end{equation}
 \end{enumerate}
-При этом прямого вывода $\mathrm{ERC}_{\mathrm{MTL}}\le\mathrm{ERC}_{\mathrm{STL}}/\sqrt{T}$ на уровне точных значений не делается.
 \end{corollary}
 
 \begin{proof}
@@ -441,6 +440,11 @@ $\|x_i\|_2 \le R$.
 что дает~\eqref{ch5:eq:mtl-mstar-scaling}.
 Если (С4) не выполнено, а известно лишь $U_n(B)=\Theta(B/\sqrt{n})$ из (С3), то $m^*(B)=\Theta(B^2)$ с коэффициентом, зависящим от $B$.
 Тогда~\eqref{ch5:eq:mtl-mstar-scaling} справедливо лишь с точностью до мультипликативной константы, не зависящей от $T$. \end{proof}
+
+\begin{remark}[Ограничение следствия]
+Теорема~\ref{thm:per-task-rc-fair-scaling} устанавливает уменьшение верхней границы~$U_n(B)$ в $\sqrt{T}$ раз, но из неё не следует $\mathrm{ERC}_{\mathrm{MTL}}\le\mathrm{ERC}_{\mathrm{STL}}/\sqrt{T}$ для фактических значений эмпирической сложности Радемахера.
+Множитель $1/\sqrt{T}$ относится к верхней границе одного и того же вида~$U_n(B)$, а не к измеренным значениям $\mathrm{ERC}$.
+\end{remark}
 
 \begin{remark}[Вырождение при одной задаче]\label{ch5:rem:mtl-t1}
 При $T=1$ условие $B_{\mathrm{shared}}\le B_{\mathrm{enc}}/\sqrt{T}$ переходит в $B_{\mathrm{shared}}\le B_{\mathrm{enc}}$.
