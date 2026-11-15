@@ -45,21 +45,21 @@
 \]
 
 Для поиска оптимальных параметров модели используется градиентный метод оптимизации:
-\[
+\begin{equation}
     \label{ch-5:eq:st:4}
     \begin{aligned}
     \textbf{w}_{t} = \textbf{w}_{t-1} + \Delta\textbf{w}\bigl(\textbf{g}_{S,t}, \textbf{w}_{t-1}, \textbf{w}_{t-2}, \ldots\bigr), \quad \textbf{g}_{S,t}=\frac{\partial \mathcal{L}\bigl(\textbf{w}_{t}, \textbf{X}_{S}, \textbf{Y}_{S}\bigr)}{\partial \textbf{w}},
     \end{aligned}
-\]
+\end{equation}
 где $t$~--- номер итерации, $\textbf{g}_{S,t}$~--- значение градиента на подвыборке размера $S$, $\Delta\textbf{w}$~--- приращение вектора параметров.
 
 Порядок на множестве параметров модели задается при помощи ковариационной матрицы $\mathbf{C}$ градиентов функции ошибки $\mathcal{L}$ по параметрам модели $\textbf{w}$. Для вычисления ковариационной матрицы $\mathbf{C}$ используется итерационная формула~\cite{Chunyan2016}, вычисляемая на каждой итерации \eqref{ch-5:eq:st:4} градиентного метода оптимизации параметров:
-\[
+\begin{equation}
     \label{ch-5:eq:st:5}
     \begin{aligned}
     \mathbf{C}_t = \bigl(1-\kappa_t\bigr)\mathbf{C}_{t-1}+\kappa_t\bigl(\textbf{g}_{1,t}-\textbf{g}_{S,t}\bigr)\bigl(\textbf{g}_{1,t}-\textbf{g}_{S,t}\bigr)^{\mathsf{T}},
     \end{aligned}
-\]
+\end{equation}
  где $t$~--- номер итерации, $\textbf{g}_{S,t}$~--- значение градиента на подвыборке размера $S$, $\textbf{g}_{1,t}$~--- значение градиента на первом элементе подвыборки, $\kappa_t=\frac{1}{t}$~--- параметр сглаживания, $\mathbf{C}_0$ инициализируются из равномерного распределения.
 
 Пусть известно $t_0$~--- число итераций, после которого все параметры находятся в некоторой локальной окрестности минимума, тогда, как показано в работе~\cite{Chunyan2016}, матрица $\mathbf{C}_{t_0}$ аппроксимирует истинную ковариационную матрицу $\mathbf{C}$. Ковариационная матрица $\mathbf{C}_{t_0}$ используется для упорядочения параметров модели $\textbf{w}_{t_0}$.
@@ -92,7 +92,7 @@
   \mathbf{H}&=\mathbf{H}_O+\mathbf{R}=\mathbf{C}+\mathbf{R}, \label{ch4:eq:hess-decomp}\\
   \bigl\|\mathbf{R}\bigr\|_2&\le M_2\,m_g. \label{ch4:eq:resid-bound}
 \end{align}
-В частности, $\operatorname{tr}\mathbf{C}=\operatorname{tr}\mathbf{H}_O$ и $\operatorname{tr}\mathbf{H}=\operatorname{tr}\mathbf{C}+\operatorname{tr}\mathbf{R}$, при этом $\lvert\operatorname{tr}\mathbf{R}\rvert\le n\,M_2m_g$.
+В частности, $\operatorname{tr}\mathbf{C}=\operatorname{tr}\mathbf{H}_O$ и $\operatorname{tr}\mathbf{H}=\operatorname{tr}\mathbf{C}+\operatorname{tr}\mathbf{R}$, при этом $\lvert\operatorname{tr}\mathbf{R}\rvert\le p\,M_2m_g$.
 \end{proposition}
 
 \begin{proof}
@@ -110,7 +110,7 @@
   \bigl\|\mathbf{R}\bigr\|_2=\bigl\|\mathbb{E}\bigl[g_i\nabla^2z_i\bigr]\bigr\|_2\le\mathbb{E}\bigl[\lvert g_i\rvert\,\bigl\|\nabla^2z_i\bigr\|_2\bigr]\le M_2\,\mathbb{E}\lvert g_i\rvert\le M_2m_g ,
 \]
 то есть~\eqref{ch4:eq:resid-bound}.
-Соотношения для следов следуют из~\eqref{ch4:eq:cov-eq-gn} и~\eqref{ch4:eq:hess-decomp} и оценки $\lvert\operatorname{tr}\mathbf{M}\rvert\le n\|\mathbf{M}\|_2$. \end{proof}
+Соотношения для следов следуют из~\eqref{ch4:eq:cov-eq-gn} и~\eqref{ch4:eq:hess-decomp} и оценки $\lvert\operatorname{tr}\mathbf{M}\rvert\le p\|\mathbf{M}\|_2$. \end{proof}
 
 \begin{remark}[Перенос на итерационную матрицу]\label{ch4:rem:cov-Ct}
 Равенство~\eqref{ch4:eq:cov-eq-gn} установлено для $\mathbf{C}=\mathbb{E}[\nabla\ell\,\nabla\ell^{\top}]$.
@@ -132,7 +132,7 @@ $$
  то вектор индексов $\mathcal{I}_{\textbf{w}_{t_0}} = [3,1,2]$.
 
 Для фиксации параметров $\textbf{w}_{t_0}$ при помощи вектора индексов $\mathcal{I}_{\textbf{w}_{t_0}}$ используется бинарный вектор $\bm{\alpha}\bigl(\zeta\bigr)$:
-\[
+\begin{equation}
     \label{ch-5:eq:st:6}
     \begin{aligned}
     \alpha_i\bigl(\zeta\bigr) = \begin{cases}
@@ -140,7 +140,7 @@ $$
        0 &\text{иначе},
      \end{cases}
     \end{aligned}
-\]
+\end{equation}
  где $\zeta$~--- число фиксирующих параметров.
 
  Учитывая \eqref{ch-5:eq:st:6}, уравнение \eqref{ch-5:eq:st:4} приводится к виду
@@ -164,8 +164,8 @@ $$
 \]
 
 \begin{figure}[h!t]\center
-    \subfloat[Матрица ковариации]{\includegraphics[width=0.5\textwidth]{thesis/figures/chapter-4/belsli/Cov}}
-    \subfloat[Дисперсионные доли]{\includegraphics[width=0.5\textwidth]{thesis/figures/chapter-4/belsli/BelslyImage}}
+    \subfloat[Матрица ковариации]{\includegraphics[width=0.5\textwidth]{figures/chapter-4/belsli/Cov}}
+    \subfloat[Дисперсионные доли]{\includegraphics[width=0.5\textwidth]{figures/chapter-4/belsli/BelslyImage}}
     \caption{Иллюстрация метода Белсли для анализа мультиколлинеарности параметров на синтетических данных. Слева показана матрица ковариации параметров, справа~--- дисперсионные доли, демонстрирующие вклад каждого признака в дисперсию параметров модели.}
     \label{CovBel}
 \end{figure}
@@ -462,13 +462,13 @@ Fashion-MNIST, удаление слоя & $667700$ параметров & $3970
 В настоящем разделе рассматривается метод дистилляции моделей глубокого обучения на многодоменных данных. В отличие от классической дистилляции, где модель учителя и модель ученика обучаются на данных из одного домена, предлагаемый метод позволяет передавать знания между моделями, обученными на данных из различных доменов, связанных инъективным отображением.
 
 \begin{figure}[h!t]\center
-    {\includegraphics[width=0.4 \textwidth]{thesis/figures/chapter-4/multidomain-distillation/Distillation_only}}
+    {\includegraphics[width=0.4 \textwidth]{figures/chapter-4/multidomain-distillation/Distillation_only}}
     \caption{Схема базовой дистилляции моделей глубокого обучения, где модель учителя обучается на большом наборе данных из генеральной совокупности $A$, а затем ее выходы используются для обучения модели ученика на меньшем наборе данных из того же домена.}
     \label{dist_only}
 \end{figure}
 
 \begin{figure}[h!t]\center
-    {\includegraphics[width=0.4 \textwidth]{thesis/figures/chapter-4/multidomain-distillation/Distillation_DA}}
+    {\includegraphics[width=0.4 \textwidth]{figures/chapter-4/multidomain-distillation/Distillation_DA}}
     \caption{Схема дистилляции моделей глубокого обучения с доменной адаптацией, где модель учителя обучается на данных из домена $A$, а модель ученика~--- на данных из домена $B$, связанных инъективным отображением $\varphi$.}
     \label{dist_da}
 \end{figure}
@@ -761,15 +761,15 @@ R_{\text{rg}} = \frac{\sum_{(\textbf{x},y)\in \mathfrak{D}} \left(f(\textbf{x}, 
 Для эксперимента на выборке Wine~\cite{Wine} рассматривается нейронная сеть с 13 нейронами на входе, 13 нейронами в скрытом слое и 3 нейронами на выходе.
 
 \begin{figure}[h!t]\center
-    \includegraphics[width=0.8\textwidth]{thesis/figures/chapter-4/belsli/Wine/All.pdf}\\
+    \includegraphics[width=0.8\textwidth]{figures/chapter-4/belsli/Wine/All.pdf}\\
     \caption{Зависимость точности классификации $R_{\mathrm{cl}}$ от процента удаленных параметров для различных методов прореживания на выборке Wine. Метод оптимального прореживания, вариационный метод и метод Белсли позволяют удалить $\approx80\%$ параметров без существенной потери качества.}
     \label{WineAll}
 \end{figure}
 
 \begin{figure}[h!t]\center
-    \subfloat[Произвольное удаление параметров]{\includegraphics[width=0.5\textwidth]{thesis/figures/chapter-4/belsli/Wine/RandomNoise3D.pdf}}
-    \subfloat[Оптимальное прореживание]{\includegraphics[width=0.5\textwidth]{thesis/figures/chapter-4/belsli/Wine/OBDNoise3D.pdf}}\\
-    \subfloat[Вариационный метод]{\includegraphics[width=0.5\textwidth]{thesis/figures/chapter-4/belsli/Wine/VariationalNoise3D.pdf}}
+    \subfloat[Произвольное удаление параметров]{\includegraphics[width=0.5\textwidth]{figures/chapter-4/belsli/Wine/RandomNoise3D.pdf}}
+    \subfloat[Оптимальное прореживание]{\includegraphics[width=0.5\textwidth]{figures/chapter-4/belsli/Wine/OBDNoise3D.pdf}}\\
+    \subfloat[Вариационный метод]{\includegraphics[width=0.5\textwidth]{figures/chapter-4/belsli/Wine/VariationalNoise3D.pdf}}
     \caption{Поверхности изменения уровня шума ответов нейросети при изменении процента удаленных параметров и уровня шума входных данных для различных методов прореживания на выборке Wine. Метод Белсли демонстрирует наименьший уровень шума, что видно по более низкому положению соответствующей поверхности.}
     \label{WineNoise}
 \end{figure}
@@ -781,15 +781,15 @@ R_{\text{rg}} = \frac{\sum_{(\textbf{x},y)\in \mathfrak{D}} \left(f(\textbf{x}, 
 Для эксперимента на выборке Boston Housing~\cite{boston1978} рассматривается нейронная сеть с 13 нейронами на входе, 39 нейронами в скрытом слое и одним нейроном на выходе.
 
 \begin{figure}[h!t]\center
-    \includegraphics[width=0.8\textwidth]{thesis/figures/chapter-4/belsli/Boston/All.pdf}\\
+    \includegraphics[width=0.8\textwidth]{figures/chapter-4/belsli/Boston/All.pdf}\\
     \caption{Зависимость среднеквадратического отклонения прогноза $\mathsf{R}_{\text{rg}}$ от процента удаленных параметров для различных методов прореживания на выборке Boston Housing. В этой постановке метод Белсли допускает удаление большей доли параметров при сопоставимом качестве.}
     \label{BostonAll}
 \end{figure}
 
 \begin{figure}[h!t]\center
-    \subfloat[Произвольное удаление параметров]{\includegraphics[width=0.5\textwidth]{thesis/figures/chapter-4/belsli/Boston/RandomNoise3D.pdf}}
-    \subfloat[Оптимальное прореживание]{\includegraphics[width=0.5\textwidth]{thesis/figures/chapter-4/belsli/Boston/OBDNoise3D.pdf}}\\
-    \subfloat[Вариационный метод]{\includegraphics[width=0.5\textwidth]{thesis/figures/chapter-4/belsli/Boston/VariationalNoise3D.pdf}}
+    \subfloat[Произвольное удаление параметров]{\includegraphics[width=0.5\textwidth]{figures/chapter-4/belsli/Boston/RandomNoise3D.pdf}}
+    \subfloat[Оптимальное прореживание]{\includegraphics[width=0.5\textwidth]{figures/chapter-4/belsli/Boston/OBDNoise3D.pdf}}\\
+    \subfloat[Вариационный метод]{\includegraphics[width=0.5\textwidth]{figures/chapter-4/belsli/Boston/VariationalNoise3D.pdf}}
     \caption{Поверхности изменения уровня шума ответов нейросети при изменении процента удаленных параметров и уровня шума входных данных для различных методов прореживания на выборке Boston Housing. Все методы демонстрируют одинаковый уровень шума, так как соответствующие поверхности находятся на одном уровне.}
     \label{BostonNoise}
 \end{figure}
@@ -801,15 +801,15 @@ R_{\text{rg}} = \frac{\sum_{(\textbf{x},y)\in \mathfrak{D}} \left(f(\textbf{x}, 
 Для эксперимента на синтетических данных рассматривается нейронная сеть с 100 нейронами на входе и одним нейроном на выходе.
 
 \begin{figure}[h!t]\center
-    \includegraphics[width=0.8\textwidth]{thesis/figures/chapter-4/belsli/Data1/All.pdf}\\
+    \includegraphics[width=0.8\textwidth]{figures/chapter-4/belsli/Data1/All.pdf}\\
     \caption{Зависимость среднеквадратического отклонения прогноза от процента удаленных параметров для различных методов прореживания на синтетической выборке с мультиколлинеарными параметрами. Метод Белсли здесь дает уменьшение ошибки при удалении шумовых параметров.}
     \label{Data1All}
 \end{figure}
 
 \begin{figure}[h!t]\center
-    \subfloat[Произвольное удаление параметров]{\includegraphics[width=0.5\textwidth]{thesis/figures/chapter-4/belsli/Data1/RandomNoise3D.pdf}}
-    \subfloat[Оптимальное прореживание]{\includegraphics[width=0.5\textwidth]{thesis/figures/chapter-4/belsli/Data1/OBDNoise3D.pdf}}\\
-    \subfloat[Вариационный метод]{\includegraphics[width=0.5\textwidth]{thesis/figures/chapter-4/belsli/Data1/VariationalNoise3D.pdf}}
+    \subfloat[Произвольное удаление параметров]{\includegraphics[width=0.5\textwidth]{figures/chapter-4/belsli/Data1/RandomNoise3D.pdf}}
+    \subfloat[Оптимальное прореживание]{\includegraphics[width=0.5\textwidth]{figures/chapter-4/belsli/Data1/OBDNoise3D.pdf}}\\
+    \subfloat[Вариационный метод]{\includegraphics[width=0.5\textwidth]{figures/chapter-4/belsli/Data1/VariationalNoise3D.pdf}}
     \caption{Поверхности изменения уровня шума ответов нейросети при изменении процента удаленных параметров и уровня шума входных данных для различных методов прореживания на синтетической выборке. Метод Белсли демонстрирует наименьший уровень шума, что видно по более низкому положению соответствующей поверхности.}
     \label{Data1Noise}
 \end{figure}
@@ -962,7 +962,7 @@ R_{\text{rg}} = \frac{\sum_{(\textbf{x},y)\in \mathfrak{D}} \left(f(\textbf{x}, 
 Экспериментальная процедура включает три этапа. На первом этапе обучается модель ученика на малоресурсной части и происходит ее тестирование на тестовой части для получения базовой оценки качества. На втором этапе используются метки модели учителя, обученной на мультиресурсной части, для обучения модели ученика. На третьем этапе происходит обучение модели учителя на изображениях из мультиресурсной части и используется модель учителя и отображение для обучения модели ученика. Предобученная модель CycleGAN~\cite{CycleGAN} используется в качестве отображения $\varphi$ для доменной адаптации.
 
 \begin{figure}[htpb]\center
-    {\includegraphics[width=0.5\textwidth]{thesis/figures/chapter-4/multidomain-distillation/Mapping}}
+    {\includegraphics[width=0.5\textwidth]{figures/chapter-4/multidomain-distillation/Mapping}}
     \caption{Пример применения инъективного отображения $\varphi$ для доменной адаптации между ImageNet-Small и ImageNet-Big. Демонстрирует визуальное преобразование объекта из исходного домена в целевой домен для использования в многодоменной дистилляции.}
     \label{mapping}
 \end{figure}
@@ -1000,13 +1000,13 @@ R_{\text{rg}} = \frac{\sum_{(\textbf{x},y)\in \mathfrak{D}} \left(f(\textbf{x}, 
 
 Аналогично эксперименту по компьютерному зрению, сравнивается производительность модели ученика без учителя, с учителем и с учителем и адаптацией домена. Результаты усреднялись по 5 запускам для вычисления среднего значения и дисперсии метрик, что обеспечивает статистическую надежность полученных оценок.
 \begin{figure}[htpb]
-    \centerline{\includegraphics[width=0.5\textwidth]{thesis/figures/chapter-4/multidomain-distillation/Dist_acc.png}}
+    \centerline{\includegraphics[width=0.5\textwidth]{figures/chapter-4/multidomain-distillation/Dist_acc.png}}
     \caption{Зависимость точности аппроксимации от числа эпох обучения на тестовой выборке ImageNet для различных методов дистилляции. Результаты усреднены по 5 запускам, выше показатели у вариантов с учителем и доменной адаптацией.}
     \label{cv_acc}
 \end{figure}
 
 \begin{figure}[htpb]
-    \centerline{\includegraphics[width=0.5\textwidth]{thesis/figures/chapter-4/multidomain-distillation/Dist_loss.png}}
+    \centerline{\includegraphics[width=0.5\textwidth]{figures/chapter-4/multidomain-distillation/Dist_loss.png}}
     \caption{Зависимость ошибки перекрестной энтропии между истинными и предсказанными метками от числа эпох обучения на тестовой выборке ImageNet для различных методов дистилляции. Результаты усреднены по 5 запускам и показывают снижение ошибки при использовании методов дистилляции.}
     \label{cv_loss}
     \end{figure}
@@ -1045,7 +1045,7 @@ R_{\text{rg}} = \frac{\sum_{(\textbf{x},y)\in \mathfrak{D}} \left(f(\textbf{x}, 
 В таблице~\ref{table_4} представлены количественные результаты эксперимента по компьютерному зрению: валидационная точность, потери и интегральный критерий для моделей, обученных с дистилляцией и адаптацией домена и без них.
 
 \begin{figure}[h!t]\center
-    {\includegraphics[width=0.5 \textwidth]{thesis/figures/chapter-4/multidomain-distillation/NLP_loss.png}}
+    {\includegraphics[width=0.5 \textwidth]{figures/chapter-4/multidomain-distillation/NLP_loss.png}}
     \caption{Зависимость ошибки перекрестной энтропии от числа эпох обучения на тестовом наборе данных OPUS-100 для задачи машинного перевода. Результаты усреднены по 3 запускам, ниже ошибка у моделей с учителем.}
     \label{nlp_loss}
 \end{figure}
@@ -1104,19 +1104,19 @@ R_{\text{rg}} = \frac{\sum_{(\textbf{x},y)\in \mathfrak{D}} \left(f(\textbf{x}, 
 
 \begin{figure}[!t]
 \centering
-  \includegraphics[width=0.5\textwidth]{thesis/figures/chapter-4/anti-distillation/file}
+  \includegraphics[width=0.5\textwidth]{figures/chapter-4/anti-distillation/file}
  \caption{Сравнение валидационной точности для различных методов инициализации параметров модели на наборе данных Fashion-MNIST. Модели с антидистилляцией имеют меньшую дисперсию и более высокую точность, чем сравниваемые инициализации.}
   \label{fig:1}
 \end{figure}
 \begin{figure}[!t]
 \centering
-  \includegraphics[width=0.5\textwidth]{thesis/figures/chapter-4/anti-distillation/fsgm}
+  \includegraphics[width=0.5\textwidth]{figures/chapter-4/anti-distillation/fsgm}
  \caption{Зависимость валидационной точности от уровня адверсарного шума в данных для различных методов инициализации на наборе данных Fashion-MNIST. Антидистилляция сохраняет более высокую точность при высоких уровнях шума, чем сравниваемые методы.}
   \label{fig:2}
 \end{figure}
 \begin{figure}[!t]
 \centering
-  \includegraphics[width=0.5\textwidth]{thesis/figures/chapter-4/anti-distillation/noise}
+  \includegraphics[width=0.5\textwidth]{figures/chapter-4/anti-distillation/noise}
  \caption{Зависимость валидационной точности от параметра интенсивности нормального шума $\varepsilon$ в параметрах модели для различных методов инициализации на наборе данных Fashion-MNIST. Вариант без регуляризации матрицы Гессе ($\lambda_4=0$) сохраняет более высокую точность при максимальном уровне шума.}
   \label{fig:3}
 \end{figure}

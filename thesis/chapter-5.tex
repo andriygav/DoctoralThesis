@@ -294,13 +294,22 @@ $\|\phi(x;w)\|_2 \le B_{\mathrm{Lip}}\,\|w\|_2\,\|x\|_2$.
 \item Энкодер STL удовлетворяет $\|w_{\mathrm{enc}}\|\le B_{\mathrm{enc}}$,
 общий энкодер MTL удовлетворяет $\|w_{\mathrm{shared}}\|\le B_{\mathrm{shared}}$.
 \item Многозадачное масштабирование: $B_{\mathrm{shared}} \le B_{\mathrm{enc}}/\sqrt{T}$.
+\item Равномерная управляемость семейства энкодеров: существует постоянная
+$C_{\mathrm{enc}}\ge1$ такая, что для любой выборки $S_t$
+\begin{equation}\label{eq:enc-cover}
+\mathbb{E}_{\sigma}\sup_{\|w\|\le B}
+\Big\|\sum_{i=1}^{n}\sigma_i\,\phi(x_i;w)\Big\|_2
+\le
+C_{\mathrm{enc}}\sup_{\|w\|\le B}
+\Big(\sum_{i=1}^{n}\|\phi(x_i;w)\|_2^2\Big)^{1/2}.
+\end{equation}
 \end{enumerate}
 
 Обозначим через $\widehat{\mathfrak R}_n(\cdot;S_t)$ эмпирическую сложность Радемахера на $S_t$.
 Пусть $\mathcal{F}_{\mathrm{STL}}^{(t)}$ совпадает с семейством $\mathcal{F}(B_{\mathrm{enc}})$, а $\mathcal{F}_{\mathrm{MTL}}^{(t)}$~--- с семейством $\mathcal{F}(B_{\mathrm{shared}})$, где класс $\mathcal{F}(B)$ задается в доказательстве.
 Введем функцию
 \begin{equation}\label{eq:mtl-rc-upper-bound-template}
-U_n(B) := \frac{B_{\mathrm{head}}\,B_{\mathrm{Lip}}\,R\,B}{\sqrt{n}}.
+U_n(B) := \frac{C_{\mathrm{enc}}\,B_{\mathrm{head}}\,B_{\mathrm{Lip}}\,R\,B}{\sqrt{n}}.
 \end{equation}
 Тогда
 \begin{equation}\label{eq:mtl-vs-stl-rc}
@@ -308,7 +317,7 @@ U_n(B) := \frac{B_{\mathrm{head}}\,B_{\mathrm{Lip}}\,R\,B}{\sqrt{n}}.
 \qquad
 \widehat{\mathfrak R}_n\!\big(\mathcal{F}_{\mathrm{STL}}^{(t)};S_t\big)\le U_n(B_{\mathrm{enc}}).
 \end{equation}
-Следовательно, одна и та же величина вида~\eqref{eq:mtl-rc-upper-bound-template} дает верхнюю оценку эмпирической сложности Радемахера в STL- и MTL-постановках, а предположение~3 обеспечивает не менее чем $1/\sqrt{T}$-кратное уменьшение шаблонной верхней оценки при переходе от $B_{\mathrm{enc}}$ к $B_{\mathrm{shared}}$.
+Следовательно, одна и та же величина вида~\eqref{eq:mtl-rc-upper-bound-template} дает верхнюю оценку эмпирической сложности Радемахера в STL- и MTL-постановках с точностью до постоянной $C_{\mathrm{enc}}$, а предположение~3 обеспечивает не менее чем $1/\sqrt{T}$-кратное уменьшение шаблонной верхней оценки при переходе от $B_{\mathrm{enc}}$ к $B_{\mathrm{shared}}$. Постоянная $C_{\mathrm{enc}}$ сокращается при сравнении шаблонных оценок STL и MTL, поэтому результат сравнения сохраняется.
 \end{theorem}
 \begin{proof}
 Пусть $S_t = \{x_i\}_{i=1}^n$~--- выборка для целевой задачи $t$ с
@@ -347,18 +356,40 @@ $\|x_i\|_2 \le R$.
       \Big\|\sum_{i=1}^n \sigma_i\, \phi(x_i;w)\Big\|_2.
 \]
 
-По неравенствам Йенсена и Хинчина,
+По неравенствам Йенсена и Хинчина для фиксированного набора векторов
+$a_i$ выполняется
 \[
     \mathbb{E}_{\sigma}
       \Big\|\sum_{i=1}^n \sigma_i\,a_i\Big\|_2
     \le
-    \Big(\sum_{i=1}^n \|a_i\|_2^2\Big)^{1/2},
+    \Big(\sum_{i=1}^n \|a_i\|_2^2\Big)^{1/2}.
 \]
-что дает
+Применяя это неравенство к каждому фиксированному $w$ и затем беря верхнюю
+грань по $\|w\|\le B$, получаем
 \[
     \widehat{\mathfrak R}_n(\mathcal{F}(B);S_t)
     \le
     \frac{B_{\mathrm{head}}}{n}\,
+    \mathbb{E}_{\sigma}
+    \sup_{\|w\|\le B}
+      \Big\|\sum_{i=1}^n \sigma_i\,\phi(x_i;w)\Big\|_2.
+\]
+Согласно предположению~\eqref{eq:enc-cover}, верхняя грань и математическое
+ожидание можно переставить с точностью до постоянной $C_{\mathrm{enc}}$:
+\[
+    \mathbb{E}_{\sigma}
+    \sup_{\|w\|\le B}
+      \Big\|\sum_{i=1}^n \sigma_i\,\phi(x_i;w)\Big\|_2
+    \le
+    C_{\mathrm{enc}}
+    \sup_{\|w\|\le B}
+      \Big(\sum_{i=1}^n \|\phi(x_i;w)\|_2^2\Big)^{1/2},
+\]
+откуда
+\[
+    \widehat{\mathfrak R}_n(\mathcal{F}(B);S_t)
+    \le
+    \frac{C_{\mathrm{enc}}\,B_{\mathrm{head}}}{n}\,
     \sup_{\|w\|\le B}
       \Big(\sum_{i=1}^n \|\phi(x_i;w)\|_2^2\Big)^{1/2}.
 \]
@@ -503,7 +534,7 @@ $\|x_i\|_2 \le R$.
 
 \begin{figure}[h!t]
 	\centering
-	\includegraphics[width=\textwidth]{thesis/figures/chapter-5/fmri/scheme}
+	\includegraphics[width=\textwidth]{figures/chapter-5/fmri/scheme}
 	\caption{Схема метода декодирования фМРТ-изображений из видеопоследовательностей. Метод использует архитектуру ResNet152 для векторизации видеокадров и линейную регрессию с $L_2$-регуляризацией для предсказания разностей между последовательными фМРТ-снимками с учетом временной задержки $\Delta t$.}
 	\label{fig:scheme}
 \end{figure}
@@ -680,7 +711,7 @@ mDeBERTa~\cite{he2021deberta}, которая является современ�
 
 \begin{figure}[ht]
   \centering
-    \includegraphics[width=0.75\linewidth]{thesis/figures/chapter-5/rademacher/lora_rank_vs_f1-1.pdf}
+    \includegraphics[width=0.75\linewidth]{figures/chapter-5/rademacher/lora_rank_vs_f1-1.pdf}
     \caption{Зависимость метрики $F_1$ от ранга $r$ адаптеров LoRA для модели DeBERTa-v3-base на задаче детекции машинно-генерированного текста. В данном эксперименте наибольшие значения $F_1$ наблюдаются при $r=8$. Дальнейший рост ранга не улучшает метрику.}
     \label{fig:r_vs_f1}
 \label{fig:lora_rank}
@@ -851,15 +882,15 @@ LoRA обеспечивает ускорение в 12.6\%, что указыв�
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.7\linewidth]{thesis/figures/chapter-5/rademacher/r_vs_loss.png}
+    \includegraphics[width=0.7\linewidth]{figures/chapter-5/rademacher/r_vs_loss.png}
     \caption{Динамика потерь при обучении модели DeBERTa-v3-base с адаптерами LoRA различных рангов ($r \in \{8, 16, 32\}$) на задаче детекции машинно-генерированного текста. Анализ показывает, что более высокие ранги обеспечивают более быструю сходимость и более низкие финальные потери, но $r=8$ дает более высокие метрики обобщения в данном эксперименте.}
     \label{fig:r_vs_loss}
 \end{figure}
 
 \begin{figure}[htbp]
     \centering
-    \subfloat[Норма градиента]{\includegraphics[width=0.75\textwidth]{thesis/figures/chapter-5/rademacher/Gradient_norm.png}}\\
-    \subfloat[Ошибка на обучающей выборке]{\includegraphics[width=0.75\textwidth]{thesis/figures/chapter-5/rademacher/Loss.png}}\\
+    \subfloat[Норма градиента]{\includegraphics[width=0.75\textwidth]{figures/chapter-5/rademacher/Gradient_norm.png}}\\
+    \subfloat[Ошибка на обучающей выборке]{\includegraphics[width=0.75\textwidth]{figures/chapter-5/rademacher/Loss.png}}\\
     \caption{Динамика нормы градиента и потерь при обучении моделей DeBERTa-v3-base с полной тонкой настройкой и адаптацией LoRA ($r=8$) в течение 5 эпох на задаче детекции машинно-генерированного текста. LoRA демонстрирует более гладкие траектории нормы градиента и потерь, что указывает на более стабильную сходимость в данном эксперименте.}
     \label{fig:combined}
 \end{figure}
@@ -923,7 +954,7 @@ LoRA обеспечивает ускорение в 12.6\%, что указыв�
 Графики демонстрируют, что оптимальное значение коэффициента $\alpha \approx 1000$.
 Форма кривой сохраняется независимо от коэффициента сжатия фМРТ-изображений.
 \begin{figure}[h!t]\centering
-	\includegraphics[width=0.65\textwidth]{thesis/figures/chapter-5/fmri/subs_MSE_alpha}
+	\includegraphics[width=0.65\textwidth]{figures/chapter-5/fmri/subs_MSE_alpha}
 	\caption{Зависимость метрики MSE от параметра регуляризации $\alpha$ для метода декодирования фМРТ-изображений на тестовой выборке при различных коэффициентах сжатия (1, 2, 4, 8). Оптимальное значение коэффициента $\alpha \approx 1000$ сохраняется независимо от коэффициента сжатия, что подтверждает стабильность метода при снижении размерности данных.}
 	\label{fig:mse-alpha}
 \end{figure}
@@ -1015,14 +1046,14 @@ LoRA обеспечивает ускорение в 12.6\%, что указыв�
 \end{table}
 
 \begin{figure}[h!t]\centering
-    \includegraphics[width=\textwidth]{thesis/figures/chapter-5/ai-datasets/violins_PHD}
+    \includegraphics[width=\textwidth]{figures/chapter-5/ai-datasets/violins_PHD}
     \caption{Распределения размерности персистентной гомологии (PHD) для человеческих и машинно-сгенерированных текстов в различных наборах данных детекции. Качественные наборы данных (SemEval, PAN24, MGT-1) демонстрируют схожие распределения PHD для обоих типов текстов, что указывает на высокое качество сгенерированных данных и их близость к человеческим текстам по топологическим характеристикам.}
     \label{fig:phd_values}
 \end{figure}
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=1.00\textwidth]{thesis/figures/chapter-5/ai-datasets/4_datasets_TTS}
+\includegraphics[width=1.00\textwidth]{figures/chapter-5/ai-datasets/4_datasets_TTS}
 \caption{Топологические временные ряды (TTS) для четырех наборов данных с высокими значениями метрики $\text{KL}_{\text{TTS}}$: GhostBuster, PAN24, MGTBench и DAGPap22. Высокие значения $\text{KL}_{\text{TTS}}$ для GhostBuster и PAN24 обусловлены расхождением в текстах с более высокими размерностями, тогда как для MGTBench и DAGPap22~--- разницей в самих распределениях PHD, что указывает на различные типы различий между человеческими и машинно-сгенерированными текстами.}
 \label{tts}
 \end{figure}

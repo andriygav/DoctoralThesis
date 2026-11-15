@@ -139,7 +139,7 @@
 Данная оценка соответствует эмпирическому представлению о том, что кривизна функции потерь пропорциональна квадрату нормы весов и квадрату нормы входных данных.
 \end{remark}
 
-Теорема~\ref{theorem:hess-kiselev-lemma} указывает на зависимость спектральной нормы матрицы Гессе от размера скрытого слоя~$h$. Полученная оценка демонстрирует, что норма матрицы Гессе растет экспоненциально как по глубине сети~$L$, так и по размеру скрытого слоя $h$, причем степень экспоненты определяется произведением $hM$. Это подчеркивает влияние ширины и глубины сети на сложность оптимизационного ландшафта.
+Теорема~\ref{theorem:hess-kiselev-lemma} указывает на зависимость спектральной нормы матрицы Гессе от размера скрытого слоя~$h$. Полученная оценка демонстрирует, что норма матрицы Гессе растет экспоненциально по глубине сети~$L$ и полиномиально по размеру скрытого слоя $h$, причем степень полинома определяется произведением $hM$. Это подчеркивает влияние ширины и глубины сети на сложность оптимизационного ландшафта.
 
 Экспоненциальный характер зависимости объясняет известную эмпирическую оценку о том, что глубокие и широкие сети обладают значительно более сложной геометрией функции потерь, что создает дополнительные сложности для методов оптимизации. Полученный результат также подчеркивает важность контроля норм параметров на протяжении всего процесса обучения для обеспечения устойчивости алгоритмов оптимизации.
 
@@ -1161,57 +1161,57 @@ M &= 3\cdot\max \Bigg(\frac{2N}{d_V} \| \mathbf{X}\|^2_2, \\
 
 \begin{figure}[h!t]
     \centering
-    \includegraphics[width=0.72\linewidth]{thesis/figures/chapter-2/transformer/hessian_entries}
+    \includegraphics[width=0.72\linewidth]{figures/chapter-2/transformer/hessian_entries}
     \caption{Визуализация элементов матрицы Гессе для инициализированной модели трансформера (один блок, набор данных MNIST, батч из 128 примеров) в логарифмическом масштабе. Наблюдается неоднородность величин элементов, при этом блоки, соответствующие параметрам Values, демонстрируют наибольшие значения.}
     \label{chapter:gesian:experiment:fig:hessian_entries}
 \end{figure}
 
 \begin{figure}[h!t]
     \centering
-    \includegraphics[width=0.72\linewidth]{thesis/figures/chapter-2/transformer/hessian_entries_trained}
+    \includegraphics[width=0.72\linewidth]{figures/chapter-2/transformer/hessian_entries_trained}
     \caption{Визуализация элементов матрицы Гессе для обученной модели трансформера (один блок, набор данных MNIST, точность на валидации >50\%) в логарифмическом масштабе. После обучения все блоки матрицы Гессе приобретают большие значения, при этом блок {Values}-{Values} демонстрирует максимальные величины, что подтверждает гетерогенность вклада различных параметров в кривизну функции потерь.}
     \label{chapter:gesian:experiment:fig:hessian_entries_trained}
 \end{figure}
 
 \begin{figure}[h!t]
     \centering
-    \includegraphics[width=0.43\linewidth]{thesis/figures/chapter-2/transformer/parameters_norm}\hfill
-    \includegraphics[width=0.43\linewidth]{thesis/figures/chapter-2/transformer/hessians_norm}
+    \includegraphics[width=0.43\linewidth]{figures/chapter-2/transformer/parameters_norm}\hfill
+    \includegraphics[width=0.43\linewidth]{figures/chapter-2/transformer/hessians_norm}
     \caption{Спектральные нормы блоков параметров трансформера (слева) и спектральные нормы соответствующих блоков матрицы Гессе (справа), вычисленные на одном батче из 128 примеров набора данных MNIST. Наибольшие значения норм соответствуют блокам Keys и Values, что согласуется с теоретическими оценками теоремы~\ref{thm:transformer_hessian_estimate}.}
     \label{chapter:gesian:experiment:fig:norm}
 \end{figure}
 
 \begin{figure}[h!t]
     \centering
-    \includegraphics[width=\linewidth]{thesis/figures/chapter-2/transformer/hessian_entries_queries.pdf}
+    \includegraphics[width=\linewidth]{figures/chapter-2/transformer/hessian_entries_queries.pdf}
     \caption{Визуализация элементов блока матрицы Гессе, соответствующего параметрам Queries трансформера (один блок, набор данных MNIST). Блок демонстрирует структурированное распределение элементов, отражающее взаимосвязи между параметрами механизма самовнимания.}
     \label{chapter:gesian:experiment:fig:hessian_entries_queries}
 \end{figure}
 
 \begin{figure}[h!t]
     \centering
-    \includegraphics[width=\linewidth]{thesis/figures/chapter-2/transformer/hessian_entries_keys.pdf}
+    \includegraphics[width=\linewidth]{figures/chapter-2/transformer/hessian_entries_keys.pdf}
     \caption{Визуализация элементов блока матрицы Гессе, соответствующего параметрам Keys трансформера (один блок, набор данных MNIST). Блок демонстрирует значительные значения элементов, что подтверждает важную роль параметров Keys в формировании кривизны функции потерь.}
     \label{chapter:gesian:experiment:fig:hessian_entries_keys}
 \end{figure}
 
 \begin{figure}[h!t]
     \centering
-    \includegraphics[width=\linewidth]{thesis/figures/chapter-2/transformer/hessian_entries_values.pdf}
+    \includegraphics[width=\linewidth]{figures/chapter-2/transformer/hessian_entries_values.pdf}
     \caption{Визуализация элементов блока матрицы Гессе, соответствующего параметрам Values трансформера (один блок, набор данных MNIST). Блок демонстрирует наибольшие значения элементов среди всех блоков матрицы Гессе, что согласуется с теоретическими оценками и подтверждает доминирующий вклад параметров Values в общую кривизну функции потерь.}
     \label{chapter:gesian:experiment:fig:hessian_entries_values}
 \end{figure}
 
 \begin{figure}[h!t]
     \centering
-    \includegraphics[width=\linewidth]{thesis/figures/chapter-2/transformer/hessian_entries_layernorm.pdf}
+    \includegraphics[width=\linewidth]{figures/chapter-2/transformer/hessian_entries_layernorm.pdf}
     \caption{Визуализация элементов блока матрицы Гессе, соответствующего параметрам LayerNorm трансформера (один блок, набор данных MNIST). Блок демонстрирует структурированное распределение элементов, отражающее влияние нормализации слоев на локальную геометрию функции потерь.}
     \label{chapter:gesian:experiment:fig:hessian_entries_layernorm}
 \end{figure}
 
 \begin{figure}[h!t]
     \centering
-    \includegraphics[width=\linewidth]{thesis/figures/chapter-2/transformer/hessian_entries_feedforward.pdf}
+    \includegraphics[width=\linewidth]{figures/chapter-2/transformer/hessian_entries_feedforward.pdf}
     \caption{Визуализация элементов блока матрицы Гессе, соответствующего параметрам блока FFN (Feed-Forward Network) трансформера (один блок, набор данных MNIST). Блок демонстрирует умеренные значения элементов по сравнению с блоками Keys и Values, что отражает специфику вклада полносвязных слоев в кривизну функции потерь.}
     \label{chapter:gesian:experiment:fig:hessian_entries_feedforward}
 \end{figure}

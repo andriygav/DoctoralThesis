@@ -968,15 +968,21 @@ $F_1$-мера $\uparrow$ & $0.7806$ & $0.7648$ & $-2.0\%$ \\
         \item Ограничение на признаки: для всех $x,w$ $\|\phi(x;w)\|_2\le B_{\mathrm{Lip}}\,\|w\|_2\,\|x\|_2$.
         \item Энкодер STL удовлетворяет $\|w_{\mathrm{enc}}\|\le B_{\mathrm{enc}}$, общий энкодер MTL удовлетворяет $\|w_{\mathrm{shared}}\|\le B_{\mathrm{shared}}$.
         \item Многозадачное масштабирование: $B_{\mathrm{shared}}\le B_{\mathrm{enc}}/\sqrt{T}$.
+        \item Равномерная управляемость семейства энкодеров: существует постоянная $C_{\mathrm{enc}}\ge1$ такая, что для любой выборки $S_t$
+        \[
+            \mathbb{E}_{\sigma}\sup_{\|w\|\le B}\Bigl\|\sum_{i=1}^{n}\sigma_i\,\phi(x_i;w)\Bigr\|_2
+            \le
+            C_{\mathrm{enc}}\sup_{\|w\|\le B}\Bigl(\sum_{i=1}^{n}\|\phi(x_i;w)\|_2^2\Bigr)^{1/2}.
+        \]
     \end{enumerate}
-    Обозначим через $\widehat{\mathfrak R}_n(\cdot;S_t)$ эмпирическую сложность Радемахера на $S_t$. Пусть $\mathcal{F}_{\mathrm{STL}}^{(t)}$ совпадает с семейством $\mathcal{F}(B_{\mathrm{enc}})$, а $\mathcal{F}_{\mathrm{MTL}}^{(t)}$ --- с семейством $\mathcal{F}(B_{\mathrm{shared}})$, где класс $\mathcal{F}(B)$ задается в доказательстве. Введем функцию $U_n(B):=\frac{B_{\mathrm{head}}\,B_{\mathrm{Lip}}\,R\,B}{\sqrt{n}}$. Тогда
+    Обозначим через $\widehat{\mathfrak R}_n(\cdot;S_t)$ эмпирическую сложность Радемахера на $S_t$. Пусть $\mathcal{F}_{\mathrm{STL}}^{(t)}$ совпадает с семейством $\mathcal{F}(B_{\mathrm{enc}})$, а $\mathcal{F}_{\mathrm{MTL}}^{(t)}$ --- с семейством $\mathcal{F}(B_{\mathrm{shared}})$, где класс $\mathcal{F}(B)$ задается в доказательстве. Введем функцию $U_n(B):=\frac{C_{\mathrm{enc}}\,B_{\mathrm{head}}\,B_{\mathrm{Lip}}\,R\,B}{\sqrt{n}}$. Тогда
     \[
         \widehat{\mathfrak R}_n\!\big(\mathcal{F}_{\mathrm{MTL}}^{(t)};S_t\big)\le U_n(B_{\mathrm{shared}})\le \frac{1}{\sqrt{T}}\,U_n(B_{\mathrm{enc}}), \qquad
         \widehat{\mathfrak R}_n\!\big(\mathcal{F}_{\mathrm{STL}}^{(t)};S_t\big)\le U_n(B_{\mathrm{enc}}).
     \]
 \end{rustheorem}
 \begin{rusremark}
-    Одна и та же величина вида $U_n(B)$ дает верхнюю оценку эмпирической сложности Радемахера в STL- и MTL-постановках, а предположение 3 обеспечивает уменьшение этой верхней оценки не менее чем в $\sqrt{T}$ раз при переходе от $B_{\mathrm{enc}}$ к $B_{\mathrm{shared}}$.
+    Одна и та же величина вида $U_n(B)$ дает верхнюю оценку эмпирической сложности Радемахера в STL- и MTL-постановках с точностью до постоянной $C_{\mathrm{enc}}$, а предположение 3 обеспечивает уменьшение этой верхней оценки не менее чем в $\sqrt{T}$ раз при переходе от $B_{\mathrm{enc}}$ к $B_{\mathrm{shared}}$. Постоянная $C_{\mathrm{enc}}$ сокращается при сравнении шаблонных оценок STL и MTL, поэтому результат сравнения сохраняется.
 \end{rusremark}
 \key{Многозадачное обучение снижает верхнюю оценку сложности на задачу в $\sqrt{T}$ раз.}
 \end{frame}
