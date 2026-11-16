@@ -92,7 +92,7 @@
 \begin{frame}{Объект, предмет и методы исследования}
 \justifying
 \small
-\textbf{Объект исследования.} Процессы параметрического обучения моделей машинного обучения по конечным выборкам.
+\textbf{Объект исследования.} Процесс обучения параметрических моделей машинного обучения по конечным выборкам.
 
 \vspace{0.3cm}
 \textbf{Предмет исследования.} Согласованность сложности параметрических моделей машинного обучения с характеристиками обучающей выборки, формализуемая мерами на модели и на выборке.
@@ -138,7 +138,7 @@
 
 \textbf{Ограниченность классических мер сложности.} Классические меры сложности --- VC-размерность, радемахеровская сложность и PAC-обучаемость --- характеризуют класс гипотез и ориентированы на анализ худшего случая. Их оценки консервативны для перепараметризованных моделей и не учитывают специфику архитектур, что ограничивает их применимость к моделям глубокого обучения.
 
-\textbf{Независимость от найденного решения.} VC-размерность и радемахеровская сложность класса не зависят от найденного решения $f\in\mathcal{F}$ и не отражают влияния регуляризации, ранней остановки и особенностей процесса оптимизации на обобщающую способность модели. (Norm-based и PAC-Bayes-границы зависят от решения, здесь речь о мерах, характеризующих класс гипотез.)
+\textbf{Независимость от найденного решения.} VC-размерность и радемахеровская сложность класса не зависят от найденного решения $f\in\mathcal{F}$ и не отражают влияния регуляризации, ранней остановки и особенностей процесса оптимизации на обобщающую способность модели.
 
 \textbf{О границе применимости.} Результаты формулируются в терминах стабилизации эмпирического риска, утверждения о связи с обобщающей способностью в работе не доказываются.
 
@@ -155,6 +155,7 @@
 \justifying
 \small
 \textbf{Проблема.} Классические меры относятся к классу гипотез, а не к конкретному решению. Для перепараметризованных сетей оценки завышают сложность обобщения.
+
 \textbf{VC-размерность.} Наибольшее число точек, которые класс может разбить всеми способами. Функция роста:
 \[
     m_{\mathcal{H}}(n)=\sum_{i=0}^{VC(\mathcal{H})}\binom{n}{i}.
@@ -189,9 +190,9 @@
 \end{rustheorem}
 Разложение полной ошибки обученной модели~$f_D$:
 \[
-    R(f_D)\le R(f^*)+\underbrace{\bigl(\inf_{f\in\mathcal{F}}R(f)-R(f^*)\bigr)}_{\text{ошибка аппроксимации}}+\underbrace{\bigl(R(f_D)-\inf_{f\in\mathcal{F}}R(f)\bigr)^{+}}_{\text{ошибка оценивания}},
+    R(f_D)\le R(f^*)+\underbrace{\inf_{f\in\mathcal{F}}R(f)-R(f^*)}_{\text{ошибка аппроксимации}}+\underbrace{\bigl(R(f_D)-\inf_{f\in\mathcal{F}}R(f)\bigr)^{+}}_{\text{ошибка оценивания}},
 \]
-где $f^*$ --- функция (возможно, вне класса $\mathcal{F}$), реализующая минимум истинного риска.
+где $f^*$ --- функция, реализующая минимум истинного риска.
 
 \key{Аппроксимационная теория не задает сложность обучения по конечной выборке.}
 \end{frame}
@@ -212,7 +213,7 @@
 \includegraphics[width=0.98\textwidth]{thesis/figures/chapter-0/scaling_law.pdf}
 \end{minipage}\hfill
 \begin{minipage}[c]{0.50\textwidth}
-Каждая кривая --- фиксированный $C$, минимум в~$N^{*}$. С ростом $C$ минимум смещается вправо и вниз (пунктир~--- точки оптимума).
+Каждая кривая --- фиксированный $C$, минимум в~$N^{*}$. С ростом $C$ минимум смещается вправо и вниз.
 \end{minipage}
 \key{Законы масштабирования --- эмпирическое макроописание без объяснения механизма.}
 \end{frame}
@@ -311,7 +312,7 @@
     \mathbf{H}^{(k)}(\boldsymbol{\theta})=\nabla^2_{\boldsymbol{\theta}}\mathcal{L}_{k}(\boldsymbol{\theta})=\frac{1}{k}\sum_{i=1}^{k}\mathbf{H}_{i}(\boldsymbol{\theta}).
 \]
 \begin{rusremark}
-    Вместо точной критической точки можно допускать малые градиенты: для некоторого $\varepsilon_g\ge 0$
+    Вместо стационарности можно допускать малые градиенты: для некоторого $\varepsilon_g\ge 0$
     \[
         \bigl\|\nabla \mathcal{L}_k(\boldsymbol{\theta}^*)\bigr\|_2 \le \varepsilon_g,\qquad
         \bigl\|\nabla \mathcal{L}_{k+1}(\boldsymbol{\theta}^*)\bigr\|_2 \le \varepsilon_g .
@@ -367,7 +368,12 @@
     где $\mathbb{E}_{i}$ означает математическое ожидание по равномерно выбранному индексу из $D$ при фиксированной точке $\boldsymbol{\theta}^*$.
 \end{rusdefinition}
 \begin{rusremark}
-    $\mu_f$ велика, когда пообъектные матрицы Гессе существенно расходятся в операторной норме относительно своего среднего по $D$. Разность $\mathbf{H}^{(k+1)}-\mathbf{H}^{(k)}$ задает скорость сходимости ландшафта. Мера фиксируется на найденном решении $\boldsymbol{\theta}^*$ и зависит от параметризации: при эквивалентной перепараметризации функции $f$ (например, для ReLU-сети) гессиан потерь, а с ним и $\mu_f$, могут изменяться. Для однозначности рассматривается каноническая параметризация с фиксированной нормировкой весов (спектральная нормализация слоев / weight decay как селектор масштаба).
+    \begin{itemize}
+        \item $\mu_f$ велика, когда пообъектные матрицы Гессе существенно расходятся в операторной норме относительно своего среднего по $D$.
+        \item Разность $\mathbf{H}^{(k+1)}-\mathbf{H}^{(k)}$ задает скорость сходимости ландшафта.
+        \item Мера фиксируется на найденном решении $\boldsymbol{\theta}^*$ и зависит от параметризации.
+        \item Для однозначности рассматривается каноническая параметризация с фиксированной нормировкой весов.
+    \end{itemize}   
 \end{rusremark}
 \begin{figure}[t]\center
     \includegraphics[height=0.17\textwidth]{thesis/figures/chapter-1/empirical-landscape/fig_mu_residual_vs_loss_time.png}
@@ -381,7 +387,7 @@
 \justifying
 \small
 \setlength{\abovedisplayskip}{2pt}\setlength{\belowdisplayskip}{2pt}\setlength{\abovedisplayshortskip}{1pt}\setlength{\belowdisplayshortskip}{1pt}
-При разложении Тейлора ключевой член контролируется разностью матриц Гессе нового объекта и среднего:
+При разложении Тейлора квадратичный член контролируется разностью матриц Гессе нового объекта и среднего:
 \begin{align*}
     \bigl|\mathcal{L}_{k+1}(\boldsymbol{\theta})-\mathcal{L}_k(\boldsymbol{\theta})\bigr|
     &\le\frac{1}{k+1}\Bigl|\ell(f_{\boldsymbol{\theta}^*}(\mathbf{x}_{k+1}),\mathbf{y}_{k+1})-\frac{1}{k}\sum_{i=1}^{k}\ell(f_{\boldsymbol{\theta}^*}(\mathbf{x}_i),\mathbf{y}_i)\Bigr|\\
@@ -436,6 +442,34 @@
 \key{Скорость стабилизации риска напрямую связана со сложностью модели.}
 \end{frame}
 %----------------------------------------------------------------------------------------------------------
+\begin{frame}{Доказательство: стабилизация эмпирического риска}
+\justifying
+\footnotesize
+\vspace{-2pt}
+Источник скорости --- тождество скользящих средних:
+\[
+    \mathcal{L}_{k+1}-\mathcal{L}_k=\frac{1}{k+1}\bigl[\ell_{k+1}-\mathcal{L}_k\bigr].
+\]
+Тейлор по $\boldsymbol{\delta}=\boldsymbol{\theta}-\boldsymbol{\theta}^*$, $\|\boldsymbol{\delta}\|_2\le R$, в точке $\boldsymbol{\theta}^*$:
+\[
+    \frac{\ell_{k+1}-\mathcal{L}_k}{k+1}
+    =\underbrace{\frac{\ell_{k+1}(\boldsymbol{\theta}^*)-\mathcal{L}_k(\boldsymbol{\theta}^*)}{k+1}}_{\text{(I)}}
+    +\underbrace{\frac{\bigl(\nabla\ell_{k+1}(\boldsymbol{\theta}^*)-\nabla\mathcal{L}_k(\boldsymbol{\theta}^*)\bigr)^{\top}\boldsymbol{\delta}}{k+1}}_{\text{(II)}}
+    +\underbrace{\frac{\tfrac12\boldsymbol{\delta}^{\top}\bigl(\mathbf{H}^{(k+1)}(\boldsymbol{\xi}_1)-\mathbf{H}^{(k)}(\boldsymbol{\xi}_2)\bigr)\boldsymbol{\delta}}{k+1}}_{\text{(III)}}.
+\]
+Покомпонентно:
+\begin{itemize}
+    \item (I): $\bigl|\ell_{k+1}(\boldsymbol{\theta}^*)-\mathcal{L}_k(\boldsymbol{\theta}^*)\bigr|\le 2M_\ell$;
+    \item (II): $\bigl|(\nabla\ell_{k+1}(\boldsymbol{\theta}^*)-\nabla\mathcal{L}_k(\boldsymbol{\theta}^*))^{\top}\boldsymbol{\delta}\bigr|\le 2(k+1)\varepsilon_g R$;
+    \item (III): $\bigl\|\mathbf{H}^{(k+1)}(\boldsymbol{\xi}_1)-\mathbf{H}^{(k)}(\boldsymbol{\xi}_2)\bigr\|_2\le 2\bar\mu_f+2L_3R$.
+\end{itemize}
+Складывая вклады, получаем
+\[
+    \bigl|\mathcal{L}_{k+1}-\mathcal{L}_k\bigr|\le\frac{2M_\ell+\bar\mu_fR^2+L_3R^3}{k+1}+2\varepsilon_gR=\frac{A_1}{k+1}+2\varepsilon_gR .
+\]
+\key{Источник $1/(k+1)$ --- тождество средних; доминирует (III) с разбросом гессианов $\bar\mu_f\to\mu_f(f\mid D)$, (I) ограничен $M_\ell$.}
+\end{frame}
+%----------------------------------------------------------------------------------------------------------
 \begin{frame}{Оценка достаточного объема из стабилизации риска}
 \justifying
 \small
@@ -450,7 +484,7 @@
     причем $k^\star$ растет с~$\bar\mu_f$, $M_\ell$, $L_3$ и~$R^2/\varepsilon$ при $\varepsilon_g=0$, при $\varepsilon_g>0$ зависимость от~$R$ и~$\varepsilon$ дробно-линейная. При $\varepsilon_g\to\varepsilon/2R$ знаменатель $\varepsilon-2\varepsilon_gR\to0$ и~$k^\star\to\infty$.
 \end{ruscorollary}
 \begin{rusremark}
-    В ожидании по выборке допустима замена $\bar\mu_f\to\mu_f(f\mid D)$, поскольку $\mathbb{E}\|\mathbf{H}_{k+1}-\bar{\mathbf{H}}\|_2=\mu_f(f\mid D)$ и $\|\bar{\mathbf{H}}-\mathbf{H}^{(k)}\|_2=O(1/\sqrt{k})$. Условие $\bar\mu_f\asymp\mu_f(f\mid D)$ означает отсутствие выбросов и тяжелых хвостов в распределении норм матриц Гессе по объектам (ограниченность носителя). При $\varepsilon_g>0$ правая часть содержит постоянное слагаемое $2\varepsilon_gR$, поэтому $\limsup_{k\to\infty}|\mathcal{L}_{k+1}-\mathcal{L}_k|\le 2\varepsilon_gR$.
+    В ожидании по выборке допустима замена $\bar\mu_f\to\mu_f(f\mid D)$, поскольку $\mathbb{E}\|\mathbf{H}_{k+1}-\bar{\mathbf{H}}\|_2=\mu_f(f\mid D)$ и $\|\bar{\mathbf{H}}-\mathbf{H}^{(k)}\|_2=O(1/\sqrt{k})$. Условие $\bar\mu_f\asymp\mu_f(f\mid D)$ означает отсутствие выбросов и тяжелых хвостов в распределении норм матриц Гессе по объектам. При $\varepsilon_g>0$ правая часть содержит постоянное слагаемое $2\varepsilon_gR$, поэтому $\limsup_{k\to\infty}|\mathcal{L}_{k+1}-\mathcal{L}_k|\le 2\varepsilon_gR$.
 \end{rusremark}
 \key{Достаточный объем растет с разбросом матриц Гессе и обратно пропорционален точности аппроксимации.}
 \end{frame}
@@ -464,9 +498,7 @@
 \begin{rusdefinition}
     Мерой сложности модели~$f$ назовем отображение~$\mu_f:\mathfrak{F}\to\mathbb{R}_+$.
 \end{rusdefinition}
-\begin{rusremark}
-    $\mu_f$ --- функция, сопоставляющая модели число, а не структура (например, норма весов $\mu_f(f)=\|\boldsymbol{\theta}\|_2$), она не обязана быть аддитивной, а лишь отражать «сложность» модели.
-\end{rusremark}
+
 \begin{rusdefinition}
     Мерой сложности выборки назовем отображение~$\mu_D:\mathfrak{D}_\Gamma\to\mathbb{R}_+$, удовлетворяющее для любых $D_i,D_j$ условию конечной субаддитивности
     \[
@@ -474,8 +506,9 @@
     \]
     и условию монотонности по включению: $D_1\subseteq D_2\Rightarrow\mu_D(D_1)\le\mu_D(D_2)$. Аддитивность на непересекающихся множествах не предполагается.
 \end{rusdefinition}
+
 \begin{rusremark}
-    Мера субаддитивна и монотонна, но не обязана быть аддитивной: сложность объединения может быть меньше суммы сложностей частей (например, за счет общих закономерностей), что позволяет учитывать сложность отдельных объектов, а не только мощность выборки.
+    Мера субаддитивна и монотонна, но не обязана быть аддитивной: сложность объединения может быть меньше суммы сложностей частей, например, за счет общих закономерностей, что позволяет учитывать сложность отдельных объектов, а не только мощность выборки.
 \end{rusremark}
 \key{Мера сложности модели --- характеристика, мера сложности выборки субаддитивна и монотонна.}
 \end{frame}
@@ -521,7 +554,7 @@
 \end{rusdefinition}
 \begin{rusremark}
     Спектральное распределение Гессе бимодально: основная масса собственных значений --- вблизи нуля, выбросы --- в области ненулевых значений. Для практического анализа релевантна G-компонента:
-    $\mathbf{H}_{i}(\boldsymbol{\theta})\approx\nabla_{\boldsymbol{\theta}}\mathbf{z}_i\,\frac{\partial^2\ell(\mathbf{z}_i,\mathbf{y}_i)}{\partial\mathbf{z}_i^2}\,\nabla_{\boldsymbol{\theta}}\mathbf{z}_i^{\top}$. Теория нейронного касательного ядра линеаризует логиты, поэтому H-компонента исчезает.
+    $\mathbf{H}_{i}(\boldsymbol{\theta})\approx\nabla_{\boldsymbol{\theta}}\mathbf{z}_i\,\frac{\partial^2\ell(\mathbf{z}_i,\mathbf{y}_i)}{\partial\mathbf{z}_i^2}\,\nabla_{\boldsymbol{\theta}}\mathbf{z}_i^{\top}$.
 \end{rusremark}
 \key{Декомпозиция разделяет кривизну потери и кривизну отображения вход-выход, для анализа релевантна G-компонента.}
 \end{frame}
@@ -547,6 +580,24 @@
     $\mathbf{Q}^{(p)}=\partial\mathbf{T}^{(p)}/\partial\mathbf{W}^{(p)}$, $\mathbf{A}=\nabla^2_{\mathbf{z}}\ell=\mathrm{diag}(\mathbf{p})-\mathbf{p}\mathbf{p}^{\top}$ при кросс-энтропии.
 \end{rusremark}
 \key{Единая факторизация переносит оценку нормы Гессе на произвольную суперпозицию слоев с матрицами активации.}
+\end{frame}
+%----------------------------------------------------------------------------------------------------------
+\begin{frame}{Доказательство: факторизация матрицы Гессе}
+\justifying
+\footnotesize
+\vspace{-2pt}
+Представление $f_{\boldsymbol{\theta}}(\mathbf{x})=\mathbf{T}^{(L+1)}\boldsymbol{\Lambda}^{(L)}\dots\boldsymbol{\Lambda}^{(1)}\mathbf{T}^{(1)}\mathbf{x}$, $\mathbf{Q}^{(p)}:=\partial\mathbf{T}^{(p)}/\partial\mathbf{W}^{(p)}$.
+\begin{enumerate}[1)]
+    \item \textbf{Идея.} Веса входят в $\mathbf{T}^{(p)}$ линейно $\Rightarrow$ кривизна порождается масками $\boldsymbol{\Lambda}^{(p)}$, а не весами. $\mathbf{H}_O$ расщепляется на маску $\mathbf{F}$ и веса $\mathbf{A}$, причем для ReLU $\mathbf{H}_O=0$ п.в.
+    \item \textbf{Цепное правило.} $\dfrac{\partial\mathbf{z}}{\partial\mathbf{W}^{(p)}}=\bigl(\mathbf{G}^{(p)}\otimes\mathbf{x}^{(p-1)\top}\bigr)\mathbf{Q}^{(p)}$, по тождеству $\operatorname{vec}(\mathbf{B}\mathbf{V}\mathbf{A}^{\top})=(\mathbf{A}\otimes\mathbf{B})\operatorname{vec}(\mathbf{V})$.
+    \item \textbf{Блоки Гессе.} $\mathbf{H}_O^{(kl)}=\mathbf{Q}^{(k)\top}\bigl(\mathbf{G}^{(k)\top}\otimes\mathbf{R}^{(k-1)}\mathbf{x}\bigr)\mathbf{A}\bigl(\mathbf{G}^{(l)}\otimes\mathbf{x}^{\top}\mathbf{R}^{(l-1)\top}\bigr)\mathbf{Q}^{(l)}$.
+    \item \textbf{Сборка.} По всем слоям, $\mathbf{F}$ --- произведения Кронекера, $\mathbf{A}=\nabla^2_{\mathbf{z}}\ell$:
+    \[
+        \mathbf{H}_O=\mathbf{Q}^{\top}\mathbf{F}^{\top}\mathbf{A}\mathbf{F}\mathbf{Q}.
+    \]
+\end{enumerate}
+\vspace{-2pt}
+\key{Кривизна в масках $\Lambda$ (веса линейны) $\Rightarrow$ $\mathbf{H}_O=\mathbf{Q}^{\top}\mathbf{F}^{\top}\mathbf{A}\mathbf{F}\mathbf{Q}$, $\|\mathbf{H}_O\|\le\|\mathbf{Q}\|^2\|\mathbf{F}\|^2\|\mathbf{A}\|$.}
 \end{frame}
 %----------------------------------------------------------------------------------------------------------
 \begin{frame}{Оценка нормы Гессе для полносвязных сетей}
@@ -623,9 +674,9 @@
     \]
 \end{rustheorem}
 \begin{rusremark}
-    Оценка выражает зависимость от размерностей модели и норм весовых матриц, слагаемые пропорциональны различным степеням $\|\mathbf{X}\|_2$. Здесь ограничивается один слой самовнимания.
+    Величина $M$ задается максимумом из трех слагаемых. Первое зависит только от $N/d_V$ и $\|\mathbf{X}\|_2$; второе и третье растут с нормами весовых матриц $\mathbf{W}_K,\mathbf{W}_V,\mathbf{W}_Q$ и размерностями $d_K,d_V$. По входу слагаемые пропорциональны $\|\mathbf{X}\|_2^3,\ldots,\|\mathbf{X}\|_2^6$. Здесь ограничивается один слой самовнимания.
 \end{rusremark}
-\key{Слой самовнимания: $M$.}
+\key{Норма Гессе слоя самовнимания растет с нормой входа $\|\mathbf{X}\|_2$ и нормами весовых матриц $\mathbf{W}$; вклад по входу --- до $\|\mathbf{X}\|_2^6$.}
 \end{frame}
 %----------------------------------------------------------------------------------------------------------
 %----------------------------------------------------------------------------------------------------------
@@ -723,7 +774,7 @@
 \key{Эксперименты подтверждают асимптотический характер оценок ландшафтной меры.}
 \end{frame}
 %----------------------------------------------------------------------------------------------------------
-\begin{frame}{Полносвязная сеть: независимость от природы признаков}
+\begin{frame}{Сходимость ландшафта при признаковом экстракторе (ViT)}
 \justifying
 \small
 \begin{center}
@@ -731,12 +782,13 @@
 \includegraphics[width=0.49\textwidth]{thesis/figures/chapter-1/landscape-hessian/figs_extraction/mnist_hidden_size.pdf}
 \end{center}
 \vspace{2pt}
+Зависимость $\bigl|\mathcal{L}_{k+1}(\boldsymbol{\theta})-\mathcal{L}_k(\boldsymbol{\theta})\bigr|$ от размера выборки $k$ для полносвязной сети на MNIST, когда вход сети --- признаки предобученного энкодера вместо сырых пикселей.
 \begin{itemize}
     \setlength{\itemsep}{2pt}
-    \item Эффект глубины $L$ и ширины $h$ сохраняется при предобученном экстракторе признаков (Vision Transformer, ViT).
-    \item Оценка $\mu_f(f\mid D)\lesssim L(hM)^{2L}$ не зависит от природы входного пространства объектов.
+    \item Справа: при $h=16$ разность растет с глубиной $L$ от $1$ до $10$.
+    \item Слева: при $L=5$ разность убывает с шириной $h$ от $4$ до $64$.
 \end{itemize}
-\key{Оценка ландшафтной меры устойчива к выбору экстрактора признаков.}
+\key{Тот же характер зависимостей от $L$ и $h$ сохраняется при входе в виде признаков предобученного экстрактора, что согласуется с теоремой о сходимости ландшафта.}
 \end{frame}
 %----------------------------------------------------------------------------------------------------------
 \begin{frame}{Ландшафтная мера и радемахеровская сложность}
@@ -832,6 +884,37 @@
 \key{Оценка двусторонняя: порядок $m^*$ определяется ландшафтной мерой, а не просто мажорируется ею.}
 \end{frame}
 %----------------------------------------------------------------------------------------------------------
+\begin{frame}{Доказательство: двусторонняя оценка $m^*$}
+\justifying
+\footnotesize
+\vspace{-2pt}
+\textbf{Верхняя оценка.} Стабилизация $\bigl|\mathcal{L}_{k+1}-\mathcal{L}_k\bigr|\le\varepsilon$ при $\dfrac{A_1}{k+1}+2\varepsilon_gR\le\varepsilon$:
+\[
+    m^*\le m^*_{\mathrm{up}}:=\frac{A_1}{\varepsilon-2\varepsilon_gR},\qquad A_1=2M_\ell+\bar\mu_f R^2+L_3 R^3 .
+\]
+\textbf{Нижняя оценка.} По обратному неравенству треугольника, $\boldsymbol{\delta}=R\mathbf{v}$, $\|\mathbf{v}\|_2=1$:
+\begin{align*}
+    \bigl|\mathcal{L}_{k+1}-\mathcal{L}_k\bigr|
+    &\ge\tfrac12 R^2\bigl|\mathbf{v}^{\top}\bigl(\mathbf{H}^{(k+1)}(\boldsymbol{\xi}_1)-\mathbf{H}^{(k)}(\boldsymbol{\xi}_2)\bigr)\mathbf{v}\bigr|-2M_\ell\\
+    &\ge\tfrac12 R^2\bigl(c\,\bar\mu_f-2L_3R\bigr)-2M_\ell .
+\end{align*}
+Стабилизация невозможна при $k<m^*_{\mathrm{low}}:=\tfrac{1}{\varepsilon}\bigl(\tfrac12 R^2(c\,\bar\mu_f-2L_3R)-2M_\ell\bigr)-1$, откуда $m^*_{\mathrm{low}}\le m^*\le m^*_{\mathrm{up}}$.
+
+\textbf{Ключевое.} Верхняя --- мажорирование по всем $k$, а нижняя требует $\bigl|\mathbf{v}^{\top}(\mathbf{H}_{k+1}-\mathbf{H}_k)\mathbf{v}\bigr|\ge c\,\bar\mu_f$ на нетривиальном множестве, поэтому «для всех $k$» ломается.
+\vspace{-2pt}
+\begin{center}
+\begin{tikzpicture}[font=\footnotesize,>=stealth]
+    \draw[->] (-3.4,0)--(3.4,0) node[right]{$m^*$};
+    \draw[very thick,darkcyan] (-3.2,0)--(-0.7,0);
+    \draw[very thick,darkgreen] (0.7,0)--(3.2,0);
+    \node[below,darkcyan,align=center] at (-2.0,-0.32){$\le m^*_{\mathrm{up}}=\frac{A_1}{\varepsilon-2\varepsilon_gR}$};
+    \node[below,darkgreen,align=center] at (2.0,-0.32){$\ge m^*_{\mathrm{low}}=\frac{K}{\varepsilon}-1$};
+\end{tikzpicture}
+\end{center}
+\vspace{-6pt}
+\key{При $\bar\mu_f R^2\gg M_\ell$, $L_3R=O(\bar\mu_f)$ получаем $m^*=\Theta\bigl((M_\ell+\mu_f(f\mid D)R^2)/\varepsilon\bigr)$.}
+\end{frame}
+%----------------------------------------------------------------------------------------------------------
 \begin{frame}{Асимптотическая оценка $m^*$ через ландшафтную меру}
 \justifying
 \footnotesize
@@ -923,6 +1006,24 @@
 \key{Инъективное~$\varphi$ не увеличивает меру учителя сверх~$\mu_f(\mathbf{f}\mid\mathfrak{D}_{\mathrm{t}})+2L_H s$ при ограниченном сдвиге доменов.}
 \end{frame}
 %----------------------------------------------------------------------------------------------------------
+\begin{frame}{Доказательство: отображение $\varphi$ не увеличивает меру}
+\justifying
+\footnotesize
+\vspace{-2pt}
+Цель: $\mu_f(\mathbf{f}\circ\varphi\mid\mathfrak{D}_{\mathrm{t}})\le\mu_f(\mathbf{f}\mid\mathfrak{D}_{\mathrm{t}})+2L_H s$. Опора --- цепное правило и липшицевость гессиана.
+\begin{enumerate}[1)]
+    \item \textbf{Цепное правило.} $\nabla^2_{\boldsymbol{\theta}}\bigl[\ell(\mathbf{f}_{\boldsymbol{\theta}}(\varphi(\mathbf{x})),y)\bigr]=\mathbf{H}^{\mathbf{f}}(\varphi(\mathbf{x}))$.
+    \item \textbf{Равенство мер.} $\mu_f(\mathbf{f}\circ\varphi\mid\mathfrak{D}_{\mathrm{t}})=\mu_f\bigl(\mathbf{f}\mid\varphi(\mathfrak{D}_{\mathrm{t}})\bigr)$.
+    \item \textbf{Липшицевость.} $\bigl\|\mathbf{H}^{\mathbf{f}}(\mathbf{x})-\mathbf{H}^{\mathbf{f}}(\mathbf{x}')\bigr\|_2\le L_H\|\mathbf{x}-\mathbf{x}'\|_2$ и неравенство треугольника:
+    \[
+        \bigl\|\mathbf{H}_i-\bar{\mathbf{H}}\bigr\|_2\le\bigl\|\mathbf{H}_i^{0}-\bar{\mathbf{H}}^{0}\bigr\|_2+2L_H s,\quad s=\max_i\|\varphi(\mathbf{x}_i)-\mathbf{x}_i\|_2.
+    \]
+\end{enumerate}
+Усредняя по $i$: $\mu_f\bigl(\mathbf{f}\mid\varphi(\mathfrak{D}_{\mathrm{t}})\bigr)\le\mu_f\bigl(\mathbf{f}\mid\mathfrak{D}_{\mathrm{t}}\bigr)+2L_H s$.
+\vspace{-2pt}
+\key{Гессиан композиции = гессиан учителя в $\varphi(\mathbf{x})$; сдвиг доменов входит с коэффициентом $2L_H s$.}
+\end{frame}
+%----------------------------------------------------------------------------------------------------------
 \begin{frame}{Прореживание по ковариации градиентов}
 \justifying
 \footnotesize
@@ -945,6 +1046,7 @@
         \mathbf{C}=\mathbf{H}_O,\qquad \mathbf{H}=\mathbf{H}_O+\mathbf{R}=\mathbf{C}+\mathbf{R},\qquad \|\mathbf{R}\|_2\le M_2\,m_g.
     \]
 \end{rusproposition}
+Иллюстрация тождества $\mathbf{C}=\mathbf{H}_O$: GN-компонента есть фишеровская информация $\mathbf{H}_O=\mathbb{E}\bigl[\nabla\log p_\theta\,\nabla\log p_\theta^{\top}\bigr]$, а градиент потерь $g_i=-\nabla\log p_\theta(y_i\mid x_i)$, поэтому при $y_i\sim p_\theta(\cdot\mid x_i)$ (модельная вероятность из условия) $\mathbb{E}\bigl[g_i g_i^{\top}\mid x_i\bigr]=\mathbf{H}_O(x_i)$. Следовательно, прореживание по $\mathbf{C}$ режет именно ландшафтно-значимую GN-компоненту $\mathbf{H}_O$, а не нерелевантную $\mathbf{R}$ в декомпозиции $\mathbf{H}=\mathbf{H}_O+\mathbf{R}$.
 Процедура прореживания. Обозначим~$\mathcal{I}_{\mathbf{w}_{t_0}}$ вектор индексов, порядок которого задан при помощи ковариационной матрицы~$\mathbf{C}_{t_0}$.
 \[
     \alpha_i(\zeta)=\begin{cases}
@@ -1013,7 +1115,7 @@ LoRA ограничивает $\Delta W$ условием низкого ран�
     Тогда $\widehat{\Theta}_n \xrightarrow{P} \Theta^\star$ при $n\to\infty$.
 \end{rustheorem}
 \begin{rusremark}
-    Здесь $\Theta$ --- матрица обновления $\Delta W$, а не пара $(A,B)$: в силу $\Delta W=AB=(AC)(C^{-1}B)$ минимум по $(A,B)$ не единствен. Состоятельность понимается для произведения $AB$.
+    Здесь $\Theta$ --- матрица обновления $\Delta W$, а не пара $(A,B)$: в силу $\Delta W=AB=(AC)(C^{-1}B)$ минимум по $(A,B)$ не единствен. Состоятельность понимается для произведения $AB$. Проверяемыми условиями состоятельности M-оценки в теореме являются: компактность $K$, единственность точки $\Theta^\star$ на $K$, непрерывность и интегрируемость $\sup_{\Theta\in K}|\log P_{\Phi_0+\Theta}|$, а также измеримость $\widehat{\Theta}_n$ как минимизатора эмпирического риска на $K$.
 \end{rusremark}
 \key{При низкоранговой параметризации оценка остается статистически состоятельной.}
 \end{frame}
@@ -1053,7 +1155,7 @@ $F_1$-мера $\uparrow$ & $0.7806$ & $0.7648$ & $-2.0\%$ \\
     \item Это согласуется с теоретической мотивацией снижения размерности.
 \end{itemize}
 \begin{rusremark}
-    При ранге~$r=8$ и $\alpha=32$ пороговые метрики качества снижаются на $1{,}4$--$3{,}2\%$, тогда как потери на валидации и время обучения сокращаются на $36{,}3\%$ и $12{,}6\%$. Различие объясняется тем, что потери и пороговые метрики --- разные функционалы: LoRA дает более гладкую динамику обучения и меньшие потери, при этом $F_1$ падает на $2{,}0\%$ в пределах того же диапазона. Потери на валидации $1{.}81$ --- значение функции потерь, используемой при обучении, сравнение со значением $0{.}693$ некорректно.
+    При ранге~$r=8$ и $\alpha=32$ пороговые метрики качества снижаются на $1{,}4$--$3{,}2\%$, тогда как потери на валидации и время обучения сокращаются на $36{,}3\%$ и $12{,}6\%$. Различие объясняется тем, что потери и пороговые метрики --- разные функционалы: LoRA дает более гладкую динамику обучения и меньшие потери, при этом $F_1$ падает на $2{,}0\%$ в пределах того же диапазона.
 \end{rusremark}
 \key{LoRA снижает число обучаемых параметров при малом изменении качества.}
 \end{frame}
@@ -1085,11 +1187,30 @@ $F_1$-мера $\uparrow$ & $0.7806$ & $0.7648$ & $-2.0\%$ \\
 \end{rustheorem}
 \begin{rusremark}
     \footnotesize
-    Одна и та же величина $U_n(B)$ мажорирует эмпирическую сложность Радемахера в STL- и MTL-постановках, а предположение 3 уменьшает эту оценку в $\sqrt{T}$ раз при переходе от $B_{\mathrm{enc}}$ к $B_{\mathrm{shared}}$. При этом численные значения $B_{\mathrm{enc}}$, $B_{\mathrm{shared}}$ и их отношение в эксперименте не приводятся, поэтому предположение 3 о масштабировании норм энкодеров экспериментально не проверено, проверка этого условия требует двух измеренных констант.
+    Одна и та же величина $U_n(B)$ мажорирует эмпирическую сложность Радемахера в STL- и MTL-постановках, а предположение 3 уменьшает эту оценку в $\sqrt{T}$ раз при переходе от $B_{\mathrm{enc}}$ к $B_{\mathrm{shared}}$.
 \end{rusremark}
 \key{Многозадачное обучение снижает верхнюю оценку сложности на задачу в $\sqrt{T}$ раз.}
 \end{frame}
-
+%----------------------------------------------------------------------------------------------------------
+\begin{frame}{Доказательство: сложность Радемахера при MTL}
+\justifying
+\footnotesize
+\vspace{-2pt}
+Цель: $\widehat{\mathfrak R}_n(\mathcal{F}(B);S_t)\le U_n(B)$.
+\begin{enumerate}[1)]
+    \item \textbf{Дуальность} (Коши--Буняковский по голове): $\sup_{\|h\|\le B_{\mathrm{head}}}\sum_i\sigma_i h^{\top}\phi(x_i;w)=B_{\mathrm{head}}\bigl\|\sum_i\sigma_i\phi(x_i;w)\bigr\|_2$.
+    \item \textbf{Хинчин} (фиксированные $\phi(x_i;w)$): $\mathbb{E}_\sigma\bigl\|\sum_i\sigma_i a_i\bigr\|_2\le\bigl(\sum_i\|a_i\|_2^2\bigr)^{1/2}$.
+    \item \textbf{Равномерная управляемость}: перестановка $\sup_w$ и $\mathbb{E}_\sigma$ с константой $C_{\mathrm{enc}}$ --- предположение, не выводится из 1--2.
+    \item \textbf{Ограничение на признаки}: $\|\phi(x;w)\|_2\le B_{\mathrm{Lip}}\|w\|_2\|x\|_2$, $\|x_i\|_2\le R$.
+\end{enumerate}
+\[
+    \widehat{\mathfrak R}_n\!\bigl(\mathcal{F}(B);S_t\bigr)\le
+    \frac{C_{\mathrm{enc}}\,B_{\mathrm{head}}\,B_{\mathrm{Lip}}\,R\,B}{\sqrt{n}}=U_n(B).
+\]
+Множитель $1/\sqrt{T}$: из $B_{\mathrm{shared}}\le B_{\mathrm{enc}}/\sqrt{T}$ и однородности $U_n$ степени $1$ по $B$ $\Rightarrow$ $U_n(B_{\mathrm{shared}})\le U_n(B_{\mathrm{enc}})/\sqrt{T}$.
+\vspace{-4pt}
+\key{Шаги 1--4 дают $U_n(B)$; $1/\sqrt{T}$ вошел из $B_{\mathrm{shared}}\le B_{\mathrm{enc}}/\sqrt{T}$, а не из дуальности или Хинчина.}
+\end{frame}
 %----------------------------------------------------------------------------------------------------------
 \begin{frame}{Многозадачность уменьшает достаточный размер выборки}
 \justifying
